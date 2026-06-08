@@ -9,6 +9,7 @@ const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const checkedFiles = [];
 const missing = [];
 const dynamicReferences = [];
+const brandViolations = [];
 
 await walk(ROOT);
 
@@ -38,9 +39,13 @@ for (const file of checkedFiles) {
   for (const malformed of text.matchAll(/https?:\\?\/wp-content[^\s"'<>)]*/gi)) {
     dynamicReferences.push(`${relativeFile}: malformed ${malformed[0]}`);
   }
+
+  if (relativeFile.endsWith('.html')) {
+    brandViolations.push(...findBrandViolations(text, relativeFile));
+  }
 }
 
-if (missing.length || dynamicReferences.length) {
+if (missing.length || dynamicReferences.length || brandViolations.length) {
   if (missing.length) {
     console.error('Missing local targets:');
     for (const item of missing.slice(0, 60)) console.error(`- ${item}`);
@@ -49,6 +54,11 @@ if (missing.length || dynamicReferences.length) {
   if (dynamicReferences.length) {
     console.error('Dynamic/internal references left:');
     for (const item of dynamicReferences.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (brandViolations.length) {
+    console.error('Brand rule violations:');
+    for (const item of brandViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   process.exit(1);
@@ -108,4 +118,67 @@ function localTargetExists(localUrl) {
     const pageTarget = path.join(ROOT, localPath, 'index.html');
     return existsSync(fileTarget) || existsSync(pageTarget);
   });
+}
+
+function findBrandViolations(html, relativeFile) {
+  const violations = [];
+  for (const { label, value } of extractBrandContexts(html)) {
+    const visibleBrandText = stripTechnicalBrandReferences(value);
+    for (const match of visibleBrandText.matchAll(/\bCroizet\b/gi)) {
+      const before = visibleBrandText.slice(Math.max(0, match.index - 32), match.index);
+      if (!/\bLéopold(?:\s|\u00a0)+$/i.test(before)) {
+        const start = Math.max(0, match.index - 70);
+        const end = Math.min(visibleBrandText.length, match.index + 90);
+        const preview = visibleBrandText.slice(start, end).replace(/\s+/g, ' ').trim();
+        violations.push(`${relativeFile} (${label}): "${preview}"`);
+      }
+    }
+  }
+  return violations;
+}
+
+function extractBrandContexts(html) {
+  const contexts = [];
+
+  for (const [, value] of html.matchAll(/<title[^>]*>([\s\S]*?)<\/title>/gi)) {
+    contexts.push({ label: 'title', value: decodeHtml(value) });
+  }
+
+  for (const [, name, value] of html.matchAll(/\b(alt|title|aria-label|content)=["']([^"']*Croizet[^"']*)["']/gi)) {
+    if (/^https?:\/\//i.test(value) || value.includes('/')) continue;
+    contexts.push({ label: name, value: decodeHtml(value) });
+  }
+
+  const visibleText = decodeHtml(
+    html
+      .replace(/<head[\s\S]*?<\/head>/gi, ' ')
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<[^>]+>/g, ' ')
+  );
+  contexts.push({ label: 'visible text', value: visibleText });
+
+  return contexts.filter((context) => /\bCroizet\b/i.test(context.value));
+}
+
+function decodeHtml(value) {
+  return value
+    .replace(/&nbsp;|&#160;/gi, '\u00a0')
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&#([0-9]+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)))
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;|&#34;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>');
+}
+
+function stripTechnicalBrandReferences(value) {
+  return value
+    .replace(/\bhttps?:\/\/\S*croizet\S*/gi, ' ')
+    .replace(/\bwww\.\S*croizet\S*/gi, ' ')
+    .replace(/\b\S*@\S*croizet\S*/gi, ' ')
+    .replace(/\b(?:[\w-]*croizet[\w-]*\.)+[\w.-]+/gi, ' ')
+    .replace(/\b\S*[-_/]\S*croizet\S*\b/gi, ' ');
 }

@@ -15,6 +15,13 @@ Objectif :
 - `scripts/build-static-site.mjs` : régénère la copie statique depuis les sitemaps WordPress publics.
 - `AUDIT.md` : analyse page par page et recommandations.
 
+## Règles de marque
+
+- Le mot `Croizet` ne doit jamais apparaître seul dans un texte visible, un titre, une description, une alternative d'image ou une donnée SEO.
+- La marque doit être écrite `Léopold Croizet`.
+- `Léopold` et `Croizet` doivent rester sur la même ligne, dans la même police, la même taille et le même style. Ne jamais séparer les deux mots dans deux balises, deux lignes, deux tailles ou deux traitements graphiques différents.
+- Pour les nouveaux blocs graphiques, utiliser un espace insécable ou un élément unique lorsque le contexte risque de couper le nom sur deux lignes.
+
 ## Regeneration
 
 ```bash
