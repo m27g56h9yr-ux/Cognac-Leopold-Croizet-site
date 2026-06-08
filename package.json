@@ -1,0 +1,9 @@
+{
+  "name": "cognac-leopold-croizet-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-static-site.mjs",
+    "check": "node scripts/check-static-site.mjs"
+  }
+}

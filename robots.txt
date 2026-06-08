@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cognac-leopold-croizet.com/sitemap.xml
