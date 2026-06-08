@@ -1857,6 +1857,174 @@ p.container-mentions-legales {
   margin-left: auto;
 }
 
+.home-cocktail-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+.home-cocktail-link:hover,
+.home-cocktail-link:focus {
+  color: #AC8C5E;
+  text-decoration: none;
+}
+
+.cocktails-hero-section {
+  background: linear-gradient(rgba(26, 22, 18, 0.58), rgba(26, 22, 18, 0.82)), url("/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg") center/cover no-repeat;
+  color: white;
+  padding: 190px 20px 80px;
+}
+.container-page.cocktails {
+  display: block;
+}
+.cocktails-hero {
+  text-align: center;
+}
+.cocktails-kicker {
+  color: #d2a14b;
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+.cocktails-hero .titre-cocktail {
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-size: 3.4rem;
+  letter-spacing: 0.05em;
+  line-height: 1.05;
+  margin: 0 auto 26px;
+}
+.cocktails-hero .titre-cocktail strong {
+  color: #d2a14b;
+  display: block;
+  font-weight: 300;
+}
+.cocktails-intro {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  margin: 0 auto 34px;
+  max-width: 760px;
+}
+.cocktails-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+.cocktails-shortcuts a {
+  border: 1px solid rgba(210, 161, 75, 0.85);
+  color: white;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 12px 18px;
+  text-transform: uppercase;
+}
+.cocktails-shortcuts a:hover,
+.cocktails-shortcuts a:focus {
+  background-color: #d2a14b;
+  color: #241d16;
+  text-decoration: none;
+}
+.cocktails-recipes {
+  display: grid;
+  gap: 70px;
+  margin: 0 auto;
+  max-width: 1240px;
+  padding: 80px 20px 70px;
+}
+.cocktail-recipe-card {
+  align-items: center;
+  display: grid;
+  gap: 48px;
+  grid-template-columns: minmax(300px, 0.92fr) minmax(320px, 1fr);
+}
+.cocktail-recipe-card-reverse .cocktail-poster {
+  order: 2;
+}
+.cocktail-poster {
+  margin: 0;
+}
+.cocktail-poster img {
+  aspect-ratio: 1055 / 1491;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.36);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.cocktail-recipe-text {
+  background-color: #f5efe6;
+  color: #2f261d;
+  padding: 42px;
+}
+.cocktail-signature {
+  color: #9b6a16;
+  font-family: "Playfair Display", serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  margin: 0 0 8px;
+}
+.cocktail-recipe-text h2 {
+  color: #9b6a16;
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1.03;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+.cocktail-summary {
+  font-family: "Playfair Display", serif;
+  font-size: 1.08rem;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.cocktail-profile {
+  border-bottom: 1px solid rgba(155, 106, 22, 0.45);
+  border-top: 1px solid rgba(155, 106, 22, 0.45);
+  color: #7a5418;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 0 0 28px;
+  padding: 13px 0;
+  text-transform: uppercase;
+}
+.cocktail-recipe-grid {
+  display: grid;
+  gap: 26px;
+}
+.cocktail-recipe-grid h3 {
+  color: #9b6a16;
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+.cocktail-recipe-grid ul,
+.cocktail-recipe-grid ol {
+  margin: 0;
+  padding-left: 19px;
+}
+.cocktail-recipe-grid li,
+.cocktail-recipe-grid p {
+  font-family: "Playfair Display", serif;
+  font-size: 0.98rem;
+  line-height: 1.68;
+  margin-bottom: 4px;
+}
+.cocktails-legal {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  margin: 0;
+  padding: 0 20px 42px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 @media screen and (max-width: 1199px) {
   .prevent-scroll {
     overflow: hidden;
@@ -1985,6 +2153,41 @@ p.container-mentions-legales {
   }
   .info-legales {
     width: 100%;
+  }
+  .cocktails-hero-section {
+    padding: 135px 20px 58px;
+  }
+  .cocktails-hero .titre-cocktail {
+    font-size: 2.2rem;
+  }
+  .cocktails-intro {
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+  .cocktails-shortcuts {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    max-width: 360px;
+  }
+  .cocktails-recipes {
+    gap: 44px;
+    padding: 50px 18px;
+  }
+  .cocktail-recipe-card {
+    gap: 24px;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    max-width: 620px;
+  }
+  .cocktail-recipe-card-reverse .cocktail-poster {
+    order: 0;
+  }
+  .cocktail-recipe-text {
+    padding: 28px 22px;
+  }
+  .cocktail-recipe-text h2 {
+    font-size: 2rem;
   }
 }
 @media (max-width: 1199px) {
