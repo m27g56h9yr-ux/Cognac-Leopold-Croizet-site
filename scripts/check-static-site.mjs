@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const checkedFiles = [];
 const missing = [];
 const dynamicReferences = [];
@@ -87,6 +88,12 @@ function extractLocalUrls(text) {
 
 function localTargetExists(localUrl) {
   if (localUrl === '/') return existsSync(path.join(ROOT, 'index.html'));
+  if (DEPLOY_BASE_PATH && localUrl === `${DEPLOY_BASE_PATH}/`) {
+    return existsSync(path.join(ROOT, 'index.html'));
+  }
+  if (DEPLOY_BASE_PATH && localUrl.startsWith(`${DEPLOY_BASE_PATH}/`)) {
+    localUrl = localUrl.slice(DEPLOY_BASE_PATH.length);
+  }
   const variants = [localUrl];
   try {
     const decoded = decodeURIComponent(localUrl);

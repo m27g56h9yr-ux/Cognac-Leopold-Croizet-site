@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
+const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 
 const SITEMAP_INDEXES = [
   'https://cognac-leopold-croizet.com/wp-sitemap.xml',
@@ -184,6 +185,7 @@ async function buildPage(pageUrl) {
     route,
     alternates: originalAlternates,
   });
+  html = applyDeployBase(html);
 
   await writeText(targetPath, html);
 
@@ -212,6 +214,9 @@ function stripDynamicWordPressNoise(html) {
     .replace(/<link[^>]+rel=["']EditURI["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+title=["']JSON["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+title=["']oEmbed[^>]+>\s*/gi, '')
+    .replace(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi, (script) => (
+      /"@type"\s*:\s*"Product"/i.test(script) ? '' : script
+    ))
     .replace(/<script[^>]+kit\.fontawesome\.com\/[^>]*><\/script>\s*/gi, '')
     .replace(/<script[^>]+id=["']sourcebuster-js-js["'][\s\S]*?<\/script>\s*/gi, '')
     .replace(/<script[^>]+id=["']wpml-cookie-js-extra["'][\s\S]*?<\/script>\s*/gi, '')
@@ -279,6 +284,67 @@ function rewriteHtmlUrls(html, baseUrl) {
   );
 }
 
+function applyDeployBase(text) {
+  if (!DEPLOY_BASE_PATH) return text;
+
+  const base = DEPLOY_BASE_PATH.replace(/\/$/, '');
+  const basePattern = escapeRegExp(base.slice(1));
+  const pageOrAssetPath = '(?:wp-content|wp-includes|assets|categorie-produit|cgv|collection|commander|en|heritage|la-matiere|lalchimie|le-feu|le-temps|leopold-croizet|mentions-legales|mon-compte|panier|pierre-croizet-cocktails|rencontre|ru|robots\\.txt|sitemap\\.xml|site\\.webmanifest|llms\\.txt)';
+  const staticAssetPath = '(?:wp-content|wp-includes|assets)';
+  const pageOrAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${pageOrAssetPath}(?:/|$)`, 'i');
+  const staticAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${staticAssetPath}(?:/|$)`, 'i');
+  const prefixPageOrAsset = (value) => (pageOrAssetRegex.test(value) ? `${base}${value}` : value);
+  const prefixStaticAsset = (value) => (staticAssetRegex.test(value) ? `${base}${value}` : value);
+
+  let rewritten = text.replace(
+    /\b(href|src|poster|action|data-src|data-background|data-bg|data-image|data-lazy-src|data-large_image|data-thumb|content)=["']([^"']*)["']/gi,
+    (full, attr, value) => `${attr}="${prefixPageOrAsset(value)}"`,
+  );
+
+  rewritten = rewritten.replace(
+    /\b(srcset|data-srcset)=["']([^"']*)["']/gi,
+    (full, attr, value) => `${attr}="${rewriteDeployBaseSrcset(value, prefixPageOrAsset)}"`,
+  );
+
+  rewritten = rewritten.replace(/url\((['"]?)(\/(?!\/)[^'")]+)\1\)/gi, (full, quote, value) => (
+    `url(${quote}${prefixStaticAsset(value)}${quote})`
+  ));
+
+  return rewritten.replace(
+    /(^|[="'`(:\s])\/(wp-content|wp-includes|assets)\//g,
+    (full, prefix, segment) => `${prefix}${base}/${segment}/`,
+  );
+}
+
+function applyDeployBaseToCss(text) {
+  if (!DEPLOY_BASE_PATH) return text;
+
+  const base = DEPLOY_BASE_PATH.replace(/\/$/, '');
+  const basePattern = escapeRegExp(base.slice(1));
+  const staticAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))(?:wp-content|wp-includes|assets)(?:/|$)`, 'i');
+
+  return text.replace(/url\((['"]?)(\/(?!\/)[^'")]+)\1\)/gi, (full, quote, value) => (
+    `url(${quote}${staticAssetRegex.test(value) ? `${base}${value}` : value}${quote})`
+  ));
+}
+
+function applyDeployBaseToScript(text) {
+  if (!DEPLOY_BASE_PATH) return text;
+
+  const base = DEPLOY_BASE_PATH.replace(/\/$/, '');
+  const basePattern = escapeRegExp(base.slice(1));
+
+  return text
+    .replace(
+      new RegExp(`(["'\`])/(?!/|${basePattern}(?:/|$))(wp-content|wp-includes|assets)/`, 'g'),
+      `$1${base}/$2/`,
+    )
+    .replace(
+      new RegExp(`\\\\/(?!${basePattern}\\\\/)(wp-content|wp-includes|assets)\\\\/`, 'g'),
+      `\\/${base.slice(1)}\\/$1\\/`,
+    );
+}
+
 function rewriteSrcset(value, baseUrl) {
   return value
     .split(',')
@@ -287,6 +353,18 @@ function rewriteSrcset(value, baseUrl) {
       if (!trimmed) return trimmed;
       const [url, ...descriptor] = trimmed.split(/\s+/);
       return [rewriteUrl(url, baseUrl), ...descriptor].join(' ');
+    })
+    .join(', ');
+}
+
+function rewriteDeployBaseSrcset(value, prefixLocalUrl) {
+  return value
+    .split(',')
+    .map((candidate) => {
+      const trimmed = candidate.trim();
+      if (!trimmed) return trimmed;
+      const [url, ...descriptor] = trimmed.split(/\s+/);
+      return [prefixLocalUrl(url), ...descriptor].join(' ');
     })
     .join(', ');
 }
@@ -549,11 +627,13 @@ async function fetchAsset(url, referer) {
       body = await response.text();
       collectAssets(body, url.toString());
       body = rewriteCssUrls(body, url.toString());
+      body = applyDeployBaseToCss(body);
       await writeText(localPath, body);
     } else if (contentType.includes('javascript') || localPath.endsWith('.js')) {
       body = await response.text();
       body = repairScriptAsset(body, localPath);
       collectAssets(body, url.toString());
+      body = applyDeployBaseToScript(body);
       await writeText(localPath, body);
     } else {
       const buffer = Buffer.from(await response.arrayBuffer());
@@ -831,6 +911,10 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function decodeHtmlEntities(value) {
