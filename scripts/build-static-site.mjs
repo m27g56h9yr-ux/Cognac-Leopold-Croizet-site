@@ -53,6 +53,12 @@ const ASSET_EXTENSIONS = new Set([
   '.woff2',
 ]);
 
+const EXCLUDED_PAGE_ROUTES = new Set([
+  '/heritage/',
+  '/en/heritage/',
+  '/ru/heritage/',
+]);
+
 const GENERATED_TOP_LEVEL = [
   'assets',
   'categorie-produit',
@@ -140,6 +146,7 @@ async function collectSitemapUrls() {
       const url = normalizeAbsoluteUrl(loc);
       if (!url) continue;
       if (!HOST_PREFIX.has(url.hostname)) continue;
+      if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) continue;
       urls.add(stripHash(url).toString());
     }
   }
@@ -180,6 +187,7 @@ async function buildPage(pageUrl) {
   let html = repairKnownBrokenAssets(stripDynamicWordPressNoise(originalHtml));
   collectAssets(html, pageUrl);
   html = rewriteHtmlUrls(html, pageUrl);
+  html = removeExcludedNavigationLinks(html);
   html = enhanceSeo(html, {
     pageUrl,
     route,
@@ -202,6 +210,16 @@ async function buildPage(pageUrl) {
   if (pageDir !== '.') {
     await mkdir(path.join(ROOT, pageDir), { recursive: true });
   }
+}
+
+function removeExcludedNavigationLinks(html) {
+  const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
+  const excludedRoutes = [...EXCLUDED_PAGE_ROUTES].map((route) => escapeRegExp(`${base}${route}`));
+  const excludedLinkPattern = excludedRoutes.join('|');
+  return html.replace(
+    new RegExp(`\\s*<li\\b[^\\n]*href=["'](?:${excludedLinkPattern})["'][^\\n]*<\\/li>\\s*`, 'gi'),
+    '\n',
+  );
 }
 
 function stripDynamicWordPressNoise(html) {
@@ -806,6 +824,11 @@ function pageHrefForUrl(url) {
   const pathname = normalizePagePath(url.pathname);
   const href = `${prefix}${pathname}`;
   return href === '' ? '/' : href;
+}
+
+function toLocalRoute(url) {
+  const prefix = HOST_PREFIX.get(url.hostname) || '';
+  return `${prefix}${normalizePagePath(url.pathname)}`;
 }
 
 function routeForPagePath(pagePath) {

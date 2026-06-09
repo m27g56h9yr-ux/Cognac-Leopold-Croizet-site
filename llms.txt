@@ -19,7 +19,6 @@ Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 
 - https://cognac-leopold-croizet.com/collection/xo-exception/ - Xo Exception | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/collection/xo/ - Xo | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/commander/ - Boutique Cognac Léopold Croizet
-- https://cognac-leopold-croizet.com/heritage/ - Nous sommes le Cognac Léopold CROIZET
 - https://cognac-leopold-croizet.com/la-matiere/ - Le fruit | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/lalchimie/ - L'Alchimie | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/le-feu/ - Le Feu | Cognac Léopold Croizet
@@ -45,7 +44,6 @@ Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 
 - https://cognac-leopold-croizet.com/en/collection/vsop/ - Vsop | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/en/collection/xo-exception/ - Xo Exception | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/en/collection/xo/ - Xo | Cognac Léopold Croizet
-- https://cognac-leopold-croizet.com/en/heritage/ - We are Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/en/la-matiere/ - The fruit | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/en/lalchimie/ - Alchemy | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/en/le-feu/ - The Fire | Cognac Léopold Croizet
@@ -70,7 +68,6 @@ Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 
 - https://cognac-leopold-croizet.com/ru/collection/vsop/ - Vsop | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/ru/collection/xo-exception/ - Xo Exception | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/ru/collection/xo/ - Xo | Cognac Léopold Croizet
-- https://cognac-leopold-croizet.com/ru/heritage/ - Мы &#8212; Пьер Круазе | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/ru/la-matiere/ - Плод | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/ru/lalchimie/ - Алхимия | Cognac Léopold Croizet
 - https://cognac-leopold-croizet.com/ru/le-feu/ - Огонь | Cognac Léopold Croizet
