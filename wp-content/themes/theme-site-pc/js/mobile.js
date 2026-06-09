@@ -5,6 +5,7 @@ $(document).ready(function () {
     repair_contact_email();
     remove_russian_prices();
     repair_russian_order_links();
+    repair_russian_cocktail_link();
 
 
     move_language_switch();
@@ -87,6 +88,39 @@ $(document).ready(function () {
         if (!orderLink) return;
 
         $(".btn-commander-produit").attr("href", orderLink);
+    }
+
+    function repair_russian_cocktail_link() {
+        if (!window.location.pathname.match(/\/ru\/?$|\/ru\/index\.html$/)) return;
+
+        var href = "/Cognac-Leopold-Croizet-site/ru/pierre-croizet-cocktails/";
+        var title = $(".home-titre-image").filter(function () {
+            return $.trim($(this).text()) === "Shake!";
+        }).first();
+        if (!title.length) return;
+
+        var column = title.closest(".wp-block-column");
+        if (!column.length) return;
+
+        column.find("img[src*='img_home_carre_cocktail']").each(function () {
+            var image = $(this);
+            var imageLink = image.closest("a");
+            if (imageLink.length) {
+                imageLink.attr("href", href).addClass("home-cocktail-link");
+            } else {
+                image.wrap($("<a>", { href: href, "class": "home-cocktail-link" }));
+            }
+        });
+
+        column.find(".home-titre-image, .home-texte-image").each(function () {
+            var textBlock = $(this);
+            var textLink = textBlock.closest("a");
+            if (textLink.length) {
+                textLink.attr("href", href).addClass("home-cocktail-link");
+            } else {
+                textBlock.wrap($("<a>", { href: href, "class": "home-cocktail-link" }));
+            }
+        });
     }
 
     $(".navbar-toggler").on("click", function () {
