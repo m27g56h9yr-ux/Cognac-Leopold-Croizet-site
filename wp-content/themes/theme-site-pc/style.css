@@ -119,10 +119,6 @@ ul#sous-menu-id,
   font-weight: bold;
 }
 
-.wpml-ls-item-ru {
-  display: none !important;
-}
-
 .mega-menu-container {
   position: absolute;
   top: 143px;
@@ -2240,9 +2236,11 @@ body.page-id-1746 nav.navbar::before {
     box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.35);
     max-height: 100%;
     overflow-y: auto;
+    flex-wrap: wrap;
   }
   a.logo-header {
     width: 110px;
+    order: 1;
   }
   a.logo-header img {
     width: 110px;
@@ -2252,6 +2250,8 @@ body.page-id-1746 nav.navbar::before {
   }
   .menu-site {
     display: block;
+    order: 4;
+    width: 100%;
   }
   .menu-site ul#menu-menu-principal {
     flex-direction: column;
@@ -2268,7 +2268,15 @@ body.page-id-1746 nav.navbar::before {
     border-bottom: 1px solid #AC8C5E;
   }
   .wpml-ls-legacy-list-horizontal {
-    padding: 15px;
+    order: 2;
+    margin-left: auto;
+    padding: 0 12px;
+  }
+  .wpml-ls-legacy-list-horizontal ul {
+    margin: 0 !important;
+  }
+  .navbar-toggler {
+    order: 3;
   }
   ul#menu-menu-principal li a.wpml-ls-link {
     margin: 0;

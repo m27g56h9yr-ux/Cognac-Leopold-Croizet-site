@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
+const STATIC_ASSET_VERSION = 'ru-lang-20260609';
 
 const SITEMAP_INDEXES = [
   'https://cognac-leopold-croizet.com/wp-sitemap.xml',
@@ -194,6 +195,7 @@ async function buildPage(pageUrl) {
     alternates: originalAlternates,
   });
   html = applyDeployBase(html);
+  html = applyStaticAssetVersion(html);
 
   await writeText(targetPath, html);
 
@@ -331,6 +333,13 @@ function applyDeployBase(text) {
   return rewritten.replace(
     /(^|[="'`(:\s])\/(wp-content|wp-includes|assets)\//g,
     (full, prefix, segment) => `${prefix}${base}/${segment}/`,
+  );
+}
+
+function applyStaticAssetVersion(html) {
+  return html.replace(
+    /(\/Cognac-Leopold-Croizet-site\/wp-content\/themes\/theme-site-pc\/(?:style\.css|js\/mobile\.js))(?!\?v=)/g,
+    `$1?v=${STATIC_ASSET_VERSION}`,
   );
 }
 
@@ -643,6 +652,7 @@ async function fetchAsset(url, referer) {
 
     if (contentType.includes('text/css') || localPath.endsWith('.css')) {
       body = await response.text();
+      body = repairStylesheetAsset(body, localPath);
       collectAssets(body, url.toString());
       body = rewriteCssUrls(body, url.toString());
       body = applyDeployBaseToCss(body);
@@ -663,6 +673,41 @@ async function fetchAsset(url, referer) {
   } catch (error) {
     failedAssets.push({ url: key, error: error.message });
   }
+}
+
+function repairStylesheetAsset(body, localPath) {
+  if (localPath === 'wp-content/themes/theme-site-pc/style.css') {
+    const repaired = body.replace(/\n?\.wpml-ls-item-ru\s*\{\s*display:\s*none\s*!important;\s*\}\s*/gi, '\n');
+    if (repaired.includes('nav.navbar .wpml-ls-legacy-list-horizontal')) return repaired;
+
+    return `${repaired}
+@media screen and (max-width: 1199px) {
+  nav.navbar {
+    flex-wrap: wrap;
+  }
+  nav.navbar a.logo-header {
+    order: 1;
+  }
+  nav.navbar .wpml-ls-legacy-list-horizontal {
+    order: 2;
+    margin-left: auto;
+    padding: 0 12px;
+  }
+  nav.navbar .wpml-ls-legacy-list-horizontal ul {
+    margin: 0 !important;
+  }
+  nav.navbar .navbar-toggler {
+    order: 3;
+  }
+  nav.navbar .menu-site {
+    order: 4;
+    width: 100%;
+  }
+}
+`;
+  }
+
+  return body;
 }
 
 function repairScriptAsset(body, localPath) {
@@ -686,6 +731,15 @@ function repairScriptAsset(body, localPath) {
     return body.replace(
       /https:\/\/cognac-leopold-croizet\.com\/wp-content\/uploads\/2022\/01\/panier\.svg/g,
       '/wp-content/uploads/2022/01/panier.svg',
+    );
+  }
+
+  if (localPath === 'wp-content/themes/theme-site-pc/js/mobile.js') {
+    return body.replace(
+      /function move_language_switch\(\) \{\s*if \(window\.matchMedia\("\(min-width: 1200px\)"\)\.matches\) \{\s*\$\(("\.wpml-ls-legacy-list-horizontal"|'\.wpml-ls-legacy-list-horizontal')\)\.appendTo\(("\.navbar"|'\.navbar')\);\s*\} else \{\s*\$\(("\.wpml-ls-legacy-list-horizontal"|'\.wpml-ls-legacy-list-horizontal')\)\.appendTo\(("\.menu-site ul#menu-menu-principal"|'\.menu-site ul#menu-menu-principal')\);\s*\}\s*\}/,
+      `function move_language_switch() {
+        $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
+    }`,
     );
   }
 

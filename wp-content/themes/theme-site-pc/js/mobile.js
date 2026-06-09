@@ -10,11 +10,7 @@ $(document).ready(function () {
 
 
     function move_language_switch() {
-        if (window.matchMedia("(min-width: 1200px)").matches) {
-            $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
-        } else {
-            $(".wpml-ls-legacy-list-horizontal").appendTo(".menu-site ul#menu-menu-principal");
-        }
+        $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
     }
 
     $(".navbar-toggler").on("click", function () {
