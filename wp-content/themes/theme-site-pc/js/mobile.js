@@ -2,6 +2,8 @@ $(document).ready(function () {
 
 
     repair_visit_map();
+    repair_contact_email();
+    remove_russian_prices();
 
 
     move_language_switch();
@@ -29,6 +31,40 @@ $(document).ready(function () {
         map.style.height = "350px";
 
         $(".gmap_canvas a[href*='123movies-to.org'], .gmap_canvas a[href*='embedgooglemap.net']").remove();
+    }
+
+    function repair_contact_email() {
+        var oldEmails = ["contact@mdpierre.com", "cognac@mdpierre.com"];
+        var newEmail = "cognac@mdpierrre.com";
+
+        $("a[href^='mailto:']").each(function () {
+            var href = $(this).attr("href");
+            oldEmails.forEach(function (oldEmail) {
+                href = href.replace(oldEmail, newEmail);
+            });
+            $(this).attr("href", href);
+        });
+
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        var node;
+        while ((node = walker.nextNode())) {
+            oldEmails.forEach(function (oldEmail) {
+                node.nodeValue = node.nodeValue.split(oldEmail).join(newEmail);
+            });
+        }
+
+        $("script[type='application/ld+json']").each(function () {
+            var json = this.textContent;
+            oldEmails.forEach(function (oldEmail) {
+                json = json.split(oldEmail).join(newEmail);
+            });
+            this.textContent = json;
+        });
+    }
+
+    function remove_russian_prices() {
+        if (!window.location.pathname.match(/\/ru(\/|$)/)) return;
+        $(".prix-produit-collection, .prix-produit-container, .woocommerce-Price-amount").remove();
     }
 
     $(".navbar-toggler").on("click", function () {
