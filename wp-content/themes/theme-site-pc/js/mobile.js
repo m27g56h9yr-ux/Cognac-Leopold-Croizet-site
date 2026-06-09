@@ -4,6 +4,7 @@ $(document).ready(function () {
     repair_visit_map();
     repair_contact_email();
     remove_russian_prices();
+    repair_russian_order_links();
 
 
     move_language_switch();
@@ -34,7 +35,7 @@ $(document).ready(function () {
     }
 
     function repair_contact_email() {
-        var oldEmails = ["cognac@mdpierrre.com", "cognac@mdpierrre.com"];
+        var oldEmails = ["contact@mdpierre.com", "cognac@mdpierre.com"];
         var newEmail = "cognac@mdpierrre.com";
 
         $("a[href^='mailto:']").each(function () {
@@ -65,6 +66,11 @@ $(document).ready(function () {
     function remove_russian_prices() {
         if (!window.location.pathname.match(/\/ru(\/|$)/)) return;
         $(".prix-produit-collection, .prix-produit-container, .woocommerce-Price-amount").remove();
+    }
+
+    function repair_russian_order_links() {
+        if (!window.location.pathname.match(/\/ru\/collection\/vsop\/?$/)) return;
+        $(".btn-commander-produit").attr("href", "https://av.ru/i/174054");
     }
 
     $(".navbar-toggler").on("click", function () {
