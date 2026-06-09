@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
 
+    repair_visit_map();
+
+
     move_language_switch();
 
 
@@ -11,6 +14,21 @@ $(document).ready(function () {
 
     function move_language_switch() {
         $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
+    }
+
+    function repair_visit_map() {
+        var map = document.querySelector("#gmap_canvas");
+        if (!map) return;
+
+        map.setAttribute("src", "https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed");
+        map.setAttribute("loading", "lazy");
+        map.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+        map.style.border = "0";
+        map.style.width = "100%";
+        map.style.maxWidth = "1200px";
+        map.style.height = "350px";
+
+        $(".gmap_canvas a[href*='123movies-to.org'], .gmap_canvas a[href*='embedgooglemap.net']").remove();
     }
 
     $(".navbar-toggler").on("click", function () {
