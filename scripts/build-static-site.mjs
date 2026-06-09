@@ -196,6 +196,7 @@ async function buildPage(pageUrl) {
   });
   html = applyDeployBase(html);
   html = applyStaticAssetVersion(html);
+  html = localizeRussianStaticHtml(html, route);
 
   await writeText(targetPath, html);
 
@@ -341,6 +342,249 @@ function applyStaticAssetVersion(html) {
     /(\/Cognac-Leopold-Croizet-site\/wp-content\/themes\/theme-site-pc\/(?:style\.css|js\/mobile\.js))(?!\?v=)/g,
     `$1?v=${STATIC_ASSET_VERSION}`,
   );
+}
+
+function localizeRussianStaticHtml(html, route) {
+  if (!route.startsWith('/ru/')) return html;
+
+  const replacements = [
+    ['Hoy-Xay', 'Мастерство'],
+    ['title="посещать"', 'title="Визит"'],
+    ['>посещать<', '>Визит<'],
+    ['>Rencontre<', '>Визит<'],
+    ['Un chai multi-médaillé', 'Погреб, отмеченный множеством наград'],
+    ['Logo Léopold Croizet', 'Логотип Léopold Croizet'],
+    ['Léopold Croizet assis interview', 'Léopold Croizet, интервью'],
+    ['Logos medailles', 'Логотипы медалей'],
+    ['fond-page', 'фон страницы'],
+    ['page déchirée', 'рваная бумага'],
+    ['Toggle navigation', 'Открыть меню'],
+    ['previous arrow', 'стрелка назад'],
+    ['next arrow', 'стрелка вперед'],
+    ['Annee', 'Год'],
+    ['En cliquant sur « Entrer » vous confirmez avoir l\'âge requis dans votre pays pour visiter ce site.', 'Нажимая «Войти», вы подтверждаете, что достигли возраста, необходимого в вашей стране для посещения этого сайта.'],
+    ['Vous acceptez nos <a href="#">Conditions générales d\'utilisation</a> et déclarez avoir lu notre', 'Вы принимаете наши <a href="#">общие условия использования</a> и подтверждаете, что прочитали нашу'],
+    ['Charte de données personnelles & Cookies', 'политику персональных данных и cookies'],
+    ['>Entrer<', '>Войти<'],
+    ['Boutique Cognac Léopold Croizet', 'Бутик Cognac Léopold Croizet'],
+    ['Boutique <strong>Cognac</strong> Léopold Croizet', 'Бутик <strong>Cognac</strong> Léopold Croizet'],
+    ['Please select a rating', 'Пожалуйста, выберите оценку'],
+    ['Your cart is currently empty.', 'Ваша корзина пуста.'],
+    ['Return to shop', 'Вернуться в бутик'],
+    ['>Login<', '>Вход<'],
+    ['Username or email address', 'Имя пользователя или email'],
+    ['Password&nbsp;', 'Пароль&nbsp;'],
+    ['Remember me', 'Запомнить меня'],
+    ['>Log in<', '>Войти<'],
+    ['Lost your password?', 'Забыли пароль?'],
+    ['Collection <strong>Cognac</strong> Léopold Croizet', 'Коллекция <strong>Cognac</strong> Léopold Croizet'],
+    ['Collection  Cognac  Léopold Croizet', 'Коллекция Cognac Léopold Croizet'],
+    ['Collection Cognac Léopold Croizet', 'Коллекция Cognac Léopold Croizet'],
+    ['Коньяки Пьера Круазе', 'Коньяки Леопольда Круазе'],
+    ['коньяки Пьера Круазе', 'коньяки Леопольда Круазе'],
+    ['Пьер Круазе', 'Леопольд Круазе'],
+    ['Пьера Круазе', 'Леопольда Круазе'],
+    ['& aussi...', 'А также...'],
+    ['&amp; aussi...', 'А также...'],
+    ['>порядок<', '>Заказать<'],
+    ['> порядок<', '>Заказать<'],
+    ['Appellation cognac Fins Bois controlée', 'Контролируемое наименование Cognac Fins Bois'],
+    ['Appellation Cognac Contrôlée', 'Контролируемое наименование Cognac'],
+    ['Appelation Cognac Contrôlée', 'Контролируемое наименование Cognac'],
+    ['Аппелласьон', 'Наименование'],
+    ['Rancio Charentais', 'шарантское рансьо'],
+    ['Product quantity', 'Количество товара'],
+    ['VS quantity', 'Количество VS'],
+    ['VSOP quantity', 'Количество VSOP'],
+    ['Napoléon quantity', 'Количество Napoléon'],
+    ['XO quantity', 'Количество XO'],
+    ['XO Exception quantity', 'Количество XO Exception'],
+    ['Extra quantity', 'Количество Extra'],
+    ['Excellence quantity', 'Количество Excellence'],
+    ['Héritage quantity', 'Количество Héritage'],
+    ['Valentine XO quantity', 'Количество Valentine XO'],
+    ['Valentine Количество XO', 'Количество Valentine XO'],
+    ['Add to cart', 'Добавить в корзину'],
+    ['Дегустационные арактеристики', 'Дегустационные характеристики'],
+    ['Note sensorielles', 'Дегустационные характеристики'],
+    ['Pictogramme Oeil', 'Пиктограмма: глаз'],
+    ['Pictogramme Nez', 'Пиктограмма: нос'],
+    ['Pictogramme Bouche', 'Пиктограмма: рот'],
+    ['separateur-produit', 'разделитель продукта'],
+    ['Nерсик', 'персик'],
+    ['Rруша', 'груша'],
+    ['Cушенный абрикос', 'сушеный абрикос'],
+    ['Cлива', 'слива'],
+    ['Pоза', 'роза'],
+    ['виноградные цветок', 'цветок винограда'],
+    ['Visite de nos chais…', 'Визит в наши погреба…'],
+    ['<strong>Visite</strong> de nos chais…', '<strong>Визит</strong> в наши погреба…'],
+    ['Sur rendez-vous au', 'По предварительной записи по телефону'],
+    ['Many long years of aging were (are) indispensable', 'Долгие годы выдержки были необходимы'],
+    ['to develop this XO Exception.', 'для создания XO Exception.'],
+    ['>Discover<', '>Открыть<'],
+    ['LÉOPOLD CROIZET COGNAC FROM GENERATION TO GENERATION', 'COGNAC LÉOPOLD CROIZET ИЗ ПОКОЛЕНИЯ В ПОКОЛЕНИЕ'],
+    ['COGNAC LÉOPOLD CROIZET DE GÉNÉRATION EN GÉNÉRATION', 'COGNAC LÉOPOLD CROIZET ИЗ ПОКОЛЕНИЯ В ПОКОЛЕНИЕ'],
+    ['Discover a very old Cognac characteristic of Fins Bois.', 'Откройте для себя очень старый Cognac, характерный для Fins Bois.'],
+    ['An exceptional and unique creation which is the pride', 'Исключительное и уникальное творение, гордость'],
+    ['of the LÉOPOLD CROIZET house and reveals', 'дома LÉOPOLD CROIZET, раскрывающее'],
+    ['the excellence of our know-how.', 'совершенство нашего мастерства.'],
+    ['EXCELLENCE... <br>Have you experienced ?', 'EXCELLENCE... <br>Вы уже пробовали?'],
+    ['Maison LÉOPOLD CROIZET', 'ДОМ LÉOPOLD CROIZET'],
+    ['De nombreuses années de vieillissement', 'Многие годы выдержки'],
+    ['ont été nécessaires pour élaborer', 'потребовались для создания'],
+    ['ce XO Exception.', 'этого XO Exception.'],
+    ['>Découvrir<', '>Открыть<'],
+    ['>Découvrez<', '>Откройте<'],
+    ['un très vieux Cognac', 'очень старый Cognac'],
+    ['caractéristique', 'характерный'],
+    ['des Fins Bois.', 'для Fins Bois.'],
+    ['Une création', 'Творение'],
+    ['exceptionnelle', 'исключительное'],
+    ['et unique,', 'и уникальное,'],
+    ['la fierté de la Maison', 'гордость дома'],
+    ['Ce Cognac vous dévoile', 'Этот Cognac раскрывает'],
+    ['toute l\'excellence', 'всё совершенство'],
+    ['de notre savoir-faire.', 'нашего мастерства.'],
+    ['Shake !', 'Shake!'],
+    ['Idées fraîches pour les beaux jours', 'Свежие идеи для солнечных дней'],
+    ['Découvrir l&#8217;extra Léopold Croizet', 'Открыть Extra Léopold Croizet'],
+    ['Découvrir l’extra Léopold Croizet', 'Открыть Extra Léopold Croizet'],
+    ['Prendre le temps', 'Дать времени время'],
+    ['&#8230; et le remonter', '… и повернуть его вспять'],
+    ['… et le remonter', '… и повернуть его вспять'],
+    ['Le hasard n&#8217;existe pas', 'Случайностей не бывает'],
+    ['Le hasard n’existe pas', 'Случайностей не бывает'],
+    ['Je souhaite recevoir de vos nouvelles de temps en temps.', 'Я хочу время от времени получать ваши новости.'],
+    ['En renseignant votre adresse e-mail, vous acceptez de recevoir chaque mois nos dernières actualités sur nos produits et vous prenez connaissances de nos', 'Указывая свой e-mail, вы соглашаетесь ежемесячно получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими'],
+    ['mentions légales', 'правовыми уведомлениями'],
+    ['Pour vous désinscrire, merci d\'envoyer un e-mail à cognac@mdpierre.com.', 'Чтобы отписаться, отправьте письмо на cognac@mdpierre.com.'],
+    ['placeholder="Laissez nous votre e-mail"', 'placeholder="Оставьте ваш e-mail"'],
+    ['>Envoyer<', '>Отправить<'],
+    ['Le travail de la vigne mobile', 'Работа на винограднике'],
+    ['Le travail de la vigne', 'Работа на винограднике'],
+    ['Le raisin mobile', 'Виноград'],
+    ['Les vendanges mobile', 'Сбор урожая'],
+    ['L\'assemblage', 'Ассамбляж'],
+    ['La mise en bouteille', 'Розлив в бутылки'],
+    ['La distillation mobile', 'Дистилляция'],
+    ['Double distillation mobile', 'Двойная дистилляция'],
+    ['double distillation', 'двойная дистилляция'],
+    ['Le vieillissement mobile', 'Выдержка'],
+    ['vente eaux de vie', 'продажа коньячных спиртов'],
+    ['ventes edv - mobile', 'продажа коньячных спиртов'],
+    ['ventes fille - mobile', 'продажа дочери'],
+    ['acte mariage - mobile', 'брачный акт'],
+    ['ventes bois lantin - mobile', 'продажа Bois Lantin'],
+    ['acte de vente - mobile', 'акт продажи'],
+    ['etiquette - mobile', 'этикетка'],
+    ['vue aerienne - mobile', 'вид с воздуха'],
+    ['Marc Fouché - mobile', 'Марк Фуше'],
+    ['Léopold Croizet - mobile', 'Леопольд Круазе'],
+    ['Eaux-de-vie', 'коньячные спирты'],
+    ['eaux de vies', 'коньячных спиртов'],
+    ['eaux de vie', 'коньячных спиртов'],
+    ['eaux-de-vie', 'коньячные спирты'],
+    ['нашего коньячных спиртов', 'наших коньячных спиртов'],
+    ['divers actes', 'разные документы'],
+    ['В чем заключается ваша работа и ее масштабы в Maison Léopold Croizet?', 'В чем заключается ваша работа и каков ее масштаб в доме Léopold Croizet?'],
+    ['Я рассказываю о коньяках Леопольда Круазе нашим клиентам и своим друзьям.', 'Я рассказываю о коньяках Léopold Croizet нашим клиентам и своим друзьям.'],
+    ['наших eaux de vie', 'наших коньячных спиртов'],
+  ];
+
+  let localized = html;
+  for (const [from, to] of replacements) {
+    localized = localized.split(from).join(to);
+  }
+
+  localized = localized
+    .replace(/href="\/Cognac-Leopold-Croizet-site\/collection\//g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/')
+    .replace(/href="\/Cognac-Leopold-Croizet-site\/le-temps\//g, 'href="/Cognac-Leopold-Croizet-site/ru/le-temps/')
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/xo-exception\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/xo-exception/"')
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/extra\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/extra/"')
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/le-temps\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/le-temps/"')
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/lalchimie\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/lalchimie/"')
+    .replace(
+      /Je suis Léopold Croizet, je représente la 9e génération de vignerons sur le domaine\. J’en ai hérité de mon père qui en a hérité de sa mère qui en a elle-même hérité de son père et ainsi de suite… Notre vignoble, planté principalement sur la commune de Triac Lautrait, réunit 30 hectares autour d’une ferme typiquement charentaise\. Ici on est au cœur du village, Lantin, à proximité de Jarnac\. C’est un terroir privilégié\. Il appartient au cru des Fins Bois et bénéficie des limites argilo-calcaires des terres de Champagne\.\s*/g,
+      'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
+    );
+
+  return applyRussianSeo(localized, route);
+}
+
+function applyRussianSeo(html, route) {
+  const title = russianRouteTitles(route);
+  const description = russianRouteDescription(route);
+  let localized = html;
+
+  if (title) {
+    localized = localized
+      .replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`)
+      .replace(/<meta property="og:title" content="[^"]*">/i, `<meta property="og:title" content="${title}">`);
+  }
+
+  if (description) {
+    localized = localized
+      .replace(/<meta name="description" content="[^"]*">/i, `<meta name="description" content="${description}">`)
+      .replace(/<meta property="og:description" content="[^"]*">/i, `<meta property="og:description" content="${description}">`);
+  }
+
+  return localized;
+}
+
+function russianRouteTitles(route) {
+  const titles = new Map([
+    ['/ru/', 'Cognac Léopold Croizet'],
+    ['/ru/a-faire/', 'Коллекция Cognac Léopold Croizet | Cognac Léopold Croizet'],
+    ['/ru/categorie-produit/non-classe-ru/', 'Коллекция Cognac Léopold Croizet | Cognac Léopold Croizet'],
+    ['/ru/rencontre/', 'Визит в наши погреба… | Cognac Léopold Croizet'],
+    ['/ru/mon-compte-2/', 'Мой аккаунт | Cognac Léopold Croizet'],
+    ['/ru/panier-2/', 'Корзина | Cognac Léopold Croizet'],
+    ['/ru/validation/', 'Оформление заказа | Cognac Léopold Croizet'],
+  ]);
+  const productName = russianProductName(route);
+  if (productName) return `${productName} | Cognac Léopold Croizet`;
+  return titles.get(route) || '';
+}
+
+function russianRouteDescription(route) {
+  const descriptions = new Map([
+    ['/ru/', 'Cognac Léopold Croizet: семейное мастерство, органический виноградник, коллекция коньяков и визиты в погреба.'],
+    ['/ru/a-faire/', 'Коллекция Cognac Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence и Héritage.'],
+    ['/ru/categorie-produit/non-classe-ru/', 'Коллекция Cognac Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence и Héritage.'],
+    ['/ru/la-matiere/', 'Материя Cognac Léopold Croizet: виноградник, органическое земледелие, виноград и сбор урожая.'],
+    ['/ru/lalchimie/', 'Алхимия Cognac Léopold Croizet: ассамбляж, розлив и создание коньяков дома.'],
+    ['/ru/le-feu/', 'Огонь Cognac Léopold Croizet: двойная дистилляция, выдержка и работа с французским дубом.'],
+    ['/ru/le-temps/', 'Время Cognac Léopold Croizet: архивы, семейная история и передача мастерства из поколения в поколение.'],
+    ['/ru/rencontre/', 'Визит в погреба Cognac Léopold Croizet в Triac-Lautrait, по предварительной записи.'],
+    ['/ru/mon-compte-2/', 'Мой аккаунт Cognac Léopold Croizet: вход в личный кабинет клиента.'],
+    ['/ru/panier-2/', 'Корзина бутика Cognac Léopold Croizet.'],
+    ['/ru/validation/', 'Оформление заказа в бутике Cognac Léopold Croizet.'],
+  ]);
+
+  const productName = russianProductName(route);
+  if (productName) {
+    return `Откройте Cognac Léopold Croizet ${productName}: описание, характеристики, дегустационные ноты и заказ онлайн.`;
+  }
+
+  return descriptions.get(route) || 'Официальный сайт Cognac Léopold Croizet: коллекция коньяков, мастерство, история дома и визиты в погреба.';
+}
+
+function russianProductName(route) {
+  const slug = matchFirst(route, /^\/ru\/collection\/([^/]+)\//);
+  if (!slug) return '';
+  const productNames = new Map([
+    ['vs', 'VS'],
+    ['vsop', 'VSOP'],
+    ['napoleon', 'Napoléon'],
+    ['xo', 'XO'],
+    ['xo-exception', 'XO Exception'],
+    ['extra', 'Extra'],
+    ['excellence', 'Excellence'],
+    ['heritage', 'Héritage'],
+    ['valentine', 'Valentine XO'],
+  ]);
+  return productNames.get(slug) || labelFromPath(slug);
 }
 
 function applyDeployBaseToCss(text) {
