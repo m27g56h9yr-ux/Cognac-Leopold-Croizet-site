@@ -458,7 +458,7 @@ function localizeRussianStaticHtml(html, route) {
     ['Je souhaite recevoir de vos nouvelles de temps en temps.', 'Я хочу время от времени получать ваши новости.'],
     ['En renseignant votre adresse e-mail, vous acceptez de recevoir chaque mois nos dernières actualités sur nos produits et vous prenez connaissances de nos', 'Указывая свой e-mail, вы соглашаетесь ежемесячно получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими'],
     ['mentions légales', 'правовыми уведомлениями'],
-    ['Pour vous désinscrire, merci d\'envoyer un e-mail à cognac@mdpierre.com.', 'Чтобы отписаться, отправьте письмо на cognac@mdpierre.com.'],
+    ['Pour vous désinscrire, merci d\'envoyer un e-mail à cognac@mdpierrre.com.', 'Чтобы отписаться, отправьте письмо на cognac@mdpierrre.com.'],
     ['placeholder="Laissez nous votre e-mail"', 'placeholder="Оставьте ваш e-mail"'],
     ['>Envoyer<', '>Отправить<'],
     ['Le travail de la vigne mobile', 'Работа на винограднике'],
@@ -509,7 +509,13 @@ function localizeRussianStaticHtml(html, route) {
       'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
     );
 
-  return applyRussianSeo(localized, route);
+  return removeRussianPrices(applyRussianSeo(localized, route));
+}
+
+function removeRussianPrices(html) {
+  return html
+    .replace(/\s*<div class="prix-produit-collection">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n')
+    .replace(/\s*<div class="prix-produit-container">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n');
 }
 
 function applyRussianSeo(html, route) {
@@ -751,7 +757,7 @@ function organizationSchema(route) {
     name: 'Cognac Léopold Croizet',
     url: PUBLIC_ORIGIN,
     logo: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg`,
-    email: 'cognac@mdpierre.com',
+    email: 'cognac@mdpierrre.com',
     telephone: '+33545358810',
     address: {
       '@type': 'PostalAddress',
@@ -1043,7 +1049,7 @@ function makeLlmsTxt(records) {
     '',
     'Family-owned Cognac house in Triac-Lautrait, France, producing Fins Bois cognacs from organic vineyard work, distillation, ageing and blending know-how.',
     '',
-    'Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 Triac-Lautrait, France.',
+    'Contact: cognac@mdpierrre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 Triac-Lautrait, France.',
     '',
     section('French pages', byLang.fr),
     section('English pages', byLang.en),

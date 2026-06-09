@@ -34,7 +34,7 @@ $(document).ready(function () {
     }
 
     function repair_contact_email() {
-        var oldEmails = ["contact@mdpierre.com", "cognac@mdpierre.com"];
+        var oldEmails = ["cognac@mdpierrre.com", "cognac@mdpierrre.com"];
         var newEmail = "cognac@mdpierrre.com";
 
         $("a[href^='mailto:']").each(function () {
