@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { access, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -118,6 +118,7 @@ async function main() {
   }
 
   await copyStaticAssets();
+  await removeLegacyExcellenceCoffretAssets();
   await writeGlobalFiles();
 
   console.log(`Generated ${pageRecords.length} pages`);
@@ -143,6 +144,26 @@ async function copyStaticAssets() {
     return;
   }
   await cp(STATIC_ASSETS_DIR, ROOT, { recursive: true, force: true });
+}
+
+async function removeLegacyExcellenceCoffretAssets() {
+  const dir = path.join(ROOT, 'wp-content/uploads/2021/06');
+  let files;
+  try {
+    files = await readdir(dir);
+  } catch {
+    return;
+  }
+
+  const legacyPrefixes = [
+    'img_produit_excellence_coffret-1',
+    'img_produit_excellence_02-1',
+    'img_produit_excellence_03',
+  ];
+
+  await Promise.all(files
+    .filter((file) => file.endsWith('.png') && legacyPrefixes.some((prefix) => file.startsWith(prefix)))
+    .map((file) => rm(path.join(dir, file), { force: true })));
 }
 
 async function collectSitemapUrls() {
@@ -212,6 +233,7 @@ async function buildPage(pageUrl) {
   html = applyDeployBase(html);
   html = applyStaticAssetVersion(html);
   html = updateExtraProductImagery(html, route);
+  html = updateExcellenceProductImagery(html, route);
   html = localizeRussianStaticHtml(html, route);
 
   await writeText(targetPath, html);
@@ -380,8 +402,9 @@ function updateExtraProductImagery(html, route) {
   next = next.replace(
     /<figure class="wp-block-image[^"]*">\s*(<a href="([^"]+)">)?<img[^>]+img_home_carre_extra_03-1[^>]+>(<\/a>)?\s*<\/figure>/g,
     (match, anchorStart = '', href = '') => {
-      const linkStart = anchorStart ? `<a href="${href}">` : '';
-      const linkEnd = anchorStart ? '</a>' : '';
+      const targetHref = href || homepageExtraProductHref(route, base);
+      const linkStart = targetHref ? `<a href="${targetHref}">` : '';
+      const linkEnd = targetHref ? '</a>' : '';
       return `<figure class="wp-block-image size-full is-style-default">${linkStart}<img decoding="async" width="720" height="731" src="${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png" alt="Cognac Léopold Croizet Extra Extra avec coffret rouge" class="wp-image-extra-2026" srcset="${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png 420w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-500.png 500w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png 720w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret.png 1200w" sizes="(max-width: 720px) 100vw, 720px" />${linkEnd}</figure>`;
     },
   );
@@ -396,6 +419,13 @@ function updateExtraProductImagery(html, route) {
   return next;
 }
 
+function homepageExtraProductHref(route, base) {
+  if (route === '/') return `${base}/collection/extra/`;
+  const localeMatch = route.match(/^\/(en|ru|da|sv|no)\/$/);
+  if (localeMatch) return `${base}/${localeMatch[1]}/collection/extra/`;
+  return '';
+}
+
 function extraProductGalleryMarkup(base) {
   const main = `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret`;
   const open = `${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret`;
@@ -404,6 +434,25 @@ function extraProductGalleryMarkup(base) {
         <div data-thumb="${main}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra avec coffret rouge" class="woocommerce-product-gallery__image"><a href="${main}.png"><img width="420" height="426" src="${main}-420.png" class="wp-post-image" alt="Cognac Léopold Croizet Extra avec coffret rouge" title="Cognac Léopold Croizet Extra avec coffret rouge" data-caption="" data-src="${main}.png" data-large_image="${main}.png" data-large_image_width="1200" data-large_image_height="1219" decoding="async" fetchpriority="high" srcset="${main}-420.png 420w, ${main}-500.png 500w, ${main}-720.png 720w, ${main}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
         <div data-thumb="${open}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra dans son coffret ouvert" class="woocommerce-product-gallery__image"><a href="${open}.png"><img width="420" height="381" src="${open}-420.png" class="" alt="Cognac Léopold Croizet Extra dans son coffret ouvert" title="Cognac Léopold Croizet Extra dans son coffret ouvert" data-caption="" data-src="${open}.png" data-large_image="${open}.png" data-large_image_width="1200" data-large_image_height="1089" decoding="async" loading="lazy" srcset="${open}-420.png 420w, ${open}-500.png 500w, ${open}-715.png 715w, ${open}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
         <div data-thumb="${box}-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="${box}.png"><img width="420" height="567" src="${box}-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="${box}.png" data-large_image="${box}.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="${box}-420.png 420w, ${box}-500.png 500w, ${box}.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>`;
+}
+
+function updateExcellenceProductImagery(html, route) {
+  if (!/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/excellence\/$/.test(route)) return html;
+  const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
+  return html.replace(
+    /<figure class="woocommerce-product-gallery__wrapper">[\s\S]*?<\/figure>/,
+    excellenceProductGalleryMarkup(base),
+  );
+}
+
+function excellenceProductGalleryMarkup(base) {
+  const etui = `${base}/wp-content/uploads/2026/06/img_excellence_etui`;
+  const bottle = `${base}/wp-content/uploads/2021/06/img_produit_excellence_base-1`;
+  const detail = `${base}/wp-content/uploads/2021/06/img_produit_excellence_02-2-2`;
+  return `<figure class="woocommerce-product-gallery__wrapper">
+        <div data-thumb="${etui}-420x782.jpg" data-thumb-alt="Cognac Léopold Croizet Excellence avec nouvel étui bleu" class="woocommerce-product-gallery__image"><a href="${etui}.jpg"><img width="420" height="782" src="${etui}-420x782.jpg" class="wp-post-image" alt="Cognac Léopold Croizet Excellence avec nouvel étui bleu" title="Cognac Léopold Croizet Excellence avec nouvel étui bleu" data-caption="" data-src="${etui}.jpg" data-large_image="${etui}.jpg" data-large_image_width="792" data-large_image_height="1476" decoding="async" fetchpriority="high" srcset="${etui}-420x782.jpg 420w, ${etui}-500x932.jpg 500w, ${etui}-670x1248.jpg 670w, ${etui}.jpg 792w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="${bottle}-420x642.png" data-thumb-alt="Bouteille Cognac Léopold Croizet Excellence" class="woocommerce-product-gallery__image"><a href="${bottle}.png"><img width="420" height="642" src="${bottle}-420x642.png" class="" alt="Bouteille Cognac Léopold Croizet Excellence" title="Bouteille Cognac Léopold Croizet Excellence" data-caption="" data-src="${bottle}.png" data-large_image="${bottle}.png" data-large_image_width="720" data-large_image_height="1100" decoding="async" loading="lazy" srcset="${bottle}-420x642.png 420w, ${bottle}-196x300.png 196w, ${bottle}-670x1024.png 670w, ${bottle}-500x764.png 500w, ${bottle}.png 720w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="${detail}-420x642.png" data-thumb-alt="Détail étiquette Cognac Léopold Croizet Excellence" class="woocommerce-product-gallery__image"><a href="${detail}.png"><img width="420" height="642" src="${detail}-420x642.png" class="" alt="Détail étiquette Cognac Léopold Croizet Excellence" title="Détail étiquette Cognac Léopold Croizet Excellence" data-caption="" data-src="${detail}.png" data-large_image="${detail}.png" data-large_image_width="720" data-large_image_height="1100" decoding="async" loading="lazy" srcset="${detail}-420x642.png 420w, ${detail}-196x300.png 196w, ${detail}-670x1024.png 670w, ${detail}-500x764.png 500w, ${detail}.png 720w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>`;
 }
 
 function localizeRussianStaticHtml(html, route) {

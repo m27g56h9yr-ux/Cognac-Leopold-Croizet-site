@@ -443,6 +443,7 @@ function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
+  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
   const productImage = matchFirst(html, /<img\b[^>]+class=["'][^"']*(?:wp-post-image|attachment-woocommerce_single)[^"']*["'][^>]+src=["']([^"']+)["']/i)
     || matchFirst(html, /<img\b[^>]+src=["']([^"']*img_produit[^"']+)["']/i);
   if (productImage) return normalizePublicPath(productImage);
