@@ -382,7 +382,7 @@ function updateExtraProductImagery(html, route) {
     (match, anchorStart = '', href = '') => {
       const linkStart = anchorStart ? `<a href="${href}">` : '';
       const linkEnd = anchorStart ? '</a>' : '';
-      return `<figure class="wp-block-image size-full is-style-default">${linkStart}<img decoding="async" width="715" height="649" src="${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png" alt="Cognac Léopold Croizet Extra dans son coffret rouge" class="wp-image-extra-2026" srcset="${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png 420w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-500.png 500w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png 715w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret.png 1200w" sizes="(max-width: 715px) 100vw, 715px" />${linkEnd}</figure>`;
+      return `<figure class="wp-block-image size-full is-style-default">${linkStart}<img decoding="async" width="720" height="731" src="${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png" alt="Cognac Léopold Croizet Extra Extra avec coffret rouge" class="wp-image-extra-2026" srcset="${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png 420w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-500.png 500w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png 720w, ${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret.png 1200w" sizes="(max-width: 720px) 100vw, 720px" />${linkEnd}</figure>`;
     },
   );
 
