@@ -1,13 +1,15 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+const STATIC_ASSETS_DIR = path.join(ROOT, 'static-assets');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const STATIC_ASSET_VERSION = 'ru-lang-20260609';
+const GOOGLE_MAP_EMBED_URL = 'https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed';
 
 const SITEMAP_INDEXES = [
   'https://cognac-leopold-croizet.com/wp-sitemap.xml',
@@ -22,6 +24,9 @@ const HOST_PREFIX = new Map([
   ['www.leopold-croizet.com', ''],
   ['en.cognac-leopold-croizet.com', '/en'],
   ['ru.cognac-leopold-croizet.com', '/ru'],
+  ['da.cognac-leopold-croizet.com', '/da'],
+  ['sv.cognac-leopold-croizet.com', '/sv'],
+  ['no.cognac-leopold-croizet.com', '/no'],
 ]);
 
 const CDN_ASSET_HOSTS = new Set([
@@ -112,6 +117,7 @@ async function main() {
     await fetchAsset(next.url, next.referer);
   }
 
+  await copyStaticAssets();
   await writeGlobalFiles();
 
   console.log(`Generated ${pageRecords.length} pages`);
@@ -128,6 +134,15 @@ async function cleanGeneratedFiles() {
   for (const file of GENERATED_FILES) {
     await rm(path.join(ROOT, file), { force: true });
   }
+}
+
+async function copyStaticAssets() {
+  try {
+    await access(STATIC_ASSETS_DIR);
+  } catch {
+    return;
+  }
+  await cp(STATIC_ASSETS_DIR, ROOT, { recursive: true, force: true });
 }
 
 async function collectSitemapUrls() {
@@ -196,6 +211,7 @@ async function buildPage(pageUrl) {
   });
   html = applyDeployBase(html);
   html = applyStaticAssetVersion(html);
+  html = updateExtraProductImagery(html, route);
   html = localizeRussianStaticHtml(html, route);
 
   await writeText(targetPath, html);
@@ -261,6 +277,9 @@ function repairKnownBrokenAssets(html) {
   return html
     .replace(/https?:\/wp-content/gi, '/wp-content')
     .replace(/https?:\\\/wp-content/gi, '/wp-content')
+    .replace(/https:\/\/maps\.google\.com\/maps\?q=30%20route%20d"Angoul%C3%AAme%2016200%20Triac-Lautrait&t=&z=13&ie=UTF8&iwloc=&output=embed/gi, GOOGLE_MAP_EMBED_URL)
+    .replace(/<a href="https:\/\/123movies-to\.org"><\/a><br>\s*/gi, '')
+    .replace(/<\/style><a href="https:\/\/www\.embedgooglemap\.net"><\/a>\s*<style>/gi, '</style>\n                <style>')
     .replace(/\/wp-content\/uploads\/2021\/12\/cropped-favicon_512-(?:32x32|180x180|192x192|270x270)\.png/gi, '/wp-content/uploads/2021/10/logo_croizet_blason.svg')
     .replace(/https:\/wp-content\/uploads\/2021\/12\/cropped-favicon_512-(?:32x32|180x180|192x192|270x270)\.png/gi, '/wp-content/uploads/2021/10/logo_croizet_blason.svg')
     .replace(/\/wp-content\/uploads\/2021\/06\/domaine-pierre-croizet\.jpg/gi, '/wp-content/uploads/2022/02/propriete_02-scaled.jpg')
@@ -310,7 +329,7 @@ function applyDeployBase(text) {
 
   const base = DEPLOY_BASE_PATH.replace(/\/$/, '');
   const basePattern = escapeRegExp(base.slice(1));
-  const pageOrAssetPath = '(?:wp-content|wp-includes|assets|categorie-produit|cgv|collection|commander|en|heritage|la-matiere|lalchimie|le-feu|le-temps|leopold-croizet|mentions-legales|mon-compte|panier|pierre-croizet-cocktails|rencontre|ru|robots\\.txt|sitemap\\.xml|site\\.webmanifest|llms\\.txt)';
+  const pageOrAssetPath = '(?:wp-content|wp-includes|assets|categorie-produit|cgv|collection|commander|en|da|sv|no|heritage|la-matiere|lalchimie|le-feu|le-temps|leopold-croizet|mentions-legales|mon-compte|panier|pierre-croizet-cocktails|rencontre|ru|robots\\.txt|sitemap\\.xml|site\\.webmanifest|llms\\.txt)';
   const staticAssetPath = '(?:wp-content|wp-includes|assets)';
   const pageOrAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${pageOrAssetPath}(?:/|$)`, 'i');
   const staticAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${staticAssetPath}(?:/|$)`, 'i');
@@ -342,6 +361,49 @@ function applyStaticAssetVersion(html) {
     /(\/Cognac-Leopold-Croizet-site\/wp-content\/themes\/theme-site-pc\/(?:style\.css|js\/mobile\.js))(?!\?v=)/g,
     `$1?v=${STATIC_ASSET_VERSION}`,
   );
+}
+
+function updateExtraProductImagery(html, route) {
+  const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
+  const menuImage = `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png`;
+  const menuSrcset = [
+    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w`,
+    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w`,
+    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w`,
+    `${menuImage} 720w`,
+  ].join(', ');
+
+  let next = html
+    .replace(/src="[^"]*\/wp-content\/uploads\/2021\/06\/img_produit_extra_base(?:-[^"]+)?\.png"/g, `src="${menuImage}"`)
+    .replace(/srcset="[^"]*img_produit_extra_base[^"]*"/g, `srcset="${menuSrcset}"`);
+
+  next = next.replace(
+    /<figure class="wp-block-image[^"]*">\s*(<a href="([^"]+)">)?<img[^>]+img_home_carre_extra_03-1[^>]+>(<\/a>)?\s*<\/figure>/g,
+    (match, anchorStart = '', href = '') => {
+      const linkStart = anchorStart ? `<a href="${href}">` : '';
+      const linkEnd = anchorStart ? '</a>' : '';
+      return `<figure class="wp-block-image size-full is-style-default">${linkStart}<img decoding="async" width="715" height="649" src="${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png" alt="Cognac Léopold Croizet Extra dans son coffret rouge" class="wp-image-extra-2026" srcset="${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png 420w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-500.png 500w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png 715w, ${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret.png 1200w" sizes="(max-width: 715px) 100vw, 715px" />${linkEnd}</figure>`;
+    },
+  );
+
+  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/extra\/$/.test(route)) {
+    next = next.replace(
+      /<figure class="woocommerce-product-gallery__wrapper">[\s\S]*?<\/figure>/,
+      extraProductGalleryMarkup(base),
+    );
+  }
+
+  return next;
+}
+
+function extraProductGalleryMarkup(base) {
+  const main = `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret`;
+  const open = `${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret`;
+  const box = `${base}/wp-content/uploads/2026/06/extra-coffret-seul`;
+  return `<figure class="woocommerce-product-gallery__wrapper">
+        <div data-thumb="${main}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra avec coffret rouge" class="woocommerce-product-gallery__image"><a href="${main}.png"><img width="420" height="426" src="${main}-420.png" class="wp-post-image" alt="Cognac Léopold Croizet Extra avec coffret rouge" title="Cognac Léopold Croizet Extra avec coffret rouge" data-caption="" data-src="${main}.png" data-large_image="${main}.png" data-large_image_width="1200" data-large_image_height="1219" decoding="async" fetchpriority="high" srcset="${main}-420.png 420w, ${main}-500.png 500w, ${main}-720.png 720w, ${main}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="${open}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra dans son coffret ouvert" class="woocommerce-product-gallery__image"><a href="${open}.png"><img width="420" height="381" src="${open}-420.png" class="" alt="Cognac Léopold Croizet Extra dans son coffret ouvert" title="Cognac Léopold Croizet Extra dans son coffret ouvert" data-caption="" data-src="${open}.png" data-large_image="${open}.png" data-large_image_width="1200" data-large_image_height="1089" decoding="async" loading="lazy" srcset="${open}-420.png 420w, ${open}-500.png 500w, ${open}-715.png 715w, ${open}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="${box}-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="${box}.png"><img width="420" height="567" src="${box}-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="${box}.png" data-large_image="${box}.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="${box}-420.png 420w, ${box}-500.png 500w, ${box}.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>`;
 }
 
 function localizeRussianStaticHtml(html, route) {
@@ -509,13 +571,39 @@ function localizeRussianStaticHtml(html, route) {
       'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
     );
 
-  return removeRussianPrices(applyRussianSeo(localized, route));
+  return applyRussianOrderLinks(removeRussianPrices(applyRussianSeo(localized, route)), route);
 }
 
 function removeRussianPrices(html) {
   return html
     .replace(/\s*<div class="prix-produit-collection">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n')
     .replace(/\s*<div class="prix-produit-container">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n');
+}
+
+function applyRussianOrderLinks(html, route) {
+  const orderLinks = new Map([
+    ['/ru/collection/vs/', 'https://av.ru/i/1021709'],
+    ['/ru/collection/vsop/', 'https://av.ru/i/174054'],
+    ['/ru/collection/napoleon/', 'https://av.ru/i/1020490'],
+    ['/ru/collection/xo/', 'https://av.ru/i/1020491'],
+    ['/ru/collection/xo-exception/', 'https://av.ru/i/1005624'],
+    ['/ru/collection/extra/', 'https://av.ru/i/174057'],
+    ['/ru/collection/excellence/', 'https://av.ru/i/231809'],
+    ['/ru/collection/heritage/', 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
+    ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
+  ]);
+  const orderLink = orderLinks.get(route);
+  if (!orderLink) return html;
+
+  return html
+    .replace(
+      /href="[^"]*"\s+class=" btn-commander-produit"/,
+      `href="${orderLink}" class=" btn-commander-produit"`,
+    )
+    .replace(
+      /wp-content\/themes\/theme-site-pc\/js\/btn-commander-produit\.js(?!\?)/,
+      'wp-content/themes/theme-site-pc/js/btn-commander-produit.js?v=av-order-20260609',
+    );
 }
 
 function applyRussianSeo(html, route) {
@@ -824,6 +912,9 @@ function firstImage(html) {
 function languageForRoute(route) {
   if (route.startsWith('/en/')) return 'en';
   if (route.startsWith('/ru/')) return 'ru';
+  if (route.startsWith('/da/')) return 'da';
+  if (route.startsWith('/sv/')) return 'sv';
+  if (route.startsWith('/no/')) return 'no';
   return 'fr';
 }
 

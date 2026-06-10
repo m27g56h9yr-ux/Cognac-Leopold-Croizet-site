@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-static-site.mjs",
+    "build": "node scripts/build-static-site.mjs && node scripts/add-nordic-locales.mjs && node scripts/seo-hardening.mjs",
+    "seo": "node scripts/seo-hardening.mjs",
     "check": "node scripts/check-static-site.mjs"
   }
 }
