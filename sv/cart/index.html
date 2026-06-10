@@ -20,7 +20,7 @@
 <script id="lc-language-router">(function(){
 var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/"};
 var aliases={nb:"no",nn:"no"};
-var regionLanguage={FR:"fr",MC:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
+var regionLanguage={FR:"fr",MC:"fr",BE:"fr",CH:"fr",CA:"fr",LU:"fr",HT:"fr",BJ:"fr",BF:"fr",BI:"fr",CM:"fr",CF:"fr",TD:"fr",KM:"fr",CG:"fr",CD:"fr",CI:"fr",DJ:"fr",GA:"fr",GN:"fr",GQ:"fr",MG:"fr",ML:"fr",NE:"fr",RW:"fr",SN:"fr",SC:"fr",TG:"fr",MU:"fr",MR:"fr",MA:"fr",DZ:"fr",TN:"fr",LB:"fr",VU:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",YT:"fr",NC:"fr",PF:"fr",PM:"fr",WF:"fr",BL:"fr",MF:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
 var storageKey="lcPreferredLanguage";
 var deployBase="/Cognac-Leopold-Croizet-site";
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
@@ -28,7 +28,7 @@ function activeBase(){var path=window.location.pathname;return path===deployBase
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\/index\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
 function normalizeLang(tag){var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[code]||supported[code]&&code||""}
 function regionFor(tag){try{var locale=new Intl.Locale(tag);if(locale.region)return locale.region.toUpperCase()}catch(error){}var match=String(tag||"").match(/[-_]([a-z]{2}|\d{3})\b/i);return match?match[1].toUpperCase():""}
-function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct}for(var j=0;j<list.length;j++){var region=regionFor(list[j]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
+function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct;var region=regionFor(list[i]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
 function preferredLang(){try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
 function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&localStorage.setItem(storageKey,lang)}catch(error){}}
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
