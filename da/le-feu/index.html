@@ -12,7 +12,7 @@
 <link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/le-feu/">
 <link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/le-feu/">
 <link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/le-feu/">
-<link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/le-feu/">
+<link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/le-feu/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="da_DK">
 <meta property="og:title" content="Ilden | Destillation Cognac Léopold Croizet">
@@ -23,6 +23,29 @@
 <meta name="twitter:title" content="Ilden | Destillation Cognac Léopold Croizet">
 <meta name="twitter:description" content="Ilden bag Cognac Léopold Croizet: dobbelt charentais-destillation, kobberalambic, lagring og præcision i kælderen.">
 <meta name="twitter:image" content="https://cognac-leopold-croizet.com/wp-content/uploads/2021/06/img_produit_vs_base2.png">
+<script id="lc-language-router">(function(){
+var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/"};
+var aliases={nb:"no",nn:"no"};
+var regionLanguage={FR:"fr",MC:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
+var storageKey="lcPreferredLanguage";
+var deployBase="/Cognac-Leopold-Croizet-site";
+var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
+function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
+function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\/index\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
+function normalizeLang(tag){var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[code]||supported[code]&&code||""}
+function regionFor(tag){try{var locale=new Intl.Locale(tag);if(locale.region)return locale.region.toUpperCase()}catch(error){}var match=String(tag||"").match(/[-_]([a-z]{2}|\d{3})\b/i);return match?match[1].toUpperCase():""}
+function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct}for(var j=0;j<list.length;j++){var region=regionFor(list[j]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
+function preferredLang(){try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
+function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&localStorage.setItem(storageKey,lang)}catch(error){}}
+function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
+document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
+var route=routeFor(window.location.pathname);
+if(isCrawler()||route!=="/"||/(?:^|[?&])lc_no_redirect=1(?:&|$)/.test(window.location.search))return;
+var lang=preferredLang();
+var targetRoute=supported[lang]||supported.en;
+if(targetRoute===route)return;
+window.location.replace(activeBase()+targetRoute+window.location.search+window.location.hash)
+})();</script>
 
 <link rel="preload" href="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/style.css?v=ru-lang-20260609" as="style">
 

@@ -390,6 +390,7 @@ function hardenHtml(html, route, file) {
     .replace(/<link[^>]+rel=["']canonical["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '')
+    .replace(/<script\b[^>]*id=["']lc-language-router["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
     .replace(/<meta\s+property=["']og:(?:type|title|description|url|image|locale)["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:card["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:(?:title|description|image)["'][^>]*>\s*/gi, '');
@@ -414,6 +415,7 @@ function hardenHtml(html, route, file) {
     `<meta name="twitter:title" content="${escapeHtml(metadata.title)}">`,
     `<meta name="twitter:description" content="${escapeHtml(metadata.description)}">`,
     image ? `<meta name="twitter:image" content="${PUBLIC_ORIGIN}${image}">` : '',
+    languageRouterScript(),
   ].filter(Boolean).join('\n');
 
   next = next.replace(/<head([^>]*)>/i, `<head$1>\n${headBlock}\n`);
@@ -476,8 +478,39 @@ function makeAlternateTags(route) {
   const tags = group.map((alternateRoute) => (
     `<link rel="alternate" hreflang="${languageForRoute(alternateRoute)}" href="${PUBLIC_ORIGIN}${alternateRoute}">`
   ));
-  tags.push(`<link rel="alternate" hreflang="x-default" href="${PUBLIC_ORIGIN}${group[0]}">`);
+  tags.push(`<link rel="alternate" hreflang="x-default" href="${PUBLIC_ORIGIN}${xDefaultRoute(group)}">`);
   return tags;
+}
+
+function xDefaultRoute(group) {
+  return group.find((route) => route === '/en/' || route.startsWith('/en/')) || group[0];
+}
+
+function languageRouterScript() {
+  const script = `(function(){
+var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/"};
+var aliases={nb:"no",nn:"no"};
+var regionLanguage={FR:"fr",MC:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
+var storageKey="lcPreferredLanguage";
+var deployBase="/Cognac-Leopold-Croizet-site";
+var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
+function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
+function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\\/index\\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
+function normalizeLang(tag){var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[code]||supported[code]&&code||""}
+function regionFor(tag){try{var locale=new Intl.Locale(tag);if(locale.region)return locale.region.toUpperCase()}catch(error){}var match=String(tag||"").match(/[-_]([a-z]{2}|\\d{3})\\b/i);return match?match[1].toUpperCase():""}
+function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct}for(var j=0;j<list.length;j++){var region=regionFor(list[j]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
+function preferredLang(){try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
+function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&localStorage.setItem(storageKey,lang)}catch(error){}}
+function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
+document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
+var route=routeFor(window.location.pathname);
+if(isCrawler()||route!=="/"||/(?:^|[?&])lc_no_redirect=1(?:&|$)/.test(window.location.search))return;
+var lang=preferredLang();
+var targetRoute=supported[lang]||supported.en;
+if(targetRoute===route)return;
+window.location.replace(activeBase()+targetRoute+window.location.search+window.location.hash)
+})();`;
+  return `<script id="lc-language-router">${script}</script>`;
 }
 
 function replaceStructuredData(html, route, metadata, image) {
@@ -646,7 +679,7 @@ function makeSitemap(routes) {
       lines.push(`    <xhtml:link rel="alternate" hreflang="${languageForRoute(alternate)}" href="${escapeXml(`${PUBLIC_ORIGIN}${alternate}`)}" />`);
     }
     if (routeToGroup.has(route)) {
-      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${PUBLIC_ORIGIN}${routeToGroup.get(route)[0]}`)}" />`);
+      lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${PUBLIC_ORIGIN}${xDefaultRoute(routeToGroup.get(route))}`)}" />`);
     }
     lines.push('  </url>');
   }
