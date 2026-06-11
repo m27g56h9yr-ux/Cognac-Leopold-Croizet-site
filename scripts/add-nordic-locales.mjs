@@ -1216,7 +1216,7 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
     return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list" hidden>${items}</ul>\n</div>`;
   const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   if (regex.test(html)) return html.replace(regex, block);
   return html;

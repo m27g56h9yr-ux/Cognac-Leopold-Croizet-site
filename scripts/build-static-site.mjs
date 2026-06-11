@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const STATIC_ASSETS_DIR = path.join(ROOT, 'static-assets');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
-const STATIC_ASSET_VERSION = 'language-menu-20260611';
+const STATIC_ASSET_VERSION = 'language-menu-map-20260611';
 const GOOGLE_MAP_EMBED_URL = 'https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed';
 
 const SITEMAP_INDEXES = [
@@ -300,6 +300,7 @@ function repairKnownBrokenAssets(html) {
   return html
     .replace(/https?:\/wp-content/gi, '/wp-content')
     .replace(/https?:\\\/wp-content/gi, '/wp-content')
+    .replace(/src="https:\/\/maps\.google\.com\/maps\?q=30%20route%20d"Angoul%C3%AAme%2016200%20Triac-Lautrait&t=&z=13&ie=UTF8&iwloc=&output=embed"/gi, `src="${GOOGLE_MAP_EMBED_URL}"`)
     .replace(/https:\/\/maps\.google\.com\/maps\?q=30%20route%20d"Angoul%C3%AAme%2016200%20Triac-Lautrait&t=&z=13&ie=UTF8&iwloc=&output=embed/gi, GOOGLE_MAP_EMBED_URL)
     .replace(/<a href="https:\/\/123movies-to\.org"><\/a><br>\s*/gi, '')
     .replace(/<\/style><a href="https:\/\/www\.embedgooglemap\.net"><\/a>\s*<style>/gi, '</style>\n                <style>')
@@ -1105,7 +1106,7 @@ function repairStylesheetAsset(body, localPath) {
 }
 
 function ensureLanguageMenuStyles(body) {
-  if (body.includes('.lc-language-menu > .lc-language-menu-toggle')) return body;
+  if (body.includes('.lc-language-menu > ul.lc-language-menu-list[hidden]')) return body;
   return `${body}
 .lc-language-menu {
   position: relative;
@@ -1135,6 +1136,8 @@ function ensureLanguageMenuStyles(body) {
   content: "";
   display: none;
 }
+.lc-language-menu > ul.lc-language-menu-list,
+nav.navbar .lc-language-menu > ul.lc-language-menu-list,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list {
   position: absolute;
   top: 100%;
@@ -1153,6 +1156,11 @@ function ensureLanguageMenuStyles(body) {
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   visibility: hidden;
 }
+.lc-language-menu > ul.lc-language-menu-list[hidden] {
+  display: none !important;
+}
+.lc-language-menu.is-open > ul.lc-language-menu-list,
+nav.navbar .lc-language-menu.is-open > ul.lc-language-menu-list,
 .wpml-ls-legacy-list-horizontal.lc-language-menu.is-open > ul.lc-language-menu-list {
   display: block !important;
   opacity: 1;
@@ -1160,9 +1168,11 @@ function ensureLanguageMenuStyles(body) {
   transform: translateY(0);
   visibility: visible;
 }
+.lc-language-menu > ul.lc-language-menu-list li,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li {
   display: block;
 }
+.lc-language-menu > ul.lc-language-menu-list li a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a {
   display: block;
   padding: 6px 16px;
@@ -1171,10 +1181,12 @@ function ensureLanguageMenuStyles(body) {
   text-align: center;
   white-space: nowrap;
 }
+.lc-language-menu > ul.lc-language-menu-list li a::after,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a::after {
   content: "";
   display: none;
 }
+.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a {
   color: #895006;
 }
@@ -1226,6 +1238,10 @@ function ensureLanguageMenuScript(body) {
     init_language_menu();
 
     function init_language_menu() {
+        $(".lc-language-menu").removeClass("is-open");
+        $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+        $(".lc-language-menu-list").attr("hidden", "hidden").hide();
+
         $(".lc-language-menu-toggle").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -1233,11 +1249,12 @@ function ensureLanguageMenuScript(body) {
             var menu = $(this).closest(".lc-language-menu");
             var isOpen = menu.hasClass("is-open");
 
-            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
             $(".lc-language-menu-toggle").attr("aria-expanded", "false");
 
             if (!isOpen) {
                 menu.addClass("is-open");
+                menu.find(".lc-language-menu-list").removeAttr("hidden").show();
                 $(this).attr("aria-expanded", "true");
             }
         });
@@ -1247,13 +1264,13 @@ function ensureLanguageMenuScript(body) {
         });
 
         $(document).off("click.lcLanguageMenu").on("click.lcLanguageMenu", function () {
-            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
             $(".lc-language-menu-toggle").attr("aria-expanded", "false");
         });
 
         $(document).off("keydown.lcLanguageMenu").on("keydown.lcLanguageMenu", function (event) {
             if (event.key === "Escape") {
-                $(".lc-language-menu").removeClass("is-open");
+                $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
                 $(".lc-language-menu-toggle").attr("aria-expanded", "false");
             }
         });

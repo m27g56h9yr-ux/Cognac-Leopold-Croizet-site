@@ -15,6 +15,10 @@ $(document).ready(function () {
     }
 
     function init_language_menu() {
+        $(".lc-language-menu").removeClass("is-open");
+        $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+        $(".lc-language-menu-list").attr("hidden", "hidden").hide();
+
         $(".lc-language-menu-toggle").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -22,11 +26,12 @@ $(document).ready(function () {
             var menu = $(this).closest(".lc-language-menu");
             var isOpen = menu.hasClass("is-open");
 
-            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
             $(".lc-language-menu-toggle").attr("aria-expanded", "false");
 
             if (!isOpen) {
                 menu.addClass("is-open");
+                menu.find(".lc-language-menu-list").removeAttr("hidden").show();
                 $(this).attr("aria-expanded", "true");
             }
         });
@@ -36,13 +41,13 @@ $(document).ready(function () {
         });
 
         $(document).off("click.lcLanguageMenu").on("click.lcLanguageMenu", function () {
-            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
             $(".lc-language-menu-toggle").attr("aria-expanded", "false");
         });
 
         $(document).off("keydown.lcLanguageMenu").on("keydown.lcLanguageMenu", function (event) {
             if (event.key === "Escape") {
-                $(".lc-language-menu").removeClass("is-open");
+                $(".lc-language-menu").removeClass("is-open").find(".lc-language-menu-list").attr("hidden", "hidden").hide();
                 $(".lc-language-menu-toggle").attr("aria-expanded", "false");
             }
         });

@@ -303,6 +303,8 @@ ul#sous-menu-id,
   content: "";
   display: none;
 }
+.lc-language-menu > ul.lc-language-menu-list,
+nav.navbar .lc-language-menu > ul.lc-language-menu-list,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list {
   position: absolute;
   top: 100%;
@@ -321,6 +323,11 @@ ul#sous-menu-id,
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   visibility: hidden;
 }
+.lc-language-menu > ul.lc-language-menu-list[hidden] {
+  display: none !important;
+}
+.lc-language-menu.is-open > ul.lc-language-menu-list,
+nav.navbar .lc-language-menu.is-open > ul.lc-language-menu-list,
 .wpml-ls-legacy-list-horizontal.lc-language-menu.is-open > ul.lc-language-menu-list {
   display: block !important;
   opacity: 1;
@@ -328,9 +335,11 @@ ul#sous-menu-id,
   transform: translateY(0);
   visibility: visible;
 }
+.lc-language-menu > ul.lc-language-menu-list li,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li {
   display: block;
 }
+.lc-language-menu > ul.lc-language-menu-list li a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a {
   display: block;
   padding: 6px 16px;
@@ -339,10 +348,12 @@ ul#sous-menu-id,
   text-align: center;
   white-space: nowrap;
 }
+.lc-language-menu > ul.lc-language-menu-list li a::after,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a::after {
   content: "";
   display: none;
 }
+.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a {
   color: #895006;
 }
