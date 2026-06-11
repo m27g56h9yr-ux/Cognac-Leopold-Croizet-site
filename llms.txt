@@ -2,7 +2,7 @@
 
 > Family-owned Cognac house in Triac-Lautrait, Charente, producing Fins Bois cognacs and welcoming visitors by appointment.
 
-Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs. The site is available in French, English, Russian, Danish, Swedish and Norwegian.
+Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.
 
 ## Key Pages
 - [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.
@@ -11,6 +11,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Danish homepage](https://cognac-leopold-croizet.com/da/): Official Danish homepage.
 - [Swedish homepage](https://cognac-leopold-croizet.com/sv/): Official Swedish homepage.
 - [Norwegian homepage](https://cognac-leopold-croizet.com/no/): Official Norwegian homepage.
+- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.
 - [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.
 - [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.
 - [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.

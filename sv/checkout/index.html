@@ -17,23 +17,35 @@
 <meta name="twitter:title" content="Beställning Cognac Léopold Croizet">
 <meta name="twitter:description" content="Checkout sur le site officiel Cognac Léopold Croizet : collection, savoir-faire familial et domaine de Triac-Lautrait.">
 <meta name="twitter:image" content="https://cognac-leopold-croizet.com/wp-content/uploads/2021/06/img_produit_vs_base2.png">
+<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart{display:none!important}</style>
 <script id="lc-language-router">(function(){
-var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/"};
-var aliases={nb:"no",nn:"no"};
-var regionLanguage={FR:"fr",MC:"fr",BE:"fr",CH:"fr",CA:"fr",LU:"fr",HT:"fr",BJ:"fr",BF:"fr",BI:"fr",CM:"fr",CF:"fr",TD:"fr",KM:"fr",CG:"fr",CD:"fr",CI:"fr",DJ:"fr",GA:"fr",GN:"fr",GQ:"fr",MG:"fr",ML:"fr",NE:"fr",RW:"fr",SN:"fr",SC:"fr",TG:"fr",MU:"fr",MR:"fr",MA:"fr",DZ:"fr",TN:"fr",LB:"fr",VU:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",YT:"fr",NC:"fr",PF:"fr",PM:"fr",WF:"fr",BL:"fr",MF:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
+var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/",zh:"/zh/"};
+var aliases={nb:"no",nn:"no",zhhans:"zh",zhcn:"zh"};
+var regionLanguage={FR:"fr",MC:"fr",BE:"fr",CH:"fr",CA:"fr",LU:"fr",HT:"fr",BJ:"fr",BF:"fr",BI:"fr",CM:"fr",CF:"fr",TD:"fr",KM:"fr",CG:"fr",CD:"fr",CI:"fr",DJ:"fr",GA:"fr",GN:"fr",GQ:"fr",MG:"fr",ML:"fr",NE:"fr",RW:"fr",SN:"fr",SC:"fr",TG:"fr",MU:"fr",MR:"fr",MA:"fr",DZ:"fr",TN:"fr",LB:"fr",VU:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",YT:"fr",NC:"fr",PF:"fr",PM:"fr",WF:"fr",BL:"fr",MF:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no",CN:"zh",HK:"zh",MO:"zh",TW:"zh"};
+var chinaRegions={CN:1,HK:1,MO:1,TW:1};
+var chinaTimeZones={"Asia/Shanghai":1,"Asia/Urumqi":1,"Asia/Hong_Kong":1,"Asia/Macau":1,"Asia/Taipei":1};
 var storageKey="lcPreferredLanguage";
+var chinaStorageKey="lcChinaVisitor";
 var deployBase="/Cognac-Leopold-Croizet-site";
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
 function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\/index\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
-function normalizeLang(tag){var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[code]||supported[code]&&code||""}
+function normalizeLang(tag){var clean=String(tag||"").toLowerCase().replace(/[-_]/g,"");var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[clean]||aliases[code]||(supported[code]?code:"")}
 function regionFor(tag){try{var locale=new Intl.Locale(tag);if(locale.region)return locale.region.toUpperCase()}catch(error){}var match=String(tag||"").match(/[-_]([a-z]{2}|\d{3})\b/i);return match?match[1].toUpperCase():""}
-function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct;var region=regionFor(list[i]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
-function preferredLang(){try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
+function browserTags(){return navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""]}
+function detectsChina(){var list=browserTags();for(var i=0;i<list.length;i++){if(normalizeLang(list[i])==="zh")return true;if(chinaRegions[regionFor(list[i])])return true}try{var tz=Intl.DateTimeFormat().resolvedOptions().timeZone;if(chinaTimeZones[tz])return true}catch(error){}return false}
+function browserLang(){var list=browserTags();for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct;var region=regionFor(list[i]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
+function preferredLang(){if(detectsChina())return"zh";try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
 function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&localStorage.setItem(storageKey,lang)}catch(error){}}
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
-document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
+function hasChinaFlag(){try{return window.localStorage&&localStorage.getItem(chinaStorageKey)==="1"}catch(error){return false}}
+function setChinaFlag(){try{window.localStorage&&localStorage.setItem(chinaStorageKey,"1")}catch(error){}}
+function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart");for(var i=0;i<items.length;i++)items[i].remove()}
 var route=routeFor(window.location.pathname);
+var chinaVisitor=detectsChina();
+if(chinaVisitor)setChinaFlag();
+if(chinaVisitor||hasChinaFlag()||route.indexOf("/zh/")===0){document.documentElement.classList.add("lc-hide-prices");if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",hidePricesNow)}else{hidePricesNow()}}
+document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
 if(isCrawler()||route!=="/"||/(?:^|[?&])lc_no_redirect=1(?:&|$)/.test(window.location.search))return;
 var lang=preferredLang();
 var targetRoute=supported[lang]||supported.en;
@@ -252,7 +264,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
       </div>
       
 <div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">
-	<ul><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/commander/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/checkout/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/validation/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/checkout/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/checkout/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/checkout/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li></ul>
+	<ul><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/commander/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/checkout/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/validation/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/checkout/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/checkout/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/checkout/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/zh/checkout/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
 </div>
     </nav>
 

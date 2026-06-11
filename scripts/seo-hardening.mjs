@@ -21,16 +21,16 @@ const productNames = new Map([
 ]);
 
 const contentGroups = [
-  ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/'],
-  ['/collection/', '/en/shop/', '/ru/a-faire/', '/da/shop/', '/sv/shop/', '/no/shop/'],
-  ['/la-matiere/', '/en/la-matiere/', '/ru/la-matiere/', '/da/la-matiere/', '/sv/la-matiere/', '/no/la-matiere/'],
-  ['/le-feu/', '/en/le-feu/', '/ru/le-feu/', '/da/le-feu/', '/sv/le-feu/', '/no/le-feu/'],
-  ['/lalchimie/', '/en/lalchimie/', '/ru/lalchimie/', '/da/lalchimie/', '/sv/lalchimie/', '/no/lalchimie/'],
-  ['/le-temps/', '/en/le-temps/', '/ru/le-temps/', '/da/le-temps/', '/sv/le-temps/', '/no/le-temps/'],
-  ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/'],
-  ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/'],
-  ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/'],
-  ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`]),
+  ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'],
+  ['/collection/', '/en/shop/', '/ru/a-faire/', '/da/shop/', '/sv/shop/', '/no/shop/', '/zh/shop/'],
+  ['/la-matiere/', '/en/la-matiere/', '/ru/la-matiere/', '/da/la-matiere/', '/sv/la-matiere/', '/no/la-matiere/', '/zh/la-matiere/'],
+  ['/le-feu/', '/en/le-feu/', '/ru/le-feu/', '/da/le-feu/', '/sv/le-feu/', '/no/le-feu/', '/zh/le-feu/'],
+  ['/lalchimie/', '/en/lalchimie/', '/ru/lalchimie/', '/da/lalchimie/', '/sv/lalchimie/', '/no/lalchimie/', '/zh/lalchimie/'],
+  ['/le-temps/', '/en/le-temps/', '/ru/le-temps/', '/da/le-temps/', '/sv/le-temps/', '/no/le-temps/', '/zh/le-temps/'],
+  ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
+  ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
+  ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
+  ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
 ];
 
 const routeMetadata = new Map([
@@ -281,7 +281,52 @@ for (const [slug, name] of productNames) {
     title: `${name} | Cognac Léopold Croizet`,
     description: `Oppdag Cognac Léopold Croizet ${name}: smaksnoter, karakter, lagring og familiens håndverk fra Fins Bois.`,
   });
+  routeMetadata.set(`/zh/collection/${slug}/`, {
+    title: `${name} | Cognac Léopold Croizet`,
+    description: `探索 Cognac Léopold Croizet ${name}：品鉴笔记、风格、陈酿与 Fins Bois 家族酒庄的工艺传承。`,
+  });
 }
+
+const zhRouteMetadata = new Map([
+  ['/zh/', {
+    title: 'Cognac Léopold Croizet | Fins Bois 家族干邑酒庄',
+    description: 'Cognac Léopold Croizet 是位于 Triac-Lautrait、Fins Bois 的家族干邑酒庄，呈现 VS、VSOP、Napoléon、XO 与 Extra 系列干邑、葡萄园工艺与酒窖参观。',
+  }],
+  ['/zh/shop/', {
+    title: 'Cognac Léopold Croizet 系列 | VS、VSOP、XO 与 Extra',
+    description: '探索 Cognac Léopold Croizet 系列：VS、VSOP、Napoléon、XO、XO Exception、Extra、Excellence、Héritage 与 Valentine XO。',
+  }],
+  ['/zh/la-matiere/', {
+    title: '果实 | Cognac Léopold Croizet 葡萄园与风土',
+    description: 'Cognac Léopold Croizet 的果实：Fins Bois 风土、有机葡萄园工作、葡萄与 Triac-Lautrait 的采收。',
+  }],
+  ['/zh/le-feu/', {
+    title: '火焰 | Cognac Léopold Croizet 蒸馏',
+    description: 'Cognac Léopold Croizet 的火焰：夏朗德双重蒸馏、铜壶蒸馏器、陈酿与酒窖工作的精准。',
+  }],
+  ['/zh/lalchimie/', {
+    title: '调配艺术 | Cognac Léopold Croizet',
+    description: 'Cognac Léopold Croizet 的调配艺术：调和、成熟、装瓶与代代相传的家族工艺。',
+  }],
+  ['/zh/le-temps/', {
+    title: '时间 | Cognac Léopold Croizet 传承',
+    description: 'Cognac Léopold Croizet 的时间：档案、家族历史、陈酿与世代传承的 savoir-faire。',
+  }],
+  ['/zh/leopold-croizet/', {
+    title: 'Léopold Croizet | 访谈与家族故事',
+    description: '走近 Léopold Croizet：家族故事、Triac-Lautrait 酒庄、传承，以及独立干邑酒庄的愿景。',
+  }],
+  ['/zh/rencontre/', {
+    title: '参观 Cognac Léopold Croizet 酒窖 | Triac-Lautrait',
+    description: '预约参观位于 Triac-Lautrait、靠近 Jarnac 的 Cognac Léopold Croizet 酒窖，探索家族酒庄。',
+  }],
+  ['/zh/pierre-croizet-cocktails/', {
+    title: 'Cognac Léopold Croizet 鸡尾酒 | 干邑与 Pineau 配方',
+    description: "探索 Charente Spritz、L'Heure Dorée、Ginger d'Or 与 Golden Melon，四款以 Cognac Léopold Croizet 与 Pineau des Charentes 调制的鸡尾酒。",
+  }],
+]);
+
+for (const [route, metadata] of zhRouteMetadata) routeMetadata.set(route, metadata);
 
 const noindexRoutes = new Set([
   '/categorie-produit/non-classe/',
@@ -290,6 +335,7 @@ const noindexRoutes = new Set([
   '/da/categorie-produit/non-classe-en/',
   '/sv/categorie-produit/non-classe-en/',
   '/no/categorie-produit/non-classe-en/',
+  '/zh/categorie-produit/non-classe-en/',
   '/cgv/',
   '/mentions-legales/',
   '/mon-compte/',
@@ -298,17 +344,20 @@ const noindexRoutes = new Set([
   '/da/my-account/',
   '/sv/my-account/',
   '/no/my-account/',
+  '/zh/my-account/',
   '/panier/',
   '/en/cart/',
   '/ru/panier-2/',
   '/da/cart/',
   '/sv/cart/',
   '/no/cart/',
+  '/zh/cart/',
   '/en/checkout/',
   '/ru/validation/',
   '/da/checkout/',
   '/sv/checkout/',
   '/no/checkout/',
+  '/zh/checkout/',
 ]);
 
 const allHtmlFiles = await walkHtml(ROOT);
@@ -368,11 +417,22 @@ function languageForRoute(route) {
   if (route.startsWith('/da/')) return 'da';
   if (route.startsWith('/sv/')) return 'sv';
   if (route.startsWith('/no/')) return 'no';
+  if (route.startsWith('/zh/')) return 'zh';
   return 'fr';
 }
 
 function localeForRoute(route) {
-  return { fr: 'fr_FR', en: 'en_GB', ru: 'ru_RU', da: 'da_DK', sv: 'sv_SE', no: 'nb_NO' }[languageForRoute(route)];
+  return { fr: 'fr_FR', en: 'en_GB', ru: 'ru_RU', da: 'da_DK', sv: 'sv_SE', no: 'nb_NO', zh: 'zh_CN' }[languageForRoute(route)];
+}
+
+function htmlLangForRoute(route) {
+  const lang = languageForRoute(route);
+  return lang === 'zh' ? 'zh-Hans' : lang;
+}
+
+function hrefLangForRoute(route) {
+  const lang = languageForRoute(route);
+  return lang === 'zh' ? 'zh-Hans' : lang;
 }
 
 function hardenHtml(html, route, file) {
@@ -391,12 +451,13 @@ function hardenHtml(html, route, file) {
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '')
     .replace(/<script\b[^>]*id=["']lc-language-router["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
+    .replace(/<style\b[^>]*id=["']lc-price-guard-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '')
     .replace(/<meta\s+property=["']og:(?:type|title|description|url|image|locale)["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:card["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:(?:title|description|image)["'][^>]*>\s*/gi, '');
 
   if (/<html[^>]*lang=/i.test(next)) {
-    next = next.replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, `<html$1lang="${lang}"$2>`);
+    next = next.replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, `<html$1lang="${htmlLangForRoute(route)}"$2>`);
   }
 
   const headBlock = [
@@ -415,6 +476,7 @@ function hardenHtml(html, route, file) {
     `<meta name="twitter:title" content="${escapeHtml(metadata.title)}">`,
     `<meta name="twitter:description" content="${escapeHtml(metadata.description)}">`,
     image ? `<meta name="twitter:image" content="${PUBLIC_ORIGIN}${image}">` : '',
+    priceGuardStyle(),
     languageRouterScript(),
   ].filter(Boolean).join('\n');
 
@@ -442,10 +504,10 @@ function labelFromRoute(route) {
 }
 
 function bestImageForPage(html, route) {
-  if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
+  if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
-  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
-  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
   const productImage = matchFirst(html, /<img\b[^>]+class=["'][^"']*(?:wp-post-image|attachment-woocommerce_single)[^"']*["'][^>]+src=["']([^"']+)["']/i)
     || matchFirst(html, /<img\b[^>]+src=["']([^"']*img_produit[^"']+)["']/i);
   if (productImage) return normalizePublicPath(productImage);
@@ -474,9 +536,9 @@ function makeGroupMap(existingRoutes) {
 
 function makeAlternateTags(route) {
   const group = routeToGroup.get(route);
-  if (!group) return [`<link rel="alternate" hreflang="${languageForRoute(route)}" href="${PUBLIC_ORIGIN}${route}">`];
+  if (!group) return [`<link rel="alternate" hreflang="${hrefLangForRoute(route)}" href="${PUBLIC_ORIGIN}${route}">`];
   const tags = group.map((alternateRoute) => (
-    `<link rel="alternate" hreflang="${languageForRoute(alternateRoute)}" href="${PUBLIC_ORIGIN}${alternateRoute}">`
+    `<link rel="alternate" hreflang="${hrefLangForRoute(alternateRoute)}" href="${PUBLIC_ORIGIN}${alternateRoute}">`
   ));
   tags.push(`<link rel="alternate" hreflang="x-default" href="${PUBLIC_ORIGIN}${xDefaultRoute(group)}">`);
   return tags;
@@ -486,24 +548,39 @@ function xDefaultRoute(group) {
   return group.find((route) => route === '/en/' || route.startsWith('/en/')) || group[0];
 }
 
+function priceGuardStyle() {
+  return `<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart{display:none!important}</style>`;
+}
+
 function languageRouterScript() {
   const script = `(function(){
-var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/"};
-var aliases={nb:"no",nn:"no"};
-var regionLanguage={FR:"fr",MC:"fr",BE:"fr",CH:"fr",CA:"fr",LU:"fr",HT:"fr",BJ:"fr",BF:"fr",BI:"fr",CM:"fr",CF:"fr",TD:"fr",KM:"fr",CG:"fr",CD:"fr",CI:"fr",DJ:"fr",GA:"fr",GN:"fr",GQ:"fr",MG:"fr",ML:"fr",NE:"fr",RW:"fr",SN:"fr",SC:"fr",TG:"fr",MU:"fr",MR:"fr",MA:"fr",DZ:"fr",TN:"fr",LB:"fr",VU:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",YT:"fr",NC:"fr",PF:"fr",PM:"fr",WF:"fr",BL:"fr",MF:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no"};
+var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/",zh:"/zh/"};
+var aliases={nb:"no",nn:"no",zhhans:"zh",zhcn:"zh"};
+var regionLanguage={FR:"fr",MC:"fr",BE:"fr",CH:"fr",CA:"fr",LU:"fr",HT:"fr",BJ:"fr",BF:"fr",BI:"fr",CM:"fr",CF:"fr",TD:"fr",KM:"fr",CG:"fr",CD:"fr",CI:"fr",DJ:"fr",GA:"fr",GN:"fr",GQ:"fr",MG:"fr",ML:"fr",NE:"fr",RW:"fr",SN:"fr",SC:"fr",TG:"fr",MU:"fr",MR:"fr",MA:"fr",DZ:"fr",TN:"fr",LB:"fr",VU:"fr",GF:"fr",GP:"fr",MQ:"fr",RE:"fr",YT:"fr",NC:"fr",PF:"fr",PM:"fr",WF:"fr",BL:"fr",MF:"fr",RU:"ru",DK:"da",SE:"sv",NO:"no",CN:"zh",HK:"zh",MO:"zh",TW:"zh"};
+var chinaRegions={CN:1,HK:1,MO:1,TW:1};
+var chinaTimeZones={"Asia/Shanghai":1,"Asia/Urumqi":1,"Asia/Hong_Kong":1,"Asia/Macau":1,"Asia/Taipei":1};
 var storageKey="lcPreferredLanguage";
+var chinaStorageKey="lcChinaVisitor";
 var deployBase="/Cognac-Leopold-Croizet-site";
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
 function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\\/index\\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
-function normalizeLang(tag){var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[code]||supported[code]&&code||""}
+function normalizeLang(tag){var clean=String(tag||"").toLowerCase().replace(/[-_]/g,"");var code=String(tag||"").toLowerCase().split(/[-_]/)[0];return aliases[clean]||aliases[code]||(supported[code]?code:"")}
 function regionFor(tag){try{var locale=new Intl.Locale(tag);if(locale.region)return locale.region.toUpperCase()}catch(error){}var match=String(tag||"").match(/[-_]([a-z]{2}|\\d{3})\\b/i);return match?match[1].toUpperCase():""}
-function browserLang(){var list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""];for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct;var region=regionFor(list[i]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
-function preferredLang(){try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
+function browserTags(){return navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||navigator.userLanguage||""]}
+function detectsChina(){var list=browserTags();for(var i=0;i<list.length;i++){if(normalizeLang(list[i])==="zh")return true;if(chinaRegions[regionFor(list[i])])return true}try{var tz=Intl.DateTimeFormat().resolvedOptions().timeZone;if(chinaTimeZones[tz])return true}catch(error){}return false}
+function browserLang(){var list=browserTags();for(var i=0;i<list.length;i++){var direct=normalizeLang(list[i]);if(direct)return direct;var region=regionFor(list[i]);if(regionLanguage[region])return regionLanguage[region]}return"en"}
+function preferredLang(){if(detectsChina())return"zh";try{var saved=window.localStorage&&localStorage.getItem(storageKey);if(saved&&supported[saved])return saved}catch(error){}return browserLang()}
 function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&localStorage.setItem(storageKey,lang)}catch(error){}}
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
-document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
+function hasChinaFlag(){try{return window.localStorage&&localStorage.getItem(chinaStorageKey)==="1"}catch(error){return false}}
+function setChinaFlag(){try{window.localStorage&&localStorage.setItem(chinaStorageKey,"1")}catch(error){}}
+function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart");for(var i=0;i<items.length;i++)items[i].remove()}
 var route=routeFor(window.location.pathname);
+var chinaVisitor=detectsChina();
+if(chinaVisitor)setChinaFlag();
+if(chinaVisitor||hasChinaFlag()||route.indexOf("/zh/")===0){document.documentElement.classList.add("lc-hide-prices");if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",hidePricesNow)}else{hidePricesNow()}}
+document.addEventListener("click",function(event){var target=event.target&&event.target.closest?event.target.closest("a[hreflang]"):null;if(!target)return;var lang=normalizeLang(target.getAttribute("hreflang"));if(lang)rememberLang(lang)},true);
 if(isCrawler()||route!=="/"||/(?:^|[?&])lc_no_redirect=1(?:&|$)/.test(window.location.search))return;
 var lang=preferredLang();
 var targetRoute=supported[lang]||supported.en;
@@ -558,7 +635,7 @@ function webSiteSchema() {
     name: 'Cognac Léopold Croizet',
     url: PUBLIC_ORIGIN,
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no'],
+    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'],
   };
 }
 
@@ -603,7 +680,7 @@ function breadcrumbSchema(route) {
 }
 
 function productSchema(route, metadata, image) {
-  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no)\/)?collection\/([^/]+)\//);
+  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
   const name = productNames.get(slug);
   if (!name) return null;
   return {
@@ -630,20 +707,34 @@ function cocktailRecipesSchema(route) {
     ["Ginger d'Or", 'Cognac Léopold Croizet, ginger beer, citron vert'],
     ['Golden Melon', 'Cognac Léopold Croizet VSOP, Vieux Pineau des Charentes, melon, miel d’acacia'],
   ];
-  return names.map(([name, ingredients]) => ({
+  return names.map(([name, ingredients]) => {
+    const localizedIngredients = recipeIngredients(lang, name, ingredients);
+    return {
     '@context': 'https://schema.org',
     '@type': 'Recipe',
     name,
-    description: recipeDescription(lang, name, ingredients),
-    recipeIngredient: ingredients.split(', '),
+    description: recipeDescription(lang, name, localizedIngredients),
+    recipeIngredient: localizedIngredients.split(', '),
     author: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg`,
     inLanguage: lang,
-  }));
+  };
+  });
+}
+
+function recipeIngredients(lang, name, ingredients) {
+  if (lang !== 'zh') return ingredients;
+  return {
+    'Charente Spritz': 'Pineau Rosé des Charentes, Cognac Léopold Croizet VS, 夏朗德甜瓜, 气泡水',
+    "L'Heure Dorée": 'Pineau Blanc des Charentes, Cognac Léopold Croizet VS, 夏朗德甜瓜, 罗勒, 青柠',
+    "Ginger d'Or": 'Cognac Léopold Croizet, 姜汁啤酒, 青柠',
+    'Golden Melon': 'Cognac Léopold Croizet VSOP, Vieux Pineau des Charentes, 甜瓜, 洋槐蜜',
+  }[name] || ingredients;
 }
 
 function recipeDescription(lang, name, ingredients) {
   if (lang === 'ru') return `${name}: коктейль с ${ingredients}.`;
+  if (lang === 'zh') return `${name}：以 ${ingredients} 调制的鸡尾酒。`;
   if (lang === 'en') return `${name}: cocktail with ${ingredients}.`;
   if (lang === 'da') return `${name}: cocktail med ${ingredients}.`;
   if (lang === 'sv') return `${name}: cocktail med ${ingredients}.`;
@@ -676,7 +767,7 @@ function makeSitemap(routes) {
     lines.push(`    <changefreq>${isHomepage(route) ? 'weekly' : 'monthly'}</changefreq>`);
     lines.push(`    <priority>${priorityForRoute(route)}</priority>`);
     for (const alternate of routeToGroup.get(route) || [route]) {
-      lines.push(`    <xhtml:link rel="alternate" hreflang="${languageForRoute(alternate)}" href="${escapeXml(`${PUBLIC_ORIGIN}${alternate}`)}" />`);
+      lines.push(`    <xhtml:link rel="alternate" hreflang="${hrefLangForRoute(alternate)}" href="${escapeXml(`${PUBLIC_ORIGIN}${alternate}`)}" />`);
     }
     if (routeToGroup.has(route)) {
       lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${PUBLIC_ORIGIN}${xDefaultRoute(routeToGroup.get(route))}`)}" />`);
@@ -689,13 +780,13 @@ function makeSitemap(routes) {
 
 function priorityForRoute(route) {
   if (isHomepage(route)) return '1.0';
-  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/[^/]+\//.test(route)) return '0.9';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/[^/]+\//.test(route)) return '0.9';
   if (route.includes('pierre-croizet-cocktails') || route.includes('rencontre')) return '0.8';
   return '0.7';
 }
 
 function isHomepage(route) {
-  return route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/';
+  return route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/';
 }
 
 function makeLlmsTxt() {
@@ -704,7 +795,7 @@ function makeLlmsTxt() {
     '',
     '> Family-owned Cognac house in Triac-Lautrait, Charente, producing Fins Bois cognacs and welcoming visitors by appointment.',
     '',
-    'Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs. The site is available in French, English, Russian, Danish, Swedish and Norwegian.',
+    'Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.',
     '',
     '## Key Pages',
     '- [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.',
@@ -713,6 +804,7 @@ function makeLlmsTxt() {
     '- [Danish homepage](https://cognac-leopold-croizet.com/da/): Official Danish homepage.',
     '- [Swedish homepage](https://cognac-leopold-croizet.com/sv/): Official Swedish homepage.',
     '- [Norwegian homepage](https://cognac-leopold-croizet.com/no/): Official Norwegian homepage.',
+    '- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.',
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
@@ -742,6 +834,7 @@ function makeLlmsFullTxt() {
     '- Danish: https://cognac-leopold-croizet.com/da/',
     '- Swedish: https://cognac-leopold-croizet.com/sv/',
     '- Norwegian: https://cognac-leopold-croizet.com/no/',
+    '- Simplified Chinese: https://cognac-leopold-croizet.com/zh/',
     '',
     '## Cognac Range',
     ...[...productNames.keys()].map((slug) => `- Cognac Léopold Croizet ${productNames.get(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
