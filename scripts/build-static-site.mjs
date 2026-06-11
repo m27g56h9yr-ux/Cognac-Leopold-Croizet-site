@@ -568,9 +568,8 @@ function localizeRussianStaticHtml(html, route) {
     ['Le hasard n&#8217;existe pas', 'Случайностей не бывает'],
     ['Le hasard n’existe pas', 'Случайностей не бывает'],
     ['Je souhaite recevoir de vos nouvelles de temps en temps.', 'Я хочу время от времени получать ваши новости.'],
-    ['En renseignant votre adresse e-mail, vous acceptez de recevoir chaque mois nos dernières actualités sur nos produits et vous prenez connaissances de nos', 'Указывая свой e-mail, вы соглашаетесь ежемесячно получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими'],
+    ['En renseignant votre adresse e-mail, vous acceptez de recevoir nos dernières actualités sur nos produits et vous prenez connaissance de nos', 'Указывая свой e-mail, вы соглашаетесь получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими'],
     ['mentions légales', 'правовыми уведомлениями'],
-    ['Pour vous désinscrire, merci d\'envoyer un e-mail à cognac@mdpierrre.com.', 'Чтобы отписаться, отправьте письмо на cognac@mdpierrre.com.'],
     ['placeholder="Laissez nous votre e-mail"', 'placeholder="Оставьте ваш e-mail"'],
     ['>Envoyer<', '>Отправить<'],
     ['Le travail de la vigne mobile', 'Работа на винограднике'],
@@ -1068,10 +1067,14 @@ async function fetchAsset(url, referer) {
 
 function repairStylesheetAsset(body, localPath) {
   if (localPath === 'wp-content/themes/theme-site-pc/style.css') {
-    const repaired = body.replace(/\n?\.wpml-ls-item-ru\s*\{\s*display:\s*none\s*!important;\s*\}\s*/gi, '\n');
-    if (repaired.includes('nav.navbar .wpml-ls-legacy-list-horizontal')) return repaired;
+    const repaired = body
+      .replace(/\n?\.wpml-ls-item-ru\s*\{\s*display:\s*none\s*!important;\s*\}\s*/gi, '\n')
+      .replace(/\.info-systeme\.succes,\s*\n\.info-systeme\.error/g, '.info-systeme.succes,\n.info-systeme.success,\n.info-systeme.error')
+      .replace(/\.info-systeme\.succes\s*\{/g, '.info-systeme.succes,\n.info-systeme.success {');
+    const withLanguageMenu = ensureLanguageMenuStyles(repaired);
+    if (withLanguageMenu.includes('nav.navbar .wpml-ls-legacy-list-horizontal')) return withLanguageMenu;
 
-    return `${repaired}
+    return `${withLanguageMenu}
 @media screen and (max-width: 1199px) {
   nav.navbar {
     flex-wrap: wrap;
@@ -1101,6 +1104,81 @@ function repairStylesheetAsset(body, localPath) {
   return body;
 }
 
+function ensureLanguageMenuStyles(body) {
+  if (body.includes('.lc-language-menu .lc-language-menu-toggle')) return body;
+  return `${body}
+.lc-language-menu {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  font-family: "Playfair Display", serif;
+}
+.lc-language-menu .lc-language-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  font-family: "Playfair Display", serif;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.lc-language-menu .lc-language-menu-toggle::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+.lc-language-menu .lc-language-menu-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: block !important;
+  min-width: 96px;
+  margin: 8px 0 0 !important;
+  padding: 7px 0 !important;
+  list-style: none;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  visibility: hidden;
+}
+.lc-language-menu.is-open .lc-language-menu-list {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+.lc-language-menu .lc-language-menu-list li a {
+  display: block;
+  padding: 6px 16px;
+  color: black;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+.lc-language-menu .lc-language-menu-list li a::after {
+  content: "";
+  display: none;
+}
+.lc-language-menu .lc-language-menu-list li.wpml-ls-current-language a {
+  color: #895006;
+}
+`;
+}
+
 function repairScriptAsset(body, localPath) {
   if (localPath === 'wp-content/themes/theme-site-pc/js/modal.js') {
     return `$(document).ready(function () {
@@ -1126,15 +1204,61 @@ function repairScriptAsset(body, localPath) {
   }
 
   if (localPath === 'wp-content/themes/theme-site-pc/js/mobile.js') {
-    return body.replace(
+    const repaired = body.replace(
       /function move_language_switch\(\) \{\s*if \(window\.matchMedia\("\(min-width: 1200px\)"\)\.matches\) \{\s*\$\(("\.wpml-ls-legacy-list-horizontal"|'\.wpml-ls-legacy-list-horizontal')\)\.appendTo\(("\.navbar"|'\.navbar')\);\s*\} else \{\s*\$\(("\.wpml-ls-legacy-list-horizontal"|'\.wpml-ls-legacy-list-horizontal')\)\.appendTo\(("\.menu-site ul#menu-menu-principal"|'\.menu-site ul#menu-menu-principal')\);\s*\}\s*\}/,
       `function move_language_switch() {
         $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
     }`,
     );
+    return ensureLanguageMenuScript(repaired);
   }
 
   return body;
+}
+
+function ensureLanguageMenuScript(body) {
+  if (body.includes('init_language_menu')) return body;
+  return body.replace(
+    /move_language_switch\(\);\s*/,
+    `move_language_switch();
+    init_language_menu();
+
+    function init_language_menu() {
+        $(".lc-language-menu-toggle").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var menu = $(this).closest(".lc-language-menu");
+            var isOpen = menu.hasClass("is-open");
+
+            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+
+            if (!isOpen) {
+                menu.addClass("is-open");
+                $(this).attr("aria-expanded", "true");
+            }
+        });
+
+        $(".lc-language-menu").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
+            event.stopPropagation();
+        });
+
+        $(document).off("click.lcLanguageMenu").on("click.lcLanguageMenu", function () {
+            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+        });
+
+        $(document).off("keydown.lcLanguageMenu").on("keydown.lcLanguageMenu", function (event) {
+            if (event.key === "Escape") {
+                $(".lc-language-menu").removeClass("is-open");
+                $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+            }
+        });
+    }
+
+    `,
+  );
 }
 
 async function writeGlobalFiles() {

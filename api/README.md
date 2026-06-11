@@ -1,19 +1,19 @@
-# Newsletter endpoint
+# Newsletter OVH
 
-This static site cannot write directly to GitHub from the browser without exposing a secret token. On OVH, copy `newsletter-config.sample.php` to `newsletter-config.php`, keep that file private, and set a fine-grained GitHub token with write access to the target repository.
+Le formulaire newsletter envoie les adresses e-mail vers `api/newsletter.php`.
 
-Expected private config:
+Sur OVH, le script crée et met à jour le fichier :
 
-```php
-<?php
-return [
-    'github_owner' => 'm27g56h9yr-ux',
-    'github_repo' => 'maison-des-pierres',
-    'github_branch' => 'main',
-    'github_path' => 'newsletter/subscribers.csv',
-    'github_token' => 'github_pat_xxx',
-    'hash_secret' => 'a-long-random-secret',
-];
+```text
+newsletter-data/subscriptions.csv
 ```
 
-The endpoint appends subscribers to a CSV file through the GitHub Contents API and stores IP/user-agent only as hashes.
+Chaque ligne contient la date d'enregistrement, l'adresse e-mail, la langue de la page, l'URL de la page, la version du consentement, l'adresse IP, le navigateur, la page d'origine et la langue du navigateur.
+
+Après chaque inscription valide, le script envoie le fichier CSV complet en pièce jointe à :
+
+```text
+cognac@mdpierre.com
+```
+
+La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier l'adresse d'envoi ou le chemin du CSV, copier ce fichier en `newsletter-config.php`.

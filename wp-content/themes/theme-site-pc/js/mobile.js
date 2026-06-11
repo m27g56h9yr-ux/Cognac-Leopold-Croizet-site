@@ -2,6 +2,7 @@ $(document).ready(function () {
 
 
     move_language_switch();
+    init_language_menu();
 
 
     window.addEventListener("resize", function () {
@@ -11,6 +12,40 @@ $(document).ready(function () {
 
     function move_language_switch() {
         $(".wpml-ls-legacy-list-horizontal").appendTo(".navbar");
+    }
+
+    function init_language_menu() {
+        $(".lc-language-menu-toggle").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var menu = $(this).closest(".lc-language-menu");
+            var isOpen = menu.hasClass("is-open");
+
+            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+
+            if (!isOpen) {
+                menu.addClass("is-open");
+                $(this).attr("aria-expanded", "true");
+            }
+        });
+
+        $(".lc-language-menu").off("click.lcLanguageMenu").on("click.lcLanguageMenu", function (event) {
+            event.stopPropagation();
+        });
+
+        $(document).off("click.lcLanguageMenu").on("click.lcLanguageMenu", function () {
+            $(".lc-language-menu").removeClass("is-open");
+            $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+        });
+
+        $(document).off("keydown.lcLanguageMenu").on("keydown.lcLanguageMenu", function (event) {
+            if (event.key === "Escape") {
+                $(".lc-language-menu").removeClass("is-open");
+                $(".lc-language-menu-toggle").attr("aria-expanded", "false");
+            }
+        });
     }
 
     $(".navbar-toggler").on("click", function () {

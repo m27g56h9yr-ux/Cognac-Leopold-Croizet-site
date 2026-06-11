@@ -194,9 +194,7 @@ const translations = [
   ['Mentions Légales', '法律声明'],
   ['Annee', '年份'],
   ['I want to receive some news time to time', '我希望不时收到来自酒庄的消息'],
-  ['Pour vous désinscrire, merci d&#39;envoyer un e-mail à cognac@mdpierrre.com.', '如需退订，请发送电子邮件至 cognac@mdpierrre.com。'],
-  ["Pour vous désinscrire, merci d'envoyer un e-mail à cognac@mdpierrre.com.", '如需退订，请发送电子邮件至 cognac@mdpierrre.com。'],
-  ['By entering your e-mail address, you agree to receive each month our latest news about our products and you acknowledge our', '填写电子邮箱即表示您同意每月接收我们的产品资讯，并确认已阅读我们的'],
+  ['By entering your e-mail address, you agree to receive each month our latest news about our products and you acknowledge our', '填写电子邮箱即表示您同意接收我们关于产品的最新资讯，并确认已阅读我们的'],
   ['legal notices', '法律声明'],
   ['Laissez nous votre e-mail', '请输入您的电子邮箱'],
   ['Send', '发送'],
@@ -631,7 +629,7 @@ function localizeNewsletter(html) {
   return html
     .replace(/<label for="">[\s\S]*?<\/label>\s*(?=\s*<div class="info-legales">)/, '<label for="">我希望不时收到来自酒庄的消息。</label>\n')
     .replace(/<div class="info-legales">\s*[\s\S]*?\s*<\/div>\s*(?=\s*<div class="info-systeme">)/, `<div class="info-legales">
-        填写电子邮箱即表示您同意每月接收我们的产品资讯，并确认已阅读我们的 <a href="${DEPLOY_BASE}/mentions-legales/">法律声明</a>。如需退订，请发送电子邮件至 cognac@mdpierrre.com。
+        填写电子邮箱即表示您同意接收我们关于产品的最新资讯，并确认已阅读我们的 <a href="${DEPLOY_BASE}/mentions-legales/">法律声明</a>。
     </div>\n`)
     .replace(/(<input\b[^>]*name="newsletter"[^>]*placeholder=")[^"]*(")/, '$1请输入您的电子邮箱$2')
     .replace(/(<form\b[^>]*class="[^"]*\bcontainer-newsletter\b[^"]*"[\s\S]*?<button type="submit">)[\s\S]*?(<\/button>)/, '$1发送$2');

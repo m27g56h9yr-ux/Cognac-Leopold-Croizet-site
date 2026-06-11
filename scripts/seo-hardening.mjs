@@ -485,6 +485,7 @@ function hardenHtml(html, route, file) {
   next = next.replace(/<head([^>]*)>/i, `<head$1>\n${headBlock}\n`);
   next = replaceStructuredData(next, route, metadata, image);
   next = repairGeneratedContent(next);
+  next = repairNewsletterBlock(next, route);
   next = removeUnavailableOrderControls(next, route);
   return normalizeGeneratedWhitespace(next);
 }
@@ -521,6 +522,72 @@ function repairGeneratedContent(html) {
     .replace(/PIERRE CROIZET/g, 'LÉOPOLD CROIZET')
     .replace(/Pierre CROIZET/g, 'Léopold Croizet')
     .replace(/Pierre Croizet/g, 'Léopold Croizet');
+}
+
+function repairNewsletterBlock(html, route) {
+  if (!html.includes('container-newsletter')) return html;
+  const lang = languageForRoute(route);
+  const copy = newsletterCopy(lang);
+  return html
+    .replace(
+      /<label for="">[\s\S]*?<\/label>\s*(?=\s*<div class="info-legales">)/,
+      `<label for="">${copy.label}</label>\n`,
+    )
+    .replace(
+      /<div class="info-legales">\s*[\s\S]*?\s*<\/div>\s*(?=\s*<div class="info-systeme">)/,
+      `<div class="info-legales">\n        ${copy.legal}\n    </div>\n`,
+    )
+    .replace(/(<input\b[^>]*name="newsletter"[^>]*placeholder=")[^"]*(")/, `$1${copy.placeholder}$2`)
+    .replace(/(<form\b[^>]*class="[^"]*\bcontainer-newsletter\b[^"]*"[\s\S]*?<button type="submit">)[\s\S]*?(<\/button>)/, `$1${copy.button}$2`);
+}
+
+function newsletterCopy(lang) {
+  const legalHref = `${PUBLIC_ORIGIN}/mentions-legales/`;
+  const copies = {
+    fr: {
+      label: 'Je souhaite recevoir de vos nouvelles de temps en temps.',
+      legal: `En renseignant votre adresse e-mail, vous acceptez de recevoir nos dernières actualités sur nos produits et vous prenez connaissance de nos <a href="${legalHref}">mentions légales</a>.`,
+      placeholder: 'Laissez nous votre e-mail',
+      button: 'Envoyer',
+    },
+    en: {
+      label: 'I would like to receive news from you from time to time.',
+      legal: `By entering your email address, you agree to receive our latest news about our products and acknowledge our <a href="${legalHref}">legal notices</a>.`,
+      placeholder: 'Leave us your email',
+      button: 'Send',
+    },
+    ru: {
+      label: 'Я хочу время от времени получать ваши новости.',
+      legal: `Указывая свой e-mail, вы соглашаетесь получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими <a href="${legalHref}">правовыми уведомлениями</a>.`,
+      placeholder: 'Оставьте ваш e-mail',
+      button: 'Отправить',
+    },
+    da: {
+      label: 'Jeg ønsker at modtage nyheder fra jer fra tid til anden.',
+      legal: `Ved at indtaste din e-mailadresse accepterer du at modtage vores seneste nyheder om vores produkter og bekræfter, at du har læst vores <a href="${legalHref}">juridiske meddelelser</a>.`,
+      placeholder: 'Skriv din e-mail',
+      button: 'Send',
+    },
+    sv: {
+      label: 'Jag vill få nyheter från er då och då.',
+      legal: `Genom att ange din e-postadress godkänner du att få våra senaste nyheter om våra produkter och bekräftar att du har tagit del av våra <a href="${legalHref}">juridiska meddelanden</a>.`,
+      placeholder: 'Lämna din e-postadress',
+      button: 'Skicka',
+    },
+    no: {
+      label: 'Jeg ønsker å motta nyheter fra dere fra tid til annen.',
+      legal: `Ved å oppgi e-postadressen din godtar du å motta våre siste nyheter om produktene våre og bekrefter at du har lest våre <a href="${legalHref}">juridiske merknader</a>.`,
+      placeholder: 'Legg igjen e-posten din',
+      button: 'Send',
+    },
+    zh: {
+      label: '我希望不时收到来自酒庄的消息。',
+      legal: `填写电子邮箱即表示您同意接收我们关于产品的最新资讯，并确认已阅读我们的 <a href="${legalHref}">法律声明</a>。`,
+      placeholder: '请输入您的电子邮箱',
+      button: '发送',
+    },
+  };
+  return copies[lang] || copies.fr;
 }
 
 function keywordsForRoute(route) {

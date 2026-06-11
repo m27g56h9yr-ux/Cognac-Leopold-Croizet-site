@@ -36,26 +36,48 @@ $(document).ready(function () {
     $(".container-newsletter").on("submit", function (event) {
         event.preventDefault();
 
+        var form = $(this);
+        var button = form.find("button");
+        var info = form.find(".info-systeme");
+        var originalButtonText = button.data("original-text") || button.text();
+        var endpoint = form.attr("data-newsletter-endpoint") || newsletterEndpoint();
 
-        $(".container-newsletter button").attr("disabled", true);
-        $(".container-newsletter button").html("<i class='fas fa-spinner fa-spin'></i>");
+        button.data("original-text", originalButtonText);
+        button.attr("disabled", true);
+        button.html("<i class='fas fa-spinner fa-spin'></i>");
+        info.removeClass("success error").html("");
 
         var data = new FormData(this);
-        data.append("action", "newsletter_save_email");
+        data.append("language", document.documentElement.getAttribute("lang") || "");
+        data.append("page", window.location.href);
+        data.append("consent_version", "newsletter-news-2026-06-11");
 
         $.ajax({
             method: "POST",
-            url: ajaxurl,
+            url: endpoint,
             contentType: false,
             processData: false,
             data: data,
-        }).done(function (data) {
-            data = $.parseJSON(data);
-            $(".info-systeme").addClass(data.class);
-            $(".info-systeme").html(data.texte);
-            $(".container-newsletter button").html("Terminé");
+        }).done(function (response) {
+            var data = typeof response === "string" ? $.parseJSON(response) : response;
+            if (data && data.ok) {
+                info.addClass("success").html("Votre adresse e-mail est bien enregistrée.");
+                button.html("Terminé");
+            } else {
+                info.addClass("error").html("Votre adresse e-mail n'a pas pu être enregistrée.");
+                button.attr("disabled", false).html(originalButtonText);
+            }
+        }).fail(function () {
+            info.addClass("error").html("Votre adresse e-mail n'a pas pu être enregistrée.");
+            button.attr("disabled", false).html(originalButtonText);
         });
     });
 
+    function newsletterEndpoint() {
+        var path = window.location.pathname;
+        var deployBase = "/Cognac-Leopold-Croizet-site";
+        var base = path === deployBase || path.indexOf(deployBase + "/") === 0 ? deployBase : "";
+        return base + "/api/newsletter.php";
+    }
 
 });

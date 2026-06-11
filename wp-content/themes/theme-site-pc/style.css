@@ -275,6 +275,76 @@ ul#sous-menu-id,
   content: "";
 }
 
+.lc-language-menu {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  font-family: "Playfair Display", serif;
+}
+.lc-language-menu .lc-language-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  font-family: "Playfair Display", serif;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.lc-language-menu .lc-language-menu-toggle::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+.lc-language-menu .lc-language-menu-list {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: block !important;
+  min-width: 96px;
+  margin: 8px 0 0 !important;
+  padding: 7px 0 !important;
+  list-style: none;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  visibility: hidden;
+}
+.lc-language-menu.is-open .lc-language-menu-list {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+}
+.lc-language-menu .lc-language-menu-list li a {
+  display: block;
+  padding: 6px 16px;
+  color: black;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+}
+.lc-language-menu .lc-language-menu-list li a::after {
+  content: "";
+  display: none;
+}
+.lc-language-menu .lc-language-menu-list li.wpml-ls-current-language a {
+  color: #895006;
+}
+
 .hide-nb-article-panier {
   display: none;
 }
@@ -556,6 +626,7 @@ ul#sous-menu-id,
 }
 
 .info-systeme.succes,
+.info-systeme.success,
 .info-systeme.error {
   padding: 10px;
   text-align: center;
@@ -565,7 +636,8 @@ ul#sous-menu-id,
   font-size: 0.8rem;
 }
 
-.info-systeme.succes {
+.info-systeme.succes,
+.info-systeme.success {
   background-color: #a68d64;
 }
 

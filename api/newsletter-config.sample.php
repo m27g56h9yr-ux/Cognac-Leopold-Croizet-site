@@ -1,9 +1,7 @@
 <?php
 return [
-    'github_owner' => 'm27g56h9yr-ux',
-    'github_repo' => 'maison-des-pierres',
-    'github_branch' => 'main',
-    'github_path' => 'newsletter/subscribers.csv',
-    'github_token' => 'github_pat_xxx',
-    'hash_secret' => 'change-this-random-secret',
+    'storage_path' => dirname(__DIR__) . '/newsletter-data/subscriptions.csv',
+    'notification_to' => 'cognac@mdpierre.com',
+    'notification_from' => 'newsletter@cognac-leopold-croizet.com',
+    'site_name' => 'Cognac Léopold Croizet',
 ];
