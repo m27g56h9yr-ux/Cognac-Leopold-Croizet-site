@@ -521,7 +521,10 @@ function repairGeneratedContent(html) {
     .replace(/Léopold CROIZET/g, 'Léopold Croizet')
     .replace(/PIERRE CROIZET/g, 'LÉOPOLD CROIZET')
     .replace(/Pierre CROIZET/g, 'Léopold Croizet')
-    .replace(/Pierre Croizet/g, 'Léopold Croizet');
+    .replace(/Pierre Croizet/g, 'Léopold Croizet')
+    .replace(/(?:LÉOPOLD\s+)+((?:Etiket|Etikett) (?:for|för) )/g, '$1')
+    .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET')
+    .replace(/(?:Léopold\s+){2,}Croizet/g, 'Léopold Croizet');
 }
 
 function repairNewsletterBlock(html, route) {

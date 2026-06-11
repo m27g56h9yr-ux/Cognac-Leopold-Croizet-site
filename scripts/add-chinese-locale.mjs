@@ -644,7 +644,12 @@ function localizeOrderControls(html) {
 }
 
 function repairTechnicalStrings(html) {
-  return html.split('loading时间').join('loadingTime');
+  return html
+    .split('loading时间').join('loadingTime')
+    .split('Date时间Format').join('DateTimeFormat')
+    .split('china时间Zones').join('chinaTimeZones')
+    .replace(/"address国家\/地区"/g, '"addressCountry"')
+    .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET');
 }
 
 function replaceLanguageSwitcher(html, route, existingRoutes) {
@@ -666,7 +671,7 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
     return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<button class="lc-language-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="lc-language-menu-current">${currentLabel}</span></button>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
   const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   return regex.test(html) ? html.replace(regex, block) : html;
 }

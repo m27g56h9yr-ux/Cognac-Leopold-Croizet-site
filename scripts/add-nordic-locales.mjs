@@ -999,7 +999,13 @@ function localizeCopiedEnglishPage(html, locale, route) {
 }
 
 function repairTechnicalStrings(html) {
-  return html.replace(/\bloadingTiden\b/g, 'loadingTime');
+  return html
+    .replace(/\bloadingTiden\b/g, 'loadingTime')
+    .replace(/\bDateTidenFormat\b/g, 'DateTimeFormat')
+    .replace(/\bchinaTidenZones\b/g, 'chinaTimeZones')
+    .replace(/"addressLand"/g, '"addressCountry"')
+    .replace(/(?:LÉOPOLD\s+)+((?:Etiket|Etikett) (?:for|för) )/g, '$1')
+    .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET');
 }
 
 function localizeEditorialCopy(html, locale) {
@@ -1210,7 +1216,7 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
     return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<button class="lc-language-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="lc-language-menu-current">${currentLabel}</span></button>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
   const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   if (regex.test(html)) return html.replace(regex, block);
   return html;

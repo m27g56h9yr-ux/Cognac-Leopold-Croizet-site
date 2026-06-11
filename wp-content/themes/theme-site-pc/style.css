@@ -282,11 +282,11 @@ ul#sous-menu-id,
   align-items: center;
   font-family: "Playfair Display", serif;
 }
-.lc-language-menu .lc-language-menu-toggle {
+.lc-language-menu > .lc-language-menu-toggle,
+.lc-language-menu > .lc-language-menu-toggle.wpml-ls-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 0;
+  padding: 3px 0;
   border: 0;
   background: transparent;
   color: black;
@@ -294,22 +294,20 @@ ul#sous-menu-id,
   font-family: "Playfair Display", serif;
   font-size: 0.8rem;
   line-height: 1.2;
+  text-decoration: none;
   text-transform: uppercase;
+  appearance: none;
+  -webkit-appearance: none;
 }
-.lc-language-menu .lc-language-menu-toggle::after {
+.lc-language-menu > .lc-language-menu-toggle::after {
   content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 5px solid currentColor;
+  display: none;
 }
-.lc-language-menu .lc-language-menu-list {
+.wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list {
   position: absolute;
   top: 100%;
   right: 0;
-  display: block !important;
+  display: none !important;
   min-width: 96px;
   margin: 8px 0 0 !important;
   padding: 7px 0 !important;
@@ -323,13 +321,17 @@ ul#sous-menu-id,
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   visibility: hidden;
 }
-.lc-language-menu.is-open .lc-language-menu-list {
+.wpml-ls-legacy-list-horizontal.lc-language-menu.is-open > ul.lc-language-menu-list {
+  display: block !important;
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
   visibility: visible;
 }
-.lc-language-menu .lc-language-menu-list li a {
+.wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li {
+  display: block;
+}
+.wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a {
   display: block;
   padding: 6px 16px;
   color: black;
@@ -337,11 +339,11 @@ ul#sous-menu-id,
   text-align: center;
   white-space: nowrap;
 }
-.lc-language-menu .lc-language-menu-list li a::after {
+.wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a::after {
   content: "";
   display: none;
 }
-.lc-language-menu .lc-language-menu-list li.wpml-ls-current-language a {
+.wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a {
   color: #895006;
 }
 
