@@ -1197,6 +1197,7 @@ function localizeCocktails(html, locale) {
 function replaceLanguageSwitcher(html, route, existingRoutes) {
   const key = normalizedRouteKey(route);
   const currentLocale = languageForRoute(route);
+  const currentLabel = locales.find((locale) => locale.code === currentLocale)?.label || 'Lang';
   const items = locales.map((locale, index) => {
     const localized = routeForLocale(locale.code, key);
     const href = existingRoutes.has(localized) ? localized : routeForLocale(locale.code, '/');
@@ -1212,8 +1213,8 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
     return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">\n\t<ul>${items}</ul>\n</div>`;
-  const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">[\s\S]*?<\/ul>\s*<\/div>/;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<button class="lc-language-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="lc-language-menu-current">${currentLabel}</span></button>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
+  const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   if (regex.test(html)) return html.replace(regex, block);
   return html;
 }

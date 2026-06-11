@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="Cognac Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra">
 <meta name="twitter:description" content="Oppdag Cognac Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage og Valentine XO.">
 <meta name="twitter:image" content="https://cognac-leopold-croizet.com/wp-content/uploads/2021/06/img_produit_vs_base2.png">
-<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart{display:none!important}</style>
+<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart,html.lc-hide-prices li.panier-menu,html.lc-hide-prices .container-btn-commander-produit,html.lc-hide-prices .commander-produit,html.lc-hide-prices .single_add_to_cart_button{display:none!important}</style>
 <script id="lc-language-router">(function(){
 var supported={fr:"/",en:"/en/",ru:"/ru/",da:"/da/",sv:"/sv/",no:"/no/",zh:"/zh/"};
 var aliases={nb:"no",nn:"no",zhhans:"zh",zhcn:"zh"};
@@ -47,7 +47,7 @@ function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
 function hasChinaFlag(){try{return window.localStorage&&localStorage.getItem(chinaStorageKey)==="1"}catch(error){return false}}
 function setChinaFlag(){try{window.localStorage&&localStorage.setItem(chinaStorageKey,"1")}catch(error){}}
-function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart");for(var i=0;i<items.length;i++)items[i].remove()}
+function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart,li.panier-menu,.container-btn-commander-produit,.commander-produit,.single_add_to_cart_button");for(var i=0;i<items.length;i++)items[i].remove()}
 var route=routeFor(window.location.pathname);
 var chinaVisitor=detectsChina();
 if(chinaVisitor)setChinaFlag();
@@ -139,9 +139,9 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 	<link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="32x32" />
 <link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="192x192" />
 <link rel="apple-touch-icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
-<meta name="msapplication-TileImage" content="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
+<meta name="msapplication-TileImage" content="https:/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
 
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","email":"cognac@mdpierrre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Route d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/no/shop/#webpage","url":"https://cognac-leopold-croizet.com/no/shop/","name":"Cognac Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra","description":"Oppdag Cognac Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage og Valentine XO.","inLanguage":"no","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2021/06/img_produit_vs_base2.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"No","item":"https://cognac-leopold-croizet.com/no/"},{"@type":"ListItem","position":3,"name":"Shop","item":"https://cognac-leopold-croizet.com/no/shop/"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet","Léopold Croizet 干邑","法国 Léopold Croizet 干邑酒庄"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","knowsAbout":["Cognac","Fins Bois","Pineau des Charentes","French spirits","法国干邑","干邑鸡尾酒"],"email":"cognac@mdpierrre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Route d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/no/shop/#webpage","url":"https://cognac-leopold-croizet.com/no/shop/","name":"Cognac Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra","description":"Oppdag Cognac Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage og Valentine XO.","inLanguage":"no","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2021/06/img_produit_vs_base2.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"No","item":"https://cognac-leopold-croizet.com/no/"},{"@type":"ListItem","position":3,"name":"Shop","item":"https://cognac-leopold-croizet.com/no/shop/"}]}]</script>
 </head>
 
 
@@ -168,7 +168,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
                     <div class="mega-menu-collection-item">
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/vs/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="VS" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 3x">
@@ -176,7 +176,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/vsop/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="VSOP" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 3x">
@@ -184,7 +184,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/napoleon/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Napoléon" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x">
@@ -192,7 +192,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/xo/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="XO" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x">
@@ -200,7 +200,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/xo-exception/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="XO Exception" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x">
@@ -208,7 +208,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/extra/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Extra" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w">
@@ -216,7 +216,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/excellence/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Excellence" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x">
@@ -224,7 +224,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="collection-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/collection/heritage/">
                                 <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Héritage" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x">
@@ -234,7 +234,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 
         <img class="bande-menu-collection" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/bande_dechiree.png" alt="page déchirée">
 </div><div class="mega-menu-experience-item">
-    
+
         <div class="experience-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/la-matiere/">
                 <h3>Frukten</h3>
@@ -242,7 +242,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="experience-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/le-feu/">
                 <h3>Ilden</h3>
@@ -250,7 +250,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="experience-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/lalchimie/">
                 <h3>Alkymi</h3>
@@ -258,7 +258,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
             </a>
         </div>
 
-    
+
         <div class="experience-item-container">
             <a href="/Cognac-Leopold-Croizet-site/no/le-temps/">
                 <h3>Tiden</h3>
@@ -275,17 +275,18 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
               </ul>
 
       </div>
-      
-<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">
-	<ul><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/collection/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/shop/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/a-faire/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/shop/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/shop/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/shop/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/zh/shop/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
+
+<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">
+	<button class="lc-language-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="lc-language-menu-current">No</span></button>
+	<ul class="lc-language-menu-list"><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/collection/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/shop/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/a-faire/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/shop/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/shop/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/shop/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/zh/shop/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
 </div>
     </nav>
 
-    
+
       <!-- <div id="age-legal" class="modal">
                 <div class="container-modal">
                     <div class="modal-partie-gauche">
-                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="Léopold Croizet">
+                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="pierre-croizet">
                     </div>
 
                     <div class="modal-partie-droite">
@@ -654,7 +655,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                 </div>
             </div> -->
 
-    
+
     <div class="hide-nb-article-panier">
       0    </div>
 
@@ -676,11 +677,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>33</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -696,11 +697,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>49</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -716,11 +717,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>69</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -736,11 +737,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>95</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -756,11 +757,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>159</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -776,11 +777,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>329</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -796,11 +797,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>1249</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -816,11 +817,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                             <div class="contenance-produit-collection">
                                 - 70 cl -
                             </div>
-                            
+
                                                             <div class="prix-produit-collection">
                                     <span>2499</span>€
                                 </div>
-                            
+
                                                             <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                                     </div>
                     </div>
@@ -833,7 +834,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 <div class="end-page">
     <div class="container-end-page">
         <div class="texte">& aussi...</div>
-        
+
                 <div class="container-collection-produit">
 
                     <div class="image-produit-collection">
@@ -847,11 +848,11 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
                         <div class="contenance-produit-collection">
                             - 35 cl -
                         </div>
-                        
+
                                                     <div class="prix-produit-collection">
                                 <span>49</span>€
                             </div>
-                        
+
                                                     <a href="/Cognac-Leopold-Croizet-site/no/shop/" class="commander-produit">Bestill</a>
                                             </div>
 
@@ -863,7 +864,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
 <footer>
   <div class="header-footer">
     <div class="inner-container-header-footer">
-      
+
     </div>
   </div>
   <div class="inner-container-footer">

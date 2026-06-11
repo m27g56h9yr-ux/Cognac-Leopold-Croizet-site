@@ -1,19 +1,9 @@
 {
   "name": "Cognac Léopold Croizet",
   "short_name": "Léopold Croizet",
-  "description": "Maison familiale de Cognac à Triac-Lautrait, Fins Bois, présentant sa collection, son savoir-faire et ses visites de chais.",
-  "start_url": "https://cognac-leopold-croizet.com/",
-  "scope": "https://cognac-leopold-croizet.com/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0b0b0b",
   "theme_color": "#0b0b0b",
-  "lang": "fr",
-  "icons": [
-    {
-      "src": "https://cognac-leopold-croizet.com/wp-content/uploads/2021/10/logo_croizet_blason.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ]
+  "lang": "fr"
 }

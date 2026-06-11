@@ -616,11 +616,14 @@ function localizeFrenchCocktailPage(html) {
 
 function removePrices(html) {
   return html
+    .replace(/\s*<li\b[^>]*class="[^"]*\bpanier-menu\b[^"]*"[\s\S]*?<\/li>\s*/gi, '\n')
     .replace(/\s*<div class="prix-produit-collection">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n')
     .replace(/\s*<div class="prix-produit-container">\s*<span>[0-9\s.,]+<\/span>\s*€\s*<\/div>\s*/g, '\n')
     .replace(/\s*<p class="price">[\s\S]*?<\/p>\s*/g, '\n')
     .replace(/\s*<span class="woocommerce-Price-amount amount">[\s\S]*?<\/span>\s*/g, '\n')
-    .replace(/\s*<form class="cart"[\s\S]*?<\/form>\s*/g, '\n');
+    .replace(/\s*<form class="cart"[\s\S]*?<\/form>\s*/g, '\n')
+    .replace(/\s*<div class="container-btn-commander-produit">[\s\S]*?<\/div>\s*/g, '\n')
+    .replace(/\s*<a\b[^>]*class="[^"]*\bcommander-produit\b[^"]*"[\s\S]*?<\/a>\s*/g, '\n');
 }
 
 function localizeNewsletter(html) {
@@ -643,12 +646,13 @@ function localizeOrderControls(html) {
 }
 
 function repairTechnicalStrings(html) {
-  return html.replace(/\bloading时间\b/g, 'loadingTime');
+  return html.split('loading时间').join('loadingTime');
 }
 
 function replaceLanguageSwitcher(html, route, existingRoutes) {
   const key = normalizedRouteKey(route);
   const currentLocale = languageForRoute(route);
+  const currentLabel = locales.find((locale) => locale.code === currentLocale)?.label || 'Lang';
   const items = locales.map((locale, index) => {
     const localized = routeForLocale(locale.code, key);
     const href = existingRoutes.has(localized) ? localized : routeForLocale(locale.code, '/');
@@ -664,8 +668,8 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
     return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">\n\t<ul>${items}</ul>\n</div>`;
-  const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal">[\s\S]*?<\/ul>\s*<\/div>/;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<button class="lc-language-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false"><span class="lc-language-menu-current">${currentLabel}</span></button>\n\t<ul class="lc-language-menu-list">${items}</ul>\n</div>`;
+  const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   return regex.test(html) ? html.replace(regex, block) : html;
 }
 

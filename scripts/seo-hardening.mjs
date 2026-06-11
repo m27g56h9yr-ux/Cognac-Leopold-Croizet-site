@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
-const TODAY = '2026-06-10';
+const TODAY = '2026-06-11';
 
 const productNames = new Map([
   ['vs', 'VS'],
@@ -446,6 +446,7 @@ function hardenHtml(html, route, file) {
   let next = html
     .replace(/<title>[\s\S]*?<\/title>\s*/i, '')
     .replace(/<meta\s+name=["']description["'][^>]*>\s*/gi, '')
+    .replace(/<meta\s+name=["']keywords["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']robots["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']canonical["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
@@ -463,6 +464,7 @@ function hardenHtml(html, route, file) {
   const headBlock = [
     `<title>${escapeHtml(metadata.title)}</title>`,
     `<meta name="description" content="${escapeHtml(metadata.description)}">`,
+    keywordsForRoute(route) ? `<meta name="keywords" content="${escapeHtml(keywordsForRoute(route))}">` : '',
     `<meta name="robots" content="${robots}">`,
     `<link rel="canonical" href="${canonical}">`,
     ...alternates,
@@ -482,7 +484,82 @@ function hardenHtml(html, route, file) {
 
   next = next.replace(/<head([^>]*)>/i, `<head$1>\n${headBlock}\n`);
   next = replaceStructuredData(next, route, metadata, image);
-  return next.endsWith('\n') ? next : `${next}\n`;
+  next = repairGeneratedContent(next);
+  next = removeUnavailableOrderControls(next, route);
+  return normalizeGeneratedWhitespace(next);
+}
+
+function normalizeGeneratedWhitespace(html) {
+  const cleaned = html
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .split('\n')
+    .map((line) => line.replace(/[ \t]+$/g, ''))
+    .join('\n');
+  return cleaned.endsWith('\n') ? cleaned : `${cleaned}\n`;
+}
+
+function repairGeneratedContent(html) {
+  return html
+    .replace(/\s*<li\b[^>]*class=["'][^"']*\bheritage\b[^"']*["'][^>]*>\s*<a\b[^>]*href=["'][^"']*\/heritage\/[^"']*["'][\s\S]*?<\/li>\s*/gi, '\n')
+    .replace(/href=["'][^"']*\/lost-password\/["']/gi, 'href="#"')
+    .replace(/\/wp-content\/uploads\/2021\/11\/img_archive_jeanmarc-fouche%CC%81_mobile\.jpg/g, '/wp-content/uploads/2024/03/img_archive_jeanmarc-fouche_mobile-1.jpg')
+    .replace(/Logo Leopold Croizet/g, 'Logo Léopold Croizet')
+    .replace(/Leopold Croizet/g, 'Léopold Croizet')
+    .replace(/COGNAC PIERRE CROIZET VIDEO/g, 'COGNAC LÉOPOLD CROIZET VIDEO')
+    .replace(/Chez les Croizet/g, 'Chez Léopold Croizet')
+    .replace(/In the Croizet family/g, 'In the Léopold Croizet family')
+    .replace(/to the CROIZET family/g, 'to the Léopold Croizet family')
+    .replace(/à la famille CROIZET/g, 'à la famille Léopold Croizet')
+    .replace(/CROIZET Frères/g, 'LÉOPOLD CROIZET Frères')
+    .replace(/Croizet Frères/g, 'Léopold Croizet Frères')
+    .replace(/ETIQUETTE CROIZET/g, 'ETIQUETTE LÉOPOLD CROIZET')
+    .replace(/Marc CROIZET/g, 'Marc Léopold Croizet')
+    .replace(/Roger CROIZET/g, 'Roger Léopold Croizet')
+    .replace(/Leopold CROIZET/g, 'Léopold Croizet')
+    .replace(/Léopold CROIZET/g, 'Léopold Croizet')
+    .replace(/PIERRE CROIZET/g, 'LÉOPOLD CROIZET')
+    .replace(/Pierre CROIZET/g, 'Léopold Croizet')
+    .replace(/Pierre Croizet/g, 'Léopold Croizet');
+}
+
+function keywordsForRoute(route) {
+  if (languageForRoute(route) !== 'zh') return '';
+  const slug = matchFirst(route, /^\/zh\/collection\/([^/]+)\//);
+  const product = productNames.get(slug);
+  const base = [
+    'Cognac Léopold Croizet',
+    'Léopold Croizet 干邑',
+    '法国干邑',
+    '干邑酒庄',
+    '法国白兰地',
+    'Fins Bois',
+    '夏朗德干邑',
+    '法国烈酒',
+  ];
+  if (product) base.push(`Cognac Léopold Croizet ${product}`, `Léopold Croizet ${product}`);
+  if (route.includes('pierre-croizet-cocktails')) base.push('干邑鸡尾酒', 'Pineau des Charentes 鸡尾酒');
+  if (route.includes('rencontre')) base.push('法国干邑酒窖参观', 'Triac-Lautrait');
+  return base.join(', ');
+}
+
+function removeUnavailableOrderControls(html, route) {
+  const isRussianExternalClient = route.startsWith('/ru/');
+  const isChineseNoPriceMarket = route.startsWith('/zh/');
+  if (!isRussianExternalClient && !isChineseNoPriceMarket) return html;
+
+  let next = html
+    .replace(/\s*<li\b[^>]*class=["'][^"']*\bpanier-menu\b[^"']*["'][\s\S]*?<\/li>\s*/gi, '\n')
+    .replace(/\s*<form\b[^>]*class=["'][^"']*\bcart\b[^"']*["'][\s\S]*?<\/form>\s*/gi, '\n')
+    .replace(/\s*<button\b[^>]*class=["'][^"']*\bsingle_add_to_cart_button\b[^"']*["'][\s\S]*?<\/button>\s*/gi, '\n');
+
+  if (isChineseNoPriceMarket) {
+    next = next
+      .replace(/\s*<div\b[^>]*class=["'][^"']*\bcontainer-btn-commander-produit\b[^"']*["'][\s\S]*?<\/div>\s*/gi, '\n')
+      .replace(/\s*<a\b[^>]*class=["'][^"']*\bcommander-produit\b[^"']*["'][\s\S]*?<\/a>\s*/gi, '\n');
+  }
+
+  return next;
 }
 
 function fallbackMetadata(route, html) {
@@ -549,7 +626,7 @@ function xDefaultRoute(group) {
 }
 
 function priceGuardStyle() {
-  return `<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart{display:none!important}</style>`;
+  return `<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart,html.lc-hide-prices li.panier-menu,html.lc-hide-prices .container-btn-commander-produit,html.lc-hide-prices .commander-produit,html.lc-hide-prices .single_add_to_cart_button{display:none!important}</style>`;
 }
 
 function languageRouterScript() {
@@ -575,7 +652,7 @@ function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
 function hasChinaFlag(){try{return window.localStorage&&localStorage.getItem(chinaStorageKey)==="1"}catch(error){return false}}
 function setChinaFlag(){try{window.localStorage&&localStorage.setItem(chinaStorageKey,"1")}catch(error){}}
-function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart");for(var i=0;i<items.length;i++)items[i].remove()}
+function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart,li.panier-menu,.container-btn-commander-produit,.commander-produit,.single_add_to_cart_button");for(var i=0;i<items.length;i++)items[i].remove()}
 var route=routeFor(window.location.pathname);
 var chinaVisitor=detectsChina();
 if(chinaVisitor)setChinaFlag();
@@ -609,10 +686,11 @@ function organizationSchema() {
     '@type': 'Organization',
     '@id': `${PUBLIC_ORIGIN}/#organization`,
     name: 'Cognac Léopold Croizet',
-    alternateName: ['Maison Léopold Croizet', 'Maison Cognac Léopold Croizet'],
+    alternateName: ['Maison Léopold Croizet', 'Maison Cognac Léopold Croizet', 'Léopold Croizet 干邑', '法国 Léopold Croizet 干邑酒庄'],
     url: PUBLIC_ORIGIN,
     logo: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg`,
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/img_slider_footer_01.png`,
+    knowsAbout: ['Cognac', 'Fins Bois', 'Pineau des Charentes', 'French spirits', '法国干邑', '干邑鸡尾酒'],
     email: 'cognac@mdpierrre.com',
     telephone: '+33545358810',
     address: {
@@ -635,7 +713,7 @@ function webSiteSchema() {
     name: 'Cognac Léopold Croizet',
     url: PUBLIC_ORIGIN,
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'],
+    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-Hans'],
   };
 }
 
@@ -647,7 +725,7 @@ function webPageSchema(route, metadata, image) {
     url: `${PUBLIC_ORIGIN}${route}`,
     name: metadata.title,
     description: metadata.description,
-    inLanguage: languageForRoute(route),
+    inLanguage: htmlLangForRoute(route),
     isPartOf: { '@id': `${PUBLIC_ORIGIN}/#website` },
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     primaryImageOfPage: image ? { '@type': 'ImageObject', url: `${PUBLIC_ORIGIN}${image}` } : undefined,
@@ -744,6 +822,21 @@ function recipeDescription(lang, name, ingredients) {
 
 function makeRobots() {
   return [
+    'User-agent: Baiduspider',
+    'Allow: /',
+    '',
+    'User-agent: Sogou web spider',
+    'Allow: /',
+    '',
+    'User-agent: 360Spider',
+    'Allow: /',
+    '',
+    'User-agent: Bytespider',
+    'Allow: /',
+    '',
+    'User-agent: PetalBot',
+    'Allow: /',
+    '',
     'User-agent: *',
     'Allow: /',
     '',
@@ -805,6 +898,7 @@ function makeLlmsTxt() {
     '- [Swedish homepage](https://cognac-leopold-croizet.com/sv/): Official Swedish homepage.',
     '- [Norwegian homepage](https://cognac-leopold-croizet.com/no/): Official Norwegian homepage.',
     '- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.',
+    '- [Chinese collection](https://cognac-leopold-croizet.com/zh/shop/): Simplified Chinese Cognac Léopold Croizet range, without public prices.',
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
@@ -835,6 +929,9 @@ function makeLlmsFullTxt() {
     '- Swedish: https://cognac-leopold-croizet.com/sv/',
     '- Norwegian: https://cognac-leopold-croizet.com/no/',
     '- Simplified Chinese: https://cognac-leopold-croizet.com/zh/',
+    '',
+    '## Simplified Chinese Search Context',
+    'The Chinese version uses zh-Hans metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.',
     '',
     '## Cognac Range',
     ...[...productNames.keys()].map((slug) => `- Cognac Léopold Croizet ${productNames.get(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
