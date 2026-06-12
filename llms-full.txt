@@ -15,7 +15,7 @@ Cognac Léopold Croizet is a family Cognac house based at 30 Route d’Angoulêm
 ## Simplified Chinese Search Context
 The Chinese version uses zh-Hans metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.
 
-## Cognac Range
+## Collection
 - Cognac Léopold Croizet VS: https://cognac-leopold-croizet.com/collection/vs/
 - Cognac Léopold Croizet VSOP: https://cognac-leopold-croizet.com/collection/vsop/
 - Cognac Léopold Croizet Napoléon: https://cognac-leopold-croizet.com/collection/napoleon/
@@ -25,6 +25,7 @@ The Chinese version uses zh-Hans metadata and presents Cognac Léopold Croizet a
 - Cognac Léopold Croizet Excellence: https://cognac-leopold-croizet.com/collection/excellence/
 - Cognac Léopold Croizet Héritage: https://cognac-leopold-croizet.com/collection/heritage/
 - Cognac Léopold Croizet Valentine XO: https://cognac-leopold-croizet.com/collection/valentine/
+- Pineau Blanc des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes-blanc/
 
 ## Craft Topics
 - Vineyard and fruit: https://cognac-leopold-croizet.com/la-matiere/

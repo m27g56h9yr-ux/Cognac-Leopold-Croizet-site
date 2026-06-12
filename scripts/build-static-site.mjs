@@ -10,6 +10,9 @@ const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const STATIC_ASSET_VERSION = 'language-menu-map-20260611';
 const GOOGLE_MAP_EMBED_URL = 'https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed';
+const PINEAU_BLANC_SLUG = 'pineau-des-charentes-blanc';
+const PINEAU_BLANC_ROUTE = `/collection/${PINEAU_BLANC_SLUG}/`;
+const PINEAU_BLANC_DESCRIPTION = "Découvrez le Pineau Blanc des Charentes Léopold Croizet : assemblage de moût de raisin et de Cognac, notes de fruits blancs, de miel et d'agrumes.";
 
 const SITEMAP_INDEXES = [
   'https://cognac-leopold-croizet.com/wp-sitemap.xml',
@@ -119,6 +122,7 @@ async function main() {
   }
 
   await copyStaticAssets();
+  await addPineauBlancPage();
   await removeLegacyExcellenceCoffretAssets();
   await writeGlobalFiles();
 
@@ -165,6 +169,248 @@ async function removeLegacyExcellenceCoffretAssets() {
   await Promise.all(files
     .filter((file) => file.endsWith('.png') && legacyPrefixes.some((prefix) => file.startsWith(prefix)))
     .map((file) => rm(path.join(dir, file), { force: true })));
+}
+
+async function addPineauBlancPage() {
+  await updateCollectionWithPineauBlanc();
+
+  if (pageRecords.some((page) => page.route === PINEAU_BLANC_ROUTE)) return;
+
+  const templatePath = path.join(ROOT, 'collection/vsop/index.html');
+  let template;
+  try {
+    template = await readFile(templatePath, 'utf8');
+  } catch {
+    console.log('Skipped Pineau Blanc page: VSOP template is not available');
+    return;
+  }
+
+  const localPath = `collection/${PINEAU_BLANC_SLUG}/index.html`;
+  const html = makePineauBlancPage(template);
+  await writeText(localPath, html);
+
+  pageRecords.push({
+    source: `${PUBLIC_ORIGIN}${PINEAU_BLANC_ROUTE}`,
+    route: PINEAU_BLANC_ROUTE,
+    targetPath: localPath,
+    title: 'Pineau Blanc des Charentes | Cognac Léopold Croizet',
+    description: PINEAU_BLANC_DESCRIPTION,
+  });
+
+  console.log(`Page ${PINEAU_BLANC_ROUTE}`);
+}
+
+async function updateCollectionWithPineauBlanc() {
+  const localPath = 'collection/index.html';
+  let html;
+  try {
+    html = await readFile(path.join(ROOT, localPath), 'utf8');
+  } catch {
+    return;
+  }
+
+  let next = addPineauBlancToMegaMenu(html);
+  next = addPineauBlancCollectionCard(next);
+  next = next.replace(
+    /Les cognacs Léopold(?:&nbsp;|\s)Croizet sont issus/,
+    'Les cognacs et Pineau Blanc des Charentes Léopold&nbsp;Croizet sont issus',
+  );
+
+  if (next !== html) await writeText(localPath, next);
+}
+
+function makePineauBlancPage(template) {
+  let html = template
+    .replace(/<body class="[^"]*">/i, '<body class="wp-singular product-template-default single single-product postid-pineau-blanc wp-theme-theme-site-pc theme-theme-site-pc woocommerce woocommerce-page woocommerce-no-js">')
+    .replace(/<option value="vsop">22<\/option>/g, '<option value="pineau-blanc">22</option>');
+
+  html = addPineauBlancPageStyle(html);
+  html = addPineauBlancToMegaMenu(html);
+  html = replacePineauLanguageMenu(html);
+  html = replacePineauProductBlock(html);
+  html = addPineauBlancToProductFooter(html);
+  return html;
+}
+
+function addPineauBlancPageStyle(html) {
+  if (html.includes('id="lc-pineau-page-style"')) return html;
+  return html.replace(/<\/head>/i, `${pineauBlancPageStyle()}\n</head>`);
+}
+
+function addPineauBlancToMegaMenu(html) {
+  const menuStart = html.indexOf('mega-menu-collection-item');
+  const menuEnd = html.indexOf('mega-menu-experience-item', menuStart);
+  if (menuStart !== -1 && menuEnd !== -1 && html.slice(menuStart, menuEnd).includes(PINEAU_BLANC_SLUG)) {
+    return html;
+  }
+
+  return html.replace(
+    /(<div class="collection-item-container">\s*<a href="[^"]*\/collection\/heritage\/"[\s\S]*?<\/div>\s*<\/div>)(?=\s*<img class="bande-menu-collection")/i,
+    `$1\n\n${pineauBlancMegaMenuItem()}\n`,
+  );
+}
+
+function addPineauBlancCollectionCard(html) {
+  if (/titre-produit-collection[\s\S]*Pineau Blanc/i.test(html)) return html;
+  return html.replace(
+    /(\s*<\/div>\s*<\/div>\s*<img class="page-dechire" id="page-dechire-collection")/i,
+    `\n${pineauBlancCollectionCard()}$1`,
+  );
+}
+
+function replacePineauLanguageMenu(html) {
+  return html.replace(
+    /<ul class="lc-language-menu-list" hidden>[\s\S]*?<\/ul>/i,
+    pineauBlancLanguageMenu(),
+  );
+}
+
+function replacePineauProductBlock(html) {
+  return html.replace(
+    /<div class="woocommerce-notices-wrapper"><\/div><div class="container-page-produit"[\s\S]*?<\/div><\/div>\s*(?=\s*<\/main>)/i,
+    pineauBlancProductBlock(),
+  );
+}
+
+function addPineauBlancToProductFooter(html) {
+  if (html.includes('lc-pineau-thumb')) return html;
+  return html.replace(
+    /(\s*<div class="separateur-bas-page">)/i,
+    `\n${pineauBlancFooterItem()}$1`,
+  );
+}
+
+function pineauBlancPageStyle() {
+  return `<style id="lc-pineau-page-style">
+.lc-pineau-wordmark{width:100%;margin:10px auto 24px auto;color:#332c2e;font-family:"Playfair Display",serif;font-weight:300;line-height:1;text-transform:uppercase;letter-spacing:0;text-align:left;font-size:2.8rem;}
+.lc-pineau-wordmark span{display:block;color:#895006;font-size:1.25rem;font-style:italic;text-transform:none;margin-top:10px;}
+.woocommerce-product-gallery__image.lc-pineau-visual img{width:420px;height:642px;max-width:100%;object-fit:cover;display:block;}
+.container-produits .produit-unique.lc-pineau-thumb img{width:90px;height:124px;object-fit:cover;}
+@media screen and (max-width:1199px){.lc-pineau-wordmark{text-align:center;font-size:2.15rem;}.woocommerce-product-gallery__image.lc-pineau-visual img{width:100%;height:auto;aspect-ratio:420/642;}}
+</style>`;
+}
+
+function pineauBlancMegaMenuItem() {
+  const base = deployBase();
+  return `        <div class="collection-item-container">
+            <a href="${base}${PINEAU_BLANC_ROUTE}">
+                                <img src="${base}/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg" alt="Pineau Blanc des Charentes Léopold Croizet">
+                <h3>Pineau Blanc</h3>
+            </a>
+        </div>
+`;
+}
+
+function pineauBlancCollectionCard() {
+  const base = deployBase();
+  return `                            <div class="container-collection-produit">
+                        <div class="image-produit-collection">
+                            <a href="${base}${PINEAU_BLANC_ROUTE}">
+                                <img src="${base}/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg" alt="Pineau Blanc des Charentes Léopold Croizet">
+                            </a>
+                        </div>
+                        <div class="informations-produit-collection">
+                            <h3 class="titre-produit-collection">
+                                Pineau Blanc                            </h3>
+                            <div class="contenance-produit-collection">
+                                - 75 cl -
+                            </div>
+                        </div>
+                    </div>
+`;
+}
+
+function pineauBlancLanguageMenu() {
+  const base = deployBase();
+  return `<ul class="lc-language-menu-list" hidden><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-current-language wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="${base}${PINEAU_BLANC_ROUTE}" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li></ul>`;
+}
+
+function pineauBlancProductBlock() {
+  const base = deployBase();
+  return `<div class="woocommerce-notices-wrapper"></div><div class="container-page-produit product type-product post-pineau-blanc status-publish first instock product_cat-non-classe has-post-thumbnail taxable shipping-taxable product-type-simple" id="product-pineau-blanc">
+
+
+
+<div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
+
+    <figure class="woocommerce-product-gallery__wrapper">
+        <div data-thumb="${base}/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg" data-thumb-alt="Pineau Blanc des Charentes Léopold Croizet" class="woocommerce-product-gallery__image lc-pineau-visual"><a href="${base}/wp-content/uploads/2026/06/cocktails/heure-doree.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2026/06/cocktails/heure-doree.jpg" class="wp-post-image" alt="Pineau Blanc des Charentes Léopold Croizet" title="Pineau Blanc des Charentes Léopold Croizet" data-caption="" data-src="${base}/wp-content/uploads/2026/06/cocktails/heure-doree.jpg" data-large_image="${base}/wp-content/uploads/2026/06/cocktails/heure-doree.jpg" data-large_image_width="1054" data-large_image_height="1492" decoding="async" fetchpriority="high" /></a></div>
+    </figure>
+
+</div>
+    <!-- <div class="summary entry-summary"> -->
+
+<div class="colonne-droite-produit">
+
+    <div class="container-titre-produit">
+        <h1 class="lc-pineau-wordmark">Pineau Blanc<br><span>des Charentes Léopold&nbsp;Croizet</span></h1>
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">Appellation<span> | </span></div>
+        <div class="donnees">Pineau des Charentes blanc</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">Contenance<span> | </span></div>
+        <div class="donnees">75 cl</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">Teneur en Alcool<span> | </span></div>
+        <div class="donnees">17 % vol.</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-histoire-produit">
+        <div class="label">Dégustation<span> </span></div>
+        <div class="donnees">Le Pineau Blanc des Charentes Léopold&nbsp;Croizet prolonge le savoir-faire familial autour de la vigne et du Cognac. Servi frais, il révèle une expression lumineuse et gourmande, entre fruits blancs, miel délicat et fraîcheur d’agrumes.</div>
+    </div>
+
+    <div class="container-notes-sensorielles">
+        <div class="titre-notes-sensorielles"><img src="${base}/wp-content/uploads/2021/06/picto_sensor.svg" alt="Note sensorielles"> Notes sensorielles</div>
+        <div class="inner-container-notes-sensorielles">
+            <div class="container-caracteristiques"><div class="label-cracteristique">Fruits blancs</div><div class="pourcentage-caracteristique"><div class="innner-pourcentage-caracteristique" style="width:55%;height:3px;background-color:#d7a642;"></div></div></div>
+            <div class="container-caracteristiques"><div class="label-cracteristique">Miel</div><div class="pourcentage-caracteristique"><div class="innner-pourcentage-caracteristique" style="width:40%;height:3px;background-color:#c99822;"></div></div></div>
+            <div class="container-caracteristiques"><div class="label-cracteristique">Agrumes confits</div><div class="pourcentage-caracteristique"><div class="innner-pourcentage-caracteristique" style="width:35%;height:3px;background-color:#f0b34a;"></div></div></div>
+            <div class="container-caracteristiques"><div class="label-cracteristique">Fleurs de vigne</div><div class="pourcentage-caracteristique"><div class="innner-pourcentage-caracteristique" style="width:25%;height:3px;background-color:#b7a06a;"></div></div></div>
+
+            <hr>
+
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto"><img src="${base}/wp-content/uploads/2021/06/picto_oeil.svg" alt="Pictogramme Oeil"></div>
+                <div class="donnees-vue">Jaune doré, reflets ambrés clairs</div>
+            </div>
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto odorat"><img src="${base}/wp-content/uploads/2021/06/picto_nez.svg" alt="Pictogramme Nez"></div>
+                <div class="donnees-odorat">Nez délicat de raisin mûr, poire, miel d’acacia et notes légèrement vanillées.</div>
+            </div>
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto"><img src="${base}/wp-content/uploads/2021/06/picto_bouche.svg" alt="Pictogramme Bouche"></div>
+                <div class="donnees-gout">Bouche souple et fraîche, finale fruitée sur les agrumes confits et la douceur du moût de raisin.</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- </div> -->
+
+</div>`;
+}
+
+function pineauBlancFooterItem() {
+  const base = deployBase();
+  return `                                <div class="produit-unique lc-pineau-thumb">
+                        <a href="${base}${PINEAU_BLANC_ROUTE}">
+                            <div class="etoile-produit">*</div>
+                            <img src="${base}/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg" alt="Pineau Blanc des Charentes Léopold Croizet">
+                            <div class="titre-produit">Pineau Blanc</div>
+                        </a>
+                    </div>
+`;
+}
+
+function deployBase() {
+  return DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
 }
 
 async function collectSitemapUrls() {

@@ -85,6 +85,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/napoleon/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/collection/pineau-des-charentes-blanc/</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/collection/pineau-des-charentes-blanc/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/collection/pineau-des-charentes-blanc/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/collection/valentine/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
