@@ -15,6 +15,91 @@ const PINEAU_ALIAS_SLUG = 'pineau-des-charentes-blanc';
 const PINEAU_ROUTE = `/collection/${PINEAU_SLUG}/`;
 const PINEAU_TEMPLATE_PATH = path.join(ROOT, 'scripts/page-templates/pineau-des-charentes.html.in');
 const PINEAU_DESCRIPTION = "Pineau des Charentes Léopold Croizet : assemblage d'eaux-de-vie de Cognac et de moûts de raisin, notes de fruits confits, vanille, miel et noix.";
+const PINEAU_LOCALIZED_PAGES = [
+  {
+    route: PINEAU_ROUTE,
+    localPath: `collection/${PINEAU_SLUG}/index.html`,
+    title: 'Pineau des Charentes | Cognac Léopold Croizet',
+    description: PINEAU_DESCRIPTION,
+    sourcePath: PINEAU_TEMPLATE_PATH,
+    source: 'legacy',
+  },
+  {
+    route: `/en/collection/${PINEAU_SLUG}/`,
+    localPath: `en/collection/${PINEAU_SLUG}/index.html`,
+    title: 'Pineau des Charentes | Cognac Léopold Croizet',
+    description: 'Discover Léopold Croizet Pineau des Charentes: Cognac eaux-de-vie and grape must, with candied fruit, vanilla, honey and walnut notes.',
+    sourcePath: path.join(ROOT, 'en/collection/vsop/index.html'),
+    copy: {
+      appellationLabel: 'Appellation',
+      appellation: 'Pineau des Charentes controlled appellation',
+      bottleLabel: 'Bottles',
+      alcoholLabel: 'Alcohol content',
+      tastingTitle: 'Tasting notes',
+      sensoryTitle: 'Sensory Notes',
+      note: 'Pineau des Charentes Léopold Croizet is made from a blend of Cognac eaux-de-vie and grape must from Colombard and Ugni Blanc. After blending, it is stirred in oak barrels during the first months, then aged for many years. It reveals a bright amber colour, rounded aromas of candied fruit and vanilla, and walnut and woodland notes on the finish.',
+      view: 'Golden yellow / amber',
+      nose: 'Candied fruit and honey aromas, with apricot, prune and cherry notes.',
+      mouth: 'A subtle balance of sweetness, round vanilla notes and candied fruit. Finish: fruit, honey and walnut notes, typical of old Pineau des Charentes.',
+      sensory: {
+        apricot: 'Dried apricot',
+        cherry: 'Cherry',
+        fruit: 'Candied fruit',
+        walnut: 'Walnut',
+        vanilla: 'Vanilla',
+      },
+      quantity: 'Pineau quantity',
+      addToCart: 'Add to cart',
+      order: 'Order',
+    },
+  },
+  {
+    route: `/ru/collection/${PINEAU_SLUG}/`,
+    localPath: `ru/collection/${PINEAU_SLUG}/index.html`,
+    title: 'Pineau des Charentes | Cognac Léopold Croizet',
+    description: 'Откройте Pineau des Charentes Léopold Croizet: виноградное сусло и Cognac, ноты цукатов, ванили, меда и ореха.',
+    sourcePath: path.join(ROOT, 'ru/collection/vsop/index.html'),
+    copy: {
+      appellationLabel: 'Апелласьон',
+      appellation: 'Pineau des Charentes, контролируемое наименование',
+      bottleLabel: 'Бутылка',
+      alcoholLabel: 'Крепость',
+      tastingTitle: 'Дегустационные ноты',
+      sensoryTitle: 'Сенсорные ноты',
+      note: 'Pineau des Charentes Léopold Croizet создается из купажа коньячных спиртов и виноградного сусла сортов Colombard и Ugni Blanc. После ассамбляжа напиток перемешивается в дубовых бочках в первые месяцы, затем выдерживается многие годы. Он раскрывает яркий янтарный оттенок, округлые ароматы цукатов и ванили, а в финале ноты ореха и лесной подстилки.',
+      view: 'Золотисто-желтый / янтарный',
+      nose: 'Ароматы цукатов и меда, с нотами абрикоса, чернослива и вишни.',
+      mouth: 'Тонкий баланс сладости, округлых ванильных нот и цукатов. Финал: фрукт, мед и ореховые оттенки, типичные для старого Pineau des Charentes.',
+      sensory: {
+        apricot: 'Сушеный абрикос',
+        cherry: 'Вишня',
+        fruit: 'Цукаты',
+        walnut: 'Орех',
+        vanilla: 'Ваниль',
+      },
+      quantity: 'Количество Pineau',
+      addToCart: 'В корзину',
+      order: 'Заказать',
+    },
+  },
+];
+const PINEAU_COLLECTION_PAGES = [
+  {
+    localPath: 'collection/index.html',
+    route: PINEAU_ROUTE,
+    title: 'Pineau',
+  },
+  {
+    localPath: 'en/shop/index.html',
+    route: `/en/collection/${PINEAU_SLUG}/`,
+    title: 'Pineau',
+  },
+  {
+    localPath: 'ru/a-faire/index.html',
+    route: `/ru/collection/${PINEAU_SLUG}/`,
+    title: 'Pineau',
+  },
+];
 
 const SITEMAP_INDEXES = [
   'https://cognac-leopold-croizet.com/wp-sitemap.xml',
@@ -176,54 +261,58 @@ async function removeLegacyExcellenceCoffretAssets() {
 async function addPineauBlancPage() {
   await updateCollectionWithPineauBlanc();
 
-  let template;
-  try {
-    template = await readFile(PINEAU_TEMPLATE_PATH, 'utf8');
-  } catch {
-    console.log('Skipped Pineau page: old template is not available');
-    return;
-  }
+  for (const config of PINEAU_LOCALIZED_PAGES) {
+    if (pageRecords.some((page) => page.route === config.route)) continue;
 
-  if (!pageRecords.some((page) => page.route === PINEAU_ROUTE)) {
-    const localPath = `collection/${PINEAU_SLUG}/index.html`;
-    let html = repairKnownBrokenAssets(stripDynamicWordPressNoise(template));
+    let template;
+    try {
+      template = await readFile(config.sourcePath, 'utf8');
+    } catch {
+      console.log(`Skipped Pineau page ${config.route}: template is not available`);
+      continue;
+    }
+
+    let html = config.source === 'legacy'
+      ? repairKnownBrokenAssets(stripDynamicWordPressNoise(template))
+      : makePineauLocalizedPage(template, config);
     html = removeExcludedNavigationLinks(html);
-    html = applyDeployBase(html);
+    if (config.source === 'legacy') html = applyDeployBase(html);
     html = applyStaticAssetVersion(html);
-    await writeText(localPath, html);
+    await writeText(config.localPath, html);
 
     pageRecords.push({
-      source: `${PUBLIC_ORIGIN}${PINEAU_ROUTE}`,
-      route: PINEAU_ROUTE,
-      targetPath: localPath,
-      title: 'Pineau des Charentes | Cognac Léopold Croizet',
-      description: PINEAU_DESCRIPTION,
+      source: `${PUBLIC_ORIGIN}${config.route}`,
+      route: config.route,
+      targetPath: config.localPath,
+      title: config.title,
+      description: config.description,
     });
 
-    console.log(`Page ${PINEAU_ROUTE}`);
+    console.log(`Page ${config.route}`);
   }
 
   await writeText(`collection/${PINEAU_ALIAS_SLUG}/index.html`, pineauBlancRedirectPage());
 }
 
 async function updateCollectionWithPineauBlanc() {
-  const localPath = 'collection/index.html';
-  let html;
-  try {
-    html = await readFile(path.join(ROOT, localPath), 'utf8');
-  } catch {
-    return;
+  for (const config of PINEAU_COLLECTION_PAGES) {
+    let html;
+    try {
+      html = await readFile(path.join(ROOT, config.localPath), 'utf8');
+    } catch {
+      continue;
+    }
+
+    let next = removePineauMegaMenuItems(html);
+    next = removePineauCollectionCards(next);
+    next = addPineauCollectionEndPageItem(next, config);
+    next = next.replace(
+      /Les cognacs et Pineau Blanc des Charentes Léopold(?:&nbsp;|\s)Croizet sont issus/,
+      'Les cognacs Léopold&nbsp;Croizet sont issus',
+    );
+
+    if (next !== html) await writeText(config.localPath, next);
   }
-
-  let next = removePineauMegaMenuItems(html);
-  next = removePineauCollectionCards(next);
-  next = addPineauCollectionEndPageItem(next);
-  next = next.replace(
-    /Les cognacs et Pineau Blanc des Charentes Léopold(?:&nbsp;|\s)Croizet sont issus/,
-    'Les cognacs Léopold&nbsp;Croizet sont issus',
-  );
-
-  if (next !== html) await writeText(localPath, next);
 }
 
 function removePineauMegaMenuItems(html) {
@@ -240,27 +329,27 @@ function removePineauCollectionCards(html) {
   );
 }
 
-function addPineauCollectionEndPageItem(html) {
-  if (html.includes(`${PINEAU_ROUTE}`) || html.includes(`/${PINEAU_SLUG}/`)) return html;
+function addPineauCollectionEndPageItem(html, config) {
+  if (html.includes(config.route) || html.includes(`/${PINEAU_SLUG}/`)) return html;
 
   return html.replace(
     /(<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/valentine\/"[\s\S]*?<\/div>\s*<\/div>)/i,
-    `$1\n\n${pineauCollectionCard()}`,
+    `$1\n\n${pineauCollectionCard(config)}`,
   );
 }
 
-function pineauCollectionCard() {
+function pineauCollectionCard(config) {
   const base = deployBase();
   return `                <div class="container-collection-produit">
 
                     <div class="image-produit-collection">
-                        <a href="${base}${PINEAU_ROUTE}">
+                        <a href="${base}${config.route}">
                             <img src="${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, ${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x, ${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 4x">
                         </a>
                     </div>
                     <div class="informations-produit-collection">
                         <h3 class="titre-produit-collection">
-                            Pineau                        </h3>
+                            ${config.title}                        </h3>
                         <div class="contenance-produit-collection">
                             - 75 cl -
                         </div>
@@ -268,6 +357,140 @@ function pineauCollectionCard() {
                     </div>
                 </div>
 `;
+}
+
+function makePineauLocalizedPage(template, config) {
+  const block = pineauProductBlock(config);
+  let html = template
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(config.title)}</title>`)
+    .replace(/<meta\s+name=["']description["'][^>]*>/i, `<meta name="description" content="${escapeHtml(config.description)}">`)
+    .replace(
+      /<div class="woocommerce-notices-wrapper"><\/div><div class="container-page-produit"[\s\S]*?<\/div><\/div>\s*(?=\s*<\/main>)/i,
+      block,
+    );
+
+  html = html.replace(/action="[^"]*\/collection\/[^"]+\/"/i, `action="${deployBase()}${config.route}"`);
+  return html;
+}
+
+function pineauProductBlock(config) {
+  const base = deployBase();
+  const route = `${base}${config.route}`;
+  const copy = config.copy;
+
+  return `<div class="woocommerce-notices-wrapper"></div><div class="container-page-produit type-product post-115 status-publish first instock product_cat-cognac has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="colonne-gauche-produit">
+    <figure class="woocommerce-product-gallery__wrapper">
+            <div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01-420x642.jpg" class="wp-post-image" alt="Pineau des Charentes" title="img_diapo_pineau-01" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div><div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02-420x642.jpg" class="" alt="Pineau des Charentes" title="img_diapo_pineau-02" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div>    </figure>
+
+</div>
+    <!-- <div class="summary entry-summary"> -->
+
+<div class="colonne-droite-produit">
+
+    <div class="container-titre-produit">
+        <img src="${base}/wp-content/uploads/2021/06/img_nom_produit_pineau.png" alt="Pineau">
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">${escapeHtml(copy.appellationLabel)}<span> | </span></div>
+        <div class="donnees">${escapeHtml(copy.appellation)}</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">${escapeHtml(copy.bottleLabel)}<span> | </span></div>
+        <div class="donnees">75 cl</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-informations-produit">
+        <div class="label">${escapeHtml(copy.alcoholLabel)}<span> | </span></div>
+        <div class="donnees">17.5 %</div>
+        <img src="${base}/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+    </div>
+    <div class="container-histoire-produit">
+        <div class="label">${escapeHtml(copy.tastingTitle)}<span> </span></div>
+        <div class="donnees">${escapeHtml(copy.note)}</div>
+    </div>
+
+    <div class="container-notes-sensorielles">
+        <div class="titre-notes-sensorielles"><img src="${base}/wp-content/uploads/2021/06/picto_sensor.svg" alt="Sensory notes"> ${escapeHtml(copy.sensoryTitle)}</div>
+        <div class="inner-container-notes-sensorielles">
+            ${pineauSensoryLine(copy.sensory.apricot, 48, '#dd9933')}
+            ${pineauSensoryLine(copy.sensory.cherry, 6, '#ef3774')}
+            ${pineauSensoryLine(copy.sensory.fruit, 18, '#aa5505')}
+            ${pineauSensoryLine(copy.sensory.walnut, 75, '#895006')}
+            ${pineauSensoryLine(copy.sensory.vanilla, 36, '#3f1c00')}
+
+            <hr>
+
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_oeil.svg" alt="Eye pictogram">
+                </div>
+                <div class="donnees-vue">${escapeHtml(copy.view)}</div>
+            </div>
+
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto odorat">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_nez.svg" alt="Nose pictogram">
+                </div>
+                <div class="donnees-odorat">${escapeHtml(copy.nose)}</div>
+            </div>
+
+            <div class="container-vu-odorat-gout">
+                <div class="container-picto">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_bouche.svg" alt="Mouth pictogram">
+                </div>
+                <div class="donnees-gout">${escapeHtml(copy.mouth)}</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <form class="cart" action="${route}" method="post" enctype='multipart/form-data'>
+
+        <div class="quantity">
+        <label class="screen-reader-text" for="quantity_pineau">${escapeHtml(copy.quantity)}</label>
+    <input
+        type="number"
+                id="quantity_pineau"
+        class="input-text qty text"
+        name="quantity"
+        value="1"
+        aria-label="${escapeHtml(copy.quantity)}"
+        size="4"
+        min="1"
+        max=""
+                    step="1"
+            placeholder=""
+            inputmode="numeric"
+            autocomplete="off"
+            />
+    </div>
+
+        <button type="submit" name="add-to-cart" value="115" class="single_add_to_cart_button button alt">${escapeHtml(copy.addToCart)}</button>
+
+            </form>
+
+
+    <!-- </div> -->
+
+    <div class="container-btn-commander-produit">
+            <div class="prix-produit-container"><span>-</span>€</div>
+        <a href="${route}" class=" btn-commander-produit"> ${escapeHtml(copy.order)}</a>
+
+
+</div></div>
+`;
+}
+
+function pineauSensoryLine(label, width, color) {
+  return `<div class="container-caracteristiques">
+                            <div class="label-cracteristique">${escapeHtml(label)}</div>
+                            <div class="pourcentage-caracteristique">
+                                <div class="innner-pourcentage-caracteristique" style="width:${width}%;height:3px;background-color:${color};"></div>
+                            </div>
+                        </div>`;
 }
 
 function pineauBlancRedirectPage() {

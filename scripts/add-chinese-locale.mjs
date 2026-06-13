@@ -72,6 +72,12 @@ const productCopy = {
     nose: '丰富而美食感十足，带巧克力、姜与肉桂气息。',
     mouth: '圆润而丰美，仿佛圣诞布丁，带黑樱桃与巧克力的浓郁气息。余味强烈且果香充沛。',
   },
+  'pineau-des-charentes': {
+    note: 'Pineau des Charentes Léopold Croizet 由 Cognac 生命之水与 Colombard、Ugni Blanc 葡萄汁调配而成。调配后，最初数月在橡木桶中定期搅拌，随后经历多年陈酿。它呈明亮琥珀色，带有蜜饯水果与香草的圆润香气，余味中可见核桃与林下气息。',
+    view: '金黄色 / 琥珀色',
+    nose: '蜜饯水果与蜂蜜香气，并带有杏、梅干和樱桃气息。',
+    mouth: '甜润、圆滑香草气息与蜜饯水果之间的细腻平衡。余味：水果、蜂蜜与核桃气息，体现陈年 Pineau des Charentes 的典型风格。',
+  },
 };
 
 const englishProductCopy = {
@@ -129,6 +135,12 @@ const englishProductCopy = {
     nose: 'Rich and greedy with notes of chocolate, ginger and cinnamon.',
     mouth: 'Round and gourmand, like Christmas pudding with rich notes of black cherry and chocolate. Intense and fruity finish.',
   },
+  'pineau-des-charentes': {
+    note: 'Pineau des Charentes Léopold Croizet is made from a blend of Cognac eaux-de-vie and grape must from Colombard and Ugni Blanc. After blending, it is stirred in oak barrels during the first months, then aged for many years. It reveals a bright amber colour, rounded aromas of candied fruit and vanilla, and walnut and woodland notes on the finish.',
+    view: 'Golden yellow / amber',
+    nose: 'Candied fruit and honey aromas, with apricot, prune and cherry notes.',
+    mouth: 'A subtle balance of sweetness, round vanilla notes and candied fruit. Finish: fruit, honey and walnut notes, typical of old Pineau des Charentes.',
+  },
 };
 
 const translations = [
@@ -169,6 +181,7 @@ const translations = [
   ['Shake !', 'Shake!'],
   ['Fresh ideas for sunny days', '晴日里的清新灵感'],
   ['Idées fraîches pour les beaux jours', '晴日里的清新灵感'],
+  ['Pineau des Charentes controlled appellation', 'Pineau des Charentes 受控原产地名称'],
   ['Bottles', '瓶型'],
   ['Alcohol content', '酒精度'],
   ['Tasting notes', '品鉴笔记'],
@@ -258,6 +271,7 @@ const sensory = {
   Pear: '梨',
   Vanilla: '香草',
   'Dried aprico': '干杏',
+  'Dried apricot': '干杏',
   Clove: '丁香',
   Plum: '李子',
   Rose: '玫瑰',
@@ -294,6 +308,7 @@ const sensory = {
   'Woodland undergrowth': '林下气息',
   'Old oak': '老橡木',
   Cherry: '樱桃',
+  Walnut: '核桃',
   Ginger: '姜',
   Nuts: '坚果',
 };
@@ -437,11 +452,15 @@ function localizeProductCopy(html, route) {
   const source = englishProductCopy[slug];
   const target = productCopy[slug];
   if (!source || !target) return html;
-  return html
+  let next = html
     .replace(source.note, target.note)
     .replace(source.view, target.view)
     .replace(source.nose, target.nose)
     .replace(source.mouth, target.mouth);
+  if (slug === 'pineau-des-charentes') {
+    next = next.replace('<div class="label">Appellation<span> | </span></div>', '<div class="label">产区名称<span> | </span></div>');
+  }
+  return next;
 }
 
 function localizeCocktails(html) {

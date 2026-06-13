@@ -66,24 +66,24 @@ const routeMetadata = new Map([
     description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO et Pineau des Charentes.',
   }],
   ['/en/shop/', {
-    title: 'Cognac Léopold Croizet Collection | VS, VSOP, XO and Extra',
-    description: 'Discover the Cognac Léopold Croizet collection: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO.',
+    title: 'Cognac and Pineau Léopold Croizet Collection | VS, VSOP, XO and Extra',
+    description: 'Discover the Léopold Croizet collection: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO and Pineau des Charentes.',
   }],
   ['/ru/a-faire/', {
-    title: 'Коллекция Cognac Léopold Croizet | VS, VSOP, XO и Extra',
-    description: 'Откройте коллекцию Cognac Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage и Valentine XO.',
+    title: 'Коллекция Cognac и Pineau Léopold Croizet | VS, VSOP, XO и Extra',
+    description: 'Откройте коллекцию Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO и Pineau des Charentes.',
   }],
   ['/da/shop/', {
-    title: 'Cognac Léopold Croizet Kollektion | VS, VSOP, XO og Extra',
-    description: 'Opdag Cognac Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage og Valentine XO.',
+    title: 'Cognac og Pineau Léopold Croizet Kollektion | VS, VSOP, XO og Extra',
+    description: 'Opdag Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO og Pineau des Charentes.',
   }],
   ['/sv/shop/', {
-    title: 'Cognac Léopold Croizet Kollektion | VS, VSOP, XO och Extra',
-    description: 'Upptäck Cognac Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage och Valentine XO.',
+    title: 'Cognac och Pineau Léopold Croizet Kollektion | VS, VSOP, XO och Extra',
+    description: 'Upptäck Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO och Pineau des Charentes.',
   }],
   ['/no/shop/', {
-    title: 'Cognac Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra',
-    description: 'Oppdag Cognac Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage og Valentine XO.',
+    title: 'Cognac og Pineau Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra',
+    description: 'Oppdag Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO og Pineau des Charentes.',
   }],
   ['/commander/', {
     title: 'Commander Cognac Léopold Croizet | Boutique officielle',
@@ -328,8 +328,8 @@ const zhRouteMetadata = new Map([
     description: 'Cognac Léopold Croizet 是位于 Triac-Lautrait、Fins Bois 的家族干邑酒庄，呈现 VS、VSOP、Napoléon、XO 与 Extra 系列干邑、葡萄园工艺与酒窖参观。',
   }],
   ['/zh/shop/', {
-    title: 'Cognac Léopold Croizet 系列 | VS、VSOP、XO 与 Extra',
-    description: '探索 Cognac Léopold Croizet 系列：VS、VSOP、Napoléon、XO、XO Exception、Extra、Excellence、Héritage 与 Valentine XO。',
+    title: 'Cognac 与 Pineau Léopold Croizet 系列 | VS、VSOP、XO 与 Extra',
+    description: '探索 Léopold Croizet 系列：VS、VSOP、Napoléon、XO、XO Exception、Extra、Excellence、Héritage、Valentine XO 与 Pineau des Charentes。',
   }],
   ['/zh/la-matiere/', {
     title: '果实 | Cognac Léopold Croizet 葡萄园与风土',
@@ -396,6 +396,10 @@ const noindexRoutes = new Set([
   '/zh/checkout/',
 ]);
 
+function isNoindexRoute(route) {
+  return noindexRoutes.has(route) || route.startsWith('/_preview/');
+}
+
 const allHtmlFiles = await walkHtml(ROOT);
 const existingRoutes = new Set(allHtmlFiles.map((file) => routeForFile(file)));
 const routeToGroup = makeGroupMap(existingRoutes);
@@ -403,10 +407,11 @@ const indexableRoutes = [];
 
 for (const file of allHtmlFiles) {
   const route = routeForFile(file);
+  if (route.startsWith('/_preview/')) continue;
   let html = await readFile(file, 'utf8');
   html = hardenHtml(html, route, file);
   await writeFile(file, html, 'utf8');
-  if (!noindexRoutes.has(route)) indexableRoutes.push(route);
+  if (!isNoindexRoute(route)) indexableRoutes.push(route);
 }
 
 indexableRoutes.sort((a, b) => a.localeCompare(b));
@@ -475,7 +480,7 @@ function hardenHtml(html, route, file) {
   const metadata = routeMetadata.get(route) || fallbackMetadata(route, html);
   const canonical = `${PUBLIC_ORIGIN}${route}`;
   const lang = languageForRoute(route);
-  const robots = noindexRoutes.has(route) ? 'noindex, follow' : 'index, follow, max-image-preview:large';
+  const robots = isNoindexRoute(route) ? 'noindex, follow' : 'index, follow, max-image-preview:large';
   const image = bestImageForPage(html, route);
   const alternates = makeAlternateTags(route);
 
