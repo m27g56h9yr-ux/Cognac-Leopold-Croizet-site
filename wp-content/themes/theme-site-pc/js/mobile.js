@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     move_language_switch();
     init_language_menu();
+    restore_pineau_product_footer();
 
 
     window.addEventListener("resize", function () {
@@ -51,6 +52,36 @@ $(document).ready(function () {
                 $(".lc-language-menu-toggle").attr("aria-expanded", "false");
             }
         });
+    }
+
+    function restore_pineau_product_footer() {
+        var container = $(".container-produits").first();
+        if (!container.length || container.find('a[href*="/collection/pineau-des-charentes/"]').length) {
+            return;
+        }
+
+        var valentine = container.find('a[href*="/collection/valentine/"]').closest(".produit-unique").last();
+        if (!valentine.length) {
+            return;
+        }
+
+        var base = "/Cognac-Leopold-Croizet-site";
+        var path = window.location.pathname;
+        var localeMatch = path.match(/^\/Cognac-Leopold-Croizet-site\/(en|ru|da|sv|no|zh)\/collection\//);
+        var locale = localeMatch ? "/" + localeMatch[1] : "";
+        var pineauRoute = base + locale + "/collection/pineau-des-charentes/";
+        var isCurrent = path.replace(/\/index\.html$/, "/") === pineauRoute;
+        var currentMarker = isCurrent ? '<div class="etoile-produit">*</div>' : "";
+
+        valentine.after(
+            '<div class="produit-unique bas-page-produit">' +
+                '<a href="' + pineauRoute + '">' +
+                    currentMarker +
+                    '<img src="' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x">' +
+                    '<div class="titre-produit">Pineau</div>' +
+                '</a>' +
+            '</div>'
+        );
     }
 
     $(".navbar-toggler").on("click", function () {
