@@ -1175,6 +1175,10 @@ h1 strong {
   width: 90px;
 }
 
+.container-produits .produit-unique.bas-page-produit a[href*="/collection/valentine/"] img {
+  width: 70px;
+}
+
 .container-produits .produit-unique .titre-produit {
   font-family: "Playfair Display", serif;
   font-size: 0.9rem;
