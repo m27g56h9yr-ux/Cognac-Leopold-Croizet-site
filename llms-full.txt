@@ -25,7 +25,7 @@ The Chinese version uses zh-Hans metadata and presents Cognac Léopold Croizet a
 - Cognac Léopold Croizet Excellence: https://cognac-leopold-croizet.com/collection/excellence/
 - Cognac Léopold Croizet Héritage: https://cognac-leopold-croizet.com/collection/heritage/
 - Cognac Léopold Croizet Valentine XO: https://cognac-leopold-croizet.com/collection/valentine/
-- Pineau Blanc des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes-blanc/
+- Pineau des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes/
 
 ## Craft Topics
 - Vineyard and fruit: https://cognac-leopold-croizet.com/la-matiere/

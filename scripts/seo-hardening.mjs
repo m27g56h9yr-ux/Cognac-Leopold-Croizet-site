@@ -18,10 +18,10 @@ const productNames = new Map([
   ['excellence', 'Excellence'],
   ['heritage', 'Héritage'],
   ['valentine', 'Valentine XO'],
-  ['pineau-des-charentes-blanc', 'Pineau Blanc des Charentes'],
+  ['pineau-des-charentes', 'Pineau des Charentes'],
 ]);
 
-const PINEAU_BLANC_SLUG = 'pineau-des-charentes-blanc';
+const PINEAU_SLUG = 'pineau-des-charentes';
 
 const contentGroups = [
   ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'],
@@ -63,7 +63,7 @@ const routeMetadata = new Map([
   }],
   ['/collection/', {
     title: 'Collection Cognac et Pineau Léopold Croizet | VS, VSOP, XO et Extra',
-    description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO et Pineau Blanc des Charentes.',
+    description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO et Pineau des Charentes.',
   }],
   ['/en/shop/', {
     title: 'Cognac Léopold Croizet Collection | VS, VSOP, XO and Extra',
@@ -260,34 +260,34 @@ const routeMetadata = new Map([
 ]);
 
 for (const [slug, name] of productNames) {
-  if (slug === PINEAU_BLANC_SLUG) {
+  if (slug === PINEAU_SLUG) {
     routeMetadata.set(`/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Découvrez le Pineau Blanc des Charentes Léopold Croizet : assemblage de moût de raisin et de Cognac, notes de fruits blancs, de miel et d'agrumes.`,
+      description: `Découvrez le Pineau des Charentes Léopold Croizet : assemblage d'eaux-de-vie de Cognac et de moûts de raisin, notes de fruits confits, vanille, miel et noix.`,
     });
     routeMetadata.set(`/en/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Discover Léopold Croizet Pineau Blanc des Charentes: grape must and Cognac, with white fruit, honey and citrus notes.`,
+      description: `Discover Léopold Croizet Pineau des Charentes: Cognac eaux-de-vie and grape must, with candied fruit, vanilla, honey and walnut notes.`,
     });
     routeMetadata.set(`/ru/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Откройте Pineau Blanc des Charentes Léopold Croizet: виноградное сусло и Cognac, ноты белых фруктов, меда и цитрусовых.`,
+      description: `Откройте Pineau des Charentes Léopold Croizet: виноградное сусло и Cognac, ноты цукатов, ванили, меда и ореха.`,
     });
     routeMetadata.set(`/da/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Opdag Pineau Blanc des Charentes Léopold Croizet: druemost og Cognac med noter af hvide frugter, honning og citrus.`,
+      description: `Opdag Pineau des Charentes Léopold Croizet: druemost og Cognac med noter af kandiseret frugt, vanilje, honning og valnød.`,
     });
     routeMetadata.set(`/sv/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Upptäck Pineau Blanc des Charentes Léopold Croizet: druvmust och Cognac med toner av vita frukter, honung och citrus.`,
+      description: `Upptäck Pineau des Charentes Léopold Croizet: druvmust och Cognac med toner av kanderad frukt, vanilj, honung och valnöt.`,
     });
     routeMetadata.set(`/no/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Oppdag Pineau Blanc des Charentes Léopold Croizet: druemost og Cognac med toner av hvit frukt, honning og sitrus.`,
+      description: `Oppdag Pineau des Charentes Léopold Croizet: druemost og Cognac med toner av kandisert frukt, vanilje, honning og valnøtt.`,
     });
     routeMetadata.set(`/zh/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `探索 Pineau Blanc des Charentes Léopold Croizet：葡萄汁与 Cognac 调和，呈现白色水果、蜂蜜与柑橘香气。`,
+      description: `探索 Pineau des Charentes Léopold Croizet：葡萄汁与 Cognac 调和，呈现蜜饯水果、香草、蜂蜜与核桃香气。`,
     });
     continue;
   }
@@ -387,6 +387,7 @@ const noindexRoutes = new Set([
   '/sv/cart/',
   '/no/cart/',
   '/zh/cart/',
+  '/collection/pineau-des-charentes-blanc/',
   '/en/checkout/',
   '/ru/validation/',
   '/da/checkout/',
@@ -688,6 +689,7 @@ function labelFromRoute(route) {
 function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
   const productImage = matchFirst(html, /<img\b[^>]+class=["'][^"']*(?:wp-post-image|attachment-woocommerce_single)[^"']*["'][^>]+src=["']([^"']+)["']/i)
@@ -993,7 +995,7 @@ function makeLlmsTxt() {
     '',
     '> Family-owned Cognac house in Triac-Lautrait, Charente, producing Fins Bois cognacs and welcoming visitors by appointment.',
     '',
-    'Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs, plus Pineau Blanc des Charentes. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.',
+    'Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs, plus Pineau des Charentes. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.',
     '',
     '## Key Pages',
     '- [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.',
@@ -1080,11 +1082,11 @@ function escapeHtml(value) {
 
 function productFullName(slug) {
   const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
-  return slug === PINEAU_BLANC_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
+  return slug === PINEAU_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
 }
 
 function productCategory(slug) {
-  return slug === PINEAU_BLANC_SLUG ? 'Pineau des Charentes' : 'Cognac';
+  return slug === PINEAU_SLUG ? 'Pineau des Charentes' : 'Cognac';
 }
 
 function escapeXml(value) {
