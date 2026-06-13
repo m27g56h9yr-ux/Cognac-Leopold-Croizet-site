@@ -1,5 +1,4 @@
 name: Restore Pineau footer links
-# Triggered again after creation so GitHub runs the repair on main.
 
 on:
   push:
@@ -44,16 +43,18 @@ jobs:
           }
 
           function pineauProductFooterItem(config) {
+            const src = `${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png`;
             const currentMarker = config.isCurrent
               ? '                                                            <div class="etoile-produit">*</div>\n'
               : '';
-            return `                                <div class="produit-unique bas-page-produit">
-                        <a href="${DEPLOY_BASE}${config.route}">
-${currentMarker}                                                        <img src="${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, ${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, ${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, ${DEPLOY_BASE}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x">
-                            <div class="titre-produit">Pineau</div>
-                        </a>
-                    </div>
-`;
+            return [
+              '                                <div class="produit-unique bas-page-produit">',
+              `                        <a href="${DEPLOY_BASE}${config.route}">`,
+              `${currentMarker}                                                        <img src="${src}" alt="Pineau" srcset="${src} 0.5x, ${src} 5x, ${src} 2x, ${src} 3x">`,
+              '                            <div class="titre-produit">Pineau</div>',
+              '                        </a>',
+              '                    </div>',
+            ].join('\n') + '\n';
           }
 
           function addPineauProductFooterItem(html, config) {
@@ -90,7 +91,7 @@ ${currentMarker}                                                        <img src
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          rm .github/workflows/restore-pineau-footer.yml
+          rm -f .github/workflows/restore-pineau-footer.yml
           git add collection en/collection ru/collection da/collection sv/collection no/collection zh/collection .github/workflows/restore-pineau-footer.yml
           if git diff --cached --quiet; then
             echo "No page changes to commit"
