@@ -292,6 +292,80 @@ async function addPineauBlancPage() {
   }
 
   await writeText(`collection/${PINEAU_ALIAS_SLUG}/index.html`, pineauBlancRedirectPage());
+  await updateProductFootersWithPineauBlanc();
+}
+
+async function updateProductFootersWithPineauBlanc() {
+  const slugs = [
+    'vs',
+    'vsop',
+    'napoleon',
+    'xo',
+    'xo-exception',
+    'extra',
+    'excellence',
+    'heritage',
+    'valentine',
+    PINEAU_SLUG,
+  ];
+  const localeConfigs = [
+    { prefix: '', route: PINEAU_ROUTE },
+    { prefix: 'en', route: `/en/collection/${PINEAU_SLUG}/` },
+    { prefix: 'ru', route: `/ru/collection/${PINEAU_SLUG}/` },
+  ];
+
+  for (const localeConfig of localeConfigs) {
+    for (const slug of slugs) {
+      const localPath = localeConfig.prefix
+        ? `${localeConfig.prefix}/collection/${slug}/index.html`
+        : `collection/${slug}/index.html`;
+      let html;
+      try {
+        html = await readFile(path.join(ROOT, localPath), 'utf8');
+      } catch {
+        continue;
+      }
+
+      const next = addPineauProductFooterItem(
+        removePineauProductFooterItems(html),
+        {
+          ...localeConfig,
+          isCurrent: slug === PINEAU_SLUG,
+        },
+      );
+      if (next !== html) await writeText(localPath, next);
+    }
+  }
+}
+
+function removePineauProductFooterItems(html) {
+  return html.replace(
+    /\s*<div class="produit-unique bas-page-produit">\s*<a href="[^"]*\/collection\/pineau-des-charentes(?:-blanc)?\/"[\s\S]*?<\/a>\s*<\/div>\s*/gi,
+    '\n',
+  );
+}
+
+function addPineauProductFooterItem(html, config) {
+  if (!html.includes('container-produits')) return html;
+
+  return html.replace(
+    /(<div class="produit-unique bas-page-produit">\s*<a href="[^"]*\/collection\/valentine\/"[\s\S]*?<\/a>\s*<\/div>)/i,
+    `$1\n${pineauProductFooterItem(config)}`,
+  );
+}
+
+function pineauProductFooterItem(config) {
+  const base = deployBase();
+  const currentMarker = config.isCurrent
+    ? '                                                            <div class="etoile-produit">*</div>\n'
+    : '';
+  return `                                <div class="produit-unique bas-page-produit">
+                        <a href="${base}${config.route}">
+${currentMarker}                                                        <img src="${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, ${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, ${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, ${base}/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x">
+                            <div class="titre-produit">Pineau</div>
+                        </a>
+                    </div>
+`;
 }
 
 async function updateCollectionWithPineauBlanc() {
