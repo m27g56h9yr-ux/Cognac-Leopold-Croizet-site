@@ -1,0 +1,76 @@
+name: Fix Valentine thumbnail size
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-valentine:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Reduce Valentine footer thumbnail and bust cache
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const root = process.cwd();
+          const oldVersion = 'language-menu-map-20260611';
+          const newVersion = 'product-footer-20260613';
+          const styleFile = path.join(root, 'wp-content/themes/theme-site-pc/style.css');
+          let style = fs.readFileSync(styleFile, 'utf8');
+          const rule = [
+            '.container-produits .produit-unique.bas-page-produit a[href*="/collection/valentine/"] img {',
+            '  width: 70px;',
+            '}',
+            '',
+          ].join('\n');
+          if (!style.includes('a[href*="/collection/valentine/"] img')) {
+            const marker = '.container-produits .produit-unique img {\n  width: 90px;\n}\n';
+            if (!style.includes(marker)) throw new Error('Product thumbnail CSS marker not found');
+            style = style.replace(marker, marker + '\n' + rule);
+            fs.writeFileSync(styleFile, style);
+          }
+
+          const textExtensions = new Set(['.html', '.css', '.js', '.mjs', '.in', '.txt', '.xml', '.json', '.svg', '.php', '.md']);
+          function walk(dir) {
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              if (entry.name === '.git') continue;
+              const full = path.join(dir, entry.name);
+              if (entry.isDirectory()) {
+                walk(full);
+                continue;
+              }
+              if (!textExtensions.has(path.extname(entry.name))) continue;
+              let text;
+              try {
+                text = fs.readFileSync(full, 'utf8');
+              } catch {
+                continue;
+              }
+              if (!text.includes(oldVersion)) continue;
+              fs.writeFileSync(full, text.replaceAll(oldVersion, newVersion));
+            }
+          }
+          walk(root);
+          NODE
+      - name: Commit Valentine thumbnail fix and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/fix-valentine-thumbnail.yml
+          git add .
+          if git diff --cached --quiet; then
+            echo "No Valentine thumbnail changes to commit"
+            exit 0
+          fi
+          git commit -m "Reduce Valentine footer thumbnail"
+          git push
