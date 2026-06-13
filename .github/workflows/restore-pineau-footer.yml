@@ -1,4 +1,5 @@
 name: Restore Pineau footer links
+# Triggered again after creation so GitHub runs the repair on main.
 
 on:
   push:
