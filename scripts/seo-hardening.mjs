@@ -803,11 +803,11 @@ function organizationSchema() {
     logo: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg`,
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/img_slider_footer_01.png`,
     knowsAbout: ['Cognac', 'Fins Bois', 'Pineau des Charentes', 'French spirits', '法国干邑', '干邑鸡尾酒'],
-    email: 'cognac@mdpierrre.com',
+    email: 'cognac@mdpierre.com',
     telephone: '+33545358810',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: "30 Route d'Angoulême",
+      streetAddress: "30 Rue d'Angoulême",
       postalCode: '16200',
       addressLocality: 'Triac-Lautrait',
       addressRegion: 'Charente',
@@ -1019,9 +1019,9 @@ function makeLlmsTxt() {
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
     '',
     '## Contact',
-    '- Email: cognac@mdpierrre.com',
+    '- Email: cognac@mdpierre.com',
     '- Phone: +33 5 45 35 88 10',
-    "- Address: 30 Route d'Angoulême, 16200 Triac-Lautrait, France",
+    "- Address: 30 Rue d'Angoulême, 16200 Triac-Lautrait, France",
     '',
   ].join('\n');
 }
@@ -1062,7 +1062,7 @@ function makeLlmsFullTxt() {
     'Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/',
     '',
     '## Contact',
-    '- cognac@mdpierrre.com',
+    '- cognac@mdpierre.com',
     '- +33 5 45 35 88 10',
     '',
   ].join('\n');
