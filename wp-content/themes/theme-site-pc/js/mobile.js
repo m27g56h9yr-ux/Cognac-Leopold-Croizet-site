@@ -4,6 +4,7 @@ $(document).ready(function () {
     move_language_switch();
     init_language_menu();
     restore_pineau_product_footer();
+    repair_pineau_rouge_images();
 
 
     window.addEventListener("resize", function () {
@@ -82,6 +83,36 @@ $(document).ready(function () {
                 '</a>' +
             '</div>'
         );
+    }
+
+    function repair_pineau_rouge_images() {
+        var base = window.location.pathname.indexOf("/Cognac-Leopold-Croizet-site/") === 0
+            ? "/Cognac-Leopold-Croizet-site"
+            : "";
+        var collectionImage = base + "/wp-content/uploads/2026/06/pineau-des-charentes-rouge-196x300.png";
+        var footerImage = base + "/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png";
+
+        $('a[href*="/collection/pineau-des-charentes-rouge/"] img').each(function () {
+            var $image = $(this);
+            var isFooter = $image.closest(".container-produits").length > 0;
+
+            $image
+                .removeAttr("srcset sizes")
+                .attr("src", isFooter ? footerImage : collectionImage)
+                .css({
+                    display: "block",
+                    height: "auto",
+                    opacity: "1",
+                    visibility: "visible"
+                });
+
+            if (isFooter) {
+                $image.css({
+                    width: "86px",
+                    "max-width": "86px"
+                });
+            }
+        });
     }
 
     $(".navbar-toggler").on("click", function () {
