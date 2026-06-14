@@ -78,7 +78,7 @@ $(document).ready(function () {
                 '<a href="' + pineauRoute + '">' +
                     currentMarker +
                     '<img src="' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, ' + base + '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x">' +
-                    '<div class="titre-produit">Pineau</div>' +
+                    '<div class="titre-produit">Pineau Blanc</div>' +
                 '</a>' +
             '</div>'
         );

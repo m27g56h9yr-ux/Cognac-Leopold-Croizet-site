@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, '..');
 const STATIC_ASSETS_DIR = path.join(ROOT, 'static-assets');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
-const STATIC_ASSET_VERSION = 'product-footer-20260614-labelalign';
+const STATIC_ASSET_VERSION = 'product-footer-20260614-pineaublanc';
 const GOOGLE_MAP_EMBED_URL = 'https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed';
 const PINEAU_SLUG = 'pineau-des-charentes';
 const PINEAU_ALIAS_SLUG = 'pineau-des-charentes-blanc';
@@ -116,21 +116,21 @@ const PINEAU_COLLECTION_PAGES = [
   {
     localPath: 'collection/index.html',
     route: PINEAU_ROUTE,
-    title: 'Pineau',
+    title: 'Pineau Blanc',
     redRoute: PINEAU_RED_ROUTE,
     redTitle: 'Pineau Rouge',
   },
   {
     localPath: 'en/shop/index.html',
     route: `/en/collection/${PINEAU_SLUG}/`,
-    title: 'Pineau',
+    title: 'Pineau Blanc',
     redRoute: `/en/collection/${PINEAU_RED_SLUG}/`,
     redTitle: 'Pineau Rouge',
   },
   {
     localPath: 'ru/a-faire/index.html',
     route: `/ru/collection/${PINEAU_SLUG}/`,
-    title: 'Pineau',
+    title: 'Pineau Blanc',
     redRoute: `/ru/collection/${PINEAU_RED_SLUG}/`,
     redTitle: 'Pineau Rouge',
   },
@@ -505,7 +505,7 @@ function addPineauProductFooterItems(html, config) {
       route: config.route,
       isCurrent: config.currentSlug === PINEAU_SLUG,
       image: '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png',
-      title: 'Pineau',
+      title: 'Pineau Blanc',
       alt: 'Pineau',
     }),
     pineauProductFooterItem({
