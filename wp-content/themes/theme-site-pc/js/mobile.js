@@ -130,9 +130,9 @@ $(document).ready(function () {
 
             if (isFooter) {
                 $image.css({
-                    width: "74px",
-                    "max-width": "74px",
-                    "margin-bottom": "8px"
+                    width: "80px",
+                    "max-width": "80px",
+                    "margin-bottom": "4px"
                 });
             } else {
                 $image.css({
