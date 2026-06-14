@@ -6,6 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const DEPLOY_BASE = '/Cognac-Leopold-Croizet-site';
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
+const PINEAU_SLUG = 'pineau-des-charentes';
+const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
 
 const locales = [
   { code: 'fr', label: 'Fr', hreflang: 'fr' },
@@ -569,6 +571,11 @@ const englishProductCopy = {
     mouth: 'A subtle balance of sweetness, round vanilla notes and candied fruit. Finish: fruit, honey and walnut notes, typical of old Pineau des Charentes.',
   },
 };
+
+for (const config of Object.values(nordicConfigs)) {
+  config.productCopy[PINEAU_RED_SLUG] = config.productCopy[PINEAU_SLUG];
+}
+englishProductCopy[PINEAU_RED_SLUG] = englishProductCopy[PINEAU_SLUG];
 
 const editorialCopy = {
   da: [

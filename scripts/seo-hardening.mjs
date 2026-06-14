@@ -19,9 +19,11 @@ const productNames = new Map([
   ['heritage', 'Héritage'],
   ['valentine', 'Valentine XO'],
   ['pineau-des-charentes', 'Pineau des Charentes'],
+  ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
 const PINEAU_SLUG = 'pineau-des-charentes';
+const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
 
 const contentGroups = [
   ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'],
@@ -63,27 +65,27 @@ const routeMetadata = new Map([
   }],
   ['/collection/', {
     title: 'Collection Cognac et Pineau Léopold Croizet | VS, VSOP, XO et Extra',
-    description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO et Pineau des Charentes.',
+    description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes et Pineau Rouge.',
   }],
   ['/en/shop/', {
     title: 'Cognac and Pineau Léopold Croizet Collection | VS, VSOP, XO and Extra',
-    description: 'Discover the Léopold Croizet collection: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO and Pineau des Charentes.',
+    description: 'Discover the Léopold Croizet collection: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes and Pineau Rouge.',
   }],
   ['/ru/a-faire/', {
     title: 'Коллекция Cognac и Pineau Léopold Croizet | VS, VSOP, XO и Extra',
-    description: 'Откройте коллекцию Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO и Pineau des Charentes.',
+    description: 'Откройте коллекцию Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes и Pineau Rouge.',
   }],
   ['/da/shop/', {
     title: 'Cognac og Pineau Léopold Croizet Kollektion | VS, VSOP, XO og Extra',
-    description: 'Opdag Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO og Pineau des Charentes.',
+    description: 'Opdag Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes og Pineau Rouge.',
   }],
   ['/sv/shop/', {
     title: 'Cognac och Pineau Léopold Croizet Kollektion | VS, VSOP, XO och Extra',
-    description: 'Upptäck Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO och Pineau des Charentes.',
+    description: 'Upptäck Léopold Croizet kollektionen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes och Pineau Rouge.',
   }],
   ['/no/shop/', {
     title: 'Cognac og Pineau Léopold Croizet Kolleksjon | VS, VSOP, XO og Extra',
-    description: 'Oppdag Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO og Pineau des Charentes.',
+    description: 'Oppdag Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes og Pineau Rouge.',
   }],
   ['/commander/', {
     title: 'Commander Cognac Léopold Croizet | Boutique officielle',
@@ -291,6 +293,37 @@ for (const [slug, name] of productNames) {
     });
     continue;
   }
+  if (slug === PINEAU_RED_SLUG) {
+    routeMetadata.set(`/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Découvrez le Pineau Rouge des Charentes Léopold Croizet : page calquée sur le Pineau des Charentes, avec la bouteille rouge.`,
+    });
+    routeMetadata.set(`/en/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Discover Léopold Croizet Pineau Rouge des Charentes: a page mirroring Pineau des Charentes, with the red bottle.`,
+    });
+    routeMetadata.set(`/ru/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Откройте Pineau Rouge des Charentes Léopold Croizet: страница по образцу Pineau des Charentes, с красной бутылкой.`,
+    });
+    routeMetadata.set(`/da/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Opdag Pineau Rouge des Charentes Léopold Croizet: en side efter Pineau des Charentes, med den røde flaske.`,
+    });
+    routeMetadata.set(`/sv/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Upptäck Pineau Rouge des Charentes Léopold Croizet: en sida efter Pineau des Charentes, med den röda flaskan.`,
+    });
+    routeMetadata.set(`/no/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `Oppdag Pineau Rouge des Charentes Léopold Croizet: en side etter Pineau des Charentes, med den røde flasken.`,
+    });
+    routeMetadata.set(`/zh/collection/${slug}/`, {
+      title: `${name} | Cognac Léopold Croizet`,
+      description: `探索 Pineau Rouge des Charentes Léopold Croizet：沿用 Pineau des Charentes 页面呈现，并使用红色酒瓶。`,
+    });
+    continue;
+  }
 
   routeMetadata.set(`/collection/${slug}/`, {
     title: `${name} | Cognac Léopold Croizet`,
@@ -329,7 +362,7 @@ const zhRouteMetadata = new Map([
   }],
   ['/zh/shop/', {
     title: 'Cognac 与 Pineau Léopold Croizet 系列 | VS、VSOP、XO 与 Extra',
-    description: '探索 Léopold Croizet 系列：VS、VSOP、Napoléon、XO、XO Exception、Extra、Excellence、Héritage、Valentine XO 与 Pineau des Charentes。',
+    description: '探索 Léopold Croizet 系列：VS、VSOP、Napoléon、XO、XO Exception、Extra、Excellence、Héritage、Valentine XO、Pineau des Charentes 与 Pineau Rouge。',
   }],
   ['/zh/la-matiere/', {
     title: '果实 | Cognac Léopold Croizet 葡萄园与风土',
@@ -695,6 +728,7 @@ function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
   const productImage = matchFirst(html, /<img\b[^>]+class=["'][^"']*(?:wp-post-image|attachment-woocommerce_single)[^"']*["'][^>]+src=["']([^"']+)["']/i)
@@ -1087,11 +1121,11 @@ function escapeHtml(value) {
 
 function productFullName(slug) {
   const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
-  return slug === PINEAU_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
+  return slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
 }
 
 function productCategory(slug) {
-  return slug === PINEAU_SLUG ? 'Pineau des Charentes' : 'Cognac';
+  return slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? 'Pineau des Charentes' : 'Cognac';
 }
 
 function escapeXml(value) {
