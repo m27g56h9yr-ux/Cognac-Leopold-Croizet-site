@@ -1173,6 +1173,15 @@ h1 strong {
 
 .container-produits .produit-unique img {
   width: 90px;
+  align-self: end;
+  display: block;
+}
+
+.container-produits .produit-unique a {
+  align-items: end;
+  display: grid;
+  grid-template-rows: 140px auto;
+  justify-items: center;
 }
 
 .container-produits .produit-unique.bas-page-produit a[href*="/collection/valentine/"] img {
@@ -1186,7 +1195,10 @@ h1 strong {
 .container-produits .produit-unique .titre-produit {
   font-family: "Playfair Display", serif;
   font-size: 0.9rem;
+  line-height: 1.2;
+  margin-top: 8px;
   color: #332c2e;
+  white-space: nowrap;
 }
 
 .container-produits .produit-unique {
