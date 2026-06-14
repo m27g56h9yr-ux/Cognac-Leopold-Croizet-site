@@ -138,7 +138,7 @@ $(document).ready(function () {
                     "background-image": "url(" + footerBackgroundImage + ")",
                     "background-repeat": "no-repeat",
                     "background-size": "81px 124px",
-                    "background-position": "5px 8px"
+                    "background-position": "5px 2px"
                 });
             } else {
                 $image.css({
