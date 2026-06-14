@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-static-site.mjs && node scripts/add-nordic-locales.mjs && node scripts/add-chinese-locale.mjs && node scripts/seo-hardening.mjs && node scripts/fix-russian-leopold-url.mjs",
-    "seo": "node scripts/seo-hardening.mjs && node scripts/fix-russian-leopold-url.mjs",
+    "build": "node scripts/build-static-site.mjs && node scripts/add-nordic-locales.mjs && node scripts/add-chinese-locale.mjs && node scripts/seo-hardening.mjs && node scripts/fix-russian-leopold-url.mjs && node scripts/fix-cocktail-schema.mjs",
+    "seo": "node scripts/seo-hardening.mjs && node scripts/fix-russian-leopold-url.mjs && node scripts/fix-cocktail-schema.mjs",
     "check": "node scripts/check-static-site.mjs"
   }
 }
