@@ -112,7 +112,7 @@ $(document).ready(function () {
             ? "/Cognac-Leopold-Croizet-site"
             : "";
         var collectionImage = base + "/wp-content/uploads/2026/06/pineau-des-charentes-rouge-196x300.png";
-        var footerImage = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        var footerImage = "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2290%22%20height%3D%22138%22%3E%3C/svg%3E";
         var footerBackgroundImage = base + "/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png";
 
         $('a[href*="/collection/pineau-des-charentes-rouge/"] img').each(function () {
