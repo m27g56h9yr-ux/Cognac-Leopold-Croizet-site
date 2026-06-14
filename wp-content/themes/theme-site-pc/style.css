@@ -1179,6 +1179,10 @@ h1 strong {
   width: 70px;
 }
 
+.container-produits .produit-unique.bas-page-produit a[href*="/collection/pineau-des-charentes-rouge/"] img {
+  width: 80px;
+}
+
 .container-produits .produit-unique .titre-produit {
   font-family: "Playfair Display", serif;
   font-size: 0.9rem;
