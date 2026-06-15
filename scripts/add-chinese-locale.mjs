@@ -145,8 +145,22 @@ const englishProductCopy = {
   },
 };
 
-productCopy[PINEAU_RED_SLUG] = productCopy[PINEAU_SLUG];
-englishProductCopy[PINEAU_RED_SLUG] = englishProductCopy[PINEAU_SLUG];
+const pineauRedProductCopy = {
+  note: 'Pineau Rouge des Charentes Léopold Croizet 由 Cognac 生命之水与 Merlot、Ugni Blanc 葡萄汁调配而成。调配后，最初数月在橡木桶中定期搅拌，随后耐心陈酿。酒色呈深宝石红并带琥珀光泽，香气展开为黑樱桃、蜜饯红色水果与西梅。入口时，Merlot 带来柔和圆润的口感、天鹅绒般的质地，并呈现黑莓、香草与柔和香料气息。余味丰盈，带有核桃、可可与林下气息。',
+  view: '深宝石红 / 琥珀光泽',
+  nose: '黑樱桃、蜜饯红色水果、西梅与黑莓，并带一丝香草。',
+  mouth: '口感圆润柔滑。成熟红果延展至柔和香料、可可、核桃与温暖余味。',
+};
+
+const englishPineauRedProductCopy = {
+  note: 'This Pineau Rouge des Charentes Léopold Croizet is made from a blend of Cognac eaux-de-vie and grape must from Merlot and Ugni Blanc. After blending, it is stirred in oak barrels during the first months, then aged patiently. Its ruby colour with amber highlights opens on black cherry, candied red fruit and prune. On the palate, Merlot brings supple roundness, a velvety texture and notes of blackberry, vanilla and gentle spice. The finish is generous, with hints of walnut, cocoa and undergrowth.',
+  view: 'Deep ruby / amber highlights',
+  nose: 'Black cherry, candied red fruit, prune and blackberry, with a touch of vanilla.',
+  mouth: 'Round and velvety. Ripe red fruit carries into gentle spice, cocoa, walnut and a warm finish.',
+};
+
+productCopy[PINEAU_RED_SLUG] = pineauRedProductCopy;
+englishProductCopy[PINEAU_RED_SLUG] = englishPineauRedProductCopy;
 
 const translations = [
   ['Skill &amp; know how', '工艺与传承'],
@@ -275,6 +289,10 @@ const sensory = {
   Peach: '桃',
   Pear: '梨',
   Vanilla: '香草',
+  'Black cherry': '黑樱桃',
+  'Candied red fruit': '蜜饯红果',
+  Prune: '西梅',
+  'Gentle spice': '柔和香料',
   'Dried aprico': '干杏',
   'Dried apricot': '干杏',
   Clove: '丁香',

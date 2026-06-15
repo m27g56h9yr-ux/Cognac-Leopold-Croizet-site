@@ -78,6 +78,14 @@ const nordicConfigs = {
       Peach: 'Fersken',
       Pear: 'Pære',
       Vanilla: 'Vanilje',
+      'Black cherry': 'Sort kirsebær',
+      'Candied red fruit': 'Kandiserte røde bær',
+      Prune: 'Sviske',
+      'Gentle spice': 'Milde krydder',
+      'Black cherry': 'Sort kirsebær',
+      'Candied red fruit': 'Kandiserede røde bær',
+      Prune: 'Sveske',
+      'Gentle spice': 'Milde krydderier',
       'Dried aprico': 'Tørret abrikos',
       'Dried apricot': 'Tørret abrikos',
       Clove: 'Nellike',
@@ -240,6 +248,10 @@ const nordicConfigs = {
       Peach: 'Persika',
       Pear: 'Päron',
       Vanilla: 'Vanilj',
+      'Black cherry': 'Svart körsbär',
+      'Candied red fruit': 'Kanderade röda bär',
+      Prune: 'Katrinplommon',
+      'Gentle spice': 'Milda kryddor',
       'Dried aprico': 'Torkad aprikos',
       'Dried apricot': 'Torkad aprikos',
       Clove: 'Kryddnejlika',
@@ -572,10 +584,38 @@ const englishProductCopy = {
   },
 };
 
-for (const config of Object.values(nordicConfigs)) {
-  config.productCopy[PINEAU_RED_SLUG] = config.productCopy[PINEAU_SLUG];
+const pineauRedProductCopy = {
+  da: {
+    note: 'Pineau Rouge des Charentes Léopold Croizet fremstilles af en blanding af Cognac-eaux-de-vie og druemost fra Merlot og Ugni Blanc. Efter assemblagen omrøres den i egetræsfade i de første måneder og lagres derefter tålmodigt. Den rubinrøde farve med ravgyldne glimt åbner med sort kirsebær, kandiserede røde bær og sveske. I munden giver Merlot en smidig rundhed, en fløjlsblød tekstur og noter af brombær, vanilje og milde krydderier. Afslutningen er generøs med strejf af valnød, kakao og skovbund.',
+    view: 'Dyb rubin / ravgyldne glimt',
+    nose: 'Sort kirsebær, kandiserede røde bær, sveske og brombær med et strejf af vanilje.',
+    mouth: 'Rund og fløjlsblød. Moden rød frugt fortsætter mod milde krydderier, kakao, valnød og en varm afslutning.',
+  },
+  sv: {
+    note: 'Pineau Rouge des Charentes Léopold Croizet framställs av en blandning av Cognac-eaux-de-vie och druvmust från Merlot och Ugni Blanc. Efter blandningen rörs den i ekfat under de första månaderna och lagras därefter tålmodigt. Den rubinröda färgen med bärnstensskimmer öppnar med svart körsbär, kanderade röda bär och katrinplommon. I munnen ger Merlot en mjuk rondör, sammetslen textur och toner av björnbär, vanilj och milda kryddor. Avslutningen är generös med inslag av valnöt, kakao och skogsbotten.',
+    view: 'Djup rubin / bärnstensskimmer',
+    nose: 'Svart körsbär, kanderade röda bär, katrinplommon och björnbär med en lätt vaniljton.',
+    mouth: 'Rund och sammetslen. Mogen röd frukt fortsätter mot milda kryddor, kakao, valnöt och en varm avslutning.',
+  },
+  no: {
+    note: 'Pineau Rouge des Charentes Léopold Croizet fremstilles av en blanding av Cognac-eaux-de-vie og druemost fra Merlot og Ugni Blanc. Etter assemblagen røres den i eikefat de første månedene og lagres deretter tålmodig. Den rubinrøde fargen med ravgylne glimt åpner med sort kirsebær, kandiserte røde bær og sviske. I munnen gir Merlot en myk rundhet, fløyelsaktig tekstur og toner av bjørnebær, vanilje og milde krydder. Avslutningen er generøs med hint av valnøtt, kakao og skogbunn.',
+    view: 'Dyp rubin / ravgylne glimt',
+    nose: 'Sort kirsebær, kandiserte røde bær, sviske og bjørnebær med et hint av vanilje.',
+    mouth: 'Rund og fløyelsaktig. Moden rød frukt går videre mot milde krydder, kakao, valnøtt og en varm avslutning.',
+  },
+};
+
+const englishPineauRedProductCopy = {
+  note: 'This Pineau Rouge des Charentes Léopold Croizet is made from a blend of Cognac eaux-de-vie and grape must from Merlot and Ugni Blanc. After blending, it is stirred in oak barrels during the first months, then aged patiently. Its ruby colour with amber highlights opens on black cherry, candied red fruit and prune. On the palate, Merlot brings supple roundness, a velvety texture and notes of blackberry, vanilla and gentle spice. The finish is generous, with hints of walnut, cocoa and undergrowth.',
+  view: 'Deep ruby / amber highlights',
+  nose: 'Black cherry, candied red fruit, prune and blackberry, with a touch of vanilla.',
+  mouth: 'Round and velvety. Ripe red fruit carries into gentle spice, cocoa, walnut and a warm finish.',
+};
+
+for (const [locale, config] of Object.entries(nordicConfigs)) {
+  config.productCopy[PINEAU_RED_SLUG] = pineauRedProductCopy[locale];
 }
-englishProductCopy[PINEAU_RED_SLUG] = englishProductCopy[PINEAU_SLUG];
+englishProductCopy[PINEAU_RED_SLUG] = englishPineauRedProductCopy;
 
 const editorialCopy = {
   da: [

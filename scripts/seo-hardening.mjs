@@ -296,31 +296,31 @@ for (const [slug, name] of productNames) {
   if (slug === PINEAU_RED_SLUG) {
     routeMetadata.set(`/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Découvrez le Pineau Rouge des Charentes Léopold Croizet : page calquée sur le Pineau des Charentes, avec la bouteille rouge.`,
+      description: `Découvrez le Pineau Rouge des Charentes Léopold Croizet : Merlot, Ugni Blanc, robe rubis, fruits rouges confits, pruneau, épices douces et cacao.`,
     });
     routeMetadata.set(`/en/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Discover Léopold Croizet Pineau Rouge des Charentes: a page mirroring Pineau des Charentes, with the red bottle.`,
+      description: `Discover Léopold Croizet Pineau Rouge des Charentes: Merlot, Ugni Blanc, ruby colour, candied red fruit, prune, gentle spice and cocoa.`,
     });
     routeMetadata.set(`/ru/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Откройте Pineau Rouge des Charentes Léopold Croizet: страница по образцу Pineau des Charentes, с красной бутылкой.`,
+      description: `Откройте Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, рубиновый цвет, красные ягоды, чернослив, нежные специи и какао.`,
     });
     routeMetadata.set(`/da/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Opdag Pineau Rouge des Charentes Léopold Croizet: en side efter Pineau des Charentes, med den røde flaske.`,
+      description: `Opdag Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinrød farve, kandiserede røde bær, sveske, milde krydderier og kakao.`,
     });
     routeMetadata.set(`/sv/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Upptäck Pineau Rouge des Charentes Léopold Croizet: en sida efter Pineau des Charentes, med den röda flaskan.`,
+      description: `Upptäck Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinröd färg, kanderade röda bär, katrinplommon, milda kryddor och kakao.`,
     });
     routeMetadata.set(`/no/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `Oppdag Pineau Rouge des Charentes Léopold Croizet: en side etter Pineau des Charentes, med den røde flasken.`,
+      description: `Oppdag Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinrød farge, kandiserte røde bær, sviske, milde krydder og kakao.`,
     });
     routeMetadata.set(`/zh/collection/${slug}/`, {
       title: `${name} | Cognac Léopold Croizet`,
-      description: `探索 Pineau Rouge des Charentes Léopold Croizet：沿用 Pineau des Charentes 页面呈现，并使用红色酒瓶。`,
+      description: `探索 Pineau Rouge des Charentes Léopold Croizet：Merlot、Ugni Blanc、深宝石红酒色、蜜饯红果、西梅、柔和香料与可可。`,
     });
     continue;
   }

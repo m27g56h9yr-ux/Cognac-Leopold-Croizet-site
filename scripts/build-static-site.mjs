@@ -18,6 +18,74 @@ const PINEAU_RED_ROUTE = `/collection/${PINEAU_RED_SLUG}/`;
 const PINEAU_TEMPLATE_PATH = path.join(ROOT, 'scripts/page-templates/pineau-des-charentes.html.in');
 const PINEAU_DESCRIPTION = "Pineau des Charentes Léopold Croizet : assemblage d'eaux-de-vie de Cognac et de moûts de raisin, notes de fruits confits, vanille, miel et noix.";
 const PINEAU_RED_IMAGE = '/wp-content/uploads/2026/06/pineau-des-charentes-rouge';
+const PINEAU_RED_COPY = {
+  fr: {
+    appellationLabel: 'Appellation',
+    appellation: 'Appellation Pineau des Charentes Contrôlée',
+    bottleLabel: 'Bouteilles',
+    alcoholLabel: 'Taux d’alcool',
+    tastingTitle: 'Notes de dégustation',
+    sensoryTitle: 'Notes Sensorielles',
+    note: 'Ce Pineau Rouge des Charentes Léopold Croizet est élaboré à partir d’un assemblage d’eaux-de-vie de Cognac et de moûts de raisin issus de nos cépages de Merlot et d’Ugni Blanc. Après assemblage, il est mêlé en barrique de chêne durant les premiers mois, puis vieilli longuement. Sa robe rubis aux reflets ambrés annonce un nez gourmand de cerise noire, de fruits rouges confits et de pruneau. En bouche, le Merlot apporte une rondeur souple, une texture veloutée et des notes de mûre, de vanille et d’épices douces. La finale reste généreuse, avec une touche de noix, de cacao et de sous-bois.',
+    view: 'Rubis profond / reflets ambrés',
+    nose: 'Cerise noire, fruits rouges confits, pruneau et mûre, avec une touche de vanille.',
+    mouth: 'Bouche ronde et veloutée. Le fruit rouge mûr s’allonge vers les épices douces, le cacao, la noix et une finale chaleureuse.',
+    sensoryLines: [
+      { label: 'Cerise noire', width: 72, color: '#7b1423' },
+      { label: 'Fruits rouges confits', width: 68, color: '#9d1f2f' },
+      { label: 'Pruneau', width: 58, color: '#5b2a21' },
+      { label: 'Épices douces', width: 42, color: '#8a4a18' },
+      { label: 'Vanille', width: 32, color: '#3f1c00' },
+    ],
+    quantity: 'quantité de Pineau Rouge',
+    addToCart: 'Ajouter au panier',
+    order: 'Commander',
+  },
+  en: {
+    appellationLabel: 'Appellation',
+    appellation: 'Pineau des Charentes controlled appellation',
+    bottleLabel: 'Bottles',
+    alcoholLabel: 'Alcohol content',
+    tastingTitle: 'Tasting notes',
+    sensoryTitle: 'Sensory Notes',
+    note: 'This Pineau Rouge des Charentes Léopold Croizet is made from a blend of Cognac eaux-de-vie and grape must from Merlot and Ugni Blanc. After blending, it is stirred in oak barrels during the first months, then aged patiently. Its ruby colour with amber highlights opens on black cherry, candied red fruit and prune. On the palate, Merlot brings supple roundness, a velvety texture and notes of blackberry, vanilla and gentle spice. The finish is generous, with hints of walnut, cocoa and undergrowth.',
+    view: 'Deep ruby / amber highlights',
+    nose: 'Black cherry, candied red fruit, prune and blackberry, with a touch of vanilla.',
+    mouth: 'Round and velvety. Ripe red fruit carries into gentle spice, cocoa, walnut and a warm finish.',
+    sensoryLines: [
+      { label: 'Black cherry', width: 72, color: '#7b1423' },
+      { label: 'Candied red fruit', width: 68, color: '#9d1f2f' },
+      { label: 'Prune', width: 58, color: '#5b2a21' },
+      { label: 'Gentle spice', width: 42, color: '#8a4a18' },
+      { label: 'Vanilla', width: 32, color: '#3f1c00' },
+    ],
+    quantity: 'Pineau Rouge quantity',
+    addToCart: 'Add to cart',
+    order: 'Order',
+  },
+  ru: {
+    appellationLabel: 'Апелласьон',
+    appellation: 'Pineau des Charentes, контролируемое наименование',
+    bottleLabel: 'Бутылка',
+    alcoholLabel: 'Крепость',
+    tastingTitle: 'Дегустационные ноты',
+    sensoryTitle: 'Сенсорные ноты',
+    note: 'Pineau Rouge des Charentes Léopold Croizet создается из купажа коньячных спиртов и виноградного сусла сортов Merlot и Ugni Blanc. После ассамбляжа напиток перемешивается в дубовых бочках в первые месяцы, затем долго выдерживается. Рубиновый оттенок с янтарными отблесками открывает аромат черной вишни, засахаренных красных ягод и чернослива. Во вкусе Merlot придает мягкую округлость, бархатистую текстуру и ноты ежевики, ванили и нежных специй. Финал щедрый, с оттенками ореха, какао и лесной подстилки.',
+    view: 'Глубокий рубиновый / янтарные отблески',
+    nose: 'Черная вишня, засахаренные красные ягоды, чернослив и ежевика, с легкой ванилью.',
+    mouth: 'Округлый и бархатистый вкус. Спелые красные ягоды переходят в нежные специи, какао, орех и теплый финал.',
+    sensoryLines: [
+      { label: 'Черная вишня', width: 72, color: '#7b1423' },
+      { label: 'Засахаренные красные ягоды', width: 68, color: '#9d1f2f' },
+      { label: 'Чернослив', width: 58, color: '#5b2a21' },
+      { label: 'Нежные специи', width: 42, color: '#8a4a18' },
+      { label: 'Ваниль', width: 32, color: '#3f1c00' },
+    ],
+    quantity: 'Количество Pineau Rouge',
+    addToCart: 'В корзину',
+    order: 'Заказать',
+  },
+};
 const PINEAU_LOCALIZED_PAGES = [
   {
     route: PINEAU_ROUTE,
@@ -93,7 +161,8 @@ const PINEAU_RED_LOCALIZED_PAGES = [
     sourcePath: `collection/${PINEAU_SLUG}/index.html`,
     localPath: `collection/${PINEAU_RED_SLUG}/index.html`,
     title: 'Pineau Rouge des Charentes | Cognac Léopold Croizet',
-    description: "Découvrez le Pineau Rouge des Charentes Léopold Croizet : page identique au Pineau des Charentes, avec la bouteille rouge.",
+    description: "Découvrez le Pineau Rouge des Charentes Léopold Croizet : Merlot, Ugni Blanc, robe rubis, fruits rouges confits, pruneau, épices douces et cacao.",
+    copy: PINEAU_RED_COPY.fr,
   },
   {
     route: `/en/collection/${PINEAU_RED_SLUG}/`,
@@ -101,7 +170,8 @@ const PINEAU_RED_LOCALIZED_PAGES = [
     sourcePath: `en/collection/${PINEAU_SLUG}/index.html`,
     localPath: `en/collection/${PINEAU_RED_SLUG}/index.html`,
     title: 'Pineau Rouge des Charentes | Cognac Léopold Croizet',
-    description: 'Discover Léopold Croizet Pineau Rouge des Charentes: same product page presentation as Pineau des Charentes, with the red bottle.',
+    description: 'Discover Léopold Croizet Pineau Rouge des Charentes: Merlot, Ugni Blanc, ruby colour, candied red fruit, prune, gentle spice and cocoa.',
+    copy: PINEAU_RED_COPY.en,
   },
   {
     route: `/ru/collection/${PINEAU_RED_SLUG}/`,
@@ -109,7 +179,8 @@ const PINEAU_RED_LOCALIZED_PAGES = [
     sourcePath: `ru/collection/${PINEAU_SLUG}/index.html`,
     localPath: `ru/collection/${PINEAU_RED_SLUG}/index.html`,
     title: 'Pineau Rouge des Charentes | Cognac Léopold Croizet',
-    description: 'Откройте Pineau Rouge des Charentes Léopold Croizet: та же страница Pineau des Charentes, с красной бутылкой.',
+    description: 'Откройте Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, рубиновый цвет, красные ягоды, чернослив, нежные специи и какао.',
+    copy: PINEAU_RED_COPY.ru,
   },
 ];
 const PINEAU_COLLECTION_PAGES = [
@@ -553,11 +624,19 @@ function makePineauRedPageFromWhite(template, config) {
     .replace(/<link\s+rel=["']canonical["'][^>]*>/i, `<link rel="canonical" href="${PUBLIC_ORIGIN}${config.route}">`)
     .replace(new RegExp(escapeRegExp(`${PUBLIC_ORIGIN}${config.sourceRoute}`), 'g'), `${PUBLIC_ORIGIN}${config.route}`)
     .replace(new RegExp(escapeRegExp(whiteRoute), 'g'), redRoute)
-    .replace(/action="[^"]*\/collection\/pineau-des-charentes\/"/i, `action="${redRoute}"`)
-    .replace(
+    .replace(/action="[^"]*\/collection\/pineau-des-charentes\/"/i, `action="${redRoute}"`);
+
+  if (config.copy) {
+    html = html.replace(
+      /<div class="woocommerce-notices-wrapper"><\/div><div class="container-page-produit"[\s\S]*?<\/div><\/div>\s*(?=\s*<\/main>)/i,
+      pineauProductBlock({ ...config, galleryHtml: pineauRedProductGallery() }),
+    );
+  } else {
+    html = html.replace(
       /<figure class="woocommerce-product-gallery__wrapper">[\s\S]*?<\/figure>/i,
       pineauRedProductGallery(),
     );
+  }
 
   html = html.replace(/<meta property="og:image" content="[^"]*">/i, `<meta property="og:image" content="${PUBLIC_ORIGIN}${PINEAU_RED_IMAGE}.png">`);
   html = html.replace(/<meta name="twitter:image" content="[^"]*">/i, `<meta name="twitter:image" content="${PUBLIC_ORIGIN}${PINEAU_RED_IMAGE}.png">`);
@@ -589,11 +668,12 @@ function pineauProductBlock(config) {
   const base = deployBase();
   const route = `${base}${config.route}`;
   const copy = config.copy;
+  const galleryHtml = config.galleryHtml || `<figure class="woocommerce-product-gallery__wrapper">
+            <div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01-420x642.jpg" class="wp-post-image" alt="Pineau des Charentes" title="img_diapo_pineau-01" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div><div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02-420x642.jpg" class="" alt="Pineau des Charentes" title="img_diapo_pineau-02" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div>    </figure>`;
 
   return `<div class="woocommerce-notices-wrapper"></div><div class="container-page-produit type-product post-115 status-publish first instock product_cat-cognac has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 <div class="colonne-gauche-produit">
-    <figure class="woocommerce-product-gallery__wrapper">
-            <div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01-420x642.jpg" class="wp-post-image" alt="Pineau des Charentes" title="img_diapo_pineau-01" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div><div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02-420x642.jpg" class="" alt="Pineau des Charentes" title="img_diapo_pineau-02" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div>    </figure>
+    ${galleryHtml}
 
 </div>
     <!-- <div class="summary entry-summary"> -->
@@ -626,11 +706,7 @@ function pineauProductBlock(config) {
     <div class="container-notes-sensorielles">
         <div class="titre-notes-sensorielles"><img src="${base}/wp-content/uploads/2021/06/picto_sensor.svg" alt="Sensory notes"> ${escapeHtml(copy.sensoryTitle)}</div>
         <div class="inner-container-notes-sensorielles">
-            ${pineauSensoryLine(copy.sensory.apricot, 48, '#dd9933')}
-            ${pineauSensoryLine(copy.sensory.cherry, 6, '#ef3774')}
-            ${pineauSensoryLine(copy.sensory.fruit, 18, '#aa5505')}
-            ${pineauSensoryLine(copy.sensory.walnut, 75, '#895006')}
-            ${pineauSensoryLine(copy.sensory.vanilla, 36, '#3f1c00')}
+            ${pineauSensoryLines(copy)}
 
             <hr>
 
@@ -694,6 +770,17 @@ function pineauProductBlock(config) {
 
 </div></div>
 `;
+}
+
+function pineauSensoryLines(copy) {
+  const lines = copy.sensoryLines || [
+    { label: copy.sensory.apricot, width: 48, color: '#dd9933' },
+    { label: copy.sensory.cherry, width: 6, color: '#ef3774' },
+    { label: copy.sensory.fruit, width: 18, color: '#aa5505' },
+    { label: copy.sensory.walnut, width: 75, color: '#895006' },
+    { label: copy.sensory.vanilla, width: 36, color: '#3f1c00' },
+  ];
+  return lines.map(({ label, width, color }) => pineauSensoryLine(label, width, color)).join('\n            ');
 }
 
 function pineauSensoryLine(label, width, color) {
