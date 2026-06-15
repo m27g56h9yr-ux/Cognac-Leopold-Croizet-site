@@ -33,7 +33,7 @@ const contentGroups = [
   ['/le-feu/', '/en/le-feu/', '/ru/le-feu/', '/da/le-feu/', '/sv/le-feu/', '/no/le-feu/', '/zh/le-feu/'],
   ['/lalchimie/', '/en/lalchimie/', '/ru/lalchimie/', '/da/lalchimie/', '/sv/lalchimie/', '/no/lalchimie/', '/zh/lalchimie/'],
   ['/le-temps/', '/en/le-temps/', '/ru/le-temps/', '/da/le-temps/', '/sv/le-temps/', '/no/le-temps/', '/zh/le-temps/'],
-  ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
+  ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/leopold-croizet/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
   ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
   ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
@@ -196,7 +196,7 @@ const routeMetadata = new Map([
     title: 'Léopold Croizet | Interview and Family Story',
     description: 'Meet Léopold Croizet: family story, Triac-Lautrait estate, transmission and the vision of an independent cognac house.',
   }],
-  ['/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/', {
+  ['/ru/leopold-croizet/', {
     title: 'Леопольд Круазе | Интервью и семейная история',
     description: 'Встреча с Леопольдом Круазе: семейная история, поместье Triac-Lautrait, преемственность и видение независимого дома коньяка.',
   }],
@@ -597,8 +597,8 @@ function normalizeGithubPagesLinks(html, route) {
       .replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/(la-matiere|le-feu|lalchimie|le-temps|leopold-croizet|rencontre|pierre-croizet-cocktails)\/\1/gi, (full, quote, slug) => `href=${quote}${DEPLOY_BASE_PATH}/${lang}/${slug}/${quote}`);
 
     if (lang === 'ru') {
-      next = next.replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/ru\/leopold-croizet\/\1/gi, (full, quote) => (
-        `href=${quote}${DEPLOY_BASE_PATH}/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/${quote}`
+      next = next.replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/ru\/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5\/\1/gi, (full, quote) => (
+        `href=${quote}${DEPLOY_BASE_PATH}/ru/leopold-croizet/${quote}`
       ));
     }
   }
@@ -1143,7 +1143,7 @@ function makeLlmsFullTxt() {
     '# Cognac Léopold Croizet: AI Reference',
     '',
     '## Identity',
-    'Cognac Léopold Croizet is a family Cognac house based at 30 Route d’Angoulême, 16200 Triac-Lautrait, France. The estate presents a Fins Bois identity, vineyard work, distillation, ageing, blending and cellar visits.',
+    "Cognac Léopold Croizet is a family Cognac house based at 30 Rue d'Angoulême, 16200 Triac-Lautrait, France. The estate presents a Fins Bois identity, vineyard work, distillation, ageing, blending and cellar visits.",
     '',
     '## Languages',
     '- French: https://cognac-leopold-croizet.com/',

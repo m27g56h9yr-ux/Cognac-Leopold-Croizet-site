@@ -1982,7 +1982,7 @@ function makeLlmsTxt(records) {
     '',
     'Family-owned Cognac house in Triac-Lautrait, France, producing Fins Bois cognacs from organic vineyard work, distillation, ageing and blending know-how.',
     '',
-    'Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Route d’Angoulême, 16200 Triac-Lautrait, France.',
+    'Contact: cognac@mdpierre.com, +33 5 45 35 88 10, 30 Rue d’Angoulême, 16200 Triac-Lautrait, France.',
     '',
     section('French pages', byLang.fr),
     section('English pages', byLang.en),
