@@ -443,7 +443,8 @@ for (const file of allHtmlFiles) {
   const route = routeForFile(file);
   let html = await readFile(file, 'utf8');
   if (route.startsWith('/_preview/')) {
-    await writeFile(file, normalizeGeneratedWhitespace(normalizeGithubPagesLinks(html, route)), 'utf8');
+    const previewHtml = applyRequestedOrderVisibility(normalizeGithubPagesLinks(html, route), route);
+    await writeFile(file, normalizeGeneratedWhitespace(previewHtml), 'utf8');
     continue;
   }
   html = hardenHtml(html, route, file);
@@ -564,6 +565,7 @@ function hardenHtml(html, route, file) {
   next = replaceStructuredData(next, route, metadata, image);
   next = repairGeneratedContent(next);
   next = repairNewsletterBlock(next, route);
+  next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
   next = normalizeGithubPagesLinks(next, route);
   next = repairLanguageMenuLinks(next, route);
@@ -741,6 +743,26 @@ function keywordsForRoute(route) {
   if (route.includes('pierre-croizet-cocktails')) base.push('干邑鸡尾酒', 'Pineau des Charentes 鸡尾酒');
   if (route.includes('rencontre')) base.push('法国干邑酒窖参观', 'Triac-Lautrait');
   return base.join(', ');
+}
+
+
+function applyRequestedOrderVisibility(html, route) {
+  let next = isHomepage(route) ? removeCartNavigationItem(html) : html;
+  const lang = languageForRoute(route);
+  if (lang === 'fr' || lang === 'en' || route.startsWith('/_preview/')) {
+    next = removeInternalOrderButtons(next);
+  }
+  return next;
+}
+
+function removeCartNavigationItem(html) {
+  return html.replace(/\s*<li\b[^>]*class=["'][^"']*\bpanier-menu\b[^"']*["'][\s\S]*?<\/li>\s*/gi, '\n');
+}
+
+function removeInternalOrderButtons(html) {
+  return html
+    .replace(/\s*<a\b(?=[^>]*class=["'][^"']*\bbtn-commander-produit\b[^"']*["'])(?=[^>]*href=["']\/Cognac-Leopold-Croizet-site\/[^"']*["'])[^>]*>[\s\S]*?<\/a>\s*/gi, '\n')
+    .replace(/\s*<a\b(?=[^>]*class=["'][^"']*\bcommander-produit\b[^"']*["'])(?=[^>]*href=["']\/Cognac-Leopold-Croizet-site\/[^"']*["'])[^>]*>[\s\S]*?<\/a>\s*/gi, '\n');
 }
 
 function removeUnavailableOrderControls(html, route) {
