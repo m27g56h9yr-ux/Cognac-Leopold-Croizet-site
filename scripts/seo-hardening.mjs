@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
+const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const TODAY = '2026-06-11';
 
 const productNames = new Map([
@@ -440,8 +441,11 @@ const indexableRoutes = [];
 
 for (const file of allHtmlFiles) {
   const route = routeForFile(file);
-  if (route.startsWith('/_preview/')) continue;
   let html = await readFile(file, 'utf8');
+  if (route.startsWith('/_preview/')) {
+    await writeFile(file, normalizeGeneratedWhitespace(normalizeGithubPagesLinks(html, route)), 'utf8');
+    continue;
+  }
   html = hardenHtml(html, route, file);
   await writeFile(file, html, 'utf8');
   if (!isNoindexRoute(route)) indexableRoutes.push(route);
@@ -561,7 +565,59 @@ function hardenHtml(html, route, file) {
   next = repairGeneratedContent(next);
   next = repairNewsletterBlock(next, route);
   next = removeUnavailableOrderControls(next, route);
+  next = normalizeGithubPagesLinks(next, route);
+  next = repairLanguageMenuLinks(next, route);
   return normalizeGeneratedWhitespace(next);
+}
+
+function homeHrefForRoute(route) {
+  const lang = languageForRoute(route);
+  return lang === 'fr' ? `${DEPLOY_BASE_PATH}/` : `${DEPLOY_BASE_PATH}/${lang}/`;
+}
+
+function normalizeGithubPagesLinks(html, route) {
+  const homeHref = homeHrefForRoute(route);
+  const lang = languageForRoute(route);
+  const xoExceptionHref = lang === 'fr'
+    ? `${DEPLOY_BASE_PATH}/collection/xo-exception/`
+    : `${DEPLOY_BASE_PATH}/${lang}/collection/xo-exception/`;
+  let next = html
+    .replace(/\bhref=(["'])\/\1/gi, (full, quote) => `href=${quote}${homeHref}${quote}`)
+    .replace(/https:\/Cognac-Leopold-Croizet-site\//g, `${DEPLOY_BASE_PATH}/`)
+    .replace(/https:\/\/raw\.githack\.com\/m27g56h9yr-ux\/Cognac-Leopold-Croizet-site\/codex\/pineau-blanc-page\//g, `${DEPLOY_BASE_PATH}/`)
+    .replace(/href=(["'])https?:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/xo-exception\/\1/gi, (full, quote) => `href=${quote}${xoExceptionHref}${quote}`);
+
+  if (lang !== 'fr') {
+    const collectionHref = lang === 'ru' ? `${DEPLOY_BASE_PATH}/ru/a-faire/` : `${DEPLOY_BASE_PATH}/${lang}/shop/`;
+    next = next
+      .replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/collection\/\1/gi, (full, quote) => `href=${quote}${collectionHref}${quote}`)
+      .replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/collection\/([^"']+)\/\1/gi, (full, quote, slug) => `href=${quote}${DEPLOY_BASE_PATH}/${lang}/collection/${slug}/${quote}`)
+      .replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/(la-matiere|le-feu|lalchimie|le-temps|leopold-croizet|rencontre|pierre-croizet-cocktails)\/\1/gi, (full, quote, slug) => `href=${quote}${DEPLOY_BASE_PATH}/${lang}/${slug}/${quote}`);
+
+    if (lang === 'ru') {
+      next = next.replace(/href=(["'])\/Cognac-Leopold-Croizet-site\/ru\/leopold-croizet\/\1/gi, (full, quote) => (
+        `href=${quote}${DEPLOY_BASE_PATH}/ru/%d0%bb%d0%b5%d0%be%d0%bf%d0%be%d0%bb%d1%8c%d0%b4%d0%b0-%d0%ba%d1%80%d1%83%d0%b0%d0%b7%d0%b5/${quote}`
+      ));
+    }
+  }
+
+  return next;
+}
+
+function repairLanguageMenuLinks(html, route) {
+  const group = routeToGroup.get(route);
+  if (!group) return html;
+
+  return html.replace(/<a\b[^>]*\bhreflang=(["'])([^"']+)\1[^>]*>/gi, (tag, quote, hrefLang) => {
+    const targetLang = hrefLang === 'zh-Hans' ? 'zh' : hrefLang;
+    const alternateRoute = group.find((candidate) => languageForRoute(candidate) === targetLang);
+    if (!alternateRoute) return tag;
+    const href = `${DEPLOY_BASE_PATH}${alternateRoute}`;
+    if (/\bhref=(["'])[^"']*\1/i.test(tag)) {
+      return tag.replace(/\bhref=(["'])[^"']*\1/i, (full, hrefQuote) => `href=${hrefQuote}${href}${hrefQuote}`);
+    }
+    return tag.replace(/<a\b/i, `<a href="${href}"`);
+  });
 }
 
 function normalizeGeneratedWhitespace(html) {
@@ -619,7 +675,7 @@ function repairNewsletterBlock(html, route) {
 }
 
 function newsletterCopy(lang) {
-  const legalHref = `${PUBLIC_ORIGIN}/mentions-legales/`;
+  const legalHref = `${DEPLOY_BASE_PATH}/mentions-legales/`;
   const copies = {
     fr: {
       label: 'Je souhaite recevoir de vos nouvelles de temps en temps.',
