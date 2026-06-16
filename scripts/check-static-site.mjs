@@ -88,6 +88,8 @@ console.log(`Checked ${checkedFiles.length} HTML/CSS files`);
 
 async function walk(dir) {
   if (dir.includes(`${path.sep}.git${path.sep}`)) return;
+  if (dir.includes(`${path.sep}_deploy${path.sep}`) || dir.endsWith(`${path.sep}_deploy`)) return;
+  if (dir.includes(`${path.sep}_preview${path.sep}`) || dir.endsWith(`${path.sep}_preview`)) return;
   const entries = await readdir(dir);
   for (const entry of entries) {
     const fullPath = path.join(dir, entry);

@@ -305,8 +305,8 @@ const failedAssets = [];
 await main();
 
 async function main() {
-  await cleanGeneratedFiles();
   const urls = await collectSitemapUrls();
+  await cleanGeneratedFiles();
 
   for (const pageUrl of urls) {
     await buildPage(pageUrl);
@@ -819,23 +819,44 @@ function deployBase() {
 async function collectSitemapUrls() {
   const sitemapUrls = new Set();
   const urls = new Set();
+  let sitemapIndexFailure = false;
 
   for (const indexUrl of SITEMAP_INDEXES) {
-    const xml = await fetchText(indexUrl);
-    for (const loc of extractLocs(xml)) {
-      sitemapUrls.add(loc);
+    try {
+      const xml = await fetchText(indexUrl);
+      for (const loc of extractLocs(xml)) {
+        if (/\.xml(?:$|\?)/i.test(loc)) {
+          sitemapUrls.add(loc);
+        } else {
+          addPageUrl(urls, loc);
+        }
+      }
+    } catch (error) {
+      sitemapIndexFailure = true;
+      console.log(`Skipped sitemap index ${indexUrl}: ${error.message}`);
     }
   }
 
-  for (const sitemapUrl of sitemapUrls) {
-    const xml = await fetchText(sitemapUrl);
-    for (const loc of extractLocs(xml)) {
-      const url = normalizeAbsoluteUrl(loc);
-      if (!url) continue;
-      if (!HOST_PREFIX.has(url.hostname)) continue;
-      if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) continue;
-      urls.add(stripHash(url).toString());
+  if (!sitemapIndexFailure) {
+    for (const sitemapUrl of sitemapUrls) {
+      try {
+        const xml = await fetchText(sitemapUrl);
+        for (const loc of extractLocs(xml)) {
+          addPageUrl(urls, loc);
+        }
+      } catch (error) {
+        console.log(`Skipped sitemap ${sitemapUrl}: ${error.message}`);
+      }
     }
+  }
+
+  if (sitemapIndexFailure || urls.size === 0) {
+    urls.clear();
+    const localSitemap = await readFile(path.join(ROOT, 'sitemap.xml'), 'utf8');
+    for (const loc of extractLocs(localSitemap)) {
+      addPageUrl(urls, loc);
+    }
+    await addLocalHtmlPageUrls(urls);
   }
 
   const sortedUrls = [...urls].sort((a, b) => {
@@ -849,6 +870,42 @@ async function collectSitemapUrls() {
   }
 
   return sortedUrls;
+}
+
+function addPageUrl(urls, loc) {
+  const url = normalizeAbsoluteUrl(loc);
+  if (!url) return;
+  if (!HOST_PREFIX.has(url.hostname)) return;
+  if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) return;
+  urls.add(stripHash(url).toString());
+}
+
+async function addLocalHtmlPageUrls(urls) {
+  async function walkLocalPages(dir) {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      const relativePath = path.relative(ROOT, fullPath);
+      const segments = relativePath.split(path.sep);
+
+      if (entry.isDirectory()) {
+        if (entry.name.startsWith('.') || entry.name === '_deploy' || entry.name === '_preview' || entry.name === 'scripts') {
+          continue;
+        }
+        await walkLocalPages(fullPath);
+        continue;
+      }
+
+      if (entry.name !== 'index.html') continue;
+      if (segments.includes('api')) continue;
+
+      const route = routeForPagePath(relativePath);
+      if (EXCLUDED_PAGE_ROUTES.has(route)) continue;
+      urls.add(`${PUBLIC_ORIGIN}${route}`);
+    }
+  }
+
+  await walkLocalPages(ROOT);
 }
 
 function hostRank(hostname) {
