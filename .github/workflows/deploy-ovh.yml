@@ -107,6 +107,13 @@ jobs:
             exit 1
           fi
 
+          {
+            echo "commit=$GITHUB_SHA"
+            echo "run_id=$GITHUB_RUN_ID"
+            echo "run_attempt=$GITHUB_RUN_ATTEMPT"
+            echo "deployed_at_utc=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          } > _deploy/deploy-version.txt
+
       - name: Install SFTP client
         run: |
           sudo apt-get update
@@ -165,6 +172,17 @@ jobs:
         run: |
           set -euo pipefail
 
+          fetch() {
+            curl --location --silent --show-error \
+              --header "Cache-Control: no-cache" \
+              --header "Pragma: no-cache" \
+              --retry 3 \
+              --retry-all-errors \
+              --connect-timeout 10 \
+              --max-time 30 \
+              "$1"
+          }
+
           urls=(
             "https://cognac-leopold-croizet.com/"
             "https://cognac-leopold-croizet.com/rencontre/"
@@ -179,3 +197,47 @@ jobs:
             fi
             echo "$url returned HTTP $status_code"
           done
+
+          version_url="https://cognac-leopold-croizet.com/deploy-version.txt?v=$GITHUB_SHA"
+          version_body="$(fetch "$version_url")"
+          if ! grep -q "commit=$GITHUB_SHA" <<< "$version_body"; then
+            echo "::error::The deployed commit marker is not visible on production. OVH may be serving a cached page or the workflow may be deploying to the wrong directory."
+            echo "Expected commit=$GITHUB_SHA at $version_url"
+            echo "Received:"
+            echo "$version_body"
+            exit 1
+          fi
+          echo "Production exposes deploy-version.txt for commit $GITHUB_SHA"
+
+          home_html="$(fetch "https://cognac-leopold-croizet.com/?v=$GITHUB_SHA")"
+          rencontre_html="$(fetch "https://cognac-leopold-croizet.com/rencontre/?v=$GITHUB_SHA")"
+          mentions_html="$(fetch "https://cognac-leopold-croizet.com/mentions-legales/?v=$GITHUB_SHA")"
+
+          forbidden_home=(
+            "cognac-pierre-croizet.com"
+            "en.cognac-leopold-croizet.com"
+            "ru.cognac-leopold-croizet.com"
+            "cognacg.cluster028.hosting.ovh.net"
+          )
+          for forbidden in "${forbidden_home[@]}"; do
+            if grep -q "$forbidden" <<< "$home_html"; then
+              echo "::error::Production homepage still contains legacy reference: $forbidden"
+              exit 1
+            fi
+          done
+
+          if ! grep -q "30 Rue d" <<< "$rencontre_html"; then
+            echo "::error::Production /rencontre/ does not contain the new address: 30 Rue d'Angoulême."
+            exit 1
+          fi
+          if grep -q "30 Route d" <<< "$rencontre_html"; then
+            echo "::error::Production /rencontre/ still contains the old address: 30 Route d'Angoulême."
+            exit 1
+          fi
+
+          if grep -q "www.leopold-croizet.com" <<< "$mentions_html"; then
+            echo "::error::Production /mentions-legales/ still contains www.leopold-croizet.com."
+            exit 1
+          fi
+
+          echo "Production content checks passed for the current commit."

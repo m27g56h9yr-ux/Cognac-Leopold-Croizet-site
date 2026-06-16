@@ -63,4 +63,12 @@ Après le déploiement, GitHub Actions vérifie automatiquement ces pages :
 - `https://cognac-leopold-croizet.com/rencontre/`
 - `https://cognac-leopold-croizet.com/mentions-legales/`
 
-Pour vérifier manuellement que la production est à jour, ouvrir ces pages dans un navigateur et contrôler que les derniers changements visibles apparaissent bien. On peut aussi regarder le dernier run GitHub Actions : il doit être vert, avec l'étape finale de vérification en succès.
+Le workflow publie aussi `deploy-version.txt` sur le site. Ce fichier contient le commit GitHub deploye. L'etape finale verifie que ce fichier est visible en production, puis controle que :
+
+- la home ne contient plus les anciennes references `cognac-pierre-croizet.com`, `en.cognac-leopold-croizet.com`, `ru.cognac-leopold-croizet.com` ou `cognacg.cluster028.hosting.ovh.net` ;
+- `/rencontre/` contient `30 Rue d'Angouleme` et ne contient plus `30 Route d'Angouleme` ;
+- `/mentions-legales/` ne contient plus `www.leopold-croizet.com`.
+
+Si le workflow est vert, le bon commit est vraiment visible sur `https://cognac-leopold-croizet.com`. Si le workflow echoue uniquement a l'etape finale, le deploiement SFTP a probablement fonctionne mais OVH sert encore un cache, ou le domaine pointe vers un autre dossier que celui deploye.
+
+Pour verifier manuellement que la production est a jour, ouvrir `https://cognac-leopold-croizet.com/deploy-version.txt` et comparer le commit affiche avec le dernier commit GitHub.
