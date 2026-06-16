@@ -39,3 +39,28 @@ node scripts/check-static-site.mjs
 `npm run check` fonctionne aussi dans un environnement ou `npm` est disponible.
 
 La version statique conserve le rendu des pages WooCommerce, compte, panier et commande, mais ces parcours nécessitent un backend pour traiter réellement les achats, connexions et emails.
+
+## Déploiement OVH
+
+Le déploiement automatique est configuré dans GitHub Actions avec le fichier `.github/workflows/deploy-ovh.yml`.
+
+Les secrets sont dans GitHub, dans le dépôt, menu **Settings** > **Secrets and variables** > **Actions**. Les secrets utilisés sont :
+
+- `OVH_SFTP_HOST`
+- `OVH_SFTP_USERNAME`
+- `OVH_SFTP_PASSWORD`
+- `OVH_SFTP_TARGET_DIR`
+
+Pour lancer un déploiement manuel : ouvrir l'onglet **Actions** du dépôt GitHub, choisir **Deploy OVH**, cliquer sur **Run workflow**, sélectionner la branche `main`, puis confirmer.
+
+Le dossier distant doit rester `.` dans le secret `OVH_SFTP_TARGET_DIR`, car l'utilisateur SFTP OVH `cognacg-codex` arrive déjà directement dans `www/site-pc-new`. Il ne faut donc pas viser `www`, `www/site-pc` ou `www/site-pc-new` dans le workflow.
+
+Avant de déployer, GitHub Actions exécute `npm run build`, puis `npm run check`. Si une étape échoue, le déploiement s'arrête.
+
+Après le déploiement, GitHub Actions vérifie automatiquement ces pages :
+
+- `https://cognac-leopold-croizet.com/`
+- `https://cognac-leopold-croizet.com/rencontre/`
+- `https://cognac-leopold-croizet.com/mentions-legales/`
+
+Pour vérifier manuellement que la production est à jour, ouvrir ces pages dans un navigateur et contrôler que les derniers changements visibles apparaissent bien. On peut aussi regarder le dernier run GitHub Actions : il doit être vert, avec l'étape finale de vérification en succès.
