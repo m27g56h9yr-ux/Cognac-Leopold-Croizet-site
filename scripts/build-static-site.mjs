@@ -18,6 +18,9 @@ const PINEAU_RED_ROUTE = `/collection/${PINEAU_RED_SLUG}/`;
 const PINEAU_TEMPLATE_PATH = path.join(ROOT, 'scripts/page-templates/pineau-des-charentes.html.in');
 const PINEAU_DESCRIPTION = "Pineau des Charentes Léopold Croizet : assemblage d'eaux-de-vie de Cognac et de moûts de raisin, notes de fruits confits, vanille, miel et noix.";
 const PINEAU_RED_IMAGE = '/wp-content/uploads/2026/06/pineau-des-charentes-rouge';
+const PINEAU_COLLECTION_IMAGE = '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png';
+const PINEAU_COLLECTION_TITLE = 'Pineau Blanc';
+const PINEAU_RED_COLLECTION_IMAGE = `${PINEAU_RED_IMAGE}.png`;
 const PINEAU_RED_COPY = {
   fr: {
     appellationLabel: 'Appellation',
@@ -484,8 +487,7 @@ async function updateCollectionWithPineauBlanc() {
 
     let next = removePineauMegaMenuItems(html);
     next = removePineauCollectionCards(next);
-    next = addPineauCollectionEndPageItem(next, config);
-    next = addPineauRougeCollectionEndPageItem(next, config);
+    next = addPineauCollectionEndPageItems(next, config);
     next = next.replace(
       /Les cognacs et Pineau Blanc des Charentes Léopold(?:&nbsp;|\s)Croizet sont issus/,
       'Les cognacs Léopold&nbsp;Croizet sont issus',
@@ -504,50 +506,44 @@ function removePineauMegaMenuItems(html) {
 
 function removePineauCollectionCards(html) {
   return html.replace(
-    /\s*<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/pineau-des-charentes(?:-blanc|-rouge)?\/"[\s\S]*?<\/div>\s*<\/div>\s*/gi,
+    /\s*<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/pineau-des-charentes(?:-blanc|-rouge)?\/"[\s\S]*?(?=\s*<div class="container-collection-produit"|\s*<\/div>\s*<\/div>\s*<footer>)/gi,
     '\n',
   );
 }
 
-function addPineauCollectionEndPageItem(html, config) {
+function addPineauCollectionEndPageItems(html, config) {
   if (html.includes(config.route) || html.includes(`/${PINEAU_SLUG}/`)) return html;
 
-  return html.replace(
-    /(<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/valentine\/"[\s\S]*?<\/div>\s*<\/div>)/i,
-    `$1\n\n${pineauCollectionCard(config)}`,
-  );
-}
-
-function addPineauRougeCollectionEndPageItem(html, config) {
-  if (!config.redRoute || html.includes(config.redRoute) || html.includes(`/${PINEAU_RED_SLUG}/`)) return html;
-  const card = pineauCollectionCard({
-    route: config.redRoute,
-    title: config.redTitle,
-    image: `${PINEAU_RED_IMAGE}-196x300.png`,
-    alt: 'Pineau Rouge des Charentes Léopold Croizet',
-  });
-
-  const afterWhite = html.replace(
-    /(<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/pineau-des-charentes\/"[\s\S]*?<\/div>\s*<\/div>)/i,
-    `$1\n\n${card}`,
-  );
-  if (afterWhite !== html) return afterWhite;
+  const cards = [pineauCollectionCard(config)];
+  if (config.redRoute) {
+    cards.push(pineauCollectionCard({
+      route: config.redRoute,
+      title: config.redTitle,
+      image: PINEAU_RED_COLLECTION_IMAGE,
+      alt: 'Pineau Rouge des Charentes Léopold Croizet',
+    }));
+  }
 
   return html.replace(
     /(<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/valentine\/"[\s\S]*?<\/div>\s*<\/div>)/i,
-    `$1\n\n${card}`,
+    `$1\n\n${cards.join('\n\n')}`,
   );
 }
 
 function pineauCollectionCard(config) {
   const base = deployBase();
-  const image = config.image || '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png';
-  const alt = config.alt || 'Pineau';
+  const image = config.image || PINEAU_COLLECTION_IMAGE;
+  const isPineauRedCard = config.route?.includes(PINEAU_RED_SLUG);
+  if (isPineauRedCard && /-\d+x\d+\.png$/i.test(image)) {
+    throw new Error(`Pineau Rouge collection card must use the full product image, not ${image}`);
+  }
+  const alt = config.alt || 'Pineau des Charentes';
+  const srcsetAttribute = isPineauRedCard ? '' : ` srcset="${collectionDensitySrcset(base, image)}"`;
   return `                <div class="container-collection-produit">
 
                     <div class="image-produit-collection">
                         <a href="${base}${config.route}">
-                            <img src="${base}${image}" alt="${escapeHtml(alt)}" srcset="${base}${image} 2x, ${base}${image} 3x, ${base}${image} 4x">
+                            <img src="${base}${image}" alt="${escapeHtml(alt)}"${srcsetAttribute}>
                         </a>
                     </div>
                     <div class="informations-produit-collection">
@@ -560,6 +556,10 @@ function pineauCollectionCard(config) {
                     </div>
                 </div>
 `;
+}
+
+function collectionDensitySrcset(base, image) {
+  return [2, 3, 4].map((density) => `${base}${image} ${density}x`).join(', ');
 }
 
 function removePineauProductFooterItems(html) {
@@ -575,14 +575,14 @@ function addPineauProductFooterItems(html, config) {
     pineauProductFooterItem({
       route: config.route,
       isCurrent: config.currentSlug === PINEAU_SLUG,
-      image: '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png',
-      title: 'Pineau Blanc',
-      alt: 'Pineau',
+      image: PINEAU_COLLECTION_IMAGE,
+      title: PINEAU_COLLECTION_TITLE,
+      alt: PINEAU_COLLECTION_TITLE,
     }),
     pineauProductFooterItem({
       route: config.redRoute,
       isCurrent: config.currentSlug === PINEAU_RED_SLUG,
-      image: `${PINEAU_RED_IMAGE}-menu-v2.png`,
+      image: PINEAU_RED_COLLECTION_IMAGE,
       title: 'Pineau Rouge',
       alt: 'Pineau Rouge des Charentes Léopold Croizet',
     }),

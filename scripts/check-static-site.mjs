@@ -10,6 +10,8 @@ const checkedFiles = [];
 const missing = [];
 const dynamicReferences = [];
 const brandViolations = [];
+const pineauRedCollectionViolations = [];
+const pineauRedProductNavigationViolations = [];
 
 await walk(ROOT);
 
@@ -42,10 +44,18 @@ for (const file of checkedFiles) {
 
   if (relativeFile.endsWith('.html')) {
     brandViolations.push(...findBrandViolations(text, relativeFile));
+    pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
+    pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
   }
 }
 
-if (missing.length || dynamicReferences.length || brandViolations.length) {
+if (
+  missing.length
+  || dynamicReferences.length
+  || brandViolations.length
+  || pineauRedCollectionViolations.length
+  || pineauRedProductNavigationViolations.length
+) {
   if (missing.length) {
     console.error('Missing local targets:');
     for (const item of missing.slice(0, 60)) console.error(`- ${item}`);
@@ -59,6 +69,16 @@ if (missing.length || dynamicReferences.length || brandViolations.length) {
   if (brandViolations.length) {
     console.error('Brand rule violations:');
     for (const item of brandViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (pineauRedCollectionViolations.length) {
+    console.error('Pineau Rouge collection thumbnail regressions:');
+    for (const item of pineauRedCollectionViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (pineauRedProductNavigationViolations.length) {
+    console.error('Pineau Rouge product navigation regressions:');
+    for (const item of pineauRedProductNavigationViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   process.exit(1);
@@ -135,6 +155,89 @@ function findBrandViolations(html, relativeFile) {
     }
   }
   return violations;
+}
+
+function findPineauRedCollectionViolations(html, relativeFile) {
+  const collectionPages = new Set([
+    'collection/index.html',
+    'en/shop/index.html',
+    'ru/a-faire/index.html',
+    'da/shop/index.html',
+    'sv/shop/index.html',
+    'no/shop/index.html',
+    'zh/shop/index.html',
+  ]);
+  if (!collectionPages.has(relativeFile)) return [];
+
+  const violations = [];
+  const images = [...html.matchAll(/<img\b[^>]*>/gi)]
+    .map((match) => match[0])
+    .filter((image) => /pineau-des-charentes-rouge|Pineau Rouge/i.test(image));
+  if (images.length === 0) {
+    return [`${relativeFile}: missing Pineau Rouge collection thumbnail image`];
+  }
+
+  for (const image of images) {
+    if (!/src=["'][^"']*\/pineau-des-charentes-rouge\.png["']/i.test(image)) {
+      violations.push(`${relativeFile}: Pineau Rouge collection card must use pineau-des-charentes-rouge.png as src`);
+    }
+    if (/pineau-des-charentes-rouge-\d+x\d+\.png/i.test(image)) {
+      violations.push(`${relativeFile}: Pineau Rouge collection card must not use a resized derivative in src or srcset`);
+    }
+    if (/\ssrcset=/i.test(image)) {
+      violations.push(`${relativeFile}: Pineau Rouge collection card must not use a srcset`);
+    }
+  }
+
+  return violations;
+}
+
+function findPineauRedProductNavigationViolations(html, relativeFile) {
+  if (!/^(?:[a-z]{2}\/)?collection\/[^/]+\/index\.html$/.test(relativeFile)) return [];
+  if (!html.includes('bas-page-produit')) return [];
+
+  const violations = [];
+  const whiteBlocks = productNavigationBlocks(html, 'pineau-des-charentes');
+  const redBlocks = productNavigationBlocks(html, 'pineau-des-charentes-rouge');
+
+  if (whiteBlocks.length === 0) {
+    violations.push(`${relativeFile}: missing Pineau Blanc product navigation thumbnail`);
+  }
+  if (redBlocks.length === 0) {
+    violations.push(`${relativeFile}: missing Pineau Rouge product navigation thumbnail`);
+  }
+
+  for (const block of whiteBlocks) {
+    if (!/src=["'][^"']*\/img_produit_pineau_base-1\.png["']/i.test(block)) {
+      violations.push(`${relativeFile}: Pineau Blanc product navigation must use img_produit_pineau_base-1.png as src`);
+    }
+    if (!/<div class="titre-produit">\s*Pineau Blanc\s*<\/div>/i.test(block)) {
+      violations.push(`${relativeFile}: Pineau Blanc product navigation title must be Pineau Blanc`);
+    }
+  }
+
+  for (const block of redBlocks) {
+    if (!/src=["'][^"']*\/pineau-des-charentes-rouge\.png["']/i.test(block)) {
+      violations.push(`${relativeFile}: Pineau Rouge product navigation must use pineau-des-charentes-rouge.png as src`);
+    }
+    if (/pineau-des-charentes-rouge-\d+x\d+\.png/i.test(block)) {
+      violations.push(`${relativeFile}: Pineau Rouge product navigation must not use a resized derivative`);
+    }
+    if (!/<div class="titre-produit">\s*Pineau Rouge\s*<\/div>/i.test(block)) {
+      violations.push(`${relativeFile}: Pineau Rouge product navigation title must be Pineau Rouge`);
+    }
+  }
+
+  return violations;
+}
+
+function productNavigationBlocks(html, slug) {
+  const escapedSlug = slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(
+    `<div class="produit-unique bas-page-produit">\\s*<a href="[^"]*/collection/${escapedSlug}/"[\\s\\S]*?</a>\\s*</div>`,
+    'gi',
+  );
+  return [...html.matchAll(pattern)].map((match) => match[0]);
 }
 
 function extractBrandContexts(html) {
