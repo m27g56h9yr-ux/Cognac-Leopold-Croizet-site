@@ -1,0 +1,181 @@
+name: Deploy OVH
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ovh-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build, check and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check static site
+        run: npm run check
+
+      - name: Prepare deployment bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          rm -rf _deploy
+          mkdir -p _deploy
+
+          rsync -a \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.gitignore' \
+            --exclude='_deploy/' \
+            --exclude='_preview/' \
+            --exclude='node_modules/' \
+            --exclude='scripts/' \
+            --exclude='*.md' \
+            --exclude='README.md' \
+            --exclude='AUDIT.md' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='npm-shrinkwrap.json' \
+            --exclude='yarn.lock' \
+            --exclude='pnpm-lock.yaml' \
+            --exclude='newsletter-data/' \
+            --exclude='api/newsletter-config.php' \
+            --exclude='.htaccess' \
+            --exclude='.htpasswd' \
+            --exclude='.user.ini' \
+            --exclude='php.ini' \
+            --exclude='wp-config.php' \
+            --exclude='config.php' \
+            --exclude='config.*' \
+            --exclude='*.config.*' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='*.env' \
+            --exclude='*.local' \
+            --exclude='*.pem' \
+            --exclude='*.key' \
+            --exclude='id_rsa*' \
+            --exclude='config.private.*' \
+            --exclude='*.private.*' \
+            ./ _deploy/
+
+          blocked_path="$(find _deploy \( \
+            -name '.git' -o \
+            -name '.github' -o \
+            -name 'newsletter-data' -o \
+            -name 'newsletter-config.php' -o \
+            -name '.htaccess' -o \
+            -name '.htpasswd' -o \
+            -name '.user.ini' -o \
+            -name 'php.ini' -o \
+            -name 'wp-config.php' -o \
+            -name 'config.php' -o \
+            -name 'config.*' -o \
+            -name '*.config.*' -o \
+            -name '.env' -o \
+            -name '.env.*' -o \
+            -name '*.env' -o \
+            -name '*.local' -o \
+            -name '*.pem' -o \
+            -name '*.key' -o \
+            -name 'id_rsa*' -o \
+            -name 'config.private.*' -o \
+            -name '*.private.*' \
+          \) -print -quit)"
+
+          if [ -n "$blocked_path" ]; then
+            echo "::error::Sensitive file included in deployment bundle: $blocked_path"
+            exit 1
+          fi
+
+      - name: Install SFTP client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+
+      - name: Deploy to OVH by SFTP
+        env:
+          SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
+          SFTP_USERNAME: ${{ secrets.OVH_SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
+          SFTP_TARGET_DIR: ${{ secrets.OVH_SFTP_TARGET_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          : "${SFTP_HOST:?Missing GitHub secret OVH_SFTP_HOST}"
+          : "${SFTP_USERNAME:?Missing GitHub secret OVH_SFTP_USERNAME}"
+          : "${SFTP_PASSWORD:?Missing GitHub secret OVH_SFTP_PASSWORD}"
+          : "${SFTP_TARGET_DIR:?Missing GitHub secret OVH_SFTP_TARGET_DIR}"
+
+          if [ "$SFTP_TARGET_DIR" != "." ]; then
+            echo "::error::OVH_SFTP_TARGET_DIR must be '.' because the OVH SFTP user already opens in www/site-pc-new."
+            exit 1
+          fi
+
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_COMMANDS
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set sftp:auto-confirm yes
+          mirror --reverse --delete --verbose --parallel=4 \
+            --exclude '(^|/)newsletter-data(/|$)' \
+            --exclude '(^|/)api/newsletter-config\.php$' \
+            --exclude '(^|/)\.htaccess$' \
+            --exclude '(^|/)\.htpasswd$' \
+            --exclude '(^|/)\.user\.ini$' \
+            --exclude '(^|/)php\.ini$' \
+            --exclude '(^|/)wp-config\.php$' \
+            --exclude '(^|/)config\.php$' \
+            --exclude '(^|/)config\..*$' \
+            --exclude '(^|/).*\.config\..*$' \
+            --exclude '(^|/)\.env(\..*)?$' \
+            --exclude '(^|/).*\.env$' \
+            --exclude '(^|/).*\.local$' \
+            --exclude '(^|/).*\.pem$' \
+            --exclude '(^|/).*\.key$' \
+            --exclude '(^|/)id_rsa.*$' \
+            --exclude '(^|/).*private.*$' \
+            _deploy/ "$SFTP_TARGET_DIR"
+          bye
+          LFTP_COMMANDS
+
+      - name: Verify production pages
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          urls=(
+            "https://cognac-leopold-croizet.com/"
+            "https://cognac-leopold-croizet.com/rencontre/"
+            "https://cognac-leopold-croizet.com/mentions-legales/"
+          )
+
+          for url in "${urls[@]}"; do
+            status_code="$(curl --location --silent --show-error --output /dev/null --write-out '%{http_code}' --retry 3 --retry-all-errors --connect-timeout 10 --max-time 30 "$url")"
+            if [ "$status_code" -lt 200 ] || [ "$status_code" -ge 400 ]; then
+              echo "::error::$url returned HTTP $status_code"
+              exit 1
+            fi
+            echo "$url returned HTTP $status_code"
+          done
