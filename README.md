@@ -55,7 +55,9 @@ Pour lancer un déploiement manuel : ouvrir l'onglet **Actions** du dépôt GitH
 
 Le dossier distant doit rester `.` dans le secret `OVH_SFTP_TARGET_DIR`, car l'utilisateur SFTP OVH `cognacg-codex` arrive déjà directement dans `www/site-pc-new`. Il ne faut donc pas viser `www`, `www/site-pc` ou `www/site-pc-new` dans le workflow.
 
-Avant de déployer, GitHub Actions exécute `npm run build`, puis `npm run check`. Si une étape échoue, le déploiement s'arrête.
+Avant de déployer, GitHub Actions vérifie que les fichiers statiques essentiels sont présents, puis exécute `npm run check`. Si une étape échoue, le déploiement s'arrête.
+
+Le workflow OVH ne lance pas `npm run build`, car ce script reconstruit le site depuis les URLs publiques WordPress. Le déploiement OVH doit publier l'état déjà commité dans GitHub, afin de ne pas dépendre de l'ancien site, d'un sitemap WordPress absent, ou d'un cache de production.
 
 Après le déploiement, GitHub Actions vérifie automatiquement ces pages :
 

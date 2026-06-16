@@ -27,8 +27,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Build static site
-        run: npm run build
+      - name: Verify committed static site files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f index.html
+          test -f sitemap.xml
+          test -f robots.txt
 
       - name: Check static site
         run: npm run check
