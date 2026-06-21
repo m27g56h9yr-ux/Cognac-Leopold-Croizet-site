@@ -45,6 +45,7 @@ a.logo-header {
 }
 a.logo-header img {
   width: 100%;
+  height: auto;
 }
 a.logo-header div {
   font-size: 0.75rem;
@@ -1988,7 +1989,8 @@ p.container-mentions-legales {
   }
   a.logo-header img {
     width: 110px;
-  }
+    height: auto;
+}
   a.logo-header div {
     font-size: 0.5rem;
   }

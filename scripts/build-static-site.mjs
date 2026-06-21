@@ -1821,9 +1821,17 @@ async function fetchAsset(url, referer) {
   }
 }
 
+function ensureLogoImageHeightAuto(css) {
+  return css.replace(/a\.logo-header img\s*\{([^}]*)\}/g, (block, declarations) => {
+    if (/\bheight\s*:/.test(declarations)) return block;
+    const indent = declarations.match(/\n([ \t]*)\S/)?.[1] || '  ';
+    return `a.logo-header img {${declarations.replace(/\s*$/, '')}\n${indent}height: auto;\n}`;
+  });
+}
+
 function repairStylesheetAsset(body, localPath) {
   if (localPath === 'wp-content/themes/theme-site-pc/style.css') {
-    const repaired = body
+    const repaired = ensureLogoImageHeightAuto(body)
       .replace(/\n?\.wpml-ls-item-ru\s*\{\s*display:\s*none\s*!important;\s*\}\s*/gi, '\n')
       .replace(/\.info-systeme\.succes,\s*\n\.info-systeme\.error/g, '.info-systeme.succes,\n.info-systeme.success,\n.info-systeme.error')
       .replace(/\.info-systeme\.succes\s*\{/g, '.info-systeme.succes,\n.info-systeme.success {');
