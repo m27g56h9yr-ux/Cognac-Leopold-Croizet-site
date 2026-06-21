@@ -1829,9 +1829,18 @@ function ensureLogoImageHeightAuto(css) {
   });
 }
 
+function ensureNewsletterInlineControls(css) {
+  return css.replace(/\.container-newsletter (input|button)\s*\{([^}]*)\}/g, (block, element, declarations) => {
+    if (/\bbox-sizing\s*:/.test(declarations)) return block;
+    const declarationIndent = declarations.match(/\n([ \t]*)\S/)?.[1] || '  ';
+    const closingIndent = block.match(/\n([ \t]*)\}$/)?.[1] || '';
+    return block.replace(/\n[ \t]*\}$/, `\n${declarationIndent}box-sizing: border-box;\n${closingIndent}}`);
+  });
+}
+
 function repairStylesheetAsset(body, localPath) {
   if (localPath === 'wp-content/themes/theme-site-pc/style.css') {
-    const repaired = ensureLogoImageHeightAuto(body)
+    const repaired = ensureNewsletterInlineControls(ensureLogoImageHeightAuto(body))
       .replace(/\n?\.wpml-ls-item-ru\s*\{\s*display:\s*none\s*!important;\s*\}\s*/gi, '\n')
       .replace(/\.info-systeme\.succes,\s*\n\.info-systeme\.error/g, '.info-systeme.succes,\n.info-systeme.success,\n.info-systeme.error')
       .replace(/\.info-systeme\.succes\s*\{/g, '.info-systeme.succes,\n.info-systeme.success {');
