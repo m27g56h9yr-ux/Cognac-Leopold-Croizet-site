@@ -1,10 +1,11 @@
 import { access, cp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const DEPLOY_BASE = '/Cognac-Leopold-Croizet-site';
+const DEPLOY_BASE = DEPLOY_BASE_PATH;
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const PINEAU_SLUG = 'pineau-des-charentes';
 const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
@@ -1007,7 +1008,7 @@ for (const locale of Object.keys(nordicConfigs)) {
     const route = routeForFile(file);
     let html = await readFile(file, 'utf8');
     html = localizeCopiedEnglishPage(html, locale, route);
-    await writeFile(file, html, 'utf8');
+    await writeFile(file, normalizeLegacyDeployBase(html), 'utf8');
   }
 }
 
@@ -1016,7 +1017,7 @@ const existingRoutes = new Set(allFiles.map(routeForFile));
 for (const file of allFiles) {
   const route = routeForFile(file);
   const html = await readFile(file, 'utf8');
-  await writeFile(file, replaceLanguageSwitcher(html, route, existingRoutes), 'utf8');
+  await writeFile(file, normalizeLegacyDeployBase(replaceLanguageSwitcher(html, route, existingRoutes)), 'utf8');
 }
 
 console.log('Nordic locale pages generated: da, sv, no');

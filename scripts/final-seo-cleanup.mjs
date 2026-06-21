@@ -1,6 +1,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { normalizeLegacyDeployBase } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -61,8 +62,9 @@ for (const file of await walkHtml(ROOT)) {
   if (next !== beforeContent) contentNormalized += 1;
 
   next = normalizeGeneratedWhitespace(next);
-  if (next !== original) {
-    await writeFile(file, next, 'utf8');
+  const normalizedNext = normalizeLegacyDeployBase(next);
+  if (normalizedNext !== original) {
+    await writeFile(file, normalizedNext, 'utf8');
     changed += 1;
   }
 }

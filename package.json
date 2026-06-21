@@ -5,6 +5,8 @@
   "scripts": {
     "build": "node scripts/build-static-site.mjs && node scripts/add-nordic-locales.mjs && node scripts/add-chinese-locale.mjs && node scripts/fix-russian-leopold-url.mjs && node scripts/seo-hardening.mjs && node scripts/fix-cocktail-schema.mjs && node scripts/final-seo-cleanup.mjs",
     "seo": "node scripts/fix-russian-leopold-url.mjs && node scripts/seo-hardening.mjs && node scripts/fix-cocktail-schema.mjs && node scripts/final-seo-cleanup.mjs",
-    "check": "node scripts/check-static-site.mjs"
+    "check": "node scripts/check-static-site.mjs",
+    "build:ovh": "DEPLOY_TARGET=ovh npm run build",
+    "build:github-pages": "DEPLOY_TARGET=github-pages npm run build"
   }
 }

@@ -34,7 +34,7 @@ var chinaRegions={CN:1,HK:1,MO:1,TW:1};
 var chinaTimeZones={"Asia/Shanghai":1,"Asia/Urumqi":1,"Asia/Hong_Kong":1,"Asia/Macau":1,"Asia/Taipei":1};
 var storageKey="lcPreferredLanguage";
 var chinaStorageKey="lcChinaVisitor";
-var deployBase="/Cognac-Leopold-Croizet-site";
+var deployBase="";
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
 function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\/index\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
@@ -60,17 +60,19 @@ var targetRoute=supported[lang]||supported.en;
 if(targetRoute===route)return;
 window.location.replace(activeBase()+targetRoute+window.location.search+window.location.hash)
 })();</script>
-<link rel="preload" href="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
+
+<link rel="preload" href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
+<link rel="preload" href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="msapplication-tap-highlight" content="no" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/use.fontawesome.com/releases/v5.7.2/css/all.css">
-  <link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script defer src="/Cognac-Leopold-Croizet-site/assets/external/maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-  <script src="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/assets/external/use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <link rel="stylesheet" href="/assets/external/stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script defer src="/assets/external/maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <script src="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
@@ -78,25 +80,25 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <style id="wp-block-library-inline-css">
 :root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
 
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/css/dist/block-library/common.min.css */
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
 </style>
 <style id="wp-block-image-inline-css">
 .wp-block-image>a,.wp-block-image>figure>a{display:inline-block}.wp-block-image img{box-sizing:border-box;height:auto;max-width:100%;vertical-align:bottom}@media not (prefers-reduced-motion){.wp-block-image img.hide{visibility:hidden}.wp-block-image img.show{animation:show-content-image .4s}}.wp-block-image[style*=border-radius] img,.wp-block-image[style*=border-radius]>a{border-radius:inherit}.wp-block-image.has-custom-border img{box-sizing:border-box}.wp-block-image.aligncenter{text-align:center}.wp-block-image.alignfull>a,.wp-block-image.alignwide>a{width:100%}.wp-block-image.alignfull img,.wp-block-image.alignwide img{height:auto;width:100%}.wp-block-image .aligncenter,.wp-block-image .alignleft,.wp-block-image .alignright,.wp-block-image.aligncenter,.wp-block-image.alignleft,.wp-block-image.alignright{display:table}.wp-block-image .aligncenter>figcaption,.wp-block-image .alignleft>figcaption,.wp-block-image .alignright>figcaption,.wp-block-image.aligncenter>figcaption,.wp-block-image.alignleft>figcaption,.wp-block-image.alignright>figcaption{caption-side:bottom;display:table-caption}.wp-block-image .alignleft{float:left;margin:.5em 1em .5em 0}.wp-block-image .alignright{float:right;margin:.5em 0 .5em 1em}.wp-block-image .aligncenter{margin-left:auto;margin-right:auto}.wp-block-image :where(figcaption){margin-bottom:1em;margin-top:.5em}.wp-block-image.is-style-circle-mask img{border-radius:9999px}@supports ((-webkit-mask-image:none) or (mask-image:none)) or (-webkit-mask-image:none){.wp-block-image.is-style-circle-mask img{border-radius:0;-webkit-mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-image:url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');mask-mode:alpha;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-size:contain;mask-size:contain}}:root :where(.wp-block-image.is-style-rounded img,.wp-block-image .is-style-rounded img){border-radius:9999px}.wp-block-image figure{margin:0}.wp-lightbox-container{display:flex;flex-direction:column;position:relative}.wp-lightbox-container img{cursor:zoom-in}.wp-lightbox-container img:hover+button{opacity:1}.wp-lightbox-container button{align-items:center;backdrop-filter:blur(16px) saturate(180%);background-color:#5a5a5a40;border:none;border-radius:4px;cursor:zoom-in;display:flex;height:20px;justify-content:center;opacity:0;padding:0;position:absolute;right:16px;text-align:center;top:16px;width:20px;z-index:100}@media not (prefers-reduced-motion){.wp-lightbox-container button{transition:opacity .2s ease}}.wp-lightbox-container button:focus-visible{outline:3px auto #5a5a5a40;outline:3px auto -webkit-focus-ring-color;outline-offset:3px}.wp-lightbox-container button:hover{cursor:pointer;opacity:1}.wp-lightbox-container button:focus{opacity:1}.wp-lightbox-container button:focus,.wp-lightbox-container button:hover,.wp-lightbox-container button:not(:hover):not(:active):not(.has-background){background-color:#5a5a5a40;border:none}.wp-lightbox-overlay{box-sizing:border-box;cursor:zoom-out;height:100vh;left:0;overflow:hidden;position:fixed;top:0;visibility:hidden;width:100%;z-index:100000}.wp-lightbox-overlay .wp-lightbox-close-button{align-items:center;cursor:pointer;display:flex;font-family:inherit;gap:8px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 4px;position:absolute;right:calc(env(safe-area-inset-right) + 16px);top:calc(env(safe-area-inset-top) + 16px);z-index:5000000}.wp-lightbox-overlay .wp-lightbox-close-button:focus,.wp-lightbox-overlay .wp-lightbox-close-button:hover,.wp-lightbox-overlay .wp-lightbox-close-button:not(:hover):not(:active):not(.has-background){background:none;border:none}.wp-lightbox-overlay .wp-lightbox-close-button:has(.wp-lightbox-close-text:not([hidden])) .wp-lightbox-close-icon svg{height:1em;width:1em}.wp-lightbox-overlay .wp-lightbox-close-icon svg{display:block}.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{align-items:center;bottom:16px;cursor:pointer;display:flex;font-family:inherit;gap:4px;justify-content:center;line-height:1;min-height:40px;min-width:40px;padding:0 8px;position:absolute;z-index:2000002}.wp-lightbox-overlay .wp-lightbox-navigation-button-next[hidden],.wp-lightbox-overlay .wp-lightbox-navigation-button-prev[hidden]{display:none}@media (min-width:960px){.wp-lightbox-overlay .wp-lightbox-navigation-button-next,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{bottom:50%;transform:translateY(-50%)}}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-next:not(:hover):not(:active):not(.has-background),.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:focus,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:hover,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:not(:hover):not(:active):not(.has-background){background:none;border:none;padding:0 8px}.wp-lightbox-overlay .wp-lightbox-navigation-button-next:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg,.wp-lightbox-overlay .wp-lightbox-navigation-button-prev:has(.wp-lightbox-navigation-text:not([hidden])) .wp-lightbox-navigation-icon svg{display:block;height:1.5em;width:1.5em}.wp-lightbox-overlay .wp-lightbox-navigation-button-prev{left:calc(env(safe-area-inset-left) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-button-next{right:calc(env(safe-area-inset-right) + 16px)}.wp-lightbox-overlay .wp-lightbox-navigation-icon svg{vertical-align:middle}.wp-lightbox-overlay .lightbox-image-container{height:var(--wp--lightbox-container-height);left:50%;overflow:hidden;position:absolute;top:50%;transform:translate(-50%,-50%);transform-origin:top left;width:var(--wp--lightbox-container-width);z-index:2000001}.wp-lightbox-overlay .wp-block-image{align-items:center;box-sizing:border-box;display:flex;height:100%;justify-content:center;margin:0;position:relative;transform-origin:0 0;width:100%;z-index:3000000}.wp-lightbox-overlay .wp-block-image img{height:var(--wp--lightbox-image-height);min-height:var(--wp--lightbox-image-height);min-width:var(--wp--lightbox-image-width);width:var(--wp--lightbox-image-width)}.wp-lightbox-overlay .wp-block-image figcaption{display:none}.wp-lightbox-overlay button{background:none;border:none}.wp-lightbox-overlay .scrim{background-color:#fff;height:100%;opacity:.9;position:absolute;width:100%;z-index:2000000}.wp-lightbox-overlay.active{visibility:visible}@media not (prefers-reduced-motion){.wp-lightbox-overlay.active{animation:turn-on-visibility .25s both}.wp-lightbox-overlay.active img{animation:turn-on-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active){animation:turn-off-visibility .35s both}.wp-lightbox-overlay.show-closing-animation:not(.active) img{animation:turn-off-visibility .25s both}.wp-lightbox-overlay.zoom.active{animation:none;opacity:1;visibility:visible}.wp-lightbox-overlay.zoom.active .lightbox-image-container{animation:lightbox-zoom-in .4s}.wp-lightbox-overlay.zoom.active .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.active .scrim{animation:turn-on-visibility .4s forwards}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active){animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container{animation:lightbox-zoom-out .4s}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .lightbox-image-container img{animation:none}.wp-lightbox-overlay.zoom.show-closing-animation:not(.active) .scrim{animation:turn-off-visibility .4s forwards}}@keyframes show-content-image{0%{visibility:hidden}99%{visibility:hidden}to{visibility:visible}}@keyframes turn-on-visibility{0%{opacity:0}to{opacity:1}}@keyframes turn-off-visibility{0%{opacity:1;visibility:visible}99%{opacity:0;visibility:visible}to{opacity:0;visibility:hidden}}@keyframes lightbox-zoom-in{0%{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale))}to{transform:translate(-50%,-50%) scale(1)}}@keyframes lightbox-zoom-out{0%{transform:translate(-50%,-50%) scale(1);visibility:visible}99%{visibility:visible}to{transform:translate(calc((-100vw + var(--wp--lightbox-scrollbar-width))/2 + var(--wp--lightbox-initial-left-position)),calc(-50vh + var(--wp--lightbox-initial-top-position))) scale(var(--wp--lightbox-scale));visibility:hidden}}
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/blocks/image/style.min.css */
+/*# sourceURL=/wp-includes/blocks/image/style.min.css */
 </style>
 <style id="wp-block-paragraph-inline-css">
 .is-small-text{font-size:.875em}.is-regular-text{font-size:1em}.is-large-text{font-size:2.25em}.is-larger-text{font-size:3em}.has-drop-cap:not(:focus):first-letter{float:left;font-size:8.4em;font-style:normal;font-weight:100;line-height:.68;margin:.05em .1em 0 0;text-transform:uppercase}body.rtl .has-drop-cap:not(:focus):first-letter{float:none;margin-left:.1em}p.has-drop-cap.has-background{overflow:hidden}:root :where(p.has-background){padding:1.25em 2.375em}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}p.has-text-align-left[style*="writing-mode:vertical-lr"],p.has-text-align-right[style*="writing-mode:vertical-rl"]{rotate:180deg}
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/blocks/paragraph/style.min.css */
+/*# sourceURL=/wp-includes/blocks/paragraph/style.min.css */
 </style>
 <style id="wp-block-columns-inline-css">
 .wp-block-columns{box-sizing:border-box;display:flex;flex-wrap:wrap!important}@media (min-width:782px){.wp-block-columns{flex-wrap:nowrap!important}}.wp-block-columns{align-items:normal!important}.wp-block-columns.are-vertically-aligned-top{align-items:flex-start}.wp-block-columns.are-vertically-aligned-center{align-items:center}.wp-block-columns.are-vertically-aligned-bottom{align-items:flex-end}@media (max-width:781px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:100%!important}}@media (min-width:782px){.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns:not(.is-not-stacked-on-mobile)>.wp-block-column[style*=flex-basis]{flex-grow:0}}.wp-block-columns.is-not-stacked-on-mobile{flex-wrap:nowrap!important}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column{flex-basis:0;flex-grow:1}.wp-block-columns.is-not-stacked-on-mobile>.wp-block-column[style*=flex-basis]{flex-grow:0}:where(.wp-block-columns){margin-bottom:1.75em}:where(.wp-block-columns.has-background){padding:1.25em 2.375em}.wp-block-column{flex-grow:1;min-width:0;overflow-wrap:break-word;word-break:break-word}.wp-block-column.is-vertically-aligned-top{align-self:flex-start}.wp-block-column.is-vertically-aligned-center{align-self:center}.wp-block-column.is-vertically-aligned-bottom{align-self:flex-end}.wp-block-column.is-vertically-aligned-stretch{align-self:stretch}.wp-block-column.is-vertically-aligned-bottom,.wp-block-column.is-vertically-aligned-center,.wp-block-column.is-vertically-aligned-top{width:100%}
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/blocks/columns/style.min.css */
+/*# sourceURL=/wp-includes/blocks/columns/style.min.css */
 </style>
 
 <style id="classic-theme-styles-inline-css">
 /*! This file is auto-generated */
 .wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/css/classic-themes.min.css */
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
 </style>
 
 <style id="global-styles-inline-css">
@@ -105,8 +107,8 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=global-styles-inline-css */
 </style>
 
-<link rel='stylesheet' id='wpml-blocks-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css" media='all' />
-<link rel='stylesheet' id='woocommerce-layout-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css" media='all' />
+<link rel='stylesheet' id='wpml-blocks-css' href="/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css" media='all' />
+<link rel='stylesheet' id='woocommerce-layout-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css" media='all' />
 <style id="woocommerce-layout-inline-css">
 
 	.infinite-scroll .woocommerce-pagination {
@@ -114,52 +116,52 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	}
 /*# sourceURL=woocommerce-layout-inline-css */
 </style>
-<link rel='stylesheet' id='woocommerce-smallscreen-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css" media='only screen and (max-width: 768px)' />
-<link rel='stylesheet' id='woocommerce-general-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce.css" media='all' />
+<link rel='stylesheet' id='woocommerce-smallscreen-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css" media='only screen and (max-width: 768px)' />
+<link rel='stylesheet' id='woocommerce-general-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce.css" media='all' />
 <style id="woocommerce-inline-inline-css">
 .woocommerce form .form-row .required { visibility: visible; }
 /*# sourceURL=woocommerce-inline-inline-css */
 </style>
-<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css" media='all' />
-<link rel='stylesheet' id='awb-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.css" media='all' />
-<link rel='stylesheet' id='style-css' href="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" media='all' />
-<link rel='stylesheet' id='add_google_font_montserrat-css' href="/Cognac-Leopold-Croizet-site/assets/external/fonts.googleapis.com/css-5cf545d9.css" media='all' />
-<link rel='stylesheet' id='add_google_font_playfair-css' href="/Cognac-Leopold-Croizet-site/assets/external/fonts.googleapis.com/css2-04e27267.css" media='all' />
-<link rel='stylesheet' id='flexible-shipping-free-shipping-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/flexible-shipping/assets/dist/css/free-shipping.css" media='all' />
-<link rel="stylesheet" type="text/css" href="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/smartslider.min.css" media="all">
-<link rel="stylesheet" type="text/css" href="/Cognac-Leopold-Croizet-site/assets/external/fonts.googleapis.com/css-8bfd5e40.css" media="all">
+<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href="/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css" media='all' />
+<link rel='stylesheet' id='awb-css' href="/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.css" media='all' />
+<link rel='stylesheet' id='style-css' href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" media='all' />
+<link rel='stylesheet' id='add_google_font_montserrat-css' href="/assets/external/fonts.googleapis.com/css-5cf545d9.css" media='all' />
+<link rel='stylesheet' id='add_google_font_playfair-css' href="/assets/external/fonts.googleapis.com/css2-04e27267.css" media='all' />
+<link rel='stylesheet' id='flexible-shipping-free-shipping-css' href="/wp-content/plugins/flexible-shipping/assets/dist/css/free-shipping.css" media='all' />
+<link rel="stylesheet" type="text/css" href="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/smartslider.min.css" media="all">
+<link rel="stylesheet" type="text/css" href="/assets/external/fonts.googleapis.com/css-8bfd5e40.css" media="all">
 <style data-related="n2-ss-39">div#n2-ss-39 .n2-ss-slider-1{display:grid;position:relative;}div#n2-ss-39 .n2-ss-slider-2{display:grid;position:relative;overflow:hidden;padding:0px 0px 0px 0px;border:0px solid RGBA(62,62,62,1);border-radius:0px;background-clip:padding-box;background-repeat:repeat;background-position:50% 50%;background-size:cover;background-attachment:scroll;z-index:1;}div#n2-ss-39:not(.n2-ss-loaded) .n2-ss-slider-2{background-image:none !important;}div#n2-ss-39 .n2-ss-slider-3{display:grid;grid-template-areas:'cover';position:relative;overflow:hidden;z-index:10;}div#n2-ss-39 .n2-ss-slider-3 > *{grid-area:cover;}div#n2-ss-39 .n2-ss-slide-backgrounds,div#n2-ss-39 .n2-ss-slider-3 > .n2-ss-divider{position:relative;}div#n2-ss-39 .n2-ss-slide-backgrounds{z-index:10;}div#n2-ss-39 .n2-ss-slide-backgrounds > *{overflow:hidden;}div#n2-ss-39 .n2-ss-slide-background{transform:translateX(-100000px);}div#n2-ss-39 .n2-ss-slider-4{place-self:center;position:relative;width:100%;height:100%;z-index:20;display:grid;grid-template-areas:'slide';}div#n2-ss-39 .n2-ss-slider-4 > *{grid-area:slide;}div#n2-ss-39.n2-ss-full-page--constrain-ratio .n2-ss-slider-4{height:auto;}div#n2-ss-39 .n2-ss-slide{display:grid;place-items:center;grid-auto-columns:100%;position:relative;z-index:20;-webkit-backface-visibility:hidden;transform:translateX(-100000px);}div#n2-ss-39 .n2-ss-slide{perspective:1000px;}div#n2-ss-39 .n2-ss-slide-active{z-index:21;}.n2-ss-background-animation{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;}div#n2-ss-39 .n2-ss-button-container,div#n2-ss-39 .n2-ss-button-container a{display:block;}div#n2-ss-39 .n2-ss-button-container--non-full-width,div#n2-ss-39 .n2-ss-button-container--non-full-width a{display:inline-block;}div#n2-ss-39 .n2-ss-button-container.n2-ss-nowrap{white-space:nowrap;}div#n2-ss-39 .n2-ss-button-container a div{display:inline;font-size:inherit;text-decoration:inherit;color:inherit;line-height:inherit;font-family:inherit;font-weight:inherit;}div#n2-ss-39 .n2-ss-button-container a > div{display:inline-flex;align-items:center;vertical-align:top;}div#n2-ss-39 .n2-ss-button-container span{font-size:100%;vertical-align:baseline;}div#n2-ss-39 .n2-ss-button-container a[data-iconplacement="left"] span{margin-right:0.3em;}div#n2-ss-39 .n2-ss-button-container a[data-iconplacement="right"] span{margin-left:0.3em;}div#n2-ss-39 .nextend-arrow{cursor:pointer;overflow:hidden;line-height:0 !important;z-index:18;-webkit-user-select:none;}div#n2-ss-39 .nextend-arrow img{position:relative;display:block;}div#n2-ss-39 .nextend-arrow img.n2-arrow-hover-img{display:none;}div#n2-ss-39 .nextend-arrow:FOCUS img.n2-arrow-hover-img,div#n2-ss-39 .nextend-arrow:HOVER img.n2-arrow-hover-img{display:inline;}div#n2-ss-39 .nextend-arrow:FOCUS img.n2-arrow-normal-img,div#n2-ss-39 .nextend-arrow:HOVER img.n2-arrow-normal-img{display:none;}div#n2-ss-39 .nextend-arrow-animated{overflow:hidden;}div#n2-ss-39 .nextend-arrow-animated > div{position:relative;}div#n2-ss-39 .nextend-arrow-animated .n2-active{position:absolute;}div#n2-ss-39 .nextend-arrow-animated-fade{transition:background 0.3s, opacity 0.4s;}div#n2-ss-39 .nextend-arrow-animated-horizontal > div{transition:all 0.4s;transform:none;}div#n2-ss-39 .nextend-arrow-animated-horizontal .n2-active{top:0;}div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-horizontal .n2-active{left:100%;}div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-horizontal .n2-active{right:100%;}div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-horizontal:HOVER > div,div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-horizontal:FOCUS > div{transform:translateX(-100%);}div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-horizontal:HOVER > div,div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-horizontal:FOCUS > div{transform:translateX(100%);}div#n2-ss-39 .nextend-arrow-animated-vertical > div{transition:all 0.4s;transform:none;}div#n2-ss-39 .nextend-arrow-animated-vertical .n2-active{left:0;}div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-vertical .n2-active{top:100%;}div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-vertical .n2-active{bottom:100%;}div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-vertical:HOVER > div,div#n2-ss-39 .nextend-arrow-previous.nextend-arrow-animated-vertical:FOCUS > div{transform:translateY(-100%);}div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-vertical:HOVER > div,div#n2-ss-39 .nextend-arrow-next.nextend-arrow-animated-vertical:FOCUS > div{transform:translateY(100%);}div#n2-ss-39 .n2-ss-control-bullet{visibility:hidden;text-align:center;justify-content:center;z-index:14;}div#n2-ss-39 .n2-ss-control-bullet--calculate-size{left:0 !important;}div#n2-ss-39 .n2-ss-control-bullet-horizontal.n2-ss-control-bullet-fullsize{width:100%;}div#n2-ss-39 .n2-ss-control-bullet-vertical.n2-ss-control-bullet-fullsize{height:100%;flex-flow:column;}div#n2-ss-39 .nextend-bullet-bar{display:inline-flex;vertical-align:top;visibility:visible;align-items:center;flex-wrap:wrap;}div#n2-ss-39 .n2-bar-justify-content-left{justify-content:flex-start;}div#n2-ss-39 .n2-bar-justify-content-center{justify-content:center;}div#n2-ss-39 .n2-bar-justify-content-right{justify-content:flex-end;}div#n2-ss-39 .n2-ss-control-bullet-vertical > .nextend-bullet-bar{flex-flow:column;}div#n2-ss-39 .n2-ss-control-bullet-fullsize > .nextend-bullet-bar{display:flex;}div#n2-ss-39 .n2-ss-control-bullet-horizontal.n2-ss-control-bullet-fullsize > .nextend-bullet-bar{flex:1 1 auto;}div#n2-ss-39 .n2-ss-control-bullet-vertical.n2-ss-control-bullet-fullsize > .nextend-bullet-bar{height:100%;}div#n2-ss-39 .nextend-bullet-bar .n2-bullet{cursor:pointer;transition:background-color 0.4s;}div#n2-ss-39 .nextend-bullet-bar .n2-bullet.n2-active{cursor:default;}div#n2-ss-39 div.n2-ss-bullet-thumbnail-container{position:absolute;z-index:10000000;}div#n2-ss-39 .n2-ss-bullet-thumbnail-container .n2-ss-bullet-thumbnail{background-size:cover;background-repeat:no-repeat;background-position:center;}div#n2-ss-39 .n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph{font-family: 'Montserrat';color: #ffffff;font-size:75%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph a, div#n2-ss-39 .n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph a:FOCUS{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph a:HOVER, div#n2-ss-39 .n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph a:ACTIVE{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-font-4fea3266f8fb974b789488b5d2debf0f-hover{font-family: 'Playfair Display';color: #ffffff;font-size:175%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: inherit;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-style-dfece9006ec4a9d761142830c01faf94-heading{background: RGBA(255,255,255,0);opacity:1;padding:10px 15px 10px 15px ;box-shadow: none;border: 1px solid RGBA(255,255,255,1);border-radius:0px;}div#n2-ss-39 .n2-style-bfeebcc8fed48f2089efc676a8e62c7b-heading{background: RGBA(255,255,255,0);opacity:0.72;padding:0px 0px 0px 0px ;box-shadow: none;border: 0px solid RGBA(0,0,0,1);border-radius:0px;}div#n2-ss-39 .n2-font-53a69e1b50bbb305cd14f96709d3c56e-hover{font-family: 'Montserrat';color: #564444;font-size:225%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading{background: RGBA(255,255,255,0);opacity:1;padding:0px 0px 0px 0px ;box-shadow: none;border: 0px solid RGBA(255,255,255,1);border-radius:0px;}div#n2-ss-39 .n2-font-be0931c4a0fccfd5cdd5ca4593481fbe-hover{font-family: 'Montserrat';color: #e8d286;font-size:625%;text-shadow: none;line-height: normal;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 300;}div#n2-ss-39 .n2-font-4b423efba596ebbcf3a43342f2c079ea-hover{font-family: 'Montserrat';color: #ffffff;font-size:162.5%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-font-38be42118c58952da1888a07b18f8645-hover{font-family: 'Playfair Display';color: #e8d286;font-size:187.5%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-font-2a6696c6cee1a3d5ec5ef7efdce4069a-link a{font-family: 'Montserrat';color: #ffffff;font-size:118.75%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 200;}div#n2-ss-39 .n2-style-7b0151b5662d682c98b6f5f971d51965-heading{background: RGBA(72,66,39,0.24);opacity:1;padding:10px 30px 10px 30px ;box-shadow: none;border: 1px solid RGBA(255,255,255,1);border-radius:0px;}div#n2-ss-39 .n2-style-dba8ae209f77245dc292ce84e31fb4ea-heading{background: RGBA(255,255,255,0);opacity:0.94;padding:0px 0px 0px 0px ;box-shadow: none;border: 0px solid RGBA(0,0,0,1);border-radius:0px;}div#n2-ss-39 .n2-font-917e83ced0341a93031f50a50930a9a6-hover{font-family: 'Playfair Display';color: #ffffff;font-size:162.5%;text-shadow: none;line-height: 1.1;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-39 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot{background: RGBA(0,0,0,0);opacity:1;padding:5px 5px 5px 5px ;box-shadow: none;border: 1px solid RGBA(255,255,255,0.38);border-radius:50px;margin:4px;padding:3px;}div#n2-ss-39 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot.n2-active, div#n2-ss-39 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot:HOVER, div#n2-ss-39 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot:FOCUS{background: RGBA(255,255,255,0.87);border: 1px solid RGBA(255,255,255,0);}div#n2-ss-39 .n2-ss-slide-limiter{max-width:1200px;}div#n2-ss-39 .n-uc-LhQqLh0tkhv5{padding:10px 10px 10px 10px}div#n2-ss-39 .n-uc-RB5kZ67mIHfX-inner{padding:10px 10px 10px 10px;justify-content:center}div#n2-ss-39 .n-uc-RB5kZ67mIHfX{align-self:center;}div#n2-ss-39 .n-uc-nHwzE3tFvOcd{padding:10px 10px 10px 10px}div#n2-ss-39 .n-uc-MroGOSzimY4S-inner{padding:10px 10px 10px 10px;justify-content:center}div#n2-ss-39 .n-uc-MroGOSzimY4S{align-self:center;}div#n2-ss-39 .n-uc-XFw9kUKrXF6H{max-width:645px;align-self:center;}div#n2-ss-39 .n-uc-z1JTDGMSgnkb{padding:10px 10px 10px 10px}div#n2-ss-39 .n-uc-82445gZrTKqO-inner{padding:10px 10px 10px 10px;justify-content:center}div#n2-ss-39 .n-uc-82445gZrTKqO{align-self:center;}div#n2-ss-39 .nextend-arrow img{width: 32px}@media (min-width: 1200px){div#n2-ss-39 [data-hide-desktopportrait="1"]{display: none !important;}}@media (orientation: landscape) and (max-width: 1199px) and (min-width: 901px),(orientation: portrait) and (max-width: 1199px) and (min-width: 701px){div#n2-ss-39 [data-hide-tabletportrait="1"]{display: none !important;}.n2-section-smartslider[data-ssid="39"]{display: none;}}@media (orientation: landscape) and (max-width: 900px),(orientation: portrait) and (max-width: 700px){div#n2-ss-39 [data-hide-mobileportrait="1"]{display: none !important;}.n2-section-smartslider[data-ssid="39"]{display: none;}div#n2-ss-39 .nextend-arrow img{width: 16px}}</style>
 <style data-related="n2-ss-40">div#n2-ss-40 .n2-ss-slider-1{display:grid;position:relative;}div#n2-ss-40 .n2-ss-slider-2{display:grid;position:relative;overflow:hidden;padding:0px 0px 0px 0px;border:0px solid RGBA(62,62,62,1);border-radius:0px;background-clip:padding-box;background-repeat:repeat;background-position:50% 50%;background-size:cover;background-attachment:scroll;z-index:1;}div#n2-ss-40:not(.n2-ss-loaded) .n2-ss-slider-2{background-image:none !important;}div#n2-ss-40 .n2-ss-slider-3{display:grid;grid-template-areas:'cover';position:relative;overflow:hidden;z-index:10;}div#n2-ss-40 .n2-ss-slider-3 > *{grid-area:cover;}div#n2-ss-40 .n2-ss-slide-backgrounds,div#n2-ss-40 .n2-ss-slider-3 > .n2-ss-divider{position:relative;}div#n2-ss-40 .n2-ss-slide-backgrounds{z-index:10;}div#n2-ss-40 .n2-ss-slide-backgrounds > *{overflow:hidden;}div#n2-ss-40 .n2-ss-slide-background{transform:translateX(-100000px);}div#n2-ss-40 .n2-ss-slider-4{place-self:center;position:relative;width:100%;height:100%;z-index:20;display:grid;grid-template-areas:'slide';}div#n2-ss-40 .n2-ss-slider-4 > *{grid-area:slide;}div#n2-ss-40.n2-ss-full-page--constrain-ratio .n2-ss-slider-4{height:auto;}div#n2-ss-40 .n2-ss-slide{display:grid;place-items:center;grid-auto-columns:100%;position:relative;z-index:20;-webkit-backface-visibility:hidden;transform:translateX(-100000px);}div#n2-ss-40 .n2-ss-slide{perspective:1000px;}div#n2-ss-40 .n2-ss-slide-active{z-index:21;}.n2-ss-background-animation{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;}div#n2-ss-40 .n2-ss-button-container,div#n2-ss-40 .n2-ss-button-container a{display:block;}div#n2-ss-40 .n2-ss-button-container--non-full-width,div#n2-ss-40 .n2-ss-button-container--non-full-width a{display:inline-block;}div#n2-ss-40 .n2-ss-button-container.n2-ss-nowrap{white-space:nowrap;}div#n2-ss-40 .n2-ss-button-container a div{display:inline;font-size:inherit;text-decoration:inherit;color:inherit;line-height:inherit;font-family:inherit;font-weight:inherit;}div#n2-ss-40 .n2-ss-button-container a > div{display:inline-flex;align-items:center;vertical-align:top;}div#n2-ss-40 .n2-ss-button-container span{font-size:100%;vertical-align:baseline;}div#n2-ss-40 .n2-ss-button-container a[data-iconplacement="left"] span{margin-right:0.3em;}div#n2-ss-40 .n2-ss-button-container a[data-iconplacement="right"] span{margin-left:0.3em;}div#n2-ss-40 .nextend-arrow{cursor:pointer;overflow:hidden;line-height:0 !important;z-index:18;-webkit-user-select:none;}div#n2-ss-40 .nextend-arrow img{position:relative;display:block;}div#n2-ss-40 .nextend-arrow img.n2-arrow-hover-img{display:none;}div#n2-ss-40 .nextend-arrow:FOCUS img.n2-arrow-hover-img,div#n2-ss-40 .nextend-arrow:HOVER img.n2-arrow-hover-img{display:inline;}div#n2-ss-40 .nextend-arrow:FOCUS img.n2-arrow-normal-img,div#n2-ss-40 .nextend-arrow:HOVER img.n2-arrow-normal-img{display:none;}div#n2-ss-40 .nextend-arrow-animated{overflow:hidden;}div#n2-ss-40 .nextend-arrow-animated > div{position:relative;}div#n2-ss-40 .nextend-arrow-animated .n2-active{position:absolute;}div#n2-ss-40 .nextend-arrow-animated-fade{transition:background 0.3s, opacity 0.4s;}div#n2-ss-40 .nextend-arrow-animated-horizontal > div{transition:all 0.4s;transform:none;}div#n2-ss-40 .nextend-arrow-animated-horizontal .n2-active{top:0;}div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-horizontal .n2-active{left:100%;}div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-horizontal .n2-active{right:100%;}div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-horizontal:HOVER > div,div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-horizontal:FOCUS > div{transform:translateX(-100%);}div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-horizontal:HOVER > div,div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-horizontal:FOCUS > div{transform:translateX(100%);}div#n2-ss-40 .nextend-arrow-animated-vertical > div{transition:all 0.4s;transform:none;}div#n2-ss-40 .nextend-arrow-animated-vertical .n2-active{left:0;}div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-vertical .n2-active{top:100%;}div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-vertical .n2-active{bottom:100%;}div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-vertical:HOVER > div,div#n2-ss-40 .nextend-arrow-previous.nextend-arrow-animated-vertical:FOCUS > div{transform:translateY(-100%);}div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-vertical:HOVER > div,div#n2-ss-40 .nextend-arrow-next.nextend-arrow-animated-vertical:FOCUS > div{transform:translateY(100%);}div#n2-ss-40 .n2-ss-control-bullet{visibility:hidden;text-align:center;justify-content:center;z-index:14;}div#n2-ss-40 .n2-ss-control-bullet--calculate-size{left:0 !important;}div#n2-ss-40 .n2-ss-control-bullet-horizontal.n2-ss-control-bullet-fullsize{width:100%;}div#n2-ss-40 .n2-ss-control-bullet-vertical.n2-ss-control-bullet-fullsize{height:100%;flex-flow:column;}div#n2-ss-40 .nextend-bullet-bar{display:inline-flex;vertical-align:top;visibility:visible;align-items:center;flex-wrap:wrap;}div#n2-ss-40 .n2-bar-justify-content-left{justify-content:flex-start;}div#n2-ss-40 .n2-bar-justify-content-center{justify-content:center;}div#n2-ss-40 .n2-bar-justify-content-right{justify-content:flex-end;}div#n2-ss-40 .n2-ss-control-bullet-vertical > .nextend-bullet-bar{flex-flow:column;}div#n2-ss-40 .n2-ss-control-bullet-fullsize > .nextend-bullet-bar{display:flex;}div#n2-ss-40 .n2-ss-control-bullet-horizontal.n2-ss-control-bullet-fullsize > .nextend-bullet-bar{flex:1 1 auto;}div#n2-ss-40 .n2-ss-control-bullet-vertical.n2-ss-control-bullet-fullsize > .nextend-bullet-bar{height:100%;}div#n2-ss-40 .nextend-bullet-bar .n2-bullet{cursor:pointer;transition:background-color 0.4s;}div#n2-ss-40 .nextend-bullet-bar .n2-bullet.n2-active{cursor:default;}div#n2-ss-40 div.n2-ss-bullet-thumbnail-container{position:absolute;z-index:10000000;}div#n2-ss-40 .n2-ss-bullet-thumbnail-container .n2-ss-bullet-thumbnail{background-size:cover;background-repeat:no-repeat;background-position:center;}div#n2-ss-40 .n2-font-e392e5e045a3778f282cc7b75b937793-hover{font-family: 'Montserrat';color: #e8d286;font-size:937.5%;text-shadow: none;line-height: normal;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 300;}div#n2-ss-40 .n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading{background: RGBA(255,255,255,0);opacity:1;padding:0px 0px 0px 0px ;box-shadow: none;border: 0px solid RGBA(255,255,255,1);border-radius:0px;}div#n2-ss-40 .n2-font-a7ffef5f2e0d1cb8b7007c22bc087dfc-hover{font-family: 'Playfair Display';color: #e8d286;font-size:162.5%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph{font-family: 'Montserrat';color: #ffffff;font-size:68.75%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph a, div#n2-ss-40 .n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph a:FOCUS{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph a:HOVER, div#n2-ss-40 .n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph a:ACTIVE{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: none;line-height: 1.2;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-689e2698a6ab3684dbdf7250daad46ce-hover{font-family: 'Playfair Display';color: #ffffff;font-size:175%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-style-45bf29c3108f281e1e71490903a5c56c-heading{background: RGBA(255,255,255,0);opacity:1;padding:5px 15px 10px 15px ;box-shadow: none;border: 1px solid RGBA(255,255,255,0.75);border-radius:0px;}div#n2-ss-40 .n2-font-593b3ae3142873c04292011dc052aeda-link a{font-family: 'Montserrat';color: #ffffff;font-size:100%;text-shadow: none;line-height: 1.5;font-weight: normal;font-style: normal;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-style-79e44d6b4a143c9744ed18690380da71-heading{background: RGBA(82,42,53,0.4);opacity:1;padding:20px 35px 20px 35px ;box-shadow: none;border: 1px solid RGBA(255,255,255,1);border-radius:0px;}div#n2-ss-40 .n2-font-01bdc45278c075eb3a4e86e0bdeb91be-hover{font-family: 'Playfair Display';color: RGBA(255,224,109,1);font-size:362.5%;text-shadow: none;line-height: normal;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 300;}div#n2-ss-40 .n2-font-e3ebd75085af384984af49b30749e534-paragraph{font-family: 'Montserrat';color: #ffffff;font-size:87.5%;text-shadow: 0px 0px 1px RGBA(0,0,0,0.73);line-height: 1.3;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-e3ebd75085af384984af49b30749e534-paragraph a, div#n2-ss-40 .n2-font-e3ebd75085af384984af49b30749e534-paragraph a:FOCUS{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: 0px 0px 1px RGBA(0,0,0,0.73);line-height: 1.3;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-font-e3ebd75085af384984af49b30749e534-paragraph a:HOVER, div#n2-ss-40 .n2-font-e3ebd75085af384984af49b30749e534-paragraph a:ACTIVE{font-family: 'Montserrat';color: #1890d7;font-size:100%;text-shadow: 0px 0px 1px RGBA(0,0,0,0.73);line-height: 1.3;font-weight: normal;font-style: normal;text-decoration: none;text-align: left;letter-spacing: normal;word-spacing: normal;text-transform: none;font-weight: 400;}div#n2-ss-40 .n2-style-3f97be085729c2d15aa55bf3b5fad7d6-heading{background: RGBA(255,255,255,0);opacity:1;padding:0px 0px 0px 140px ;box-shadow: none;border: 0px solid RGBA(0,0,0,1);border-radius:0px;}div#n2-ss-40 .n2-style-514ec50a2d40d57f59ce4d8e52ec8e47-heading{background: RGBA(255,255,255,0);opacity:1;padding:0px 0px 5px 0px ;box-shadow: none;border: 1px solid RGBA(255,255,255,0.75);border-radius:0px;}div#n2-ss-40 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot{background: RGBA(0,0,0,0);opacity:1;padding:5px 5px 5px 5px ;box-shadow: none;border: 1px solid RGBA(255,255,255,0.38);border-radius:50px;margin:4px;padding:3px;}div#n2-ss-40 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot.n2-active, div#n2-ss-40 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot:HOVER, div#n2-ss-40 .n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot:FOCUS{background: RGBA(255,255,255,0.87);border: 1px solid RGBA(255,255,255,0);}div#n2-ss-40 .n2-ss-slide-limiter{max-width:1200px;}div#n2-ss-40 .n-uc-CYiwSL2hxgzm{padding:10px 10px 10px 10px}div#n2-ss-40 .n-uc-8nPcKEm2FUoa-inner{padding:10px 10px 10px 10px;justify-content:flex-start}div#n2-ss-40 .n-uc-8nPcKEm2FUoa{align-self:center;}div#n2-ss-40 .n-uc-VnOP8lRD1fDZ{--margin-top:-20px;--margin-bottom:5px;max-width:325px;align-self:center;}div#n2-ss-40 .n-uc-alb6wr4Y7Q9a{--margin-top:-45px;max-width:325px;align-self:center;}div#n2-ss-40 .n-uc-KXriGs1GR2AK{--margin-top:-35px;--margin-bottom:-45px;max-width:555px;align-self:center;}div#n2-ss-40 .n-uc-eHuIkY0ENyLE{max-width:325px;align-self:center;}div#n2-ss-40 .n-uc-YWgBTbya4Fog{--margin-top:15px;--margin-bottom:35px;max-width:300px;align-self:center;}div#n2-ss-40 .n-uc-MUJRk631HREM{padding:10px 10px 10px 10px}div#n2-ss-40 .n-uc-6aSfwc6UUoXF-inner{padding:10px 10px 10px 10px;justify-content:center}div#n2-ss-40 .n-uc-6aSfwc6UUoXF{align-self:center;}div#n2-ss-40 .n-uc-PCIDl0PP63Sm{max-width:325px;align-self:center;}div#n2-ss-40 .n-uc-631PmFKCHamk{padding:10px 10px 10px 10px}div#n2-ss-40 .n-uc-2z0lVLw0PT1H-inner{padding:10px 10px 10px 10px;justify-content:flex-start}div#n2-ss-40 .n-uc-2z0lVLw0PT1H{align-self:center;}div#n2-ss-40 .n-uc-1hzrBJkjPjts{--margin-top:50px;--margin-left:-30px;max-width:320px;align-self:center;}div#n2-ss-40 .n-uc-oltV1ZH0oVBp{--margin-top:45px;max-width:325px;align-self:center;}div#n2-ss-40 .n-uc-vKEh6n37DYda{--margin-top:50px;--margin-bottom:35px;--margin-left:130px;max-width:220px;align-self:center;}div#n2-ss-40 .nextend-arrow img{width: 32px}@media (min-width: 1200px){div#n2-ss-40 [data-hide-desktopportrait="1"]{display: none !important;}.n2-section-smartslider[data-ssid="40"]{display: none;}}@media (orientation: landscape) and (max-width: 1199px) and (min-width: 901px),(orientation: portrait) and (max-width: 1199px) and (min-width: 701px){div#n2-ss-40 [data-hide-tabletportrait="1"]{display: none !important;}}@media (orientation: landscape) and (max-width: 900px),(orientation: portrait) and (max-width: 700px){div#n2-ss-40 [data-hide-mobileportrait="1"]{display: none !important;}div#n2-ss-40 .nextend-arrow img{width: 16px}}</style>
 <style data-related="n2-ss-28">div#n2-ss-28 .n2-ss-slider-1{display:grid;position:relative;}div#n2-ss-28 .n2-ss-slider-2{display:grid;position:relative;overflow:hidden;padding:0px 0px 0px 0px;border:0px solid RGBA(62,62,62,1);border-radius:0px;background-clip:padding-box;background-repeat:repeat;background-position:50% 50%;background-size:cover;background-attachment:scroll;z-index:1;}div#n2-ss-28:not(.n2-ss-loaded) .n2-ss-slider-2{background-image:none !important;}div#n2-ss-28 .n2-ss-slider-3{display:grid;grid-template-areas:'cover';position:relative;overflow:hidden;z-index:10;}div#n2-ss-28 .n2-ss-slider-3 > *{grid-area:cover;}div#n2-ss-28 .n2-ss-slide-backgrounds,div#n2-ss-28 .n2-ss-slider-3 > .n2-ss-divider{position:relative;}div#n2-ss-28 .n2-ss-slide-backgrounds{z-index:10;}div#n2-ss-28 .n2-ss-slide-backgrounds > *{overflow:hidden;}div#n2-ss-28 .n2-ss-slide-background{transform:translateX(-100000px);}div#n2-ss-28 .n2-ss-slider-4{place-self:center;position:relative;width:100%;height:100%;z-index:20;display:grid;grid-template-areas:'slide';}div#n2-ss-28 .n2-ss-slider-4 > *{grid-area:slide;}div#n2-ss-28.n2-ss-full-page--constrain-ratio .n2-ss-slider-4{height:auto;}div#n2-ss-28 .n2-ss-slide{display:grid;place-items:center;grid-auto-columns:100%;position:relative;z-index:20;-webkit-backface-visibility:hidden;transform:translateX(-100000px);}div#n2-ss-28 .n2-ss-slide{perspective:1000px;}div#n2-ss-28 .n2-ss-slide-active{z-index:21;}.n2-ss-background-animation{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;}div#n2-ss-28 .n2-ss-slide-limiter{max-width:300px;}div#n2-ss-28 .n-uc-ZnQ1OwHvKO0o{padding:10px 10px 10px 10px}div#n2-ss-28 .n-uc-5NstDhddz2ob{padding:10px 10px 10px 10px}div#n2-ss-28 .n-uc-KF3zl27kyCSJ{padding:10px 10px 10px 10px}div#n2-ss-28 .n-uc-fFQC5z2cvHf5{padding:10px 10px 10px 10px}div#n2-ss-28 .n-uc-CIkn1xqvQuD1{padding:10px 10px 10px 10px}@media (min-width: 1200px){div#n2-ss-28 [data-hide-desktopportrait="1"]{display: none !important;}}@media (orientation: landscape) and (max-width: 1199px) and (min-width: 901px),(orientation: portrait) and (max-width: 1199px) and (min-width: 701px){div#n2-ss-28 [data-hide-tabletportrait="1"]{display: none !important;}}@media (orientation: landscape) and (max-width: 900px),(orientation: portrait) and (max-width: 700px){div#n2-ss-28 [data-hide-mobileportrait="1"]{display: none !important;}}</style>
-<script id="newsletter-pc-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js"></script>
-<script id="jquery-core-js" src="/Cognac-Leopold-Croizet-site/wp-includes/js/jquery/jquery.min.js"></script>
-<script id="jquery-migrate-js" src="/Cognac-Leopold-Croizet-site/wp-includes/js/jquery/jquery-migrate.min.js"></script>
-<script id="mega-menu-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/mega-menu.js"></script>
-<script id="modal-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/modal.js"></script>
-<script id="panier-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/panier.js"></script>
-<script id="btn-commander-produit-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/btn-commander-produit.js"></script>
-<script id="mobile-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/mobile.js?v=product-footer-20260614-transparent-v2"></script>
+<script id="newsletter-pc-js" src="/wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js"></script>
+<script id="jquery-core-js" src="/wp-includes/js/jquery/jquery.min.js"></script>
+<script id="jquery-migrate-js" src="/wp-includes/js/jquery/jquery-migrate.min.js"></script>
+<script id="mega-menu-js" src="/wp-content/themes/theme-site-pc/js/mega-menu.js"></script>
+<script id="modal-js" src="/wp-content/themes/theme-site-pc/js/modal.js"></script>
+<script id="panier-js" src="/wp-content/themes/theme-site-pc/js/panier.js"></script>
+<script id="btn-commander-produit-js" src="/wp-content/themes/theme-site-pc/js/btn-commander-produit.js"></script>
+<script id="mobile-js" src="/wp-content/themes/theme-site-pc/js/mobile.js?v=product-footer-20260614-transparent-v2"></script>
 <meta name="generator" content="WordPress 7.0" />
 <meta name="generator" content="WooCommerce 8.7.3" />
-<link rel='shortlink' href="/Cognac-Leopold-Croizet-site/ru/" />
+<link rel='shortlink' href="/ru/" />
 <meta name="generator" content="WPML ver:4.6.5 stt:1,4,45;" />
 	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
-	<link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="32x32" />
-<link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="192x192" />
-<link rel="apple-touch-icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
-<meta name="msapplication-TileImage" content="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
+	<link rel="icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="32x32" />
+<link rel="icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="192x192" />
+<link rel="apple-touch-icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
+<meta name="msapplication-TileImage" content="/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
 
 <style id="core-block-supports-inline-css">
 .wp-container-core-columns-is-layout-8f761849{flex-wrap:nowrap;}
 /*# sourceURL=core-block-supports-inline-css */
 </style>
 
-<script>(function(){this._N2=this._N2||{_r:[],_d:[],r:function(){this._r.push(arguments)},d:function(){this._d.push(arguments)}}}).call(window);!function(a){a.indexOf("Safari")>0&&-1===a.indexOf("Chrome")&&document.documentElement.style.setProperty("--ss-safari-fix-225962","1px")}(navigator.userAgent);!function(e,i,o,r){(i=e.match(/(Chrome|Firefox|Safari)\/(\d+)\./))&&("Chrome"==i[1]?r=+i[2]>=32:"Firefox"==i[1]?r=+i[2]>=65:"Safari"==i[1]&&(o=e.match(/Version\/(\d+)/)||e.match(/(\d+)[0-9_]+like Mac/))&&(r=+o[1]>=14),r&&document.documentElement.classList.add("n2webp"))}(navigator.userAgent);</script><script src="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/n2.min.js" defer async></script>
-<script src="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/smartslider-frontend.min.js" defer async></script>
-<script src="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Slider/SliderType/Simple/Assets/dist/ss-simple.min.js" defer async></script>
-<script src="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Widget/Arrow/ArrowImage/Assets/dist/w-arrow-image.min.js" defer async></script>
-<script src="/Cognac-Leopold-Croizet-site/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Widget/Bullet/Assets/dist/w-bullet.min.js" defer async></script>
-<script>_N2.r('documentReady',function(){_N2.r(["documentReady","smartslider-frontend","SmartSliderWidgetArrowImage","SmartSliderWidgetBulletTransition","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-39',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":1200,"slideOuterHeight":700,"sliderWidth":1200,"sliderHeight":700,"slideWidth":1200,"slideHeight":700},"hideOn":{"desktopLandscape":false,"desktopPortrait":false,"tabletLandscape":false,"tabletPortrait":true,"mobileLandscape":false,"mobilePortrait":true},"onResizeEnabled":true,"type":"fullwidth","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":1200,"height":700,"max":3000,"min":1200},"tabletPortrait":{"width":701,"height":408,"customHeight":false,"max":1199,"min":701},"mobilePortrait":{"width":320,"height":186,"customHeight":false,"max":900,"min":320}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":1,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":0,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":0,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":1,"mouse":"0","mediaStarted":1},"resume":{"click":0,"mouse":"0","mediaEnded":1,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"crossfade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){new _N2.SmartSliderWidgetArrowImage(this);new _N2.SmartSliderWidgetBulletTransition(this,{"area":10,"dotClasses":"n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot ","mode":"","action":"click"})}})});_N2.r(["documentReady","smartslider-frontend","SmartSliderWidgetArrowImage","SmartSliderWidgetBulletTransition","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-40',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":1200,"slideOuterHeight":1200,"sliderWidth":1200,"sliderHeight":1200,"slideWidth":1200,"slideHeight":1200},"hideOn":{"desktopLandscape":false,"desktopPortrait":true,"tabletLandscape":false,"tabletPortrait":false,"mobileLandscape":false,"mobilePortrait":false},"onResizeEnabled":true,"type":"fullwidth","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":1200,"height":1200,"max":3000,"min":1200},"tabletPortrait":{"width":701,"height":701,"customHeight":false,"max":1199,"min":701},"mobilePortrait":{"width":320,"height":320,"customHeight":false,"max":900,"min":320}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":1,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":0,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":0,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":1,"mouse":"0","mediaStarted":1},"resume":{"click":0,"mouse":"0","mediaEnded":1,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"crossfade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){new _N2.SmartSliderWidgetArrowImage(this);new _N2.SmartSliderWidgetBulletTransition(this,{"area":10,"dotClasses":"n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot ","mode":"","action":"click"})}})});_N2.r(["documentReady","smartslider-frontend","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-28',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":300,"slideOuterHeight":300,"sliderWidth":300,"sliderHeight":300,"slideWidth":300,"slideHeight":300},"hideOn":{"desktopLandscape":false,"desktopPortrait":false,"tabletLandscape":false,"tabletPortrait":false,"mobileLandscape":false,"mobilePortrait":false},"onResizeEnabled":true,"type":"auto","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":300,"height":300,"max":3000,"min":300},"tabletPortrait":{"width":300,"height":300,"customHeight":false,"max":1199,"min":300},"mobilePortrait":{"width":300,"height":300,"customHeight":false,"max":900,"min":300}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":0,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":0,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":1,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":0,"mouse":"0","mediaStarted":0},"resume":{"click":0,"mouse":"0","mediaEnded":0,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"fade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){}})})});</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet","Léopold Croizet 干邑","法国 Léopold Croizet 干邑酒庄"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","knowsAbout":["Cognac","Fins Bois","Pineau des Charentes","French spirits","法国干邑","干邑鸡尾酒"],"email":"cognac@mdpierre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Rue d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/ru/#webpage","url":"https://cognac-leopold-croizet.com/ru/","name":"Cognac Léopold Croizet | Семейный дом коньяка Fins Bois","description":"Cognac Léopold Croizet: семейное поместье в Triac-Lautrait, Fins Bois, коллекция VS, VSOP, Napoléon, XO и Extra, мастерство и визиты в погреба.","inLanguage":"ru","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"Ru","item":"https://cognac-leopold-croizet.com/ru/"}]}]</script>
+<script>(function(){this._N2=this._N2||{_r:[],_d:[],r:function(){this._r.push(arguments)},d:function(){this._d.push(arguments)}}}).call(window);!function(a){a.indexOf("Safari")>0&&-1===a.indexOf("Chrome")&&document.documentElement.style.setProperty("--ss-safari-fix-225962","1px")}(navigator.userAgent);!function(e,i,o,r){(i=e.match(/(Chrome|Firefox|Safari)\/(\d+)\./))&&("Chrome"==i[1]?r=+i[2]>=32:"Firefox"==i[1]?r=+i[2]>=65:"Safari"==i[1]&&(o=e.match(/Version\/(\d+)/)||e.match(/(\d+)[0-9_]+like Mac/))&&(r=+o[1]>=14),r&&document.documentElement.classList.add("n2webp"))}(navigator.userAgent);</script><script src="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/n2.min.js" defer async></script>
+<script src="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/smartslider-frontend.min.js" defer async></script>
+<script src="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Slider/SliderType/Simple/Assets/dist/ss-simple.min.js" defer async></script>
+<script src="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Widget/Arrow/ArrowImage/Assets/dist/w-arrow-image.min.js" defer async></script>
+<script src="/wp-content/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Widget/Bullet/Assets/dist/w-bullet.min.js" defer async></script>
+<script>_N2.r('documentReady',function(){_N2.r(["documentReady","smartslider-frontend","SmartSliderWidgetArrowImage","SmartSliderWidgetBulletTransition","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-39',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":1200,"slideOuterHeight":700,"sliderWidth":1200,"sliderHeight":700,"slideWidth":1200,"slideHeight":700},"hideOn":{"desktopLandscape":false,"desktopPortrait":false,"tabletLandscape":false,"tabletPortrait":true,"mobileLandscape":false,"mobilePortrait":true},"onResizeEnabled":true,"type":"fullwidth","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":1200,"height":700,"max":3000,"min":1200},"tabletPortrait":{"width":701,"height":408,"customHeight":false,"max":1199,"min":701},"mobilePortrait":{"width":320,"height":186,"customHeight":false,"max":900,"min":320}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":1,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":1,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":0,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":1,"mouse":"0","mediaStarted":1},"resume":{"click":0,"mouse":"0","mediaEnded":1,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"crossfade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){new _N2.SmartSliderWidgetArrowImage(this);new _N2.SmartSliderWidgetBulletTransition(this,{"area":10,"dotClasses":"n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot ","mode":"","action":"click"})}})});_N2.r(["documentReady","smartslider-frontend","SmartSliderWidgetArrowImage","SmartSliderWidgetBulletTransition","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-40',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":1200,"slideOuterHeight":1200,"sliderWidth":1200,"sliderHeight":1200,"slideWidth":1200,"slideHeight":1200},"hideOn":{"desktopLandscape":false,"desktopPortrait":true,"tabletLandscape":false,"tabletPortrait":false,"mobileLandscape":false,"mobilePortrait":false},"onResizeEnabled":true,"type":"fullwidth","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":1200,"height":1200,"max":3000,"min":1200},"tabletPortrait":{"width":701,"height":701,"customHeight":false,"max":1199,"min":701},"mobilePortrait":{"width":320,"height":320,"customHeight":false,"max":900,"min":320}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":1,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":1,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":0,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":1,"mouse":"0","mediaStarted":1},"resume":{"click":0,"mouse":"0","mediaEnded":1,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"crossfade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){new _N2.SmartSliderWidgetArrowImage(this);new _N2.SmartSliderWidgetBulletTransition(this,{"area":10,"dotClasses":"n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot ","mode":"","action":"click"})}})});_N2.r(["documentReady","smartslider-frontend","ss-simple"],function(){new _N2.SmartSliderSimple('n2-ss-28',{"admin":false,"background.video.mobile":1,"loadingTime":2000,"randomize":{"randomize":0,"randomizeFirst":0},"callbacks":"","alias":{"id":0,"smoothScroll":0,"slideSwitch":0,"scroll":1},"align":"normal","isDelayed":0,"responsive":{"mediaQueries":{"all":false,"desktopportrait":["(min-width: 1200px)"],"tabletportrait":["(orientation: landscape) and (max-width: 1199px) and (min-width: 901px)","(orientation: portrait) and (max-width: 1199px) and (min-width: 701px)"],"mobileportrait":["(orientation: landscape) and (max-width: 900px)","(orientation: portrait) and (max-width: 700px)"]},"base":{"slideOuterWidth":300,"slideOuterHeight":300,"sliderWidth":300,"sliderHeight":300,"slideWidth":300,"slideHeight":300},"hideOn":{"desktopLandscape":false,"desktopPortrait":false,"tabletLandscape":false,"tabletPortrait":false,"mobileLandscape":false,"mobilePortrait":false},"onResizeEnabled":true,"type":"auto","sliderHeightBasedOn":"real","focusUser":1,"focusEdge":"auto","breakpoints":[{"device":"tabletPortrait","type":"max-screen-width","portraitWidth":1199,"landscapeWidth":1199},{"device":"mobilePortrait","type":"max-screen-width","portraitWidth":700,"landscapeWidth":900}],"enabledDevices":{"desktopLandscape":0,"desktopPortrait":1,"tabletLandscape":0,"tabletPortrait":1,"mobileLandscape":0,"mobilePortrait":1},"sizes":{"desktopPortrait":{"width":300,"height":300,"max":3000,"min":300},"tabletPortrait":{"width":300,"height":300,"customHeight":false,"max":1199,"min":300},"mobilePortrait":{"width":300,"height":300,"customHeight":false,"max":900,"min":300}},"overflowHiddenPage":0,"focus":{"offsetTop":"#wpadminbar","offsetBottom":""}},"controls":{"mousewheel":0,"touch":"horizontal","keyboard":0,"blockCarouselInteraction":1},"playWhenVisible":1,"playWhenVisibleAt":0.5,"lazyLoad":1,"lazyLoadNeighbor":0,"blockrightclick":0,"maintainSession":0,"autoplay":{"enabled":1,"start":1,"duration":8000,"autoplayLoop":1,"allowReStart":0,"pause":{"click":0,"mouse":"0","mediaStarted":0},"resume":{"click":0,"mouse":"0","mediaEnded":0,"slidechanged":0},"interval":1,"intervalModifier":"loop","intervalSlide":"current"},"perspective":1000,"layerMode":{"playOnce":0,"playFirstLayer":1,"mode":"skippable","inAnimation":"mainInEnd"},"parallax":{"enabled":1,"mobile":0,"is3D":0,"animate":1,"horizontal":"mouse","vertical":"mouse","origin":"slider","scrollmove":"both"},"postBackgroundAnimations":0,"bgAnimations":0,"mainanimation":{"type":"fade","duration":800,"delay":0,"ease":"easeOutQuad","shiftedBackgroundAnimation":"auto"},"carousel":1,"initCallbacks":function(){}})})});</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet","Léopold Croizet 干邑","法国 Léopold Croizet 干邑酒庄"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","knowsAbout":["Cognac","Fins Bois","Pineau des Charentes","French spirits","法国干邑","干邑鸡尾酒"],"email":"cognac@mdpierre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Rue d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/ru/#webpage","url":"https://cognac-leopold-croizet.com/ru/","name":"Cognac Léopold Croizet | Семейный дом коньяка Fins Bois","description":"Cognac Léopold Croizet: семейное поместье в Triac-Lautrait, Fins Bois, коллекция VS, VSOP, Napoléon, XO и Extra, мастерство и визиты в погреба.","inLanguage":"ru","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"Ru","item":"https://cognac-leopold-croizet.com/ru/"}]}]</script>
 </head>
 
 
@@ -167,8 +169,8 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <h1 class="screen-reader-text lc-seo-h1">Cognac Léopold Croizet</h1>
   <header id="masthead" class="site-header">
     <nav class="navbar navbar-expand-xl fixed-top navbar-light" role="navigation">
-            <a href="/Cognac-Leopold-Croizet-site/ru/" class="logo-header">
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="Logo Léopold Croizet">
+            <a href="/ru/" class="logo-header">
+        <img src="/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="Логотип Léopold Croizet" width="600" height="600" decoding="async">
         <!-- <div>Семейное поместье, построенное в 1750 году</div> -->
       </a>
 
@@ -176,10 +178,10 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div id="bs-example-navbar-collapse-1" class="menu-site collapse navbar-collapse "><ul id="menu-menu-principal-russe" class="nav navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1340" class="collection menu-item menu-item-type-post_type menu-item-object-page dropdown menu-item-1340 nav-item"><a title="Коллекция" href="/Cognac-Leopold-Croizet-site/ru/a-faire/" class="nav-link">Коллекция</a></li>
+      <div id="bs-example-navbar-collapse-1" class="menu-site collapse navbar-collapse "><ul id="menu-menu-principal-russe" class="nav navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1340" class="collection menu-item menu-item-type-post_type menu-item-object-page dropdown menu-item-1340 nav-item"><a title="Коллекция" href="/ru/a-faire/" class="nav-link">Коллекция</a></li>
 <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-884" class="experience menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-884 nav-item"><a title="Мастерство" href="#" class="nav-link">Мастерство</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2641" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2641 nav-item"><a title="Леопольда Круазе" href="/Cognac-Leopold-Croizet-site/ru/leopold-croizet/" class="nav-link">Леопольда Круазе</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1596" class="rencontre menu-item menu-item-type-post_type menu-item-object-page menu-item-1596 nav-item"><a title="Визит" href="/Cognac-Leopold-Croizet-site/ru/rencontre/" class="nav-link">Визит</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2641" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2641 nav-item"><a title="Леопольда Круазе" href="/ru/leopold-croizet/" class="nav-link">Леопольда Круазе</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1596" class="rencontre menu-item menu-item-type-post_type menu-item-object-page menu-item-1596 nav-item"><a title="Визит" href="/ru/rencontre/" class="nav-link">Визит</a></li>
 </ul></div>
       <div class="mega-menu-container">
         <div class="inner-mega-menu-container">
@@ -188,73 +190,73 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/vs/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="VS" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 3x">
+            <a href="/ru/collection/vs/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="Cognac Léopold Croizet VS" srcset="/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /wp-content/uploads/2021/06/img_produit_vs_base2.png 3x" width="720" height="1100" decoding="async">
                 <h3>VS</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/vsop/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="VSOP" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 3x">
+            <a href="/ru/collection/vsop/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="Cognac Léopold Croizet VSOP" srcset="/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /wp-content/uploads/2021/06/img_produit_vsop_base.png 3x" width="720" height="1100" decoding="async">
                 <h3>VSOP</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/napoleon/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Napoléon" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x">
+            <a href="/ru/collection/napoleon/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Cognac Léopold Croizet Napoléon" srcset="/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x" width="720" height="1100" decoding="async">
                 <h3>Napoléon</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/xo/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="XO" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x">
+            <a href="/ru/collection/xo/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="Cognac Léopold Croizet XO" srcset="/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>XO</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/xo-exception/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="XO Exception" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x">
+            <a href="/ru/collection/xo-exception/">
+                                <img src="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="Cognac Léopold Croizet XO Exception" srcset="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>XO Exception</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/extra/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Extra" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w">
+            <a href="/ru/collection/extra/">
+                                <img src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Cognac Léopold Croizet Extra" srcset="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Extra</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/excellence/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Excellence" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x">
+            <a href="/ru/collection/excellence/">
+                                <img src="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Cognac Léopold Croizet Excellence" srcset="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Excellence</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/collection/heritage/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Héritage" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x">
+            <a href="/ru/collection/heritage/">
+                                <img src="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Cognac Léopold Croizet Héritage" srcset="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Héritage</h3>
             </a>
         </div>
 
-        <img class="bande-menu-collection" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/bande_dechiree.png" alt="рваная бумага">
+        <img class="bande-menu-collection" src="/wp-content/uploads/2021/09/bande_dechiree.png" alt="рваная бумага" width="3316" height="323" decoding="async" loading="lazy">
 </div><div class="mega-menu-experience-item">
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/la-matiere/">
+            <a href="/ru/la-matiere/">
                 <h3>Плод страсти</h3>
                 <p class="sous-titre-menu">Наши виноградные лозы, наша земля, плоды нашего труда</p>
             </a>
@@ -262,7 +264,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/le-feu/">
+            <a href="/ru/le-feu/">
                 <h3>Огонь созидания</h3>
                 <p class="sous-titre-menu">каждый этап нашей работы определяет характер наших продуктов </p>
             </a>
@@ -270,7 +272,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/lalchimie/">
+            <a href="/ru/lalchimie/">
                 <h3>Чувства</h3>
                 <p class="sous-titre-menu">многовековое ноу-хау, передаваемое из поколения в поколение. </p>
             </a>
@@ -278,13 +280,13 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/ru/le-temps/">
+            <a href="/ru/le-temps/">
                 <h3>Время</h3>
                 <p class="sous-titre-menu">найдите его, чтобы запечатлеть то, что отличает нас от других.</p>
             </a>
         </div>
 
-        <img class="bande-menu-collection" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/bande_dechiree.png" alt="рваная бумага">
+        <img class="bande-menu-collection" src="/wp-content/uploads/2021/09/bande_dechiree.png" alt="рваная бумага" width="3316" height="323" decoding="async" loading="lazy">
 
 </div>        </div>
       </div>
@@ -296,7 +298,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 
 <div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">
 	<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">Ру</span></a>
-	<ul class="lc-language-menu-list" hidden><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/zh/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
+	<ul class="lc-language-menu-list" hidden><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/en/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/ru/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/da/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/sv/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-item-legacy-list-horizontal"><a href="/no/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-item-legacy-list-horizontal"><a href="/zh/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
 </div>
     </nav>
 
@@ -304,7 +306,7 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
       <!-- <div id="age-legal" class="modal">
                 <div class="container-modal">
                     <div class="modal-partie-gauche">
-                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="pierre-croizet">
+                        <img src="/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="pierre-croizet" width="2560" height="2088" decoding="async" loading="lazy">
                     </div>
 
                     <div class="modal-partie-droite">
@@ -317,516 +319,12 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
                         <form action="" method="POST" id="form-age-legal">
                             <div class="full-width">
 
-                                <label for="pays">Pays</label>
-
-                                <select name="pays" id="pays">
-                                        <option value="fr" selected="selected">France</option>
-    <option value="us">USA</option>
-    <option value="ru">Russia</option>
-    <option value="chi">China</option>
-    <option value="gb">United Kingdom</option>
-    <option value="jp">Japan</option>
-    <option value="es">Spain</option>
-    <option value="de">Germany</option>
-    <option value="it">Italy</option>
-    <option value="cn">中国大陆</option>
-    <option value="af">Afghanistan</option>
-    <option value="al">Albania</option>
-    <option value="dz">Algeria</option>
-    <option value="ad">Andorra</option>
-    <option value="ao">Angola</option>
-    <option value="ag">Antigua and Barbuda</option>
-    <option value="ar">Argentina</option>
-    <option value="am">Armenia</option>
-    <option value="au">Australia</option>
-    <option value="at">Austria</option>
-    <option value="az">Azerbaidjan</option>
-    <option value="bs">Bahamas</option>
-    <option value="bh">Bahrain</option>
-    <option value="bd">Bangladesh</option>
-    <option value="bb">Barbados</option>
-    <option value="by">Belarus</option>
-    <option value="be">Belgium</option>
-    <option value="bz">Belize</option>
-    <option value="bj">Benin</option>
-    <option value="bt">Bhutan</option>
-    <option value="bo">Bolivia</option>
-    <option value="ba">Bosnia and Herzegovina</option>
-    <option value="bw">Botswana</option>
-    <option value="br">Brazil</option>
-    <option value="bn">Brunei Darussalam</option>
-    <option value="bg">Bulgaria</option>
-    <option value="bf">Burkina Faso</option>
-    <option value="bi">Burundi</option>
-    <option value="kh">Cambodia</option>
-    <option value="cm">Cameroon</option>
-    <option value="ca">Canada</option>
-    <option value="cv">Cape Verde</option>
-    <option value="cf">Central African Republic</option>
-    <option value="td">Chad</option>
-    <option value="cl">Chile</option>
-    <option value="co">Colombia</option>
-    <option value="km">Comoros</option>
-    <option value="cr">Costa Rica</option>
-    <option value="ci">Cote d'Ivoire</option>
-    <option value="hr">Croatia</option>
-    <option value="cu">Cuba</option>
-    <option value="cy">Cyprus</option>
-    <option value="cz">Czech Republic</option>
-    <option value="dk">Denmark</option>
-    <option value="dj">Djibouti</option>
-    <option value="dm">Dominica</option>
-    <option value="do">Dominican Republic</option>
-    <option value="cg">DR Congo</option>
-    <option value="tl">East Timor</option>
-    <option value="ec">Ecuador</option>
-    <option value="eg">Egypt</option>
-    <option value="sv">El Salvador</option>
-    <option value="gq">Equatorial Guinea</option>
-    <option value="er">Eritrea</option>
-    <option value="ee">Estonia</option>
-    <option value="et">Ethiopia</option>
-    <option value="fj">Fiji</option>
-    <option value="fi">Finland</option>
-    <option value="ga">Gabon</option>
-    <option value="gm">Gambia</option>
-    <option value="ge">Georgia</option>
-    <option value="gh">Ghana</option>
-    <option value="gr">Greece</option>
-    <option value="gd">Grenada</option>
-    <option value="gt">Guatemala</option>
-    <option value="gn">Guinea</option>
-    <option value="gw">Guinea-Bissau</option>
-    <option value="gy">Guyana</option>
-    <option value="ht">Haiti</option>
-    <option value="hn">Honduras</option>
-    <option value="hk">Hong Kong S.A.R.</option>
-    <option value="hu">Hungary</option>
-    <option value="is">Iceland</option>
-    <option value="in">India</option>
-    <option value="id">Indonesia</option>
-    <option value="ir">Iran</option>
-    <option value="iq">Iraq</option>
-    <option value="ie">Ireland</option>
-    <option value="il">Israel</option>
-    <option value="jm">Jamaica</option>
-    <option value="jo">Jordan</option>
-    <option value="kz">Kazakhstan</option>
-    <option value="ke">Kenya</option>
-    <option value="ki">Kiribati</option>
-    <option value="kw">Kuwait</option>
-    <option value="kg">Kyrgyzstan</option>
-    <option value="la">Lao PDR</option>
-    <option value="lv">Latvia</option>
-    <option value="lb">Lebanon</option>
-    <option value="ls">Lesotho</option>
-    <option value="lr">Liberia</option>
-    <option value="ly">Libya</option>
-    <option value="li">Liechtenstein</option>
-    <option value="lt">Lithuania</option>
-    <option value="lu">Luxembourg</option>
-    <option value="mo">Macao S.A.R. </option>
-    <option value="mk">Macedonia</option>
-    <option value="mg">Madagascar</option>
-    <option value="mw">Malawi</option>
-    <option value="my">Malaysia</option>
-    <option value="mv">Maldives</option>
-    <option value="ml">Mali</option>
-    <option value="mt">Malta</option>
-    <option value="mh">Marshall Islands</option>
-    <option value="mr">Mauritania</option>
-    <option value="mu">Mauritius</option>
-    <option value="mx">Mexico</option>
-    <option value="fm">Micronesia</option>
-    <option value="md">Moldova</option>
-    <option value="mc">Monaco</option>
-    <option value="mn">Mongolia</option>
-    <option value="me">Montenegro</option>
-    <option value="ma">Morocco</option>
-    <option value="mz">Mozambique</option>
-    <option value="mm">Myanmar</option>
-    <option value="na">Namibia</option>
-    <option value="nr">Nauru</option>
-    <option value="np">Nepal</option>
-    <option value="nl">Netherlands</option>
-    <option value="nz">New Zealand</option>
-    <option value="ni">Nicaragua</option>
-    <option value="ne">Niger</option>
-    <option value="ng">Nigeria</option>
-    <option value="kp">North Korea</option>
-    <option value="no">Norway</option>
-    <option value="nc">Nouvelle Caledonie</option>
-    <option value="om">Oman</option>
-    <option value="pk">Pakistan</option>
-    <option value="pw">Palau</option>
-    <option value="pa">Panama</option>
-    <option value="pg">Papua New Guinea</option>
-    <option value="py">Paraguay</option>
-    <option value="pe">Peru</option>
-    <option value="ph">Philippines</option>
-    <option value="pl">Poland</option>
-    <option value="pt">Portugal</option>
-    <option value="qa">Qatar</option>
-    <option value="ro">Romania</option>
-    <option value="rw">Rwanda</option>
-    <option value="kn">Saint Kitts and Nevis</option>
-    <option value="lc">Saint Lucia</option>
-    <option value="vc">Saint Vincent &amp; the Grenadines</option>
-    <option value="ws">Samoa</option>
-    <option value="sm">San Marino</option>
-    <option value="st">Sao Tome and Principe</option>
-    <option value="sa">Saudi Arabia</option>
-    <option value="sn">Senegal</option>
-    <option value="rs">Serbia</option>
-    <option value="sc">Seychelles</option>
-    <option value="sl">Sierra Leone</option>
-    <option value="sg">Singapore</option>
-    <option value="sk">Slovakia</option>
-    <option value="si">Slovenia</option>
-    <option value="sb">Solomon Islands</option>
-    <option value="so">Somalia</option>
-    <option value="za">South Africa</option>
-    <option value="kr">South Korea</option>
-    <option value="lk">Sri Lanka</option>
-    <option value="sd">Sudan</option>
-    <option value="sr">Suriname</option>
-    <option value="sz">Swaziland</option>
-    <option value="se">Sweden</option>
-    <option value="ch">Switzerland</option>
-    <option value="sy">Syria</option>
-    <option value="tw">Taiwan region</option>
-    <option value="tj">Tajikistan</option>
-    <option value="tz">Tanzania</option>
-    <option value="th">Thailand</option>
-    <option value="tg">Togo</option>
-    <option value="to">Tonga</option>
-    <option value="tt">Trinidad and Tobago</option>
-    <option value="tn">Tunisia</option>
-    <option value="tr">Turkey</option>
-    <option value="tm">Turkmenistan</option>
-    <option value="tv">Tuvalu</option>
-    <option value="ug">Uganda</option>
-    <option value="ua">Ukraine</option>
-    <option value="ae">United Arab Emirates</option>
-    <option value="uy">Uruguay</option>
-    <option value="uz">Uzbekistan</option>
-    <option value="vu">Vanuatu</option>
-    <option value="ve">Venezuela</option>
-    <option value="vn">Vietnam</option>
-    <option value="ye">Yemen</option>
-    <option value="zm">Zambia</option>
-    <option value="zw">Zimbabwe</option>1                                </select>
-                            </div>
-
-                            <div class="date-naissance">Date de naissance</div>
-
-                            <div class="third-width">
-                                <select class="third-width" name="jour" id="jour">
-                                                                            <option value="01">01</option>
-                                                                            <option value="02">02</option>
-                                                                            <option value="03">03</option>
-                                                                            <option value="04">04</option>
-                                                                            <option value="05">05</option>
-                                                                            <option value="06">06</option>
-                                                                            <option value="07">07</option>
-                                                                            <option value="08">08</option>
-                                                                            <option value="09">09</option>
-                                                                            <option value="10">10</option>
-                                                                            <option value="11">11</option>
-                                                                            <option value="12">12</option>
-                                                                            <option value="13">13</option>
-                                                                            <option value="14">14</option>
-                                                                            <option value="15">15</option>
-                                                                            <option value="16">16</option>
-                                                                            <option value="17">17</option>
-                                                                            <option value="18">18</option>
-                                                                            <option value="19">19</option>
-                                                                            <option value="20">20</option>
-                                                                            <option value="21">21</option>
-                                                                            <option value="22">22</option>
-                                                                            <option value="23">23</option>
-                                                                            <option value="24">24</option>
-                                                                            <option value="25">25</option>
-                                                                            <option value="26">26</option>
-                                                                            <option value="27">27</option>
-                                                                            <option value="28">28</option>
-                                                                            <option value="29">29</option>
-                                                                            <option value="30">30</option>
-                                                                            <option value="31">31</option>
-                                                                    </select>
-                                <label for="jour"></label>
-                            </div>
-
-                            <div class="third-width">
-                                <select class="third-width" name="mois" id="mois">
-                                                                            <option value="01">01</option>
-                                                                            <option value="02">02</option>
-                                                                            <option value="03">03</option>
-                                                                            <option value="04">04</option>
-                                                                            <option value="05">05</option>
-                                                                            <option value="06">06</option>
-                                                                            <option value="07">07</option>
-                                                                            <option value="08">08</option>
-                                                                            <option value="09">09</option>
-                                                                            <option value="10">10</option>
-                                                                            <option value="11">11</option>
-                                                                            <option value="12">12</option>
-                                                                    </select>
-                                <label for="mois"></label>
-                            </div>
-
-                            <div class="third-width">
-                                <select class="third-width" name="annee" id="annee">
-                                    <option value="2026" selected> 2026 </option>
-                                                                            <option value="1930" > 1930 </option>
-                                                                            <option value="1931" > 1931 </option>
-                                                                            <option value="1932" > 1932 </option>
-                                                                            <option value="1933" > 1933 </option>
-                                                                            <option value="1934" > 1934 </option>
-                                                                            <option value="1935" > 1935 </option>
-                                                                            <option value="1936" > 1936 </option>
-                                                                            <option value="1937" > 1937 </option>
-                                                                            <option value="1938" > 1938 </option>
-                                                                            <option value="1939" > 1939 </option>
-                                                                            <option value="1940" > 1940 </option>
-                                                                            <option value="1941" > 1941 </option>
-                                                                            <option value="1942" > 1942 </option>
-                                                                            <option value="1943" > 1943 </option>
-                                                                            <option value="1944" > 1944 </option>
-                                                                            <option value="1945" > 1945 </option>
-                                                                            <option value="1946" > 1946 </option>
-                                                                            <option value="1947" > 1947 </option>
-                                                                            <option value="1948" > 1948 </option>
-                                                                            <option value="1949" > 1949 </option>
-                                                                            <option value="1950" > 1950 </option>
-                                                                            <option value="1951" > 1951 </option>
-                                                                            <option value="1952" > 1952 </option>
-                                                                            <option value="1953" > 1953 </option>
-                                                                            <option value="1954" > 1954 </option>
-                                                                            <option value="1955" > 1955 </option>
-                                                                            <option value="1956" > 1956 </option>
-                                                                            <option value="1957" > 1957 </option>
-                                                                            <option value="1958" > 1958 </option>
-                                                                            <option value="1959" > 1959 </option>
-                                                                            <option value="1960" > 1960 </option>
-                                                                            <option value="1961" > 1961 </option>
-                                                                            <option value="1962" > 1962 </option>
-                                                                            <option value="1963" > 1963 </option>
-                                                                            <option value="1964" > 1964 </option>
-                                                                            <option value="1965" > 1965 </option>
-                                                                            <option value="1966" > 1966 </option>
-                                                                            <option value="1967" > 1967 </option>
-                                                                            <option value="1968" > 1968 </option>
-                                                                            <option value="1969" > 1969 </option>
-                                                                            <option value="1970" > 1970 </option>
-                                                                            <option value="1971" > 1971 </option>
-                                                                            <option value="1972" > 1972 </option>
-                                                                            <option value="1973" > 1973 </option>
-                                                                            <option value="1974" > 1974 </option>
-                                                                            <option value="1975" > 1975 </option>
-                                                                            <option value="1976" > 1976 </option>
-                                                                            <option value="1977" > 1977 </option>
-                                                                            <option value="1978" > 1978 </option>
-                                                                            <option value="1979" > 1979 </option>
-                                                                            <option value="1980" > 1980 </option>
-                                                                            <option value="1981" > 1981 </option>
-                                                                            <option value="1982" > 1982 </option>
-                                                                            <option value="1983" > 1983 </option>
-                                                                            <option value="1984" > 1984 </option>
-                                                                            <option value="1985" > 1985 </option>
-                                                                            <option value="1986" > 1986 </option>
-                                                                            <option value="1987" > 1987 </option>
-                                                                            <option value="1988" > 1988 </option>
-                                                                            <option value="1989" > 1989 </option>
-                                                                            <option value="1990" > 1990 </option>
-                                                                            <option value="1991" > 1991 </option>
-                                                                            <option value="1992" > 1992 </option>
-                                                                            <option value="1993" > 1993 </option>
-                                                                            <option value="1994" > 1994 </option>
-                                                                            <option value="1995" > 1995 </option>
-                                                                            <option value="1996" > 1996 </option>
-                                                                            <option value="1997" > 1997 </option>
-                                                                            <option value="1998" > 1998 </option>
-                                                                            <option value="1999" > 1999 </option>
-                                                                            <option value="2000" > 2000 </option>
-                                                                            <option value="2001" > 2001 </option>
-                                                                            <option value="2002" > 2002 </option>
-                                                                            <option value="2003" > 2003 </option>
-                                                                            <option value="2004" > 2004 </option>
-                                                                            <option value="2005" > 2005 </option>
-                                                                            <option value="2006" > 2006 </option>
-                                                                            <option value="2007" > 2007 </option>
-                                                                    </select>
-                                <label for="annee">Год</label>
-                            </div>
-
-                            <div class="message-modal">
-                            </div>
-
-                            <div class="texte-loi">
-                                Нажимая «Войти», вы подтверждаете, что достигли возраста, необходимого в вашей стране для посещения этого сайта.
-                                Вы принимаете наши <a href="#">общие условия использования</a> и подтверждаете, что прочитали нашу
-                                <a href="#">политику персональных данных и cookies</a>                            </div>
-                            <button type="submit">Войти</button>
-                            <div class="phrase-modal">
-                                                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
-
-
-    <div class="hide-nb-article-panier">
-      0    </div>
-
-
-  </header>
-
-<div class="container-home">
-
-  <div class="n2_clear"><ss3-force-full-width data-overflow-x="body" data-horizontal-selector="body"><div class="n2-section-smartslider fitvidsignore  n2_clear" data-ssid="39"><div id="n2-ss-39-align" class="n2-ss-align"><div class="n2-padding"><div id="n2-ss-39" data-creator="Smart Slider 3" data-responsive="fullwidth" class="n2-ss-slider n2-ow n2-has-hover n2notransition  ">
-
-
-
-<div class="n2-ss-slider-wrapper-inside">
-        <div class="n2-ss-slider-1 n2_ss__touch_element n2-ow">
-            <div class="n2-ss-slider-2 n2-ow">
-                                                <div class="n2-ss-slider-3 n2-ow">
-
-                    <div class="n2-ss-slide-backgrounds n2-ow-all"><div class="n2-ss-slide-background" data-public-id="1" data-mode="fill"><video class="n2-ss-slide-background-video intrinsic-ignore data-tf-not-load" style="opacity:1;" data-mode="fill" playsinline="playsinline" webkit-playsinline="webkit-playsinline" onloadstart="this.n2LoadStarted=1;" data-keepplaying="1" preload="none" muted="muted" loop="loop" data-reset-slide-change="1"><source src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/11/Sparks12.mp4" type="video/mp4"></video><div data-color="RGBA(0,0,0,0.35)" style="background-color: RGBA(0,0,0,0.35);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="2" data-mode="fill"><video class="n2-ss-slide-background-video intrinsic-ignore data-tf-not-load" style="opacity:1;" data-mode="fill" playsinline="playsinline" webkit-playsinline="webkit-playsinline" onloadstart="this.n2LoadStarted=1;" data-keepplaying="1" preload="none" muted="muted" loop="loop" data-reset-slide-change="1"><source src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/video_savoir-faire_02.mp4" type="video/mp4"></video><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="3" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="53" data-y="52" data-alt="" data-title="" style="--ss-o-pos-x:53%;--ss-o-pos-y:52%"><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_home_fond_excellence-scaled.jpg" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(0,0,0,0.35)" style="background-color: RGBA(0,0,0,0.35);" class="n2-ss-slide-background-color"></div></div></div>                    <div class="n2-ss-slider-4 n2-ow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" data-related-device="desktopPortrait" class="n2-ow n2-ss-preserve-size n2-ss-preserve-size--slider n2-ss-slide-limiter"></svg><div data-first="1" data-slide-duration="0" data-id="242" data-slide-public-id="1" data-title="XO" class="n2-ss-slide n2-ow  n2-ss-slide-242"><div role="note" class="n2-ss-slide--focus" tabindex="-1">XO</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-LhQqLh0tkhv5" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-RB5kZ67mIHfX" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-RB5kZ67mIHfX-inner"><div class="n2-ss-layer n2-ow n-uc-bhEBCI2dY13r" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="-238" data-desktopportraittop="20" data-responsivesize="1" data-desktopportraitwidth="861" data-desktopportraitheight="auto" data-desktopportraitalign="center" data-desktopportraitvalign="middle" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-animv2="{&quot;basic&quot;:{&quot;in&quot;:{&quot;type&quot;:&quot;basic&quot;,&quot;name&quot;:&quot;Fondu \/ encha\u00een\u00e9 gauche&quot;,&quot;keyFrames&quot;:[{&quot;duration&quot;:2.5,&quot;opacity&quot;:0,&quot;scaleX&quot;:0.9,&quot;scaleY&quot;:0.9}]}}}" data-sstype="layer"><div class=" n2-ss-item-image-content n2-ss-item-content n2-ow-all"><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img id="n2-ss-39item1" alt="" class="skip-lazy jetpack-lazy-image" width="1488" height="1209" data-skip-lazy="1" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_prod_xo_exception_home-1.png" /></picture></div></div><div class="n2-ss-layer n2-ow n-uc-sBTJkw2gE1Pk" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="187" data-desktopportraittop="425" data-responsivesize="1" data-desktopportraitwidth="418" data-desktopportraitheight="auto" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div class="n2-ss-item-content n2-ss-text n2-ow-all"><div class=""><p class="n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph   ">Долгие годы выдержки были необходимы<br />
-для создания XO Exception. </p>
-</div></div></div><div class="n2-ss-layer n2-ow n-uc-rQOyYaSBrPXP" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="147" data-desktopportraittop="499" data-responsivesize="1" data-desktopportraitwidth="338" data-desktopportraitheight="auto" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item3" class="  n2-ss-item-content n2-ss-text n2-ow" style="display:block;"><a class="n2-ow n2-font-4fea3266f8fb974b789488b5d2debf0f-hover n2-style-dfece9006ec4a9d761142830c01faf94-heading " style="display:block;" href="/Cognac-Leopold-Croizet-site/ru/collection/xo-exception/">Открыть</a></div></div><div class="n2-ss-layer n2-ow n-uc-yWs9ryu6jh22" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="45" data-desktopportraittop="-105" data-responsivesize="1" data-desktopportraitwidth="163" data-desktopportraitheight="90" data-desktopportraitalign="center" data-desktopportraitvalign="middle" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div class="n2-style-bfeebcc8fed48f2089efc676a8e62c7b-heading  n2-ss-item-image-content n2-ss-item-content n2-ow-all"><img id="n2-ss-39item4" alt="" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" /></div></div><div class="n2-ss-layer n2-ow n-uc-5vA3lL6vAVDp" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="104" data-desktopportraittop="265" data-responsivesize="1" data-desktopportraitwidth="257" data-desktopportraitheight="43" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item5" class="n2-font-53a69e1b50bbb305cd14f96709d3c56e-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">COGNAC</div></div><div class="n2-ss-layer n2-ow n-uc-OTPCIPPNDkZk" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="200" data-desktopportraittop="285" data-responsivesize="1" data-desktopportraitwidth="448" data-desktopportraitheight="88" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item6" class="n2-font-be0931c4a0fccfd5cdd5ca4593481fbe-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">XO</div></div><div class="n2-ss-layer n2-ow n-uc-mw4jZnltqf7i" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="175" data-desktopportraittop="388" data-responsivesize="1" data-desktopportraitwidth="399" data-desktopportraitheight="57" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item7" class="n2-font-4b423efba596ebbcf3a43342f2c079ea-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">ДОМ LÉOPOLD CROIZET</div></div><div class="n2-ss-layer n2-ow n-uc-4IVXSBRSvqsF" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="-65" data-desktopportraittop="-300" data-responsivesize="1" data-desktopportraitwidth="399" data-desktopportraitheight="57" data-desktopportraitalign="right" data-desktopportraitvalign="bottom" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item8" class="n2-font-38be42118c58952da1888a07b18f8645-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">EXCEPTION</div></div></div></div></div></div></div><div data-slide-duration="0" data-id="243" data-slide-public-id="2" data-title="COGNAC LÉOPOLD CROIZET VIDEO" class="n2-ss-slide n2-ow  n2-ss-slide-243"><div role="note" class="n2-ss-slide--focus" tabindex="-1">COGNAC LÉOPOLD CROIZET VIDEO</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-nHwzE3tFvOcd" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-MroGOSzimY4S" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-MroGOSzimY4S-inner"><div class="n2-ss-layer n2-ow n-uc-XFw9kUKrXF6H n2-ss-layer--auto" data-pm="normal" data-animv2="{&quot;basic&quot;:{&quot;in&quot;:{&quot;type&quot;:&quot;basic&quot;,&quot;name&quot;:&quot;Flou&quot;,&quot;keyFrames&quot;:[{&quot;duration&quot;:0.6,&quot;delay&quot;:0.25,&quot;opacity&quot;:0,&quot;n2blur&quot;:10}]}}}" data-sstype="layer"><div class="n2-ss-button-container n2-ss-item-content n2-ow n2-font-2a6696c6cee1a3d5ec5ef7efdce4069a-link  n2-ss-nowrap n2-ss-button-container--non-full-width"><a class="n2-style-7b0151b5662d682c98b6f5f971d51965-heading  n2-ow " href="/Cognac-Leopold-Croizet-site/ru/le-temps/"><div><div>COGNAC LÉOPOLD CROIZET ИЗ ПОКОЛЕНИЯ В ПОКОЛЕНИЕ</div></div></a></div></div></div></div></div></div></div><div data-slide-duration="0" data-id="244" data-slide-public-id="3" data-title="EXCELLENCE" class="n2-ss-slide n2-ow  n2-ss-slide-244"><div role="note" class="n2-ss-slide--focus" tabindex="-1">EXCELLENCE</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-z1JTDGMSgnkb" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-82445gZrTKqO" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-82445gZrTKqO-inner"><div class="n2-ss-layer n2-ow n-uc-iqWzRwLuGPrr" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="416" data-desktopportraittop="437" data-responsivesize="1" data-desktopportraitwidth="418" data-desktopportraitheight="auto" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div class="n2-ss-item-content n2-ss-text n2-ow-all"><div class=""><p class="n2-font-e9635675b6b8473f75d87b13be6350b4-paragraph   ">Откройте для себя очень старый Cognac, характерный для Fins Bois.<br />
-Исключительное и уникальное творение, гордость<br />
-дома LÉOPOLD CROIZET, раскрывающее<br />
-совершенство нашего мастерства.</p>
-</div></div></div><div class="n2-ss-layer n2-ow n-uc-31h2q0W6Na48" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="377" data-desktopportraittop="507" data-responsivesize="1" data-desktopportraitwidth="338" data-desktopportraitheight="auto" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item11" class="  n2-ss-item-content n2-ss-text n2-ow" style="display:block;"><a class="n2-ow n2-font-4fea3266f8fb974b789488b5d2debf0f-hover n2-style-dfece9006ec4a9d761142830c01faf94-heading " style="display:block;" href="/Cognac-Leopold-Croizet-site/ru/collection/excellence/">Открыть</a></div></div><div class="n2-ss-layer n2-ow n-uc-qmujWAj8webj" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="268" data-desktopportraittop="-16" data-responsivesize="1" data-desktopportraitwidth="173" data-desktopportraitheight="96" data-desktopportraitalign="center" data-desktopportraitvalign="middle" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div class="n2-style-dba8ae209f77245dc292ce84e31fb4ea-heading  n2-ss-item-image-content n2-ss-item-content n2-ow-all"><img id="n2-ss-39item12" alt="" class="skip-lazy jetpack-lazy-image" loading="lazy" data-skip-lazy="1" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" /></div></div><div class="n2-ss-layer n2-ow n-uc-cU58nIq6FeRB" data-pm="absolute" data-responsiveposition="1" data-desktopportraitleft="405" data-desktopportraittop="368" data-responsivesize="1" data-desktopportraitwidth="399" data-desktopportraitheight="57" data-desktopportraitalign="center" data-desktopportraitvalign="top" data-parentid="" data-desktopportraitparentalign="center" data-desktopportraitparentvalign="middle" data-sstype="layer"><div id="n2-ss-39item13" class="n2-font-917e83ced0341a93031f50a50930a9a6-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">EXCELLENCE... <br>Вы уже пробовали?</div></div></div></div></div></div></div>                    </div>
-
-                                    </div>
-            </div>
-        </div>
-        <div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-left-center"><div style="--widget-offset:15px;" class="n2-ss-widget nextend-arrow n2-ow-all nextend-arrow-previous  nextend-arrow-animated-fade" data-hide-mobilelandscape="1" data-hide-mobileportrait="1" id="n2-ss-39-arrow-previous" role="button" aria-label="стрелка назад" tabindex="0"><img width="32" height="32" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cGF0aCBkPSJNMTEuNDMzIDE1Ljk5MkwyMi42OSA1LjcxMmMuMzkzLS4zOS4zOTMtMS4wMyAwLTEuNDItLjM5My0uMzktMS4wMy0uMzktMS40MjMgMGwtMTEuOTggMTAuOTRjLS4yMS4yMS0uMy40OS0uMjg1Ljc2LS4wMTUuMjguMDc1LjU2LjI4NC43N2wxMS45OCAxMC45NGMuMzkzLjM5IDEuMDMuMzkgMS40MjQgMCAuMzkzLS40LjM5My0xLjAzIDAtMS40MmwtMTEuMjU3LTEwLjI5Ig0KICAgICAgICAgIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgZmlsbC1ydWxlPSJldmVub2RkIi8+DQo8L3N2Zz4=" alt="стрелка назад"></div></div><div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-right-center"><div style="--widget-offset:30px;" class="n2-ss-widget nextend-arrow n2-ow-all nextend-arrow-next  nextend-arrow-animated-fade" data-hide-mobilelandscape="1" data-hide-mobileportrait="1" id="n2-ss-39-arrow-next" role="button" aria-label="стрелка вперед" tabindex="0"><img width="32" height="32" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cGF0aCBkPSJNMTAuNzIyIDQuMjkzYy0uMzk0LS4zOS0xLjAzMi0uMzktMS40MjcgMC0uMzkzLjM5LS4zOTMgMS4wMyAwIDEuNDJsMTEuMjgzIDEwLjI4LTExLjI4MyAxMC4yOWMtLjM5My4zOS0uMzkzIDEuMDIgMCAxLjQyLjM5NS4zOSAxLjAzMy4zOSAxLjQyNyAwbDEyLjAwNy0xMC45NGMuMjEtLjIxLjMtLjQ5LjI4NC0uNzcuMDE0LS4yNy0uMDc2LS41NS0uMjg2LS43NkwxMC43MiA0LjI5M3oiDQogICAgICAgICAgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC44IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==" alt="стрелка вперед"></div></div><div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-center-bottom"><div style="--widget-offset:10px;" class="n2-ss-widget n2-ss-control-bullet n2-ow-all n2-ss-control-bullet-horizontal"><div class=" nextend-bullet-bar n2-bar-justify-content-center"><div class="n2-bullet n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot " style="visibility:hidden;"></div></div></div></div></div></div><ss3-loader></ss3-loader></div></div><div class="n2_clear"></div></div></ss3-force-full-width></div><div class="n2_clear"><ss3-force-full-width data-overflow-x="body" data-horizontal-selector="body"><div class="n2-section-smartslider fitvidsignore  n2_clear" data-ssid="40"><div id="n2-ss-40-align" class="n2-ss-align"><div class="n2-padding"><div id="n2-ss-40" data-creator="Smart Slider 3" data-responsive="fullwidth" class="n2-ss-slider n2-ow n2-has-hover n2notransition  ">
-
-
-
-<div class="n2-ss-slider-wrapper-inside">
-        <div class="n2-ss-slider-1 n2_ss__touch_element n2-ow">
-            <div class="n2-ss-slider-2 n2-ow">
-                                                <div class="n2-ss-slider-3 n2-ow">
-
-                    <div class="n2-ss-slide-backgrounds n2-ow-all"><div class="n2-ss-slide-background" data-public-id="1" data-mode="fill"><video class="n2-ss-slide-background-video intrinsic-ignore data-tf-not-load" style="opacity:1;" data-mode="fill" playsinline="playsinline" webkit-playsinline="webkit-playsinline" onloadstart="this.n2LoadStarted=1;" data-keepplaying="1" preload="none" muted="muted" loop="loop" data-reset-slide-change="1"><source src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/11/Sparks12.mp4" type="video/mp4"></video><div data-color="RGBA(0,0,0,0.35)" style="background-color: RGBA(0,0,0,0.35);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="2" data-mode="fill"><video class="n2-ss-slide-background-video intrinsic-ignore data-tf-not-load" style="opacity:1;" data-mode="fill" playsinline="playsinline" webkit-playsinline="webkit-playsinline" onloadstart="this.n2LoadStarted=1;" data-keepplaying="1" preload="none" muted="muted" loop="loop" data-reset-slide-change="1"><source src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/video_savoir-faire_02.mp4" type="video/mp4"></video><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="3" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="63" data-y="4" data-alt="" data-title="" style="--ss-o-pos-x:63%;--ss-o-pos-y:4%"><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_home_fond_excellence-scaled.jpg" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(0,0,0,0.35)" style="background-color: RGBA(0,0,0,0.35);" class="n2-ss-slide-background-color"></div></div></div>                    <div class="n2-ss-slider-4 n2-ow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" data-related-device="desktopPortrait" class="n2-ow n2-ss-preserve-size n2-ss-preserve-size--slider n2-ss-slide-limiter"></svg><div data-first="1" data-slide-duration="0" data-id="245" data-slide-public-id="1" data-title="XO" class="n2-ss-slide n2-ow  n2-ss-slide-245"><div role="note" class="n2-ss-slide--focus" tabindex="-1">XO</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-CYiwSL2hxgzm" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-8nPcKEm2FUoa" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-8nPcKEm2FUoa-inner"><div class="n2-ss-layer n2-ow n-uc-VnOP8lRD1fDZ" data-pm="normal" data-sstype="layer"><div id="n2-ss-40item1" class="n2-font-e392e5e045a3778f282cc7b75b937793-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">XO</div></div><div class="n2-ss-layer n2-ow n-uc-alb6wr4Y7Q9a" data-pm="normal" data-sstype="layer"><div id="n2-ss-40item2" class="n2-font-a7ffef5f2e0d1cb8b7007c22bc087dfc-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">E  X  C  E  P  T  I  O  N</div></div><div class="n2-ss-layer n2-ow n-uc-KXriGs1GR2AK" data-pm="normal" data-animv2="{&quot;basic&quot;:{&quot;in&quot;:{&quot;type&quot;:&quot;basic&quot;,&quot;name&quot;:&quot;Fondu \/ encha\u00een\u00e9 gauche&quot;,&quot;keyFrames&quot;:[{&quot;duration&quot;:2.5,&quot;opacity&quot;:0,&quot;scaleX&quot;:0.9,&quot;scaleY&quot;:0.9}]}}}" data-sstype="layer"><div class=" n2-ss-item-image-content n2-ss-item-content n2-ow-all"><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img id="n2-ss-40item3" alt="" class="skip-lazy jetpack-lazy-image" width="1488" height="1209" data-skip-lazy="1" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_prod_xo_exception_home-1.png" /></picture></div></div><div class="n2-ss-layer n2-ow n-uc-eHuIkY0ENyLE" data-pm="normal" data-sstype="layer"><div class="n2-ss-item-content n2-ss-text n2-ow-all"><div class=""><p class="n2-font-917fbf67a29847cf589135d7f2ca2226-paragraph   ">Многие годы выдержки<br />
-потребовались для создания<br />
-этого XO Exception.</p>
-</div></div></div><div class="n2-ss-layer n2-ow n-uc-YWgBTbya4Fog" data-pm="normal" data-sstype="layer"><div id="n2-ss-40item5" class="  n2-ss-item-content n2-ss-text n2-ow" style="display:block;"><a class="n2-ow n2-font-689e2698a6ab3684dbdf7250daad46ce-hover n2-style-45bf29c3108f281e1e71490903a5c56c-heading " style="display:block;" href="/Cognac-Leopold-Croizet-site/ru/collection/xo-exception/">Открыть</a></div></div></div></div></div></div></div><div data-slide-duration="0" data-id="246" data-slide-public-id="2" data-title="COGNAC LÉOPOLD CROIZET VIDEO" class="n2-ss-slide n2-ow  n2-ss-slide-246"><div role="note" class="n2-ss-slide--focus" tabindex="-1">COGNAC LÉOPOLD CROIZET VIDEO</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-MUJRk631HREM" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-6aSfwc6UUoXF" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-6aSfwc6UUoXF-inner"><div class="n2-ss-layer n2-ow n-uc-PCIDl0PP63Sm n2-ss-layer--auto" data-pm="normal" data-animv2="{&quot;basic&quot;:{&quot;in&quot;:{&quot;type&quot;:&quot;basic&quot;,&quot;name&quot;:&quot;Flou&quot;,&quot;keyFrames&quot;:[{&quot;duration&quot;:0.6,&quot;delay&quot;:0.25,&quot;opacity&quot;:0,&quot;n2blur&quot;:10}]}}}" data-sstype="layer"><div class="n2-ss-button-container n2-ss-item-content n2-ow n2-font-593b3ae3142873c04292011dc052aeda-link  n2-ss-button-container--non-full-width"><a class="n2-style-79e44d6b4a143c9744ed18690380da71-heading  n2-ow " href="/Cognac-Leopold-Croizet-site/ru/le-temps/"><div><div>COGNAC LÉOPOLD CROIZET ИЗ ПОКОЛЕНИЯ В ПОКОЛЕНИЕ</div></div></a></div></div></div></div></div></div></div><div data-slide-duration="0" data-id="247" data-slide-public-id="3" data-title="XO" class="n2-ss-slide n2-ow  n2-ss-slide-247"><div role="note" class="n2-ss-slide--focus" tabindex="-1">XO</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-631PmFKCHamk" data-sstype="slide" data-pm="default"><div class="n2-ss-layer n2-ow n-uc-2z0lVLw0PT1H" data-pm="default" data-sstype="content" data-hasbackground="0"><div class="n2-ss-section-main-content n2-ss-layer-with-background n2-ss-layer-content n2-ow n-uc-2z0lVLw0PT1H-inner"><div class="n2-ss-layer n2-ow n-uc-1hzrBJkjPjts" data-pm="normal" data-sstype="layer"><div id="n2-ss-40item7" class="n2-font-01bdc45278c075eb3a4e86e0bdeb91be-hover n2-style-b98ec09cd171d4834ad3e8bf00e3559a-heading   n2-ss-item-content n2-ss-text n2-ow" style="display:block;">EXCELLENCE</div></div><div class="n2-ss-layer n2-ow n-uc-oltV1ZH0oVBp" data-pm="normal" data-sstype="layer"><div class="n2-ss-item-content n2-ss-text n2-ow-all"><div class=""><p class="n2-font-e3ebd75085af384984af49b30749e534-paragraph  n2-style-3f97be085729c2d15aa55bf3b5fad7d6-heading  ">Откройте<br />
-очень старый Cognac<br />
-характерный<br />
-для Fins Bois.<br />
-Творение<br />
-исключительное<br />
-и уникальное,<br />
-гордость дома<br />
-LÉOPOLD CROIZET.<br />
-Этот Cognac раскрывает<br />
-всё совершенство<br />
-нашего мастерства.</p>
-</div></div></div><div class="n2-ss-layer n2-ow n-uc-vKEh6n37DYda" data-pm="normal" data-sstype="layer"><div id="n2-ss-40item9" class="  n2-ss-item-content n2-ss-text n2-ow" style="display:block;"><a class="n2-ow n2-font-689e2698a6ab3684dbdf7250daad46ce-hover n2-style-514ec50a2d40d57f59ce4d8e52ec8e47-heading " style="display:block;" href="/Cognac-Leopold-Croizet-site/ru/collection/excellence/">Открыть</a></div></div></div></div></div></div></div>                    </div>
-
-                                    </div>
-            </div>
-        </div>
-        <div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-left-center"><div style="--widget-offset:15px;" class="n2-ss-widget nextend-arrow n2-ow-all nextend-arrow-previous  nextend-arrow-animated-fade" data-hide-mobilelandscape="1" data-hide-mobileportrait="1" id="n2-ss-40-arrow-previous" role="button" aria-label="стрелка назад" tabindex="0"><img width="32" height="32" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cGF0aCBkPSJNMTEuNDMzIDE1Ljk5MkwyMi42OSA1LjcxMmMuMzkzLS4zOS4zOTMtMS4wMyAwLTEuNDItLjM5My0uMzktMS4wMy0uMzktMS40MjMgMGwtMTEuOTggMTAuOTRjLS4yMS4yMS0uMy40OS0uMjg1Ljc2LS4wMTUuMjguMDc1LjU2LjI4NC43N2wxMS45OCAxMC45NGMuMzkzLjM5IDEuMDMuMzkgMS40MjQgMCAuMzkzLS40LjM5My0xLjAzIDAtMS40MmwtMTEuMjU3LTEwLjI5Ig0KICAgICAgICAgIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuOCIgZmlsbC1ydWxlPSJldmVub2RkIi8+DQo8L3N2Zz4=" alt="стрелка назад"></div></div><div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-right-center"><div style="--widget-offset:30px;" class="n2-ss-widget nextend-arrow n2-ow-all nextend-arrow-next  nextend-arrow-animated-fade" data-hide-mobilelandscape="1" data-hide-mobileportrait="1" id="n2-ss-40-arrow-next" role="button" aria-label="стрелка вперед" tabindex="0"><img width="32" height="32" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cGF0aCBkPSJNMTAuNzIyIDQuMjkzYy0uMzk0LS4zOS0xLjAzMi0uMzktMS40MjcgMC0uMzkzLjM5LS4zOTMgMS4wMyAwIDEuNDJsMTEuMjgzIDEwLjI4LTExLjI4MyAxMC4yOWMtLjM5My4zOS0uMzkzIDEuMDIgMCAxLjQyLjM5NS4zOSAxLjAzMy4zOSAxLjQyNyAwbDEyLjAwNy0xMC45NGMuMjEtLjIxLjMtLjQ5LjI4NC0uNzcuMDE0LS4yNy0uMDc2LS41NS0uMjg2LS43NkwxMC43MiA0LjI5M3oiDQogICAgICAgICAgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC44IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==" alt="стрелка вперед"></div></div><div class="n2-ss-slider-controls n2-ss-slider-controls-absolute-center-bottom"><div style="--widget-offset:10px;" class="n2-ss-widget n2-ss-control-bullet n2-ow-all n2-ss-control-bullet-horizontal"><div class=" nextend-bullet-bar n2-bar-justify-content-center"><div class="n2-bullet n2-style-be22e4f6cd562c2d0b1965a91b391e3b-dot " style="visibility:hidden;"></div></div></div></div></div></div><ss3-loader></ss3-loader></div></div><div class="n2_clear"></div></div></ss3-force-full-width></div>  <div class="container-front-page">
-
-<div class="wp-block-columns are-vertically-aligned-bottom home-colonnes is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
-<div class="wp-block-column is-vertically-aligned-bottom is-layout-flow wp-block-column-is-layout-flow">
-<div class="wp-block-image is-style-default"><figure class="aligncenter size-large"><img fetchpriority="high" decoding="async" width="715" height="693" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg" alt="" class="wp-image-527" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg 715w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-125x121.jpg 125w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-420x407.jpg 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-100x97.jpg 100w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-300x291.jpg 300w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-120x116.jpg 120w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-90x87.jpg 90w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_cocktail-180x174.jpg 180w" sizes="(max-width: 715px) 100vw, 715px" /></figure></div>
-
-
-
-<p class="has-text-align-center home-titre-image wp-block-paragraph">Shake!</p>
-
-
-
-<p class="has-text-align-center home-texte-image wp-block-paragraph">Свежие идеи для солнечных дней</p>
-</div>
-
-
-
-<div class="wp-block-column is-vertically-aligned-bottom is-layout-flow wp-block-column-is-layout-flow">
-<figure class="wp-block-image size-full is-style-default"><a href="/Cognac-Leopold-Croizet-site/ru/collection/extra/"><img decoding="async" width="720" height="731" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png" alt="Cognac Léopold Croizet Extra Extra avec coffret rouge" class="wp-image-extra-2026" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-500.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png 720w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret.png 1200w" sizes="(max-width: 720px) 100vw, 720px" /></a></figure>
-
-
-
-<p class="has-text-align-center home-titre-image wp-block-paragraph">Hors d&#8217;Âge</p>
-
-
-
-<p class="has-text-align-center home-texte-image wp-block-paragraph">Découvrir l&#8217;extra Léopold Croizet</p>
-</div>
-
-
-
-<div class="wp-block-column is-vertically-aligned-bottom is-layout-flow wp-block-column-is-layout-flow">
-<figure class="wp-block-image size-large is-style-default"><a href="/Cognac-Leopold-Croizet-site/ru/le-temps/"><img decoding="async" width="715" height="693" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive.jpg" alt="" class="wp-image-524" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive.jpg 715w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-125x121.jpg 125w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-420x407.jpg 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-100x97.jpg 100w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-300x291.jpg 300w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-120x116.jpg 120w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-90x87.jpg 90w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_carre_archive-180x174.jpg 180w" sizes="(max-width: 715px) 100vw, 715px" /></a></figure>
-
-
-
-<p class="has-text-align-center home-titre-image wp-block-paragraph">Дать времени время</p>
-
-
-
-<p class="has-text-align-center home-texte-image wp-block-paragraph">… и повернуть его вспять</p>
-</div>
-</div>
-
-
-
-<div class="wp-block-nk-awb nk-awb  alignfull"><div class="nk-awb-wrap" data-awb-type="image" data-awb-image-background-size="cover" data-awb-image-background-position="50% 50%" data-awb-parallax="scroll" data-awb-parallax-speed="0.5" data-awb-parallax-mobile="true"><div class="nk-awb-inner"><img decoding="async" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/02/propriete_02-scaled.jpg" class="wp-image-1358 jarallax-img is-layout-constrained wp-block-nk-awb-is-layout-constrained" width="2560" height="1841" /></div></div>
-<figure class="wp-block-image size-large contact-home-pc"><img decoding="async" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact.png" alt="" class="wp-image-1391"/></figure>
-
-
-
-<figure class="wp-block-image size-large contact-home-mobile"><img decoding="async" width="1024" height="555" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-1024x555.png" alt="" class="wp-image-1386" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-1024x555.png 1024w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-300x163.png 300w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-120x65.png 120w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-768x417.png 768w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-500x271.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-800x434.png 800w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-1280x694.png 1280w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-90x49.png 90w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-180x98.png 180w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-125x68.png 125w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-420x228.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1-1000x542.png 1000w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/12/contact_mobile-1.png 1475w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
-</div>
-
-
-
-<div class="wp-block-columns container-banniere-home is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
-<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-<figure class="wp-block-image size-large"><a href="/Cognac-Leopold-Croizet-site/ru/lalchimie/"><img decoding="async" width="1024" height="432" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-1024x432.jpg" alt="" class="wp-image-533" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-1024x432.jpg 1024w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-125x53.jpg 125w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-1000x422.jpg 1000w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-420x177.jpg 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-300x127.jpg 300w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-120x51.jpg 120w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-768x324.jpg 768w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-1536x648.jpg 1536w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-2048x864.jpg 2048w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-90x38.jpg 90w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/05/img_home_large_savoirfaire-180x76.jpg 180w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<p class="has-text-align-center home-texte-hover-image wp-block-paragraph"><a href="/Cognac-Leopold-Croizet-site/ru/lalchimie/" data-type="page" data-id="7">Случайностей не бывает</a></p>
-</div>
-</div>
-  </div>
-
-  <img class="page-dechire" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_papier_dechire.png" alt="фон страницы">
-  <div class="end-page">
-    <div class="main-container-end-page">
-      <div class="container-slider-end-page">
-        <div class="n2-section-smartslider fitvidsignore  n2_clear" data-ssid="28"><div id="n2-ss-28-align" class="n2-ss-align"><div class="n2-padding"><div id="n2-ss-28" data-creator="Smart Slider 3" data-responsive="auto" class="n2-ss-slider n2-ow n2-has-hover n2notransition  ">
-        <div class="n2-ss-slider-1 n2_ss__touch_element n2-ow">
-            <div class="n2-ss-slider-2 n2-ow">
-                                                <div class="n2-ss-slider-3 n2-ow">
-
-                    <div class="n2-ss-slide-backgrounds n2-ow-all"><div class="n2-ss-slide-background" data-public-id="1" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="50" data-y="50" data-alt="" data-title=""><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="2" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="50" data-y="50" data-alt="" data-title=""><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_06-1.png" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="3" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="50" data-y="50" data-alt="" data-title=""><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_03.png" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="4" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="50" data-y="50" data-alt="" data-title=""><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_04.png" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div><div class="n2-ss-slide-background" data-public-id="5" data-mode="fill"><div class="n2-ss-slide-background-image" data-blur="0" data-opacity="100" data-x="50" data-y="50" data-alt="" data-title=""><picture class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_05.png" alt="" title="" loading="lazy" class="skip-lazy jetpack-lazy-image" data-skip-lazy="1"></picture></div><div data-color="RGBA(255,255,255,0)" style="background-color: RGBA(255,255,255,0);" class="n2-ss-slide-background-color"></div></div></div>                    <div class="n2-ss-slider-4 n2-ow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" data-related-device="desktopPortrait" class="n2-ow n2-ss-preserve-size n2-ss-preserve-size--slider n2-ss-slide-limiter"></svg><div data-first="1" data-slide-duration="0" data-id="186" data-slide-public-id="1" data-title="img_news_01" class="n2-ss-slide n2-ow  n2-ss-slide-186"><div role="note" class="n2-ss-slide--focus" tabindex="-1">img_news_01</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-ZnQ1OwHvKO0o" data-sstype="slide" data-pm="default"></div></div></div><div data-slide-duration="0" data-id="187" data-slide-public-id="2" data-title="img_news_03" class="n2-ss-slide n2-ow  n2-ss-slide-187"><div role="note" class="n2-ss-slide--focus" tabindex="-1">img_news_03</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-5NstDhddz2ob" data-sstype="slide" data-pm="default"></div></div></div><div data-slide-duration="0" data-id="188" data-slide-public-id="3" data-title="img_news_04" class="n2-ss-slide n2-ow  n2-ss-slide-188"><div role="note" class="n2-ss-slide--focus" tabindex="-1">img_news_04</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-KF3zl27kyCSJ" data-sstype="slide" data-pm="default"></div></div></div><div data-slide-duration="0" data-id="189" data-slide-public-id="4" data-title="img_news_05" class="n2-ss-slide n2-ow  n2-ss-slide-189"><div role="note" class="n2-ss-slide--focus" tabindex="-1">img_news_05</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-fFQC5z2cvHf5" data-sstype="slide" data-pm="default"></div></div></div><div data-slide-duration="0" data-id="190" data-slide-public-id="5" data-title="img_news_02" class="n2-ss-slide n2-ow  n2-ss-slide-190"><div role="note" class="n2-ss-slide--focus" tabindex="-1">img_news_02</div><div class="n2-ss-layers-container n2-ss-slide-limiter n2-ow"><div class="n2-ss-layer n2-ow n-uc-CIkn1xqvQuD1" data-sstype="slide" data-pm="default"></div></div></div>                    </div>
-
-                                    </div>
-            </div>
-        </div>
-        </div><ss3-loader></ss3-loader></div></div><div class="n2_clear"></div></div>      </div>
-
-      <form method="POST" action="" class="container-newsletter">
-
-    <label for="">Я хочу время от времени получать ваши новости.</label>
-<div class="info-legales">
-        Указывая свой e-mail, вы соглашаетесь получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими <a href="/Cognac-Leopold-Croizet-site/mentions-legales/">правовыми уведомлениями</a>.
+                                <label for="newsletter-email">Я хочу время от времени получать ваши новости.</label>
+<div class="info-legales" id="newsletter-email-legal">
+        Указывая свой e-mail, вы соглашаетесь получать наши последние новости о продуктах и подтверждаете, что ознакомились с нашими <a href="/mentions-legales/">правовыми уведомлениями</a>.
     </div>
 <div class="info-systeme"></div>
-    <input type="email" name="newsletter" id="newsletter" placeholder="Оставьте ваш e-mail">
+    <input type="email" name="newsletter" id="newsletter-email" placeholder="Оставьте ваш e-mail" autocomplete="email" inputmode="email" aria-describedby="newsletter-email-legal">
     <button type="submit">Отправить</button>
 
 </form>
@@ -841,13 +339,13 @@ LÉOPOLD CROIZET.<br />
   </div>
   <div class="inner-container-footer">
 
-    <a href="/Cognac-Leopold-Croizet-site/ru/" class="logo-footer">
-      <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Léopold Croizet">
+    <a href="/ru/" class="logo-footer">
+      <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Логотип Léopold Croizet" width="2" height="14" decoding="async">
     </a>
     <div class="texte-medaille">
       Погреб, отмеченный множеством наград
     </div>
-    <img class="medailles-footer" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Логотипы медалей">
+    <img class="medailles-footer" src="/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Логотипы медалей" width="827" height="123" decoding="async" loading="lazy">
     <div class="reseaux-sociaux">
       <a href="https://www.facebook.com/leopold.croizet.cognac" target="_blank">Facebook</a>
       <i class="fas fa-circle"></i>
@@ -855,7 +353,7 @@ LÉOPOLD CROIZET.<br />
 
 
     </div>
-    <div class="menu-footer"><ul id="menu-pied-de-page-ru" class="menu"><li id="menu-item-2493" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2493"><a href="/Cognac-Leopold-Croizet-site/ru/rencontre/">Визит</a></li>
+    <div class="menu-footer"><ul id="menu-pied-de-page-ru" class="menu"><li id="menu-item-2493" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2493"><a href="/ru/rencontre/">Визит</a></li>
 </ul></div>    <div class="copyright">© Léopold Croizet 2026</div>
 
   </div>
@@ -867,13 +365,13 @@ LÉOPOLD CROIZET.<br />
 			document.body.className = c;
 		})();
 	</script>
-	<script id="jarallax-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/advanced-backgrounds/assets/vendor/jarallax/dist/jarallax.min.js"></script>
-<script id="jarallax-video-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/advanced-backgrounds/assets/vendor/jarallax/dist/jarallax-video.min.js"></script>
+	<script id="jarallax-js" src="/wp-content/plugins/advanced-backgrounds/assets/vendor/jarallax/dist/jarallax.min.js"></script>
+<script id="jarallax-video-js" src="/wp-content/plugins/advanced-backgrounds/assets/vendor/jarallax/dist/jarallax-video.min.js"></script>
 <script id="awb-js-extra">
 var AWB = {"version":"1.12.7","settings":{"disable_parallax":[],"disable_video":[],"full_width_fallback":true}};
 //# sourceURL=awb-js-extra
 </script>
-<script id="awb-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.js"></script>
+<script id="awb-js" src="/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.js"></script>
 </body>
 
 </html>

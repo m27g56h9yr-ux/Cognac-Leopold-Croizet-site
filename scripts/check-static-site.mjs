@@ -2,16 +2,35 @@ import { existsSync } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEPLOY_BASE_PATH, GITHUB_PAGES_BASE_PATH } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const checkedFiles = [];
 const missing = [];
 const dynamicReferences = [];
 const brandViolations = [];
 const pineauRedCollectionViolations = [];
 const pineauRedProductNavigationViolations = [];
+const legacyDeployBaseViolations = [];
+const imageDimensionViolations = [];
+const formLabelViolations = [];
+const productAltViolations = [];
+const homeMediaViolations = [];
+const productImageAltRules = [
+  [/img_prod_xo_exception_home|img_nom_produit_xo-exception/i, /Cognac Léopold Croizet XO Exception/i],
+  [/img_produit_vs_base2|VS_2024/i, /Cognac Léopold Croizet VS/i],
+  [/img_produit_vsop_base|VSOP_2024/i, /Cognac Léopold Croizet VSOP/i],
+  [/img_produit_napoleon_base|NAPOLEON_2024/i, /Cognac Léopold Croizet Napoléon/i],
+  [/img_produit_xo_base|XO_2024/i, /Cognac Léopold Croizet XO/i],
+  [/extra-bt-|img_nom_produit_extra|img_produit_extra_base/i, /Cognac Léopold Croizet Extra/i],
+  [/img_excellence_etui|img_produit_excellence|img_nom_produit_excellence/i, /Cognac Léopold Croizet Excellence/i],
+  [/img_produit_heritage|img_nom_produit_heritage/i, /Cognac Léopold Croizet Héritage/i],
+  [/img_produit_valentine|img_nom_produit_valentine/i, /Cognac Léopold Croizet Valentine XO/i],
+  [/pineau-des-charentes-rouge/i, /Pineau Rouge des Charentes Léopold Croizet/i],
+  [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, /Pineau des Charentes Léopold Croizet/i],
+];
+
 
 await walk(ROOT);
 
@@ -43,7 +62,14 @@ for (const file of checkedFiles) {
   }
 
   if (relativeFile.endsWith('.html')) {
+    if (DEPLOY_BASE_PATH !== GITHUB_PAGES_BASE_PATH && text.includes(GITHUB_PAGES_BASE_PATH)) {
+      legacyDeployBaseViolations.push(`${relativeFile}: contains ${GITHUB_PAGES_BASE_PATH}`);
+    }
     brandViolations.push(...findBrandViolations(text, relativeFile));
+    imageDimensionViolations.push(...findImageDimensionViolations(text, relativeFile));
+    formLabelViolations.push(...findFormLabelViolations(text, relativeFile));
+    productAltViolations.push(...findProductAltViolations(text, relativeFile));
+    homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
     pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
     pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
   }
@@ -55,6 +81,11 @@ if (
   || brandViolations.length
   || pineauRedCollectionViolations.length
   || pineauRedProductNavigationViolations.length
+  || legacyDeployBaseViolations.length
+  || imageDimensionViolations.length
+  || formLabelViolations.length
+  || productAltViolations.length
+  || homeMediaViolations.length
 ) {
   if (missing.length) {
     console.error('Missing local targets:');
@@ -81,6 +112,31 @@ if (
     for (const item of pineauRedProductNavigationViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
+  if (legacyDeployBaseViolations.length) {
+    console.error('Legacy deploy base references left in generated HTML:');
+    for (const item of legacyDeployBaseViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (imageDimensionViolations.length) {
+    console.error('Images without stable dimensions:');
+    for (const item of imageDimensionViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (formLabelViolations.length) {
+    console.error('Useful form controls without accessible labels:');
+    for (const item of formLabelViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (productAltViolations.length) {
+    console.error('Important product images without descriptive alt text:');
+    for (const item of productAltViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (homeMediaViolations.length) {
+    console.error('Homepage media loading regressions:');
+    for (const item of homeMediaViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
   process.exit(1);
 }
 
@@ -96,7 +152,7 @@ async function walk(dir) {
     const info = await stat(fullPath);
     if (info.isDirectory()) {
       await walk(fullPath);
-    } else if (/\.(html|css)$/.test(entry)) {
+    } else if (entry === 'index.html' || /\.css$/.test(entry)) {
       checkedFiles.push(fullPath);
     }
   }
@@ -157,6 +213,82 @@ function findBrandViolations(html, relativeFile) {
     }
   }
   return violations;
+}
+
+
+function findImageDimensionViolations(html, relativeFile) {
+  const violations = [];
+  for (const tag of html.match(/<img\b[^>]*>/gi) || []) {
+    const src = getAttribute(tag, 'src') || getAttribute(tag, 'data-src');
+    if (!src || src.startsWith('data:')) continue;
+    if (!/\.(?:png|jpe?g|gif|svg|webp|avif)(?:[?#]|$)/i.test(src)) continue;
+    if (!hasAttribute(tag, 'width') || !hasAttribute(tag, 'height')) {
+      violations.push(`${relativeFile}: ${src}`);
+    }
+  }
+  return violations;
+}
+
+function findFormLabelViolations(html, relativeFile) {
+  const violations = [];
+  const labelFors = new Set([...html.matchAll(/<label\b[^>]*\bfor=(["'])([^"']+)\1/gi)].map((match) => match[2]).filter(Boolean));
+  const controlPattern = /<(input|select|textarea)\b[^>]*>/gi;
+  for (const match of html.matchAll(controlPattern)) {
+    const tag = match[0];
+    const type = getAttribute(tag, 'type').toLowerCase();
+    if (['hidden', 'submit', 'button', 'reset', 'image'].includes(type)) continue;
+    if (hasAttribute(tag, 'aria-label') || hasAttribute(tag, 'aria-labelledby') || hasAttribute(tag, 'title')) continue;
+    const id = getAttribute(tag, 'id');
+    if (id && labelFors.has(id)) continue;
+    if (isWrappedByLabel(html, match.index)) continue;
+    const name = getAttribute(tag, 'name') || id || tag.slice(0, 80);
+    violations.push(`${relativeFile}: ${name}`);
+  }
+  return violations;
+}
+
+function findProductAltViolations(html, relativeFile) {
+  const violations = [];
+  for (const tag of html.match(/<img\b[^>]*>/gi) || []) {
+    const src = getAttribute(tag, 'src') || getAttribute(tag, 'data-src') || '';
+    const normalizedSrc = src.split('?')[0];
+    const rule = productImageAltRules.find(([pattern]) => pattern.test(normalizedSrc));
+    if (!rule) continue;
+    const alt = decodeHtml(getAttribute(tag, 'alt'));
+    if (!rule[1].test(alt)) violations.push(`${relativeFile}: ${src} alt="${alt}"`);
+  }
+  return violations;
+}
+
+function findHomeMediaViolations(html, relativeFile) {
+  if (!['index.html', 'en/index.html', 'ru/index.html', 'da/index.html', 'sv/index.html', 'no/index.html', 'zh/index.html'].includes(relativeFile)) {
+    return [];
+  }
+  const violations = [];
+  if (/"lazyLoad":0/.test(html)) violations.push(`${relativeFile}: SmartSlider lazyLoad is disabled`);
+  for (const tag of html.match(/<video\b[^>]*>/gi) || []) {
+    if (getAttribute(tag, 'preload') !== 'none') violations.push(`${relativeFile}: video preload should be none`);
+  }
+  return violations;
+}
+
+function isWrappedByLabel(html, index) {
+  const open = html.lastIndexOf('<label', index);
+  const close = html.lastIndexOf('</label>', index);
+  return open > close;
+}
+
+function hasAttribute(tag, name) {
+  return new RegExp('\\b' + escapeRegExp(name) + '=', 'i').test(tag);
+}
+
+function getAttribute(tag, name) {
+  const pattern = new RegExp("\\b" + escapeRegExp(name) + "=([\'\\\"])(.*?)\\1", "i");
+  return tag.match(pattern)?.[2] || '';
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 }
 
 function findPineauRedCollectionViolations(html, relativeFile) {

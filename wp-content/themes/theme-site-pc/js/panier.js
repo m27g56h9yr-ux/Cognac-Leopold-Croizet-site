@@ -46,7 +46,7 @@ $(document).ready(function () {
 
       $(".panier-menu a").removeClass("disabled-panier");
 
-      $(".panier-menu a").append("<div class='container-icon-panier-header'><img src='/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/01/panier.svg' class='icon-panier-header'><span class='nb-article-panier'>" + nbArticlePanier + "<span></div>");
+      $(".panier-menu a").append("<div class='container-icon-panier-header'><img src='/wp-content/uploads/2022/01/panier.svg' class='icon-panier-header'><span class='nb-article-panier'>" + nbArticlePanier + "<span></div>");
 
     } else {
 

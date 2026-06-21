@@ -75,7 +75,7 @@ $(document).ready(function () {
 
     function newsletterEndpoint() {
         var path = window.location.pathname;
-        var deployBase = "/Cognac-Leopold-Croizet-site";
+        var deployBase = "";
         var base = path === deployBase || path.indexOf(deployBase + "/") === 0 ? deployBase : "";
         return base + "/api/newsletter.php";
     }

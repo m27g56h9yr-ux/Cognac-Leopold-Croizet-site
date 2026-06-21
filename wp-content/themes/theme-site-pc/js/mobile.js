@@ -67,9 +67,9 @@ $(document).ready(function () {
             return;
         }
 
-        var base = "/Cognac-Leopold-Croizet-site";
+        var base = "";
         var path = window.location.pathname;
-        var localeMatch = path.match(/^\/Cognac-Leopold-Croizet-site\/(en|ru|da|sv|no|zh)\/collection\//);
+        var localeMatch = path.match(/^\/(en|ru|da|sv|no|zh)\/collection\//);
         var locale = localeMatch ? "/" + localeMatch[1] : "";
         var pineauRoute = base + locale + "/collection/pineau-des-charentes/";
         var isCurrent = path.replace(/\/index\.html$/, "/") === pineauRoute;
@@ -108,8 +108,8 @@ $(document).ready(function () {
     }
 
     function repair_pineau_rouge_images() {
-        var base = window.location.pathname.indexOf("/Cognac-Leopold-Croizet-site/") === 0
-            ? "/Cognac-Leopold-Croizet-site"
+        var base = window.location.pathname.indexOf("/") === 0
+            ? ""
             : "";
         var collectionImage = base + "/wp-content/uploads/2026/06/pineau-des-charentes-rouge-196x300.png";
         var footerImage = "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2290%22%20height%3D%22138%22%3E%3C/svg%3E";

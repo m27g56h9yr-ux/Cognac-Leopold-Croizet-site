@@ -2,11 +2,11 @@ import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
-const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const TODAY = '2026-06-11';
 
 const productNames = new Map([
@@ -25,6 +25,24 @@ const productNames = new Map([
 
 const PINEAU_SLUG = 'pineau-des-charentes';
 const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
+
+const NEWSLETTER_INPUT_ID = 'newsletter-email';
+
+const productImageAltRules = [
+  [/img_prod_xo_exception_home|img_nom_produit_xo-exception/i, 'Cognac Léopold Croizet XO Exception'],
+  [/img_produit_vs_base2|VS_2024/i, 'Cognac Léopold Croizet VS'],
+  [/img_produit_vsop_base|VSOP_2024/i, 'Cognac Léopold Croizet VSOP'],
+  [/img_produit_napoleon_base|NAPOLEON_2024/i, 'Cognac Léopold Croizet Napoléon'],
+  [/img_produit_xo_base|XO_2024/i, 'Cognac Léopold Croizet XO'],
+  [/extra-bt-|img_nom_produit_extra|img_produit_extra_base/i, 'Cognac Léopold Croizet Extra'],
+  [/img_excellence_etui|img_produit_excellence|img_nom_produit_excellence/i, 'Cognac Léopold Croizet Excellence'],
+  [/img_produit_heritage|img_nom_produit_heritage/i, 'Cognac Léopold Croizet Héritage'],
+  [/img_produit_valentine|img_nom_produit_valentine/i, 'Cognac Léopold Croizet Valentine XO'],
+  [/pineau-des-charentes-rouge/i, 'Pineau Rouge des Charentes Léopold Croizet'],
+  [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, 'Pineau des Charentes Léopold Croizet'],
+];
+
+const imageDimensionCache = new Map();
 
 const contentGroups = [
   ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'],
@@ -443,12 +461,16 @@ for (const file of allHtmlFiles) {
   const route = routeForFile(file);
   let html = await readFile(file, 'utf8');
   if (route.startsWith('/_preview/')) {
-    const previewHtml = applyRequestedOrderVisibility(normalizeGithubPagesLinks(html, route), route);
-    await writeFile(file, normalizeGeneratedWhitespace(previewHtml), 'utf8');
+    const previewHtml = await improveMediaMarkup(
+      applyRequestedOrderVisibility(normalizeGithubPagesLinks(html, route), route),
+      route,
+    );
+    await writeFile(file, normalizeLegacyDeployBase(normalizeGeneratedWhitespace(previewHtml)), 'utf8');
     continue;
   }
   html = hardenHtml(html, route, file);
-  await writeFile(file, html, 'utf8');
+  html = await improveMediaMarkup(html, route);
+  await writeFile(file, normalizeLegacyDeployBase(html), 'utf8');
   if (!isNoindexRoute(route)) indexableRoutes.push(route);
 }
 
@@ -569,7 +591,7 @@ function hardenHtml(html, route, file) {
   next = removeUnavailableOrderControls(next, route);
   next = normalizeGithubPagesLinks(next, route);
   next = repairLanguageMenuLinks(next, route);
-  return normalizeGeneratedWhitespace(next);
+  return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
 }
 
 function homeHrefForRoute(route) {
@@ -665,15 +687,227 @@ function repairNewsletterBlock(html, route) {
   const copy = newsletterCopy(lang);
   return html
     .replace(
-      /<label for="">[\s\S]*?<\/label>\s*(?=\s*<div class="info-legales">)/,
-      `<label for="">${copy.label}</label>\n`,
+      /<label\b[^>]*>[\s\S]*?<\/label>\s*(?=\s*<div class="info-legales")/,
+      `<label for="${NEWSLETTER_INPUT_ID}">${copy.label}</label>\n`,
     )
     .replace(
-      /<div class="info-legales">\s*[\s\S]*?\s*<\/div>\s*(?=\s*<div class="info-systeme">)/,
-      `<div class="info-legales">\n        ${copy.legal}\n    </div>\n`,
+      /<div class="info-legales"[^>]*>\s*[\s\S]*?\s*<\/div>\s*(?=\s*<div class="info-systeme">)/,
+      `<div class="info-legales" id="${NEWSLETTER_INPUT_ID}-legal">\n        ${copy.legal}\n    </div>\n`,
     )
-    .replace(/(<input\b[^>]*name="newsletter"[^>]*placeholder=")[^"]*(")/, `$1${copy.placeholder}$2`)
+    .replace(/<input\b[^>]*name="newsletter"[^>]*>/i, (tag) => {
+      let next = tag;
+      next = setAttribute(next, 'id', NEWSLETTER_INPUT_ID);
+      next = setAttribute(next, 'type', 'email');
+      next = setAttribute(next, 'placeholder', copy.placeholder);
+      next = setAttribute(next, 'autocomplete', 'email');
+      next = setAttribute(next, 'inputmode', 'email');
+      next = setAttribute(next, 'aria-describedby', `${NEWSLETTER_INPUT_ID}-legal`);
+      return next;
+    })
     .replace(/(<form\b[^>]*class="[^"]*\bcontainer-newsletter\b[^"]*"[\s\S]*?<button type="submit">)[\s\S]*?(<\/button>)/, `$1${copy.button}$2`);
+}
+
+
+async function improveMediaMarkup(html, route) {
+  let next = improveHomepageMediaLoading(html, route);
+  next = await improveImageMarkup(next, route);
+  return improveVideoMarkup(next, route);
+}
+
+function improveHomepageMediaLoading(html, route) {
+  if (!isHomepage(route)) return html;
+  return html.replace(/"lazyLoad":0/g, '"lazyLoad":1');
+}
+
+function improveVideoMarkup(html, route) {
+  if (!isHomepage(route)) return html;
+  return html.replace(/<video\b[^>]*>/gi, (tag) => {
+    let next = tag;
+    next = setAttribute(next, 'preload', 'none');
+    next = setAttribute(next, 'playsinline', 'playsinline');
+    if (!hasAttribute(next, 'aria-hidden')) next = setAttribute(next, 'aria-hidden', 'true');
+    return next;
+  });
+}
+
+async function improveImageMarkup(html, route) {
+  let output = '';
+  let lastIndex = 0;
+  let imageIndex = 0;
+
+  for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
+    output += html.slice(lastIndex, match.index);
+    output += await improveImageTag(match[0], route, imageIndex);
+    lastIndex = match.index + match[0].length;
+    imageIndex += 1;
+  }
+
+  return output + html.slice(lastIndex);
+}
+
+async function improveImageTag(tag, route, imageIndex) {
+  const src = getAttribute(tag, 'src') || getAttribute(tag, 'data-src') || '';
+  let next = repairProductAlt(tag, src);
+
+  const dimensions = await imageDimensionsForSrc(src);
+  if (dimensions) {
+    if (!hasAttribute(next, 'width')) next = setAttribute(next, 'width', String(dimensions.width));
+    if (!hasAttribute(next, 'height')) next = setAttribute(next, 'height', String(dimensions.height));
+  }
+
+  if (!hasAttribute(next, 'decoding') && !/^data:image\/svg\+xml/i.test(src)) {
+    next = setAttribute(next, 'decoding', 'async');
+  }
+
+  if (shouldLazyLoadImage(next, route, imageIndex)) {
+    next = setAttribute(next, 'loading', 'lazy');
+  }
+
+  return next;
+}
+
+function repairProductAlt(tag, src) {
+  const normalizedSrc = normalizePublicPath(src);
+  const rule = productImageAltRules.find(([pattern]) => pattern.test(normalizedSrc));
+  if (!rule) return tag;
+  return setAttribute(tag, 'alt', rule[1]);
+}
+
+function shouldLazyLoadImage(tag, route, imageIndex) {
+  if (hasAttribute(tag, 'loading') || hasAttribute(tag, 'fetchpriority')) return false;
+  if (/skip-lazy|data-skip-lazy|wp-post-image|attachment-woocommerce_single/i.test(tag)) return false;
+  if (/logo_leopold_croizet|img_slider_footer_01/i.test(tag)) return false;
+  if (isHomepage(route) && imageIndex < 4) return false;
+  return true;
+}
+
+async function imageDimensionsForSrc(src) {
+  const publicPath = normalizePublicPath(src).split('#')[0].split('?')[0];
+  if (!publicPath || publicPath.startsWith('data:')) return null;
+  if (!/\.(?:png|jpe?g|gif|webp|svg)$/i.test(publicPath)) return null;
+
+  const decodedPath = safeDecodePath(publicPath);
+  const localPath = path.join(ROOT, decodedPath.replace(/^\/+/, ''));
+  if (imageDimensionCache.has(localPath)) return imageDimensionCache.get(localPath);
+
+  let dimensions = null;
+  try {
+    const buffer = await readFile(localPath);
+    dimensions = parseImageDimensions(localPath, buffer);
+  } catch {
+    dimensions = null;
+  }
+
+  imageDimensionCache.set(localPath, dimensions);
+  return dimensions;
+}
+
+function parseImageDimensions(file, buffer) {
+  if (buffer.length < 24) return null;
+  const ext = path.extname(file).toLowerCase();
+  if (ext === '.png' && buffer.toString('ascii', 1, 4) === 'PNG') {
+    return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+  }
+  if ((ext === '.jpg' || ext === '.jpeg') && buffer[0] === 0xff && buffer[1] === 0xd8) {
+    return parseJpegDimensions(buffer);
+  }
+  if (ext === '.gif' && buffer.toString('ascii', 0, 3) === 'GIF') {
+    return { width: buffer.readUInt16LE(6), height: buffer.readUInt16LE(8) };
+  }
+  if (ext === '.webp' && buffer.toString('ascii', 0, 4) === 'RIFF' && buffer.toString('ascii', 8, 12) === 'WEBP') {
+    return parseWebpDimensions(buffer);
+  }
+  if (ext === '.svg') {
+    return parseSvgDimensions(buffer.toString('utf8'));
+  }
+  return null;
+}
+
+function parseJpegDimensions(buffer) {
+  let offset = 2;
+  while (offset < buffer.length - 9) {
+    if (buffer[offset] !== 0xff) {
+      offset += 1;
+      continue;
+    }
+    const marker = buffer[offset + 1];
+    offset += 2;
+    if (marker === 0xda || marker === 0xd9) break;
+    const length = buffer.readUInt16BE(offset);
+    if (
+      (marker >= 0xc0 && marker <= 0xc3)
+      || (marker >= 0xc5 && marker <= 0xc7)
+      || (marker >= 0xc9 && marker <= 0xcb)
+      || (marker >= 0xcd && marker <= 0xcf)
+    ) {
+      return { height: buffer.readUInt16BE(offset + 3), width: buffer.readUInt16BE(offset + 5) };
+    }
+    offset += length;
+  }
+  return null;
+}
+
+function parseWebpDimensions(buffer) {
+  const chunk = buffer.toString('ascii', 12, 16);
+  if (chunk === 'VP8X' && buffer.length >= 30) {
+    return { width: 1 + buffer.readUIntLE(24, 3), height: 1 + buffer.readUIntLE(27, 3) };
+  }
+  if (chunk === 'VP8 ' && buffer.length >= 30) {
+    return { width: buffer.readUInt16LE(26) & 0x3fff, height: buffer.readUInt16LE(28) & 0x3fff };
+  }
+  if (chunk === 'VP8L' && buffer.length >= 25) {
+    const bits = buffer.readUInt32LE(21);
+    return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
+  }
+  return null;
+}
+
+function parseSvgDimensions(svg) {
+  const width = numericSvgLength(matchFirst(svg, /\bwidth=["']([^"']+)["']/i));
+  const height = numericSvgLength(matchFirst(svg, /\bheight=["']([^"']+)["']/i));
+  if (width && height) return { width, height };
+
+  const viewBox = matchFirst(svg, /\bviewBox=["']([^"']+)["']/i);
+  if (!viewBox) return null;
+  const parts = viewBox.trim().split(/[\s,]+/).map(Number);
+  if (parts.length !== 4 || parts.some((part) => !Number.isFinite(part))) return null;
+  return { width: Math.round(parts[2]), height: Math.round(parts[3]) };
+}
+
+function numericSvgLength(value) {
+  const match = String(value || '').match(/^(\d+(?:\.\d+)?)(?:px)?$/i);
+  return match ? Math.round(Number(match[1])) : 0;
+}
+
+function safeDecodePath(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
+function hasAttribute(tag, name) {
+  return new RegExp('\\b' + escapeRegExp(name) + '=', 'i').test(tag);
+}
+
+function getAttribute(tag, name) {
+  const pattern = new RegExp("\\b" + escapeRegExp(name) + "=([\'\\\"])(.*?)\\1", "i");
+  return tag.match(pattern)?.[2] || '';
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+}
+
+
+function setAttribute(tag, name, value) {
+  const escapedValue = escapeHtml(String(value));
+  const pattern = new RegExp("\\b" + escapeRegExp(name) + "=([\'\\\"]).*?\\1", "i");
+  if (pattern.test(tag)) {
+    return tag.replace(pattern, name + '="' + escapedValue + '"');
+  }
+  return tag.replace(/\s*\/?>$/, (end) => ' ' + name + '="' + escapedValue + '"' + (end.trim().startsWith('/') ? ' />' : '>'));
 }
 
 function newsletterCopy(lang) {
@@ -760,9 +994,14 @@ function removeCartNavigationItem(html) {
 }
 
 function removeInternalOrderButtons(html) {
+  const localHrefPattern = String.raw`/(?:Cognac-Leopold-Croizet-site/)?[^"']*`;
+  const buttonPattern = (className) => new RegExp(
+    String.raw`\s*<a\b(?=[^>]*class=["'][^"']*\b${className}\b[^"']*["'])(?=[^>]*href=["']${localHrefPattern}["'])[^>]*>[\s\S]*?</a>\s*`,
+    'gi',
+  );
   return html
-    .replace(/\s*<a\b(?=[^>]*class=["'][^"']*\bbtn-commander-produit\b[^"']*["'])(?=[^>]*href=["']\/Cognac-Leopold-Croizet-site\/[^"']*["'])[^>]*>[\s\S]*?<\/a>\s*/gi, '\n')
-    .replace(/\s*<a\b(?=[^>]*class=["'][^"']*\bcommander-produit\b[^"']*["'])(?=[^>]*href=["']\/Cognac-Leopold-Croizet-site\/[^"']*["'])[^>]*>[\s\S]*?<\/a>\s*/gi, '\n');
+    .replace(buttonPattern('btn-commander-produit'), '\n')
+    .replace(buttonPattern('commander-produit'), '\n');
 }
 
 function removeUnavailableOrderControls(html, route) {
@@ -862,7 +1101,7 @@ var chinaRegions={CN:1,HK:1,MO:1,TW:1};
 var chinaTimeZones={"Asia/Shanghai":1,"Asia/Urumqi":1,"Asia/Hong_Kong":1,"Asia/Macau":1,"Asia/Taipei":1};
 var storageKey="lcPreferredLanguage";
 var chinaStorageKey="lcChinaVisitor";
-var deployBase="/Cognac-Leopold-Croizet-site";
+var deployBase=${JSON.stringify(DEPLOY_BASE_PATH)};
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
 function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\\/index\\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}

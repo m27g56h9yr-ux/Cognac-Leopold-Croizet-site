@@ -30,6 +30,13 @@ node scripts/build-static-site.mjs
 
 Le script ne nécessite aucune dépendance npm.
 
+## Déploiement
+
+`npm run build` génère la version OVH / domaine racine, sans préfixe `/Cognac-Leopold-Croizet-site`.
+`npm run build:github-pages` conserve ce préfixe pour une publication GitHub Pages en sous-dossier.
+
+Les mêmes scripts acceptent aussi `DEPLOY_BASE_PATH=/chemin npm run build` pour une base personnalisée.
+
 ## Controle
 
 ```bash

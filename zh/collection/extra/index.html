@@ -35,7 +35,7 @@ var chinaRegions={CN:1,HK:1,MO:1,TW:1};
 var chinaTimeZones={"Asia/Shanghai":1,"Asia/Urumqi":1,"Asia/Hong_Kong":1,"Asia/Macau":1,"Asia/Taipei":1};
 var storageKey="lcPreferredLanguage";
 var chinaStorageKey="lcChinaVisitor";
-var deployBase="/Cognac-Leopold-Croizet-site";
+var deployBase="";
 var crawlerPattern=/(bot|crawler|spider|slurp|bingpreview|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|ia_archiver|gptbot|chatgpt-user|perplexitybot|claudebot|anthropic-ai|applebot)/i;
 function activeBase(){var path=window.location.pathname;return path===deployBase||path.indexOf(deployBase+"/")===0?deployBase:""}
 function routeFor(pathname){var base=activeBase();var route=pathname;if(base&&route.indexOf(base)===0)route=route.slice(base.length)||"/";route=route.replace(/\/index\.html$/,"/");if(route.charAt(0)!=="/")route="/"+route;return route||"/"}
@@ -61,17 +61,19 @@ var targetRoute=supported[lang]||supported.en;
 if(targetRoute===route)return;
 window.location.replace(activeBase()+targetRoute+window.location.search+window.location.hash)
 })();</script>
-<link rel="preload" href="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
+
+<link rel="preload" href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
+<link rel="preload" href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" as="style">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="msapplication-tap-highlight" content="no" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/use.fontawesome.com/releases/v5.7.2/css/all.css">
-  <link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script defer src="/Cognac-Leopold-Croizet-site/assets/external/maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-  <script src="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/Cognac-Leopold-Croizet-site/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="/assets/external/use.fontawesome.com/releases/v5.7.2/css/all.css">
+  <link rel="stylesheet" href="/assets/external/stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script defer src="/assets/external/maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+  <script src="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/assets/external/cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <style id="wp-img-auto-sizes-contain-inline-css">
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
@@ -79,12 +81,12 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 <style id="wp-block-library-inline-css">
 :root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-color]){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
 
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/css/dist/block-library/common.min.css */
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
 </style>
 <style id="classic-theme-styles-inline-css">
 /*! This file is auto-generated */
 .wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
-/*# sourceURL=/Cognac-Leopold-Croizet-site/wp-includes/css/classic-themes.min.css */
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
 </style>
 
 <style id="global-styles-inline-css">
@@ -92,8 +94,8 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=global-styles-inline-css */
 </style>
 
-<link rel='stylesheet' id='wpml-blocks-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css" media='all' />
-<link rel='stylesheet' id='woocommerce-layout-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css" media='all' />
+<link rel='stylesheet' id='wpml-blocks-css' href="/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css" media='all' />
+<link rel='stylesheet' id='woocommerce-layout-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css" media='all' />
 <style id="woocommerce-layout-inline-css">
 
 	.infinite-scroll .woocommerce-pagination {
@@ -101,41 +103,41 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	}
 /*# sourceURL=woocommerce-layout-inline-css */
 </style>
-<link rel='stylesheet' id='woocommerce-smallscreen-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css" media='only screen and (max-width: 768px)' />
-<link rel='stylesheet' id='woocommerce-general-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/css/woocommerce.css" media='all' />
+<link rel='stylesheet' id='woocommerce-smallscreen-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css" media='only screen and (max-width: 768px)' />
+<link rel='stylesheet' id='woocommerce-general-css' href="/wp-content/plugins/woocommerce/assets/css/woocommerce.css" media='all' />
 <style id="woocommerce-inline-inline-css">
 .woocommerce form .form-row .required { visibility: visible; }
 /*# sourceURL=woocommerce-inline-inline-css */
 </style>
-<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css" media='all' />
-<link rel='stylesheet' id='awb-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.css" media='all' />
-<link rel='stylesheet' id='style-css' href="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" media='all' />
-<link rel='stylesheet' id='add_google_font_montserrat-css' href="/Cognac-Leopold-Croizet-site/assets/external/fonts.googleapis.com/css-5cf545d9.css" media='all' />
-<link rel='stylesheet' id='add_google_font_playfair-css' href="/Cognac-Leopold-Croizet-site/assets/external/fonts.googleapis.com/css2-04e27267.css" media='all' />
-<link rel='stylesheet' id='flexible-shipping-free-shipping-css' href="/Cognac-Leopold-Croizet-site/wp-content/plugins/flexible-shipping/assets/dist/css/free-shipping.css" media='all' />
-<!--n2css--><script id="newsletter-pc-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js"></script>
-<script id="jquery-core-js" src="/Cognac-Leopold-Croizet-site/wp-includes/js/jquery/jquery.min.js"></script>
-<script id="jquery-migrate-js" src="/Cognac-Leopold-Croizet-site/wp-includes/js/jquery/jquery-migrate.min.js"></script>
-<script data-wp-strategy="defer" defer id="flexslider-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/js/flexslider/jquery.flexslider.min.js"></script>
+<link rel='stylesheet' id='wpml-legacy-horizontal-list-0-css' href="/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/legacy-list-horizontal/style.min.css" media='all' />
+<link rel='stylesheet' id='awb-css' href="/wp-content/plugins/advanced-backgrounds/assets/awb/awb.min.css" media='all' />
+<link rel='stylesheet' id='style-css' href="/wp-content/themes/theme-site-pc/style.css?v=product-footer-20260614-transparent-v2" media='all' />
+<link rel='stylesheet' id='add_google_font_montserrat-css' href="/assets/external/fonts.googleapis.com/css-5cf545d9.css" media='all' />
+<link rel='stylesheet' id='add_google_font_playfair-css' href="/assets/external/fonts.googleapis.com/css2-04e27267.css" media='all' />
+<link rel='stylesheet' id='flexible-shipping-free-shipping-css' href="/wp-content/plugins/flexible-shipping/assets/dist/css/free-shipping.css" media='all' />
+<!--n2css--><script id="newsletter-pc-js" src="/wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js"></script>
+<script id="jquery-core-js" src="/wp-includes/js/jquery/jquery.min.js"></script>
+<script id="jquery-migrate-js" src="/wp-includes/js/jquery/jquery-migrate.min.js"></script>
+<script data-wp-strategy="defer" defer id="flexslider-js" src="/wp-content/plugins/woocommerce/assets/js/flexslider/jquery.flexslider.min.js"></script>
 <script id="wc-single-product-js-extra">
 var wc_single_product_params = {"i18n_required_rating_text":"Please select a rating","review_rating_required":"yes","flexslider":{"rtl":false,"animation":"slide","smoothHeight":true,"directionNav":false,"controlNav":"thumbnails","slideshow":false,"animationSpeed":500,"animationLoop":false,"allowOneSlide":false},"zoom_enabled":"","zoom_options":[],"photoswipe_enabled":"","photoswipe_options":{"shareEl":false,"closeOnScroll":false,"history":false,"hideAnimationDuration":0,"showAnimationDuration":0},"flexslider_enabled":"1"};
 //# sourceURL=wc-single-product-js-extra
 </script>
-<script data-wp-strategy="defer" defer id="wc-single-product-js" src="/Cognac-Leopold-Croizet-site/wp-content/plugins/woocommerce/assets/js/frontend/single-product.min.js"></script>
-<script id="mega-menu-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/mega-menu.js"></script>
-<script id="modal-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/modal.js"></script>
-<script id="panier-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/panier.js"></script>
-<script id="btn-commander-produit-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/btn-commander-produit.js"></script>
-<script id="mobile-js" src="/Cognac-Leopold-Croizet-site/wp-content/themes/theme-site-pc/js/mobile.js?v=product-footer-20260614-transparent-v2"></script>
+<script data-wp-strategy="defer" defer id="wc-single-product-js" src="/wp-content/plugins/woocommerce/assets/js/frontend/single-product.min.js"></script>
+<script id="mega-menu-js" src="/wp-content/themes/theme-site-pc/js/mega-menu.js"></script>
+<script id="modal-js" src="/wp-content/themes/theme-site-pc/js/modal.js"></script>
+<script id="panier-js" src="/wp-content/themes/theme-site-pc/js/panier.js"></script>
+<script id="btn-commander-produit-js" src="/wp-content/themes/theme-site-pc/js/btn-commander-produit.js"></script>
+<script id="mobile-js" src="/wp-content/themes/theme-site-pc/js/mobile.js?v=product-footer-20260614-transparent-v2"></script>
 <meta name="generator" content="WordPress 7.0" />
 <meta name="generator" content="WooCommerce 8.7.3" />
-<link rel='shortlink' href="/Cognac-Leopold-Croizet-site/zh/" />
+<link rel='shortlink' href="/zh/" />
 <meta name="generator" content="WPML ver:4.6.5 stt:1,4,45;" />
 	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
-	<link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="32x32" />
-<link rel="icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="192x192" />
-<link rel="apple-touch-icon" href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
-<meta name="msapplication-TileImage" content="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
+	<link rel="icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="32x32" />
+<link rel="icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" sizes="192x192" />
+<link rel="apple-touch-icon" href="/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
+<meta name="msapplication-TileImage" content="/wp-content/uploads/2021/10/logo_croizet_blason.svg" />
 
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet","Léopold Croizet 干邑","法国 Léopold Croizet 干邑酒庄"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","knowsAbout":["Cognac","Fins Bois","Pineau des Charentes","French spirits","法国干邑","干邑鸡尾酒"],"email":"cognac@mdpierre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Rue d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/zh/collection/extra/#webpage","url":"https://cognac-leopold-croizet.com/zh/collection/extra/","name":"Extra | Cognac Léopold Croizet","description":"探索 Cognac Léopold Croizet Extra：品鉴笔记、风格、陈酿与 Fins Bois 家族酒庄的工艺传承。","inLanguage":"zh-Hans","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2026/06/extra-bt-devant-coffret.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"Zh","item":"https://cognac-leopold-croizet.com/zh/"},{"@type":"ListItem","position":3,"name":"Collection","item":"https://cognac-leopold-croizet.com/zh/collection/"},{"@type":"ListItem","position":4,"name":"Extra","item":"https://cognac-leopold-croizet.com/zh/collection/extra/"}]},{"@context":"https://schema.org","@type":"Product","name":"Cognac Léopold Croizet Extra","description":"探索 Cognac Léopold Croizet Extra：品鉴笔记、风格、陈酿与 Fins Bois 家族酒庄的工艺传承。","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2026/06/extra-bt-devant-coffret.png","category":"Cognac","brand":{"@id":"https://cognac-leopold-croizet.com/#organization"},"manufacturer":{"@id":"https://cognac-leopold-croizet.com/#organization"},"@id":"https://cognac-leopold-croizet.com/zh/collection/extra/#product","url":"https://cognac-leopold-croizet.com/zh/collection/extra/","countryOfOrigin":"France","additionalProperty":[{"@type":"PropertyValue","name":"Appellation","value":"Appellation cognac Fins Bois controlée"},{"@type":"PropertyValue","name":"Bottle size","value":"70 cl"},{"@type":"PropertyValue","name":"ABV","value":"40 %"}]}]</script>
 </head>
@@ -145,8 +147,8 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 <h1 class="screen-reader-text lc-seo-h1">Cognac Léopold Croizet Extra</h1>
   <header id="masthead" class="site-header">
     <nav class="navbar navbar-expand-xl fixed-top navbar-light" role="navigation">
-            <a href="/Cognac-Leopold-Croizet-site/zh/" class="logo-header">
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="Logo Léopold Croizet">
+            <a href="/zh/" class="logo-header">
+        <img src="/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="Logo Léopold Croizet" width="600" height="600" decoding="async">
         <!-- <div>Single family estate, since 1750</div> -->
       </a>
 
@@ -154,10 +156,10 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div id="bs-example-navbar-collapse-1" class="menu-site collapse navbar-collapse "><ul id="menu-menu-principal-zh" class="nav navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1556" class="collection menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor dropdown active menu-item-1556 nav-item"><a title="系列" href="/Cognac-Leopold-Croizet-site/zh/shop/" class="nav-link">系列</a></li>
+      <div id="bs-example-navbar-collapse-1" class="menu-site collapse navbar-collapse "><ul id="menu-menu-principal-zh" class="nav navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1556" class="collection menu-item menu-item-type-post_type menu-item-object-page current-menu-ancestor current-menu-parent current_page_parent current_page_ancestor dropdown active menu-item-1556 nav-item"><a title="系列" href="/zh/shop/" class="nav-link">系列</a></li>
 <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-883" class="experience menu-item menu-item-type-custom menu-item-object-custom dropdown menu-item-883 nav-item"><a title="工艺与传承" href="#" class="nav-link">工艺与传承</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1925" class="interview menu-item menu-item-type-post_type menu-item-object-page menu-item-1925 nav-item"><a title="Léopold Croizet" href="/Cognac-Leopold-Croizet-site/zh/leopold-croizet/" class="nav-link">Léopold Croizet</a></li>
-<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1591" class="rencontre menu-item menu-item-type-post_type menu-item-object-page menu-item-1591 nav-item"><a title="走近我们" href="/Cognac-Leopold-Croizet-site/zh/rencontre/" class="nav-link">走近我们</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1925" class="interview menu-item menu-item-type-post_type menu-item-object-page menu-item-1925 nav-item"><a title="Léopold Croizet" href="/zh/leopold-croizet/" class="nav-link">Léopold Croizet</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-1591" class="rencontre menu-item menu-item-type-post_type menu-item-object-page menu-item-1591 nav-item"><a title="走近我们" href="/zh/rencontre/" class="nav-link">走近我们</a></li>
 </ul></div>
       <div class="mega-menu-container">
         <div class="inner-mega-menu-container">
@@ -166,73 +168,73 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/vs/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="VS" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 3x">
+            <a href="/zh/collection/vs/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="Cognac Léopold Croizet VS" srcset="/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /wp-content/uploads/2021/06/img_produit_vs_base2.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>VS</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/vsop/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="VSOP" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 3x">
+            <a href="/zh/collection/vsop/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="Cognac Léopold Croizet VSOP" srcset="/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /wp-content/uploads/2021/06/img_produit_vsop_base.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>VSOP</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/napoleon/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Napoléon" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x">
+            <a href="/zh/collection/napoleon/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Cognac Léopold Croizet Napoléon" srcset="/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Napoléon</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/xo/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="XO" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x">
+            <a href="/zh/collection/xo/">
+                                <img src="/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="Cognac Léopold Croizet XO" srcset="/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>XO</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/xo-exception/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="XO Exception" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x">
+            <a href="/zh/collection/xo-exception/">
+                                <img src="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="Cognac Léopold Croizet XO Exception" srcset="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>XO Exception</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/extra/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Extra" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w">
+            <a href="/zh/collection/extra/">
+                                <img src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Cognac Léopold Croizet Extra" srcset="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Extra</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/excellence/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Excellence" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x">
+            <a href="/zh/collection/excellence/">
+                                <img src="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Cognac Léopold Croizet Excellence" srcset="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Excellence</h3>
             </a>
         </div>
 
 
         <div class="collection-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/collection/heritage/">
-                                <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Héritage" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x">
+            <a href="/zh/collection/heritage/">
+                                <img src="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Cognac Léopold Croizet Héritage" srcset="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                 <h3>Héritage</h3>
             </a>
         </div>
 
-        <img class="bande-menu-collection" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/bande_dechiree.png" alt="page déchirée">
+        <img class="bande-menu-collection" src="/wp-content/uploads/2021/09/bande_dechiree.png" alt="page déchirée" width="3316" height="323" decoding="async" loading="lazy">
 </div><div class="mega-menu-experience-item">
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/la-matiere/">
+            <a href="/zh/la-matiere/">
                 <h3>果实</h3>
                 <p class="sous-titre-menu">我们的葡萄藤、土地与辛勤成果</p>
             </a>
@@ -240,7 +242,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/le-feu/">
+            <a href="/zh/le-feu/">
                 <h3>火焰</h3>
                 <p class="sous-titre-menu">每一个步骤都凝练出产品的性格</p>
             </a>
@@ -248,7 +250,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/lalchimie/">
+            <a href="/zh/lalchimie/">
                 <h3>调配艺术</h3>
                 <p class="sous-titre-menu">代代相传的百年工艺</p>
             </a>
@@ -256,13 +258,13 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
         <div class="experience-item-container">
-            <a href="/Cognac-Leopold-Croizet-site/zh/le-temps/">
+            <a href="/zh/le-temps/">
                 <h3>时间</h3>
                 <p class="sous-titre-menu">以时间封存我们的独特之处</p>
             </a>
         </div>
 
-        <img class="bande-menu-collection" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/bande_dechiree.png" alt="page déchirée">
+        <img class="bande-menu-collection" src="/wp-content/uploads/2021/09/bande_dechiree.png" alt="page déchirée" width="3316" height="323" decoding="async" loading="lazy">
 
 </div>        </div>
       </div>
@@ -274,7 +276,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 <div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">
 	<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">中文</span></a>
-	<ul class="lc-language-menu-list" hidden><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/collection/extra/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/en/collection/extra/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/ru/collection/extra/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/da/collection/extra/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/sv/collection/extra/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/no/collection/extra/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/Cognac-Leopold-Croizet-site/zh/collection/extra/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
+	<ul class="lc-language-menu-list" hidden><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-fr wpml-ls-first-item wpml-ls-item-legacy-list-horizontal"><a href="/collection/extra/" class="wpml-ls-link" hreflang="fr"><span class="wpml-ls-display">Fr</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-en wpml-ls-item-legacy-list-horizontal"><a href="/en/collection/extra/" class="wpml-ls-link" hreflang="en"><span class="wpml-ls-display">En</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-ru wpml-ls-item-legacy-list-horizontal"><a href="/ru/collection/extra/" class="wpml-ls-link" hreflang="ru"><span class="wpml-ls-display">Ру</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-da wpml-ls-item-legacy-list-horizontal"><a href="/da/collection/extra/" class="wpml-ls-link" hreflang="da"><span class="wpml-ls-display">Da</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-sv wpml-ls-item-legacy-list-horizontal"><a href="/sv/collection/extra/" class="wpml-ls-link" hreflang="sv"><span class="wpml-ls-display">Sv</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-no wpml-ls-item-legacy-list-horizontal"><a href="/no/collection/extra/" class="wpml-ls-link" hreflang="no"><span class="wpml-ls-display">No</span></a></li><li class="wpml-ls-slot-shortcode_actions wpml-ls-item wpml-ls-item-zh-Hans wpml-ls-last-item wpml-ls-current-language wpml-ls-item-legacy-list-horizontal"><a href="/zh/collection/extra/" class="wpml-ls-link" hreflang="zh-Hans"><span class="wpml-ls-display">中文</span></a></li></ul>
 </div>
     </nav>
 
@@ -282,7 +284,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
       <!-- <div id="age-legal" class="modal">
                 <div class="container-modal">
                     <div class="modal-partie-gauche">
-                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="pierre-croizet">
+                        <img src="/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="pierre-croizet" width="2560" height="2088" decoding="async" loading="lazy">
                     </div>
 
                     <div class="modal-partie-droite">
@@ -666,9 +668,9 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
 
     <figure class="woocommerce-product-gallery__wrapper">
-        <div data-thumb="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" data-thumb-alt="Cognac Léopold Croizet Extra avec coffret rouge" class="woocommerce-product-gallery__image"><a href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret.png"><img width="420" height="426" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" class="wp-post-image" alt="Cognac Léopold Croizet Extra avec coffret rouge" title="Cognac Léopold Croizet Extra avec coffret rouge" data-caption="" data-src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret.png" data-large_image="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret.png" data-large_image_width="1200" data-large_image_height="1219" decoding="async" fetchpriority="high" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-500.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png 720w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
-        <div data-thumb="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png" data-thumb-alt="Cognac Léopold Croizet Extra dans son coffret ouvert" class="woocommerce-product-gallery__image"><a href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret.png"><img width="420" height="381" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png" class="" alt="Cognac Léopold Croizet Extra dans son coffret ouvert" title="Cognac Léopold Croizet Extra dans son coffret ouvert" data-caption="" data-src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret.png" data-large_image="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret.png" data-large_image_width="1200" data-large_image_height="1089" decoding="async" loading="lazy" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret-500.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png 715w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-dans-coffret.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
-        <div data-thumb="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul.png"><img width="420" height="567" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul.png" data-large_image="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul-420.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul-500.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-coffret-seul.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>
+        <div data-thumb="/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" data-thumb-alt="Cognac Léopold Croizet Extra avec coffret rouge" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2026/06/extra-bt-devant-coffret.png"><img width="420" height="426" src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" class="wp-post-image" alt="Cognac Léopold Croizet Extra" title="Cognac Léopold Croizet Extra avec coffret rouge" data-caption="" data-src="/wp-content/uploads/2026/06/extra-bt-devant-coffret.png" data-large_image="/wp-content/uploads/2026/06/extra-bt-devant-coffret.png" data-large_image_width="1200" data-large_image_height="1219" decoding="async" fetchpriority="high" srcset="/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png 420w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-500.png 500w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-720.png 720w, /wp-content/uploads/2026/06/extra-bt-devant-coffret.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png" data-thumb-alt="Cognac Léopold Croizet Extra dans son coffret ouvert" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2026/06/extra-bt-dans-coffret.png"><img width="420" height="381" src="/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png" class="" alt="Cognac Léopold Croizet Extra" title="Cognac Léopold Croizet Extra dans son coffret ouvert" data-caption="" data-src="/wp-content/uploads/2026/06/extra-bt-dans-coffret.png" data-large_image="/wp-content/uploads/2026/06/extra-bt-dans-coffret.png" data-large_image_width="1200" data-large_image_height="1089" decoding="async" loading="lazy" srcset="/wp-content/uploads/2026/06/extra-bt-dans-coffret-420.png 420w, /wp-content/uploads/2026/06/extra-bt-dans-coffret-500.png 500w, /wp-content/uploads/2026/06/extra-bt-dans-coffret-715.png 715w, /wp-content/uploads/2026/06/extra-bt-dans-coffret.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="/wp-content/uploads/2026/06/extra-coffret-seul-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2026/06/extra-coffret-seul.png"><img width="420" height="567" src="/wp-content/uploads/2026/06/extra-coffret-seul-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="/wp-content/uploads/2026/06/extra-coffret-seul.png" data-large_image="/wp-content/uploads/2026/06/extra-coffret-seul.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="/wp-content/uploads/2026/06/extra-coffret-seul-420.png 420w, /wp-content/uploads/2026/06/extra-coffret-seul-500.png 500w, /wp-content/uploads/2026/06/extra-coffret-seul.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>
 
 </div>
     <!-- <div class="summary entry-summary"> -->
@@ -676,22 +678,22 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 <div class="colonne-droite-produit">
 
     <div class="container-titre-produit">
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_nom_produit_extra.png" alt="Extra">
+        <img src="/wp-content/uploads/2024/03/img_nom_produit_extra.png" alt="Cognac Léopold Croizet Extra" width="801" height="368" decoding="async" loading="lazy">
     </div>
     <div class="container-informations-produit">
         <div class="label">Appellation Cognac Contrôlée<span> | </span></div>
         <div class="donnees">Appellation cognac Fins Bois controlée</div>
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+        <img src="/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit" width="771" height="2" decoding="async" loading="lazy">
     </div>
     <div class="container-informations-produit">
         <div class="label">瓶型<span> | </span></div>
         <div class="donnees">70 cl</div>
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+        <img src="/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit" width="771" height="2" decoding="async" loading="lazy">
     </div>
     <div class="container-informations-produit">
         <div class="label">酒精度<span> | </span></div>
         <div class="donnees">40 %</div>
-        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit">
+        <img src="/wp-content/uploads/2021/06/separateur_page_prod.png" alt="separateur-produit" width="771" height="2" decoding="async" loading="lazy">
     </div>
     <div class="container-histoire-produit">
         <div class="label">品鉴笔记<span> </span></div>
@@ -699,7 +701,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
     </div>
 
     <div class="container-notes-sensorielles">
-        <div class="titre-notes-sensorielles"><img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/picto_sensor.svg" alt="Note sensorielles"> 感官笔记</div>
+        <div class="titre-notes-sensorielles"><img src="/wp-content/uploads/2021/06/picto_sensor.svg" alt="Note sensorielles" width="68" height="76" decoding="async" loading="lazy"> 感官笔记</div>
         <div class="inner-container-notes-sensorielles">
                                     <div class="container-caracteristiques">
                             <div class="label-cracteristique">杏</div>
@@ -736,21 +738,21 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto">
-                    <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/picto_oeil.svg" alt="Pictogramme Oeil">
+                    <img src="/wp-content/uploads/2021/06/picto_oeil.svg" alt="Pictogramme Oeil" width="62" height="38" decoding="async" loading="lazy">
                 </div>
                 <div class="donnees-vue">金琥珀 / 橙色</div>
             </div>
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto odorat">
-                    <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/picto_nez.svg" alt="Pictogramme Nez">
+                    <img src="/wp-content/uploads/2021/06/picto_nez.svg" alt="Pictogramme Nez" width="53" height="54" decoding="async" loading="lazy">
                 </div>
                 <div class="donnees-odorat">丰富复杂，展现蜜饯与干果香气，并浮现最初的 rancio 气息，如林下土壤般深邃。</div>
             </div>
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto">
-                    <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/picto_bouche.svg" alt="Pictogramme Bouche">
+                    <img src="/wp-content/uploads/2021/06/picto_bouche.svg" alt="Pictogramme Bouche" width="62" height="32" decoding="async" loading="lazy">
                 </div>
                 <div class="donnees-gout">入口饱满出色。茉莉与忍冬的细腻花香交织。数十年陈酿发展出明显的成熟橡木气息，果味与香料余味之间保持优美平衡，并带坚果与干果气息。</div>
             </div>
@@ -764,81 +766,82 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
 	</main></div>
-<img class="page-dechire" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_papier_dechire.png" alt="fond-page">
+<img class="page-dechire" src="/wp-content/uploads/2021/06/img_papier_dechire.png" alt="fond-page" width="3316" height="240" decoding="async" loading="lazy">
 <div class="end-page">
     <div class="container-end-page">
         <div class="container-produits">
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/vs/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="VS" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vs_base2.png 3x">
+                        <a href="/zh/collection/vs/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_vs_base2.png" alt="Cognac Léopold Croizet VS" srcset="/wp-content/uploads/2021/06/img_produit_vs_base2.png 0.5x, /wp-content/uploads/2021/06/img_produit_vs_base2.png 5x, /wp-content/uploads/2021/06/img_produit_vs_base2.png 2x, /wp-content/uploads/2021/06/img_produit_vs_base2.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">VS</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/vsop/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="VSOP" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_vsop_base.png 3x">
+                        <a href="/zh/collection/vsop/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_vsop_base.png" alt="Cognac Léopold Croizet VSOP" srcset="/wp-content/uploads/2021/06/img_produit_vsop_base.png 0.5x, /wp-content/uploads/2021/06/img_produit_vsop_base.png 5x, /wp-content/uploads/2021/06/img_produit_vsop_base.png 2x, /wp-content/uploads/2021/06/img_produit_vsop_base.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">VSOP</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/napoleon/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Napoléon" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x">
+                        <a href="/zh/collection/napoleon/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_napoleon_base.png" alt="Cognac Léopold Croizet Napoléon" srcset="/wp-content/uploads/2021/06/img_produit_napoleon_base.png 0.5x, /wp-content/uploads/2021/06/img_produit_napoleon_base.png 5x, /wp-content/uploads/2021/06/img_produit_napoleon_base.png 2x, /wp-content/uploads/2021/06/img_produit_napoleon_base.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Napoléon</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/xo/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="XO" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x">
+                        <a href="/zh/collection/xo/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_xo_base-1.png" alt="Cognac Léopold Croizet XO" srcset="/wp-content/uploads/2021/06/img_produit_xo_base-1.png 0.5x, /wp-content/uploads/2021/06/img_produit_xo_base-1.png 5x, /wp-content/uploads/2021/06/img_produit_xo_base-1.png 2x, /wp-content/uploads/2021/06/img_produit_xo_base-1.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">XO</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/xo-exception/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="XO Exception" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x">
+                        <a href="/zh/collection/xo-exception/">
+                                                        <img src="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" alt="Cognac Léopold Croizet XO Exception" srcset="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 0.5x, /wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 5x, /wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 2x, /wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">XO Exception</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/extra/">
+                        <a href="/zh/collection/extra/">
                                                             <div class="etoile-produit">*</div>
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Extra" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w">
+                                                        <img src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png" alt="Cognac Léopold Croizet Extra" srcset="/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w, /wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png 720w" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Extra</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/excellence/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Excellence" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x">
+                        <a href="/zh/collection/excellence/">
+                                                        <img src="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png" alt="Cognac Léopold Croizet Excellence" srcset="/wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 0.5x, /wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 5x, /wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 2x, /wp-content/uploads/2024/03/img_produit_excellence_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Excellence</div>
                         </a>
                     </div>
                                 <div class="produit-unique">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/heritage/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Héritage" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x">
+                        <a href="/zh/collection/heritage/">
+                                                        <img src="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png" alt="Cognac Léopold Croizet Héritage" srcset="/wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 0.5x, /wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 5x, /wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 2x, /wp-content/uploads/2021/09/img_produit_heritage_base_MENU.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Héritage</div>
                         </a>
                     </div>
                         <div class="separateur-bas-page">
             </div>
                                 <div class="produit-unique bas-page-produit">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/valentine/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_valentine_base.png" alt="Valentine XO" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_valentine_base.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_valentine_base.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_valentine_base.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_valentine_base.png 3x">
+                        <a href="/zh/collection/valentine/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_valentine_base.png" alt="Cognac Léopold Croizet Valentine XO" srcset="/wp-content/uploads/2021/06/img_produit_valentine_base.png 0.5x, /wp-content/uploads/2021/06/img_produit_valentine_base.png 5x, /wp-content/uploads/2021/06/img_produit_valentine_base.png 2x, /wp-content/uploads/2021/06/img_produit_valentine_base.png 3x" width="600" height="1167" decoding="async" loading="lazy">
                             <div class="titre-produit">Valentine XO</div>
                         </a>
                     </div>
                                 <div class="produit-unique bas-page-produit">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/pineau-des-charentes/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x">
+                        <a href="/zh/collection/pineau-des-charentes/">
+                                                        <img src="/wp-content/uploads/2021/06/img_produit_pineau_base-1.png" alt="Pineau des Charentes Léopold Croizet" srcset="/wp-content/uploads/2021/06/img_produit_pineau_base-1.png 0.5x, /wp-content/uploads/2021/06/img_produit_pineau_base-1.png 5x, /wp-content/uploads/2021/06/img_produit_pineau_base-1.png 2x, /wp-content/uploads/2021/06/img_produit_pineau_base-1.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Pineau Blanc</div>
                         </a>
                     </div>
                                 <div class="produit-unique bas-page-produit">
-                        <a href="/Cognac-Leopold-Croizet-site/zh/collection/pineau-des-charentes-rouge/">
-                                                        <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png" alt="Pineau Rouge des Charentes Léopold Croizet" srcset="/Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 0.5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 5x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 2x, /Cognac-Leopold-Croizet-site/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 3x">
+                        <a href="/zh/collection/pineau-des-charentes-rouge/">
+                                                        <img src="/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png" alt="Pineau Rouge des Charentes Léopold Croizet" srcset="/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 0.5x, /wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 5x, /wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 2x, /wp-content/uploads/2026/06/pineau-des-charentes-rouge.png 3x" width="720" height="1100" decoding="async" loading="lazy">
                             <div class="titre-produit">Pineau Rouge</div>
                         </a>
                     </div>
 
-                    </div>
+
+</div>
     </div>
 </div>
 
@@ -850,13 +853,13 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
   </div>
   <div class="inner-container-footer">
 
-    <a href="/Cognac-Leopold-Croizet-site/zh/" class="logo-footer">
-      <img src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Léopold Croizet">
+    <a href="/zh/" class="logo-footer">
+      <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Léopold Croizet" width="2" height="14" decoding="async">
     </a>
     <div class="texte-medaille">
       屡获奖项的酒窖
     </div>
-    <img class="medailles-footer" src="/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Logos medailles">
+    <img class="medailles-footer" src="/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Logos medailles" width="827" height="123" decoding="async" loading="lazy">
     <div class="reseaux-sociaux">
       <a href="https://www.facebook.com/leopold.croizet.cognac" target="_blank">Facebook</a>
       <i class="fas fa-circle"></i>
@@ -864,7 +867,7 @@ var wc_single_product_params = {"i18n_required_rating_text":"Please select a rat
 
 
     </div>
-    <div class="menu-footer"><ul id="menu-pied-de-page-zh" class="menu"><li id="menu-item-1927" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1927"><a href="/Cognac-Leopold-Croizet-site/zh/rencontre/">走近我们</a></li>
+    <div class="menu-footer"><ul id="menu-pied-de-page-zh" class="menu"><li id="menu-item-1927" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1927"><a href="/zh/rencontre/">走近我们</a></li>
 </ul></div>    <div class="copyright">© Léopold Croizet 2026</div>
 
   </div>

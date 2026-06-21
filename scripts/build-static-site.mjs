@@ -2,12 +2,12 @@ import { createHash } from 'node:crypto';
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase, stripDeployBaseForLocalPath } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const STATIC_ASSETS_DIR = path.join(ROOT, 'static-assets');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
-const DEPLOY_BASE_PATH = '/Cognac-Leopold-Croizet-site';
 const STATIC_ASSET_VERSION = 'product-footer-20260614-transparent-v2';
 const GOOGLE_MAP_EMBED_URL = 'https://www.google.com/maps?q=30%20Route%20d%27Angoul%C3%AAme%2C%2016200%20Triac-Lautrait%2C%20France&z=13&output=embed';
 const PINEAU_SLUG = 'pineau-des-charentes';
@@ -211,9 +211,7 @@ const PINEAU_COLLECTION_PAGES = [
 ];
 
 const SITEMAP_INDEXES = [
-  'https://cognac-leopold-croizet.com/wp-sitemap.xml',
-  'https://en.cognac-leopold-croizet.com/wp-sitemap.xml',
-  'https://ru.cognac-leopold-croizet.com/wp-sitemap.xml',
+  'https://cognac-leopold-croizet.com/sitemap.xml',
 ];
 
 const HOST_PREFIX = new Map([
@@ -264,7 +262,40 @@ const EXCLUDED_PAGE_ROUTES = new Set([
   '/ru/heritage/',
 ]);
 
+const EXTRA_PAGE_ROUTES = [
+  '/categorie-produit/non-classe/',
+  '/en/categorie-produit/non-classe-en/',
+  '/ru/categorie-produit/non-classe-ru/',
+  '/da/categorie-produit/non-classe-en/',
+  '/sv/categorie-produit/non-classe-en/',
+  '/no/categorie-produit/non-classe-en/',
+  '/zh/categorie-produit/non-classe-en/',
+  '/cgv/',
+  '/mentions-legales/',
+  '/mon-compte/',
+  '/en/my-account/',
+  '/ru/mon-compte-2/',
+  '/da/my-account/',
+  '/sv/my-account/',
+  '/no/my-account/',
+  '/zh/my-account/',
+  '/panier/',
+  '/en/cart/',
+  '/ru/panier-2/',
+  '/da/cart/',
+  '/sv/cart/',
+  '/no/cart/',
+  '/zh/cart/',
+  '/en/checkout/',
+  '/ru/validation/',
+  '/da/checkout/',
+  '/sv/checkout/',
+  '/no/checkout/',
+  '/zh/checkout/',
+];
+
 const GENERATED_TOP_LEVEL = [
+  'Cognac-Leopold-Croizet-site',
   'assets',
   'categorie-produit',
   'collection',
@@ -821,42 +852,67 @@ async function collectSitemapUrls() {
   const urls = new Set();
   let sitemapIndexFailure = false;
 
+  const addPageLoc = (loc) => {
+    const url = normalizeAbsoluteUrl(loc);
+    if (!url) return;
+    if (!HOST_PREFIX.has(url.hostname)) return;
+    if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) return;
+    urls.add(stripHash(url).toString());
+  };
+
   for (const indexUrl of SITEMAP_INDEXES) {
+    let xml;
     try {
-      const xml = await fetchText(indexUrl);
-      for (const loc of extractLocs(xml)) {
-        if (/\.xml(?:$|\?)/i.test(loc)) {
-          sitemapUrls.add(loc);
-        } else {
-          addPageUrl(urls, loc);
-        }
-      }
+      xml = await fetchText(indexUrl);
     } catch (error) {
       sitemapIndexFailure = true;
-      console.log(`Skipped sitemap index ${indexUrl}: ${error.message}`);
+      console.log(`Skipped sitemap source ${indexUrl}: ${error.message}`);
+      continue;
+    }
+
+    for (const loc of extractLocs(xml)) {
+      const url = normalizeAbsoluteUrl(loc);
+      if (url && url.pathname.endsWith('.xml')) {
+        sitemapUrls.add(url.toString());
+      } else {
+        addPageLoc(loc);
+      }
     }
   }
 
   if (!sitemapIndexFailure) {
     for (const sitemapUrl of sitemapUrls) {
+      let xml;
       try {
-        const xml = await fetchText(sitemapUrl);
-        for (const loc of extractLocs(xml)) {
-          addPageUrl(urls, loc);
-        }
+        xml = await fetchText(sitemapUrl);
       } catch (error) {
-        console.log(`Skipped sitemap ${sitemapUrl}: ${error.message}`);
+        console.log(`Skipped child sitemap ${sitemapUrl}: ${error.message}`);
+        continue;
+      }
+      for (const loc of extractLocs(xml)) {
+        addPageLoc(loc);
       }
     }
+  }
+
+  for (const route of EXTRA_PAGE_ROUTES) {
+    addPageLoc(`${PUBLIC_ORIGIN}${route}`);
   }
 
   if (sitemapIndexFailure || urls.size === 0) {
     urls.clear();
     const localSitemap = await readFile(path.join(ROOT, 'sitemap.xml'), 'utf8');
     for (const loc of extractLocs(localSitemap)) {
-      addPageUrl(urls, loc);
+      addPageLoc(loc);
+    }
+    for (const route of EXTRA_PAGE_ROUTES) {
+      addPageLoc(`${PUBLIC_ORIGIN}${route}`);
     }
     await addLocalHtmlPageUrls(urls);
+  }
+
+  if (urls.size === 0) {
+    throw new Error('No indexable URLs collected from sitemap sources.');
   }
 
   const sortedUrls = [...urls].sort((a, b) => {
@@ -870,14 +926,6 @@ async function collectSitemapUrls() {
   }
 
   return sortedUrls;
-}
-
-function addPageUrl(urls, loc) {
-  const url = normalizeAbsoluteUrl(loc);
-  if (!url) return;
-  if (!HOST_PREFIX.has(url.hostname)) return;
-  if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) return;
-  urls.add(stripHash(url).toString());
 }
 
 async function addLocalHtmlPageUrls(urls) {
@@ -1087,10 +1135,10 @@ function applyDeployBase(text) {
 }
 
 function applyStaticAssetVersion(html) {
-  return html.replace(
-    /(\/Cognac-Leopold-Croizet-site\/wp-content\/themes\/theme-site-pc\/(?:style\.css|js\/mobile\.js))(?!\?v=)/g,
-    `$1?v=${STATIC_ASSET_VERSION}`,
-  );
+  const base = deployBase();
+  const prefix = base ? escapeRegExp(base) : '';
+  const assetPattern = new RegExp(`(${prefix}\\/wp-content\\/themes\\/theme-site-pc\\/(?:style\\.css|js\\/mobile\\.js))(?!\\?v=)`, 'g');
+  return html.replace(assetPattern, `$1?v=${STATIC_ASSET_VERSION}`);
 }
 
 function updateExtraProductImagery(html, route) {
@@ -1315,13 +1363,14 @@ function localizeRussianStaticHtml(html, route) {
     localized = localized.split(from).join(to);
   }
 
+  const base = deployBase();
   localized = localized
-    .replace(/href="\/Cognac-Leopold-Croizet-site\/collection\//g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/')
-    .replace(/href="\/Cognac-Leopold-Croizet-site\/le-temps\//g, 'href="/Cognac-Leopold-Croizet-site/ru/le-temps/')
-    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/xo-exception\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/xo-exception/"')
-    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/extra\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/collection/extra/"')
-    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/le-temps\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/le-temps/"')
-    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/lalchimie\/"/g, 'href="/Cognac-Leopold-Croizet-site/ru/lalchimie/"')
+    .replace(/href="\/Cognac-Leopold-Croizet-site\/collection\//g, `href="${base}/ru/collection/`)
+    .replace(/href="\/Cognac-Leopold-Croizet-site\/le-temps\//g, `href="${base}/ru/le-temps/`)
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/xo-exception\/"/g, `href="${base}/ru/collection/xo-exception/"`)
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/produit\/extra\/"/g, `href="${base}/ru/collection/extra/"`)
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/le-temps\/"/g, `href="${base}/ru/le-temps/"`)
+    .replace(/href="http:\/\/cognacg\.cluster028\.hosting\.ovh\.net\/wordpress\/lalchimie\/"/g, `href="${base}/ru/lalchimie/"`)
     .replace(
       /Je suis Léopold Croizet, je représente la 9e génération de vignerons sur le domaine\. J’en ai hérité de mon père qui en a hérité de sa mère qui en a elle-même hérité de son père et ainsi de suite… Notre vignoble, planté principalement sur la commune de Triac Lautrait, réunit 30 hectares autour d’une ferme typiquement charentaise\. Ici on est au cœur du village, Lantin, à proximité de Jarnac\. C’est un terroir privilégié\. Il appartient au cru des Fins Bois et bénéficie des limites argilo-calcaires des terres de Champagne\.\s*/g,
       'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
@@ -2064,7 +2113,7 @@ function assetPathForUrl(url) {
   const ext = extensionForUrl(normalized);
 
   if (HOST_PREFIX.has(normalized.hostname)) {
-    let pathname = safePathname(normalized.pathname);
+    let pathname = stripDeployBaseForLocalPath(safePathname(normalized.pathname));
     if (pathname.startsWith('/')) pathname = pathname.slice(1);
     if (!pathname) pathname = `assets/internal/${hashUrl(normalized)}.bin`;
     return pathname;
@@ -2132,7 +2181,7 @@ function routeForPagePath(pagePath) {
 
 function normalizePagePath(pathname) {
   if (!pathname || pathname === '/') return '/';
-  return `/${pathname.replace(/^\/+/, '').replace(/\/?$/, '/')}`;
+  return stripDeployBaseForLocalPath(`/${pathname.replace(/^\/+/, '').replace(/\/?$/, '/')}`);
 }
 
 function normalizeAbsoluteUrl(value, baseUrl = undefined) {
@@ -2179,7 +2228,7 @@ async function fetchText(url) {
 async function writeText(localPath, text) {
   const target = path.join(ROOT, localPath);
   await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, text, 'utf8');
+  await writeFile(target, normalizeLegacyDeployBase(text), 'utf8');
 }
 
 async function writeBinary(localPath, buffer) {

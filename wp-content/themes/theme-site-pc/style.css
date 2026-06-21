@@ -1731,7 +1731,7 @@ td.actions button.button:hover {
 .rencontre-blason::before {
   display: block;
   content: " ";
-  background-image: url("/Cognac-Leopold-Croizet-site/wp-content/uploads/2021/10/logo_croizet_blason.svg");
+  background-image: url("/wp-content/uploads/2021/10/logo_croizet_blason.svg");
   background-repeat: no-repeat;
   background-size: contain;
   height: 60px;
@@ -1934,7 +1934,7 @@ p.container-mentions-legales {
   font-size: 0.85rem;
 }
 .container-cocktail-unique .container-cocktail .separateur-cocktail {
-  background: url("/Cognac-Leopold-Croizet-site/wp-content/uploads/2022/01/pointille.svg");
+  background: url("/wp-content/uploads/2022/01/pointille.svg");
   background-repeat: repeat-x;
   background-size: contain;
   height: 4px;
