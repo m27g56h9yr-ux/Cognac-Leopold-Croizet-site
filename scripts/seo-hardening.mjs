@@ -685,26 +685,36 @@ function repairNewsletterBlock(html, route) {
   if (!html.includes('container-newsletter')) return html;
   const lang = languageForRoute(route);
   const copy = newsletterCopy(lang);
-  return html
-    .replace(
-      /<label\b[^>]*>[\s\S]*?<\/label>\s*(?=\s*<div class="info-legales")/,
-      `<label for="${NEWSLETTER_INPUT_ID}">${copy.label}</label>\n`,
-    )
-    .replace(
-      /<div class="info-legales"[^>]*>\s*[\s\S]*?\s*<\/div>\s*(?=\s*<div class="info-systeme">)/,
-      `<div class="info-legales" id="${NEWSLETTER_INPUT_ID}-legal">\n        ${copy.legal}\n    </div>\n`,
-    )
-    .replace(/<input\b[^>]*name="newsletter"[^>]*>/i, (tag) => {
-      let next = tag;
-      next = setAttribute(next, 'id', NEWSLETTER_INPUT_ID);
-      next = setAttribute(next, 'type', 'email');
-      next = setAttribute(next, 'placeholder', copy.placeholder);
-      next = setAttribute(next, 'autocomplete', 'email');
-      next = setAttribute(next, 'inputmode', 'email');
-      next = setAttribute(next, 'aria-describedby', `${NEWSLETTER_INPUT_ID}-legal`);
+  return html.replace(
+    /<form\b(?=[^>]*class=["'][^"']*\bcontainer-newsletter\b[^"']*["'])[^>]*>[\s\S]*?<\/form>/gi,
+    (form) => {
+      let next = form
+        .replace(
+          /<label\b[^>]*>[\s\S]*?<\/label>/i,
+          `<label for="${NEWSLETTER_INPUT_ID}">${copy.label}</label>`,
+        )
+        .replace(
+          /<div class="info-legales"[^>]*>[\s\S]*?<\/div>/i,
+          `<div class="info-legales" id="${NEWSLETTER_INPUT_ID}-legal">\n        ${copy.legal}\n    </div>`,
+        )
+        .replace(/<input\b[^>]*name="newsletter"[^>]*>/i, (tag) => {
+          let input = tag;
+          input = setAttribute(input, 'id', NEWSLETTER_INPUT_ID);
+          input = setAttribute(input, 'type', 'email');
+          input = setAttribute(input, 'placeholder', copy.placeholder);
+          input = setAttribute(input, 'autocomplete', 'email');
+          input = setAttribute(input, 'inputmode', 'email');
+          input = setAttribute(input, 'aria-describedby', `${NEWSLETTER_INPUT_ID}-legal`);
+          return input;
+        });
+
+      next = next.replace(
+        /(<button\b(?=[^>]*type=["']submit["'])[^>]*>)[\s\S]*?(<\/button>)/i,
+        `$1${copy.button}$2`,
+      );
       return next;
-    })
-    .replace(/(<form\b[^>]*class="[^"]*\bcontainer-newsletter\b[^"]*"[\s\S]*?<button type="submit">)[\s\S]*?(<\/button>)/, `$1${copy.button}$2`);
+    },
+  );
 }
 
 
