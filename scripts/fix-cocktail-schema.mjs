@@ -52,7 +52,7 @@ const cocktailPages = [
   {
     route: '/zh/pierre-croizet-cocktails/',
     file: 'zh/pierre-croizet-cocktails/index.html',
-    lang: 'zh-Hans',
+    lang: 'zh-CN',
     title: 'Cognac Léopold Croizet 鸡尾酒 | Old Fashioned, French Mojito, Summit',
     description: '探索 Old Fashioned、French Mojito 与 Summit，三款以 Cognac Léopold Croizet VS 或 VSOP 调制的鸡尾酒。',
   },
@@ -258,7 +258,7 @@ function recipeDescription(lang, name) {
     da: (recipeName) => `${recipeName}: cocktailopskrift vist på den officielle Cognac Léopold Croizet-side.`,
     sv: (recipeName) => `${recipeName}: cocktailrecept som visas på den officiella Cognac Léopold Croizet-sidan.`,
     no: (recipeName) => `${recipeName}: cocktailoppskrift vist på den offisielle Cognac Léopold Croizet-siden.`,
-    'zh-Hans': (recipeName) => `${recipeName}：Cognac Léopold Croizet 官方页面展示的鸡尾酒配方。`,
+    'zh-CN': (recipeName) => `${recipeName}：Cognac Léopold Croizet 官方页面展示的鸡尾酒配方。`,
   };
 
   return (templates[lang] || templates.en)(name);

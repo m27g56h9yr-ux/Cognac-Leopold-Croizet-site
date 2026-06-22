@@ -17,7 +17,7 @@ const locales = [
   { code: 'da', label: 'Da', hreflang: 'da' },
   { code: 'sv', label: 'Sv', hreflang: 'sv' },
   { code: 'no', label: 'No', hreflang: 'no' },
-  { code: 'zh', label: '中文', hreflang: 'zh-Hans' },
+  { code: 'zh', label: '中文', hreflang: 'zh-CN' },
 ];
 
 const productCopy = {
@@ -426,7 +426,7 @@ function routeForFile(file) {
 
 function localizeCopiedEnglishPage(html, route) {
   let next = html
-    .replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, '<html$1lang="zh-Hans"$2>')
+    .replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, '<html$1lang="zh-CN"$2>')
     .replaceAll(`${DEPLOY_BASE}/en/`, `${DEPLOY_BASE}/zh/`)
     .replaceAll(`${PUBLIC_ORIGIN}/en/`, `${PUBLIC_ORIGIN}/zh/`)
     .replaceAll('menu-menu-principal-anglais', 'menu-menu-principal-zh')
@@ -443,11 +443,13 @@ function localizeCopiedEnglishPage(html, route) {
       `href="${DEPLOY_BASE}/zh/${slug}/"`
     ));
 
+  next = localizeProductCopy(next, route);
+
   for (const [from, to] of [...editorialCopy, ...translations]) next = next.split(from).join(to);
   for (const [from, to] of Object.entries(sensory)) next = next.split(`>${from}<`).join(`>${to}<`);
 
   next = localizeAgeGate(next);
-  next = localizeProductCopy(next, route);
+  next = localizeInterviewCopy(next, route);
   next = localizeCocktails(next);
   next = removePrices(next);
   next = localizeNewsletter(next);
@@ -462,12 +464,26 @@ function localizeCopiedEnglishPage(html, route) {
 
 function localizeAgeGate(html) {
   return html
-    .replace(/Pour accéder à notre site, vous devez être en âge d’acheter et de consommer de l’alcool conformément à la législation en vigueur dans votre pays\/région\s*de résidence\./g, '访问本网站前，您必须达到您所在国家或地区法律规定的购买和饮用酒精饮品的法定年龄。')
+    .replace(/Pour accéder à notre site, vous devez être en âge d’acheter et de consommer de l’alcool conformément à la législation en vigueur dans votre pays\/région(?:\s*de résidence)?\.?/g, '访问本网站前，您必须达到您所在国家或地区法律规定的购买和饮用酒精饮品的法定年龄。')
     .replace(/Si cette législation n’existe pas dans votre pays\/région,\s*vous devez avoir au moins 21 ans\./g, '如果您所在国家或地区没有相关规定，您必须年满 21 岁。')
     .replace(/En cliquant sur « Entrer » vous confirmez avoir l'âge requis dans votre pays pour visiter ce site\./g, '点击“进入”即表示您确认已达到所在国家或地区访问本网站所需的法定年龄。')
     .replace(/Vous acceptez nos <a href="#">Conditions générales d'utilisation<\/a> et déclarez avoir lu notre/g, '您接受我们的 <a href="#">使用条款</a>，并确认已阅读我们的')
     .replace(/<a href="#">Charte de données personnelles & Cookies<\/a>/g, '<a href="#">个人数据与 Cookie 政策</a>')
     .replace(/<button type="submit">Entrer<\/button>/g, '<button type="submit">进入</button>');
+}
+
+function localizeInterviewCopy(html, route) {
+  if (route !== '/zh/leopold-croizet/') return html;
+
+  return html
+    .replace(
+      /Respect for tradition, values&#8230;[\s\S]*?motivation to prove myself to be worthy of it\./g,
+      '尊重传统与价值。几代以来，我的家族在干邑生产的每一个环节都积累了专业经验：从葡萄藤到调配，当然也包括蒸馏。这种掌握让我们能够滋养并守护一份留给后代的传承，也促使我们看得更远，确保产品品质。我的祖父 Marc 在第二次世界大战后与兄弟一起创立了自己的干邑品牌，那是一个重建的时期，国家刚刚经历艰难岁月。他有远见，也成功建立了事业。我听过许多祖辈的故事，它们丰富了我对事业的理解，也激励我证明自己配得上这份传承。',
+    )
+    .replace(
+      /Difficult\s+for me to describe my cognacs[\s\S]*?range of very interesting aromas\./g,
+      '对我来说，描述自己的干邑并不容易；我更愿意让人品尝，因为它们会自己表达。正如前面所说，酿造一款好干邑，每一个步骤都很重要。我所传承的技艺带来非常果香充沛的干邑，这是 Fins Bois cru 的典型风格。它们芳香、圆润、柔和，也容易入口。这种圆润主要来自带酒泥蒸馏。随后，生命之水在法国橡木桶中陈酿，木材选自法国最优秀的森林。如今这项工作由我的妻子负责，她曾在制桶行业工作，并真正热爱木材与烈酒之间的互动。这种多样性赋予干邑非常丰富而有趣的香气层次。',
+    );
 }
 
 function localizeProductCopy(html, route) {
@@ -530,7 +546,7 @@ function localizeCocktails(html) {
 
 function localizeFrenchCocktailPage(html) {
   let next = html
-    .replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, '<html$1lang="zh-Hans"$2>')
+    .replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, '<html$1lang="zh-CN"$2>')
     .replaceAll(`${PUBLIC_ORIGIN}/pierre-croizet-cocktails/`, `${PUBLIC_ORIGIN}/zh/pierre-croizet-cocktails/`)
     .replace(/href="\/Cognac-Leopold-Croizet-site\/"/g, `href="${DEPLOY_BASE}/zh/"`)
     .replace(/href="\/Cognac-Leopold-Croizet-site\/collection\/"/g, `href="${DEPLOY_BASE}/zh/shop/"`)
@@ -541,6 +557,14 @@ function localizeFrenchCocktailPage(html) {
     .replace(/href="\/Cognac-Leopold-Croizet-site\/panier\//g, `href="${DEPLOY_BASE}/zh/cart/`)
     .replace(/href="\/Cognac-Leopold-Croizet-site\/mon-compte\//g, `href="${DEPLOY_BASE}/zh/my-account/`)
     .replace(/href="\/Cognac-Leopold-Croizet-site\/commander\//g, `href="${DEPLOY_BASE}/zh/checkout/`)
+    .replace(/href="\/collection\/"/g, `href="${DEPLOY_BASE}/zh/shop/"`)
+    .replace(/href="\/collection\/([^/]+)\/"/g, (match, slug) => (
+      `href="${DEPLOY_BASE}/zh/collection/${slug}/"`
+    ))
+    .replace(/href="\/(la-matiere|le-feu|lalchimie|le-temps|leopold-croizet|rencontre|pierre-croizet-cocktails)\//g, `href="${DEPLOY_BASE}/zh/$1/`)
+    .replace(/href="\/panier\//g, `href="${DEPLOY_BASE}/zh/cart/`)
+    .replace(/href="\/mon-compte\//g, `href="${DEPLOY_BASE}/zh/my-account/`)
+    .replace(/href="\/commander\//g, `href="${DEPLOY_BASE}/zh/checkout/`)
     .replaceAll('menu-menu-principal-francais', 'menu-menu-principal-zh')
     .replaceAll('menu-pied-de-page-fr', 'menu-pied-de-page-zh');
 
@@ -548,8 +572,11 @@ function localizeFrenchCocktailPage(html) {
     ['Cocktails Cognac Léopold Croizet | Recettes au Cognac et Pineau', 'Cognac Léopold Croizet 鸡尾酒 | 干邑与 Pineau 配方'],
     ["Découvrez Charente Spritz, L'Heure Dorée, Ginger d'Or et Golden Melon, quatre cocktails avec Cognac Léopold Croizet et Pineau des Charentes.", "探索 Charente Spritz、L'Heure Dorée、Ginger d'Or 与 Golden Melon，四款以 Cognac Léopold Croizet 与 Pineau des Charentes 调制的鸡尾酒。"],
     ['Cocktails <strong>Léopold Croizet</strong>', 'Léopold Croizet <strong>鸡尾酒</strong>'],
+    ['Léopold Croizet <strong>Cocktails</strong>', 'Léopold Croizet <strong>鸡尾酒</strong>'],
     ['Idées fraîches pour les beaux jours. Quatre créations autour du Cognac Léopold Croizet, du Pineau des Charentes et du melon charentais, pensées comme un carnet d’apéritifs de maison.', '晴日里的清新灵感。四款围绕 Cognac Léopold Croizet、Pineau des Charentes 与夏朗德甜瓜创作的配方，如同一册优雅的酒庄开胃酒手记。'],
     ['晴日里的清新灵感. Quatre créations autour du Cognac Léopold Croizet, du Pineau des Charentes et du melon charentais, pensées comme un carnet d’apéritifs de maison.', '晴日里的清新灵感。四款围绕 Cognac Léopold Croizet、Pineau des Charentes 与夏朗德甜瓜创作的配方，如同一册优雅的酒庄开胃酒手记。'],
+    ['Peut-être faites vous parti des personnes qui aime apprécier notre Cognac dans un verre tulipe accompagné d’une cheminée, d’un bon cigare, etc, etc&#8230; Vous avez raison !<br>Mais nous vous conseillons aussi de profiter de la fraîcheur et le fruité des Cognacs Léopold Croizet de façon plus festive, plus exotique, plus frappé et «on the rock» !', '也许您喜欢在壁炉旁，以郁金香杯搭配一支好雪茄来品味我们的干邑，这当然很美妙。<br>但我们也建议您以更欢庆、更异域、更鲜明的方式，在加冰或鸡尾酒中感受 Léopold Croizet 干邑的清新果香。'],
+    ['Nous utilisons nos plus jeunes Cognacs <strong>VS</strong> et <strong>VSOP</strong> pour la réalisation de nos cocktails préférés<br>que nous souhaitions partager avec vous :', '我们使用最年轻的 <strong>VS</strong> 与 <strong>VSOP</strong> 干邑调制喜爱的鸡尾酒。<br>愿与您分享：'],
     ['aria-label="Accès rapide aux recettes"', 'aria-label="快速查看配方"'],
     ['aria-label="Esprit des cocktails Léopold Croizet"', 'aria-label="Léopold Croizet 鸡尾酒精神"'],
     ['aria-label="Recettes de cocktails Léopold Croizet"', 'aria-label="Léopold Croizet 鸡尾酒配方"'],
@@ -592,6 +619,49 @@ function localizeFrenchCocktailPage(html) {
     ['Décoration', '装饰'],
     ['Le conseil Maison', '酒庄建议'],
     ['60 ml de Pineau Rosé des Charentes Léopold Croizet (assemblage 50 % rouge / 50 % blanc)', '60 ml Pineau Rosé des Charentes Léopold Croizet（50% 红 Pineau / 50% 白 Pineau 调配）'],
+    ['6 cl de VS ou VSOP Léopold Croizet', '6 cl Léopold Croizet VS 或 VSOP'],
+    ['4 cl de VS ou VSOP Léopold Croizet', '4 cl Léopold Croizet VS 或 VSOP'],
+    ['1 morceau de sucre', '1 块方糖'],
+    ["2 traits d'Angostura bitter", '2 滴 Angostura 苦精'],
+    ['1 zeste de citron', '1 条柠檬皮'],
+    ["1 zeste d'orange", '1 条橙皮'],
+    ['Faites fondre le sucre au fond du verre, arrosez-le d’Angostura.', '在杯底溶化方糖，并滴入 Angostura 苦精。'],
+    ["Versez l'eau pétillante, puis écrasez le sucre à l'aide d'un pilon jusqu'à ce qu'il fonde complètement.", '倒入气泡水，用捣棒轻压方糖，直至完全融化。'],
+    ['Ajoutez 1 ou 2 glaçons et 2,5 cl de cognac puis remuez avec une cuillère à mélange pendant 15 secondes.', '加入 1 至 2 块冰和 2.5 cl 干邑，用吧勺搅拌 15 秒。'],
+    ['Ajoutez de la glace à votre convenance et versez le cognac restant (2,5 cl).', '按喜好加入冰块，并倒入剩余的 2.5 cl 干邑。'],
+    ['Remuez encore une dizaine de secondes.', '再轻轻搅拌约 10 秒。'],
+    ["Décorez votre verre avec un zeste d'orange.", '以橙皮装饰酒杯。'],
+    ['Votre cocktail Old Fashioned est prêt !', '您的 Old Fashioned 已调制完成。'],
+    ['2 cl de sirop de sucre de canne', '2 cl 甘蔗糖浆'],
+    ['6 feuilles de menthe', '6 片薄荷叶'],
+    ['1/2 citron vert', '1/2 个青柠'],
+    ['eau gazeuse', '气泡水'],
+    ['glace pilée', '碎冰'],
+    ["Placez vos glaçons dans un torchon puis à l'aide d'un rouleau à pâtisserie, pilez la glace.", '将冰块包在布中，用擀面杖敲碎。'],
+    ['Versez dans un bol et conservez au congélateur.', '倒入碗中并暂置冷冻。'],
+    ['Placez les feuilles de menthe entière au fond de chaque verre.', '将完整薄荷叶放在每只杯底。'],
+    ['Coupez le citron en deux puis chaque demi citron en 6 morceaux.', '将青柠切半，再将每半切成 6 小块。'],
+    ['Ajoutez les 6 morceaux de citron dans chaque verre (1/2 citron).', '每杯加入 6 块青柠（半个青柠）。'],
+    ['Ajoutez le sirop de sucre de canne.', '加入甘蔗糖浆。'],
+    ['Ecrasez le citron avec un pilon spécial cocktail.', '用鸡尾酒捣棒轻压青柠。'],
+    ['Ajoutez la 碎冰 en laissant 2 cm de libre.', '加入碎冰，杯口保留约 2 cm 空间。'],
+    ['Ajoutez la glace pilée en laissant 2 cm de libre.', '加入碎冰，杯口保留约 2 cm 空间。'],
+    ['Ajoutez le cognac', '加入干邑'],
+    ["Complétez avec l'气泡水.", '以气泡水补足。'],
+    ["Complétez avec l'eau gazeuse.", '以气泡水补足。'],
+    ['Mélangez .', '轻轻搅拌。'],
+    ['Paille ou pas, c’est prêt !', '可配吸管，也可直接享用。'],
+    ['4 fines lamelles de gingembre', '4 片薄姜'],
+    ['1 zeste de citron vert', '1 条青柠皮'],
+    ['6 cl de limonade', '6 cl 柠檬汽水'],
+    ['1 pelure de concombre', '1 条黄瓜皮'],
+    ['Déposez les tranches de gingembre et le zeste de citron.', '放入姜片与柠檬皮。'],
+    ["Ajoutez 2 cl de cognac et pressez légèrement 2 à 3 fois le gingembre à l'aide d'un pilon.", '加入 2 cl 干邑，用捣棒轻压姜片 2 至 3 次。'],
+    ["Placez des glaçons et remuez 5 secondes à l'aide d'une cuillère.", '加入冰块，并用吧勺搅拌 5 秒。'],
+    ['Versez à nouveau 2 cl de Cognac et allongez à la limonade.', '再倒入 2 cl Cognac，并以柠檬汽水补足。'],
+    ['Ajoutez la pelure de concombre.', '加入黄瓜皮作装饰。'],
+    ["Remuez à l'aide d'une cuillère.", '用吧勺轻轻搅拌。'],
+    ['Votre Summit est prêt !', '您的 Summit 已调制完成。'],
     ['20 ml de Cognac Léopold Croizet VS', '20 ml Cognac Léopold Croizet VS'],
     ['80 g de melon charentais', '80 g 夏朗德甜瓜'],
     ['Eau pétillante', '气泡水'],

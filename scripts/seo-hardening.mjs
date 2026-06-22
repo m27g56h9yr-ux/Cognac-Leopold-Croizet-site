@@ -44,6 +44,31 @@ const productImageAltRules = [
 
 const imageDimensionCache = new Map();
 
+function productSeoTitle(slug, lang) {
+  const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
+  const isPineau = slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG;
+  const titles = isPineau
+    ? {
+        fr: `${name} Léopold Croizet | Pineau des Charentes`,
+        en: `${name} Léopold Croizet | French Pineau`,
+        ru: `${name} Léopold Croizet | французский Pineau`,
+        da: `${name} Léopold Croizet | fransk Pineau`,
+        sv: `${name} Léopold Croizet | fransk Pineau`,
+        no: `${name} Léopold Croizet | fransk Pineau`,
+        zh: `${name} Léopold Croizet | 法国 Pineau 甜酒`,
+      }
+    : {
+        fr: `${name} Cognac Léopold Croizet | Fins Bois`,
+        en: `${name} Cognac Léopold Croizet | Fins Bois`,
+        ru: `${name} коньяк Léopold Croizet | Fins Bois`,
+        da: `${name} cognac Léopold Croizet | Fins Bois`,
+        sv: `${name} cognac Léopold Croizet | Fins Bois`,
+        no: `${name} cognac Léopold Croizet | Fins Bois`,
+        zh: `${name} 干邑 Léopold Croizet | 法国 Fins Bois`,
+      };
+  return titles[lang] || titles.fr;
+}
+
 const contentGroups = [
   ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'],
   ['/collection/', '/en/shop/', '/ru/a-faire/', '/da/shop/', '/sv/shop/', '/no/shop/', '/zh/shop/'],
@@ -283,93 +308,93 @@ const routeMetadata = new Map([
 for (const [slug, name] of productNames) {
   if (slug === PINEAU_SLUG) {
     routeMetadata.set(`/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'fr'),
       description: `Découvrez le Pineau des Charentes Léopold Croizet : assemblage d'eaux-de-vie de Cognac et de moûts de raisin, notes de fruits confits, vanille, miel et noix.`,
     });
     routeMetadata.set(`/en/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'en'),
       description: `Discover Léopold Croizet Pineau des Charentes: Cognac eaux-de-vie and grape must, with candied fruit, vanilla, honey and walnut notes.`,
     });
     routeMetadata.set(`/ru/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'ru'),
       description: `Откройте Pineau des Charentes Léopold Croizet: виноградное сусло и Cognac, ноты цукатов, ванили, меда и ореха.`,
     });
     routeMetadata.set(`/da/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'da'),
       description: `Opdag Pineau des Charentes Léopold Croizet: druemost og Cognac med noter af kandiseret frugt, vanilje, honning og valnød.`,
     });
     routeMetadata.set(`/sv/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'sv'),
       description: `Upptäck Pineau des Charentes Léopold Croizet: druvmust och Cognac med toner av kanderad frukt, vanilj, honung och valnöt.`,
     });
     routeMetadata.set(`/no/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'no'),
       description: `Oppdag Pineau des Charentes Léopold Croizet: druemost og Cognac med toner av kandisert frukt, vanilje, honning og valnøtt.`,
     });
     routeMetadata.set(`/zh/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'zh'),
       description: `探索 Pineau des Charentes Léopold Croizet：葡萄汁与 Cognac 调和，呈现蜜饯水果、香草、蜂蜜与核桃香气。`,
     });
     continue;
   }
   if (slug === PINEAU_RED_SLUG) {
     routeMetadata.set(`/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'fr'),
       description: `Découvrez le Pineau Rouge des Charentes Léopold Croizet : Merlot, Ugni Blanc, robe rubis, fruits rouges confits, pruneau, épices douces et cacao.`,
     });
     routeMetadata.set(`/en/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'en'),
       description: `Discover Léopold Croizet Pineau Rouge des Charentes: Merlot, Ugni Blanc, ruby colour, candied red fruit, prune, gentle spice and cocoa.`,
     });
     routeMetadata.set(`/ru/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'ru'),
       description: `Откройте Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, рубиновый цвет, красные ягоды, чернослив, нежные специи и какао.`,
     });
     routeMetadata.set(`/da/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'da'),
       description: `Opdag Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinrød farve, kandiserede røde bær, sveske, milde krydderier og kakao.`,
     });
     routeMetadata.set(`/sv/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'sv'),
       description: `Upptäck Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinröd färg, kanderade röda bär, katrinplommon, milda kryddor och kakao.`,
     });
     routeMetadata.set(`/no/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'no'),
       description: `Oppdag Pineau Rouge des Charentes Léopold Croizet: Merlot, Ugni Blanc, rubinrød farge, kandiserte røde bær, sviske, milde krydder og kakao.`,
     });
     routeMetadata.set(`/zh/collection/${slug}/`, {
-      title: `${name} | Cognac Léopold Croizet`,
+      title: productSeoTitle(slug, 'zh'),
       description: `探索 Pineau Rouge des Charentes Léopold Croizet：Merlot、Ugni Blanc、深宝石红酒色、蜜饯红果、西梅、柔和香料与可可。`,
     });
     continue;
   }
 
   routeMetadata.set(`/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'fr'),
     description: `Découvrez Cognac Léopold Croizet ${name} : notes de dégustation, caractère, élevage et savoir-faire d'une maison familiale de Fins Bois.`,
   });
   routeMetadata.set(`/en/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'en'),
     description: `Discover Cognac Léopold Croizet ${name}: tasting notes, character, ageing and family know-how from Fins Bois.`,
   });
   routeMetadata.set(`/ru/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'ru'),
     description: `Откройте Cognac Léopold Croizet ${name}: дегустационные ноты, характер, выдержка и семейное мастерство Fins Bois.`,
   });
   routeMetadata.set(`/da/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'da'),
     description: `Opdag Cognac Léopold Croizet ${name}: smagsnoter, karakter, lagring og familiens savoir-faire fra Fins Bois.`,
   });
   routeMetadata.set(`/sv/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'sv'),
     description: `Upptäck Cognac Léopold Croizet ${name}: smaknoter, karaktär, lagring och familjens kunnande från Fins Bois.`,
   });
   routeMetadata.set(`/no/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'no'),
     description: `Oppdag Cognac Léopold Croizet ${name}: smaksnoter, karakter, lagring og familiens håndverk fra Fins Bois.`,
   });
   routeMetadata.set(`/zh/collection/${slug}/`, {
-    title: `${name} | Cognac Léopold Croizet`,
+    title: productSeoTitle(slug, 'zh'),
     description: `探索 Cognac Léopold Croizet ${name}：品鉴笔记、风格、陈酿与 Fins Bois 家族酒庄的工艺传承。`,
   });
 }
@@ -528,12 +553,12 @@ function localeForRoute(route) {
 
 function htmlLangForRoute(route) {
   const lang = languageForRoute(route);
-  return lang === 'zh' ? 'zh-Hans' : lang;
+  return lang === 'zh' ? 'zh-CN' : lang;
 }
 
 function hrefLangForRoute(route) {
   const lang = languageForRoute(route);
-  return lang === 'zh' ? 'zh-Hans' : lang;
+  return lang === 'zh' ? 'zh-CN' : lang;
 }
 
 function hardenHtml(html, route, file) {
@@ -586,6 +611,8 @@ function hardenHtml(html, route, file) {
   next = next.replace(/<head([^>]*)>/i, `<head$1>\n${headBlock}\n`);
   next = replaceStructuredData(next, route, metadata, image);
   next = repairGeneratedContent(next);
+  next = localizeResidualLocaleFragments(next, route);
+  next = repairLocalizedSeoHeading(next, route);
   next = repairNewsletterBlock(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
@@ -633,7 +660,7 @@ function repairLanguageMenuLinks(html, route) {
   if (!group) return html;
 
   return html.replace(/<a\b[^>]*\bhreflang=(["'])([^"']+)\1[^>]*>/gi, (tag, quote, hrefLang) => {
-    const targetLang = hrefLang === 'zh-Hans' ? 'zh' : hrefLang;
+    const targetLang = ['zh-Hans', 'zh-CN'].includes(hrefLang) ? 'zh' : hrefLang;
     const alternateRoute = group.find((candidate) => languageForRoute(candidate) === targetLang);
     if (!alternateRoute) return tag;
     const href = `${DEPLOY_BASE_PATH}${alternateRoute}`;
@@ -679,6 +706,200 @@ function repairGeneratedContent(html) {
     .replace(/(?:LÉOPOLD\s+)+((?:Etiket|Etikett) (?:for|för) )/g, '$1')
     .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET')
     .replace(/(?:Léopold\s+){2,}Croizet/g, 'Léopold Croizet');
+}
+
+function localizeResidualLocaleFragments(html, route) {
+  const lang = languageForRoute(route);
+  if (lang === 'fr') return html;
+
+  let next = replaceResidualAgeGate(html, lang);
+  next = replaceResidualPremiumCopy(next, lang, route);
+
+  if (lang === 'zh' && route.includes('/collection/')) {
+    next = next
+      .replace(/<div class="label">Appellation Cognac Contrôlée<span> \| <\/span><\/div>/g, '<div class="label">法定产区名称<span> | </span></div>')
+      .replace(/Appellation cognac Fins Bois control[ée]e/gi, 'Fins Bois 干邑受控产区');
+  }
+
+  return next;
+}
+
+function replaceResidualAgeGate(html, lang) {
+  const copy = ageGateCopy(lang);
+  if (!copy) return html;
+
+  return html
+    .replace(/Pour accéder à notre site,\s*vous devez être en âge d[’']acheter et de consommer de l[’']alcool conformément à la législation en vigueur dans votre pays\/région(?:\s*de résidence)?\.?/g, copy.access)
+    .replace(/To access our site, you must be of legal age to purchase and consume alcohol under the laws in force in your country or region of residence\.?/g, copy.access)
+    .replace(/Si cette législation n[’']existe pas dans votre pays\/région,\s*vous devez avoir au moins 21 ans\.?/g, copy.fallback)
+    .replace(/If no such law exists in your country or region, you must be at least 21 years old\.?/g, copy.fallback)
+    .replace(/En cliquant sur «\s*Entrer\s*» vous confirmez avoir l[’']âge requis dans votre pays pour visiter ce site\.?/g, copy.confirm)
+    .replace(/By clicking [“"](?:Enter|进入)[”"], you confirm that you are of legal age in your country to visit this site\.?/g, copy.confirm)
+    .replace(/Vous acceptez nos <a href="#">Conditions générales d['’]utilisation<\/a> et déclarez avoir lu notre/g, copy.terms)
+    .replace(/You accept our <a href="#">terms of use<\/a> and confirm that you have read our/g, copy.terms)
+    .replace(/<a href="#">Charte de données personnelles & Cookies<\/a>/g, copy.privacy)
+    .replace(/<a href="#">personal data and cookies policy<\/a>/g, copy.privacy)
+    .replace(/<button type="submit">Entrer<\/button>/g, `<button type="submit">${copy.enter}</button>`);
+}
+
+function ageGateCopy(lang) {
+  const copies = {
+    en: {
+      access: 'To access our site, you must be of legal age to purchase and consume alcohol under the laws in force in your country or region of residence.',
+      fallback: 'If no such law exists in your country or region, you must be at least 21 years old.',
+      confirm: 'By clicking “Enter”, you confirm that you are of legal age in your country to visit this site.',
+      terms: 'You accept our <a href="#">terms of use</a> and confirm that you have read our',
+      privacy: '<a href="#">personal data and cookies policy</a>',
+      enter: 'Enter',
+    },
+    ru: {
+      access: 'Для доступа к сайту вы должны достичь возраста, с которого в вашей стране или регионе разрешены покупка и употребление алкоголя.',
+      fallback: 'Если в вашей стране или регионе такого закона нет, вам должно быть не менее 21 года.',
+      confirm: 'Нажимая «Войти», вы подтверждаете, что достигли возраста, необходимого в вашей стране для посещения этого сайта.',
+      terms: 'Вы принимаете наши <a href="#">условия использования</a> и подтверждаете, что прочитали нашу',
+      privacy: '<a href="#">политику персональных данных и cookies</a>',
+      enter: 'Войти',
+    },
+    da: {
+      access: 'For at få adgang til vores site skal du have lovlig alder til at købe og nyde alkohol i henhold til lovgivningen i dit bopælsland eller din region.',
+      fallback: 'Hvis der ikke findes en sådan lovgivning i dit land eller din region, skal du være mindst 21 år.',
+      confirm: 'Ved at klikke på “Enter” bekræfter du, at du har den krævede alder i dit land for at besøge dette site.',
+      terms: 'Du accepterer vores <a href="#">generelle brugsbetingelser</a> og erklærer at have læst vores',
+      privacy: '<a href="#">politik for personoplysninger og cookies</a>',
+      enter: 'Enter',
+    },
+    sv: {
+      access: 'För att få tillgång till vår webbplats måste du ha laglig ålder för att köpa och konsumera alkohol enligt lagstiftningen i ditt land eller din region.',
+      fallback: 'Om sådan lagstiftning saknas i ditt land eller din region måste du vara minst 21 år.',
+      confirm: 'Genom att klicka på “Enter” bekräftar du att du har den ålder som krävs i ditt land för att besöka denna webbplats.',
+      terms: 'Du accepterar våra <a href="#">allmänna användarvillkor</a> och bekräftar att du har läst vår',
+      privacy: '<a href="#">policy för personuppgifter och cookies</a>',
+      enter: 'Enter',
+    },
+    no: {
+      access: 'For å få tilgang til nettstedet vårt må du ha lovlig alder til å kjøpe og nyte alkohol i henhold til lovgivningen i landet eller regionen der du bor.',
+      fallback: 'Hvis slik lovgivning ikke finnes i landet eller regionen din, må du være minst 21 år.',
+      confirm: 'Ved å klikke på “Enter” bekrefter du at du har alderen som kreves i landet ditt for å besøke dette nettstedet.',
+      terms: 'Du godtar våre <a href="#">generelle bruksvilkår</a> og bekrefter at du har lest vår',
+      privacy: '<a href="#">policy for personopplysninger og cookies</a>',
+      enter: 'Enter',
+    },
+    zh: {
+      access: '访问本网站前，您必须达到所在国家或地区法律规定的购买和饮用酒精饮品的法定年龄。',
+      fallback: '如果您所在国家或地区没有相关规定，您必须年满 21 岁。',
+      confirm: '点击“进入”即表示您确认已达到所在国家或地区访问本网站所需的法定年龄。',
+      terms: '您接受我们的 <a href="#">使用条款</a>，并确认已阅读我们的',
+      privacy: '<a href="#">个人数据与 Cookie 政策</a>',
+      enter: '进入',
+    },
+  };
+  return copies[lang];
+}
+
+function replaceResidualPremiumCopy(html, lang, route) {
+  let next = html;
+  const heritageNote = localizedHeritageNote(lang);
+  if (heritageNote) {
+    next = next.replace(
+      /In its\s+crystal bottle handmade by master craftsmen,[\s\S]*?It[’']s appreciated on tasting for it[’']s intensity and length\./g,
+      heritageNote,
+    );
+    next = next.replace(
+      /Presented in a crystal bottle handmade by master craftsmen,[\s\S]*?prized for its intensity and length\./g,
+      heritageNote,
+    );
+  }
+
+  if (route.endsWith('/leopold-croizet/')) {
+    const values = localizedValuesInterview(lang);
+    if (values) {
+      next = next.replace(
+        /Respect for tradition, values&#8230;[\s\S]*?motivation to prove myself to be worthy of it\./g,
+        values,
+      );
+      next = next.replace(
+        /Respect for tradition and values\. For several generations,[\s\S]*?prove worthy of what I received\./g,
+        values,
+      );
+    }
+
+    const style = localizedStyleInterview(lang);
+    if (style) {
+      next = next.replace(
+        /Difficult\s+for me to describe my cognacs[\s\S]*?range of very interesting aromas\./g,
+        style,
+      );
+      next = next.replace(
+        /It is hard for me to describe my cognacs;[\s\S]*?This diversity creates a very interesting aromatic range\./g,
+        style,
+      );
+    }
+  }
+
+  return next;
+}
+
+function localizedHeritageNote(lang) {
+  return {
+    en: 'Presented in a crystal bottle handmade by master craftsmen, Héritage is the soul of the house. Four generations of the family have shaped its character with passion. Powerful and slightly animal, its aromatic depth is dense and complex: leather, tobacco and old wood reveal an exceptional rancio, lifted by floral notes and a fresh finish. On tasting, it is prized for its intensity and length.',
+    ru: 'В хрустальном графине ручной работы Héritage воплощает душу дома. Четыре поколения семьи с увлечением формировали его характер. Мощный, слегка животный, с густым и сложным ароматом: кожа, табак и старое дерево раскрывают исключительное rancio, дополненное цветочными нотами и свежим финалом. В дегустации он ценится за интенсивность и длину.',
+    da: 'I sin håndlavede krystalflaske er Héritage husets sjæl. Fire generationer af familien har med passion formet dens karakter. Kraftfuld og let animalsk, med en tæt og kompleks aromatisk dybde: læder, tobak og gammelt træ afslører en enestående rancio, løftet af florale noter og en frisk afslutning. Ved smagning værdsættes den for sin intensitet og længde.',
+    sv: 'I sin handgjorda kristallflaska är Héritage husets själ. Fyra generationer av familjen har med passion format dess karaktär. Kraftfull och lätt animalisk, med tät och komplex aromatisk djup: läder, tobak och gammalt trä avslöjar en exceptionell rancio, lyft av florala toner och en frisk avslutning. Vid provning uppskattas den för sin intensitet och längd.',
+    no: 'I sin håndlagde krystallflaske er Héritage husets sjel. Fire generasjoner av familien har med lidenskap formet dens karakter. Kraftfull og lett animalsk, med tett og kompleks aromatisk dybde: lær, tobakk og gammelt tre avslører en eksepsjonell rancio, løftet av florale toner og en frisk avslutning. Ved smaking verdsettes den for intensitet og lengde.',
+    zh: 'Héritage 盛装于大师手工制作的水晶瓶中，是酒庄精神的凝结。家族四代人以热情塑造其性格。它强劲、略带动物感，香气浓郁而复杂：皮革、烟草与古老木质显现非凡 rancio，并伴随花香绽放与清新收尾。品饮时以强度与悠长余味见长。',
+  }[lang];
+}
+
+function localizedValuesInterview(lang) {
+  return {
+    en: 'Respect for tradition and values. For several generations, my family has carried expertise through every stage of cognac production: from the vineyard to blending, and of course distillation. This mastery allows us to nurture an inheritance for future generations, to look further ahead and to protect product quality. My grandfather Marc launched his cognac brand with his brother just after the Second World War, during a period of reconstruction after difficult years. He thought big, built the business with success, and prevailed. I have many stories about my ancestors; they enrich my vision of the business and motivate me to prove worthy of what I received.',
+    zh: '尊重传统与价值。几代以来，我的家族在干邑生产的每一个环节都积累了专业经验：从葡萄藤到调配，当然也包括蒸馏。这种掌握让我们能够滋养并守护一份留给后代的传承，也促使我们看得更远，确保产品品质。我的祖父 Marc 在第二次世界大战后与兄弟一起创立了自己的干邑品牌，那是一个重建的时期，国家刚刚经历艰难岁月。他有远见，也成功建立了事业。我听过许多祖辈的故事，它们丰富了我对事业的理解，也激励我证明自己配得上这份传承。',
+  }[lang];
+}
+
+function localizedStyleInterview(lang) {
+  return {
+    en: 'It is hard for me to describe my cognacs; I prefer to let people taste them, because they speak for themselves. As I said earlier, every step matters in making a good cognac. The expertise I carry forward produces very fruity cognacs, typical of the Fins Bois cru. They are fragrant, round, mellow and easy to drink. This roundness comes mainly from distillation on the lees. Our spirits then age in French oak barrels, with wood selected from the finest forests in France. Today this work belongs to my wife, who once worked in cooperage and has a real passion for the dialogue between wood and spirit. This diversity creates a very interesting aromatic range.',
+    zh: '对我来说，描述自己的干邑并不容易；我更愿意让人品尝，因为它们会自己表达。正如前面所说，酿造一款好干邑，每一个步骤都很重要。我所传承的技艺带来非常果香充沛的干邑，这是 Fins Bois cru 的典型风格。它们芳香、圆润、柔和，也容易入口。这种圆润主要来自带酒泥蒸馏。随后，生命之水在法国橡木桶中陈酿，木材选自法国最优秀的森林。如今这项工作由我的妻子负责，她曾在制桶行业工作，并真正热爱木材与烈酒之间的互动。这种多样性赋予干邑非常丰富而有趣的香气层次。',
+  }[lang];
+}
+
+function repairLocalizedSeoHeading(html, route) {
+  const heading = productSeoHeading(route);
+  if (!heading) return html;
+  return html.replace(
+    /<h1\b([^>]*)class=(["'])([^"']*\blc-seo-h1\b[^"']*)\2([^>]*)>[\s\S]*?<\/h1>/i,
+    (tag, beforeClass, quote, className, afterClass) => `<h1${beforeClass}class=${quote}${className}${quote}${afterClass}>${escapeHtml(heading)}</h1>`,
+  );
+}
+
+function productSeoHeading(route) {
+  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
+  if (!slug) return '';
+  const lang = languageForRoute(route);
+  const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
+  const isPineau = slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG;
+  if (isPineau) {
+    return {
+      fr: `${name} Léopold Croizet`,
+      en: `${name} Léopold Croizet French Pineau`,
+      ru: `${name} Léopold Croizet, французский Pineau`,
+      da: `${name} Léopold Croizet, fransk Pineau`,
+      sv: `${name} Léopold Croizet, fransk Pineau`,
+      no: `${name} Léopold Croizet, fransk Pineau`,
+      zh: `${name} Léopold Croizet 法国 Pineau 甜酒`,
+    }[lang] || `${name} Léopold Croizet`;
+  }
+
+  return {
+    fr: `Cognac Léopold Croizet ${name}`,
+    en: `Léopold Croizet ${name} Cognac`,
+    ru: `${name} коньяк Léopold Croizet`,
+    da: `${name} cognac Léopold Croizet`,
+    sv: `${name} cognac Léopold Croizet`,
+    no: `${name} cognac Léopold Croizet`,
+    zh: `${name} 干邑 Léopold Croizet`,
+  }[lang] || `Cognac Léopold Croizet ${name}`;
 }
 
 function repairNewsletterBlock(html, route) {
@@ -1186,7 +1407,7 @@ function webSiteSchema() {
     name: 'Cognac Léopold Croizet',
     url: PUBLIC_ORIGIN,
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-Hans'],
+    inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'],
   };
 }
 
@@ -1404,7 +1625,7 @@ function makeLlmsFullTxt() {
     '- Simplified Chinese: https://cognac-leopold-croizet.com/zh/',
     '',
     '## Simplified Chinese Search Context',
-    'The Chinese version uses zh-Hans metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.',
+    'The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.',
     '',
     '## Collection',
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),

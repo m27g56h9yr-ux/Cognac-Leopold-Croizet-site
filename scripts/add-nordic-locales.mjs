@@ -1120,8 +1120,13 @@ function localizeAgeGate(html, locale) {
   }[locale];
 
   return html
-    .replace(/Pour accéder à notre site, vous devez être en âge d’acheter et de consommer de l’alcool conformément à la législation en vigueur dans votre pays\/région\s*de résidence\./g, copy.access)
+    .replace(/Pour accéder à notre site, vous devez être en âge d’acheter et de consommer de l’alcool conformément à la législation en vigueur dans votre pays\/région(?:\s*de résidence)?\.?/g, copy.access)
     .replace(/Si cette législation n’existe pas dans votre pays\/région,\s*vous devez avoir au moins 21 ans\./g, copy.fallback)
+    .replace(/En cliquant sur « Entrer » vous confirmez avoir l'âge requis dans votre pays pour visiter ce site\.?/g, {
+      da: 'Ved at klikke på “Enter” bekræfter du, at du har den krævede alder i dit land for at besøge dette site.',
+      sv: 'Genom att klicka på “Enter” bekräftar du att du har den ålder som krävs i ditt land för att besöka denna webbplats.',
+      no: 'Ved å klikke på “Enter” bekrefter du at du har alderen som kreves i landet ditt for å besøke dette nettstedet.',
+    }[locale])
     .replace(/Vous acceptez nos <a href="#">Conditions générales d'utilisation<\/a> et déclarez avoir lu notre/g, copy.terms)
     .replace(/<a href="#">Charte de données personnelles & Cookies<\/a>/g, copy.privacy);
 }
