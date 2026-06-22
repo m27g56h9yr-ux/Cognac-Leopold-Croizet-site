@@ -8,6 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
+const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 
 const productNames = new Map([
   ['vs', 'VS'],
@@ -574,6 +575,7 @@ function hardenHtml(html, route, file) {
     .replace(/<meta\s+name=["']description["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']keywords["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']robots["'][^>]*>\s*/gi, '')
+    .replace(/<meta\s+name=["']msvalidate\.01["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']canonical["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '')
@@ -592,6 +594,7 @@ function hardenHtml(html, route, file) {
     `<meta name="description" content="${escapeHtml(metadata.description)}">`,
     keywordsForRoute(route) ? `<meta name="keywords" content="${escapeHtml(keywordsForRoute(route))}">` : '',
     `<meta name="robots" content="${robots}">`,
+    `<meta name="msvalidate.01" content="${BING_SITE_VERIFICATION}">`,
     `<link rel="canonical" href="${canonical}">`,
     ...alternates,
     `<meta property="og:type" content="${route.includes('/collection/') ? 'product' : 'website'}">`,
