@@ -65,7 +65,6 @@ jobs:
             --exclude='pnpm-lock.yaml' \
             --exclude='newsletter-data/' \
             --exclude='api/newsletter-config.php' \
-            --exclude='.htaccess' \
             --exclude='.htpasswd' \
             --exclude='.user.ini' \
             --exclude='php.ini' \
@@ -89,7 +88,6 @@ jobs:
             -name '.github' -o \
             -name 'newsletter-data' -o \
             -name 'newsletter-config.php' -o \
-            -name '.htaccess' -o \
             -name '.htpasswd' -o \
             -name '.user.ini' -o \
             -name 'php.ini' -o \
@@ -154,7 +152,6 @@ jobs:
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude '(^|/)newsletter-data(/|$)' \
             --exclude '(^|/)api/newsletter-config\.php$' \
-            --exclude '(^|/)\.htaccess$' \
             --exclude '(^|/)\.htpasswd$' \
             --exclude '(^|/)\.user\.ini$' \
             --exclude '(^|/)php\.ini$' \
@@ -224,6 +221,7 @@ jobs:
             "en.cognac-leopold-croizet.com"
             "ru.cognac-leopold-croizet.com"
             "cognacg.cluster028.hosting.ovh.net"
+            "Cognac-Leopold-Croizet-site"
           )
           for forbidden in "${forbidden_home[@]}"; do
             if grep -q "$forbidden" <<< "$home_html"; then
