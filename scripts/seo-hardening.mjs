@@ -724,13 +724,17 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
       <p class="lc-lead">${lead}</p>
     </div>
   </header>`;
+  const fontLinkHtml = isPlainHeader ? '  <link rel="stylesheet" href="/assets/external/fonts.googleapis.com/css-5cf545d9.css" media="all">\n' : '';
+  const paperTearHtml = isPlainHeader ? `
+    <img class="lc-paper-tear" src="/wp-content/uploads/2021/06/img_papier_dechire.png" alt="" aria-hidden="true" width="3316" height="240" decoding="async">` : '';
   const titleHtml = isPlainHeader ? `
     <section class="lc-page-title">
-      <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
-      <h1>${heading}</h1>
+      ${eyebrow ? `<p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>` : ''}
+      <h1 class="lc-film-title">${heading}</h1>
       ${lead ? `<p class="lc-lead">${lead}</p>` : ''}
     </section>` : '';
   const plainHeaderCss = isPlainHeader ? `
+    body.lc-film-page{background:#f6f3ef}
     .lc-site-header{background:#fff;border-bottom:1px solid #d8d8d8;position:relative;z-index:1}
     .lc-site-nav{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;align-items:center}
     .lc-logo-header{display:block;width:160px;flex:0 0 160px;color:#000;text-decoration:none}
@@ -738,20 +742,22 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     .lc-site-header .lc-nav{width:100%;padding-left:50px;gap:0}
     .lc-site-header .lc-nav a{display:block;padding:60px 0;margin:0 15px;color:#232323;border-bottom:2px solid #fff;font-size:.82rem;font-weight:400}
     .lc-site-header .lc-nav a:hover{text-decoration:none;border-bottom-color:#232323}
-    .lc-main-plain{margin:0 auto;padding-top:46px}
-    .lc-page-title{max-width:940px;margin:0 auto 32px;text-align:center}
+    .lc-main-plain{max-width:none;margin:0 auto;padding:122px clamp(18px,4vw,34px) 90px;overflow:hidden;background:linear-gradient(#dacdbc 0%,#f6f3ef 270px);position:relative}
+    .lc-paper-tear{position:absolute;top:0;left:0;width:100%;height:118px;object-fit:fill;object-position:top center;pointer-events:none;z-index:0}
+    .lc-page-title{position:relative;z-index:1;max-width:940px;margin:0 auto 60px;text-align:center}
     .lc-page-title .lc-eyebrow{color:var(--lc-gold)}
     .lc-page-title .lc-lead{color:var(--lc-muted)}
-    .lc-film-panel{padding:clamp(18px,4vw,44px)}` : '';
+    .lc-film-title{font-family:"Montserrat",Arial,sans-serif;text-transform:uppercase;font-weight:300;font-size:clamp(28px,3.2vw,39px);line-height:1.28;letter-spacing:0;margin:0}
+    .lc-film-panel{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(18px,4vw,44px)}` : '';
   const plainHeaderMobileCss = isPlainHeader ? `
-    @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding-top:28px;margin-top:0}.lc-page-title{text-align:left}.lc-page-title h1{font-size:clamp(34px,11vw,50px)}.lc-film-panel{padding:18px}}` : '';
+    @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding:88px 18px 90px;margin-top:0;background:linear-gradient(#dacdbc 0%,#f6f3ef 220px)}.lc-paper-tear{height:82px}.lc-page-title{text-align:left;margin-bottom:34px}.lc-film-title{font-size:clamp(26px,8vw,36px);line-height:1.22}.lc-film-panel{padding:18px}}` : '';
 
   return `<!doctype html>
 <html lang="${htmlLangForRoute(route)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escapeHtml(title)}</title>
+${fontLinkHtml}  <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <style>
     :root{color-scheme:light;--lc-ink:#15120f;--lc-muted:#675c51;--lc-gold:#b78a3b;--lc-line:#e7ded1;--lc-paper:#fbf8f2;--lc-cream:#f4eadb}
@@ -818,7 +824,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
 </head>
 <body${pageClass ? ` class="${escapeHtml(pageClass)}"` : ''}>
 ${headerHtml}
-  <main${isPlainHeader ? ' class="lc-main-plain"' : ''}>${titleHtml}
+  <main${isPlainHeader ? ' class="lc-main-plain"' : ''}>${paperTearHtml}${titleHtml}
     <div class="lc-panel${isPlainHeader ? ' lc-film-panel' : ''}">
       ${body}
       ${note ? `<div class="lc-note">${note}</div>` : ''}
@@ -1068,7 +1074,7 @@ function filmPageHtml(route) {
     route,
     title: copy.metaTitle,
     description: copy.description,
-    eyebrow: copy.eyebrow,
+    eyebrow: '',
     heading: copy.heading,
     lead: '',
     body,

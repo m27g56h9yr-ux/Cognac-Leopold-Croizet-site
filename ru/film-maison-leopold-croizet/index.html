@@ -62,6 +62,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/external/fonts.googleapis.com/css-5cf545d9.css" media="all">
   <style>
     :root{color-scheme:light;--lc-ink:#15120f;--lc-muted:#675c51;--lc-gold:#b78a3b;--lc-line:#e7ded1;--lc-paper:#fbf8f2;--lc-cream:#f4eadb}
     *{box-sizing:border-box}
@@ -79,6 +80,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .lc-lead{max-width:760px;margin:26px auto 0;font-size:clamp(18px,2.2vw,24px);color:#f6efe4}
     main{max-width:1080px;margin:-46px auto 0;padding:0 clamp(18px,4vw,34px) 90px;position:relative}
     .lc-panel{background:#fff;border:1px solid var(--lc-line);padding:clamp(26px,5vw,56px);box-shadow:0 24px 70px rgba(24,18,12,.08)}
+    body.lc-film-page{background:#f6f3ef}
     .lc-site-header{background:#fff;border-bottom:1px solid #d8d8d8;position:relative;z-index:1}
     .lc-site-nav{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;align-items:center}
     .lc-logo-header{display:block;width:160px;flex:0 0 160px;color:#000;text-decoration:none}
@@ -86,11 +88,13 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .lc-site-header .lc-nav{width:100%;padding-left:50px;gap:0}
     .lc-site-header .lc-nav a{display:block;padding:60px 0;margin:0 15px;color:#232323;border-bottom:2px solid #fff;font-size:.82rem;font-weight:400}
     .lc-site-header .lc-nav a:hover{text-decoration:none;border-bottom-color:#232323}
-    .lc-main-plain{margin:0 auto;padding-top:46px}
-    .lc-page-title{max-width:940px;margin:0 auto 32px;text-align:center}
+    .lc-main-plain{max-width:none;margin:0 auto;padding:122px clamp(18px,4vw,34px) 90px;overflow:hidden;background:linear-gradient(#dacdbc 0%,#f6f3ef 270px);position:relative}
+    .lc-paper-tear{position:absolute;top:0;left:0;width:100%;height:118px;object-fit:fill;object-position:top center;pointer-events:none;z-index:0}
+    .lc-page-title{position:relative;z-index:1;max-width:940px;margin:0 auto 60px;text-align:center}
     .lc-page-title .lc-eyebrow{color:var(--lc-gold)}
     .lc-page-title .lc-lead{color:var(--lc-muted)}
-    .lc-film-panel{padding:clamp(18px,4vw,44px)}
+    .lc-film-title{font-family:"Montserrat",Arial,sans-serif;text-transform:uppercase;font-weight:300;font-size:clamp(28px,3.2vw,39px);line-height:1.28;letter-spacing:0;margin:0}
+    .lc-film-panel{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(18px,4vw,44px)}
     .lc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
     .lc-faq-layout{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
     .lc-faq-aside{border-left:3px solid var(--lc-gold);padding-left:22px;color:var(--lc-muted)}
@@ -135,7 +139,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
     .copyright{margin-top:20px;color:#b9aa96;font-size:13px}
     @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}
-    @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding-top:28px;margin-top:0}.lc-page-title{text-align:left}.lc-page-title h1{font-size:clamp(34px,11vw,50px)}.lc-film-panel{padding:18px}}
+    @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding:88px 18px 90px;margin-top:0;background:linear-gradient(#dacdbc 0%,#f6f3ef 220px)}.lc-paper-tear{height:82px}.lc-page-title{text-align:left;margin-bottom:34px}.lc-film-title{font-size:clamp(26px,8vw,36px);line-height:1.22}.lc-film-panel{padding:18px}}
   </style>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"Organization","@id":"https://cognac-leopold-croizet.com/#organization","name":"Cognac Léopold Croizet","alternateName":["Maison Léopold Croizet","Maison Cognac Léopold Croizet","Léopold Croizet 干邑","法国 Léopold Croizet 干邑酒庄"],"url":"https://cognac-leopold-croizet.com","logo":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg","image":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png","knowsAbout":["Cognac","Fins Bois","Pineau des Charentes","French spirits","法国干邑","干邑鸡尾酒"],"email":"cognac@mdpierre.com","telephone":"+33545358810","address":{"@type":"PostalAddress","streetAddress":"30 Rue d'Angoulême","postalCode":"16200","addressLocality":"Triac-Lautrait","addressRegion":"Charente","addressCountry":"FR"},"sameAs":["https://www.facebook.com/leopold.croizet.cognac"]},{"@context":"https://schema.org","@type":"WebPage","@id":"https://cognac-leopold-croizet.com/ru/film-maison-leopold-croizet/#webpage","url":"https://cognac-leopold-croizet.com/ru/film-maison-leopold-croizet/","name":"Фильм Maison Léopold Croizet | Семейный Cognac Fins Bois","description":"Посмотрите фильм Maison Léopold Croizet: семейное поместье, наследие, мастерство и cognacs Fins Bois в Triac-Lautrait.","inLanguage":"ru","isPartOf":{"@id":"https://cognac-leopold-croizet.com/#website"},"publisher":{"@id":"https://cognac-leopold-croizet.com/#organization"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://cognac-leopold-croizet.com/wp-content/uploads/2024/03/img_slider_footer_01.png"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Cognac Léopold Croizet","item":"https://cognac-leopold-croizet.com/"},{"@type":"ListItem","position":2,"name":"Ru","item":"https://cognac-leopold-croizet.com/ru/"},{"@type":"ListItem","position":3,"name":"Film Maison Léopold Croizet","item":"https://cognac-leopold-croizet.com/ru/film-maison-leopold-croizet/"}]}]</script>
 </head>
@@ -155,9 +159,10 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     </div>
   </header>
   <main class="lc-main-plain">
+    <img class="lc-paper-tear" src="/wp-content/uploads/2021/06/img_papier_dechire.png" alt="" aria-hidden="true" width="3316" height="240" decoding="async" loading="lazy">
     <section class="lc-page-title">
-      <p class="lc-eyebrow">Фильм дома</p>
-      <h1>Фильм Maison<br>Léopold&nbsp;Croizet</h1>
+
+      <h1 class="lc-film-title">Фильм Maison<br>Léopold&nbsp;Croizet</h1>
 
     </section>
     <div class="lc-panel lc-film-panel">
