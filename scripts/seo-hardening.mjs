@@ -687,10 +687,64 @@ async function writeSourcePages() {
   }
 }
 
-function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '' }) {
+function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '', headerVariant = 'hero' }) {
   const lang = languageForRoute(route);
   const nav = sourceNavigationCopy(lang);
   const routes = sourceNavigationRoutes(lang);
+  const isPlainHeader = headerVariant === 'plain';
+  const headerHtml = isPlainHeader ? `  <header class="lc-site-header">
+    <div class="lc-site-nav">
+      <a class="lc-logo-header" href="${routes.home}" aria-label="${nav.home}">
+        <img src="/wp-content/uploads/2024/03/img_slider_footer_01.png" alt="Logo Cognac Léopold Croizet" width="600" height="600" decoding="async">
+      </a>
+      <nav class="lc-nav" aria-label="Navigation principale">
+        <a href="${routes.collection}">${nav.collection}</a>
+        <a href="${routes.knowHow}">${nav.knowHow}</a>
+        <a href="${routes.leopold}">${nav.leopold}</a>
+        <a href="${routes.film}">${nav.film}</a>
+        <a href="${routes.visit}">${nav.visit}</a>
+      </nav>
+    </div>
+  </header>` : `  <header class="lc-page-header">
+    <div class="lc-topbar">
+      <a class="lc-logo" href="/" aria-label="Accueil Cognac Léopold Croizet">
+        <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Cognac Léopold Croizet" width="164" height="118" decoding="async">
+      </a>
+      <nav class="lc-nav" aria-label="Navigation principale">
+        <a href="${routes.home}">${nav.home}</a>
+        <a href="${routes.collection}">${nav.collection}</a>
+        <a href="${routes.film}">${nav.film}</a>
+        <a href="${routes.visit}">${nav.visit}</a>
+        <a href="${routes.business}">${nav.business}</a>
+      </nav>
+    </div>
+    <div class="lc-hero">
+      <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
+      <h1>${heading}</h1>
+      <p class="lc-lead">${lead}</p>
+    </div>
+  </header>`;
+  const titleHtml = isPlainHeader ? `
+    <section class="lc-page-title">
+      <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
+      <h1>${heading}</h1>
+      ${lead ? `<p class="lc-lead">${lead}</p>` : ''}
+    </section>` : '';
+  const plainHeaderCss = isPlainHeader ? `
+    .lc-site-header{background:#fff;border-bottom:1px solid #d8d8d8;position:relative;z-index:1}
+    .lc-site-nav{max-width:1400px;margin:0 auto;padding:0 50px;display:flex;align-items:center}
+    .lc-logo-header{display:block;width:160px;flex:0 0 160px;color:#000;text-decoration:none}
+    .lc-logo-header img{display:block;width:100%;height:auto}
+    .lc-site-header .lc-nav{width:100%;padding-left:50px;gap:0}
+    .lc-site-header .lc-nav a{display:block;padding:60px 0;margin:0 15px;color:#232323;border-bottom:2px solid #fff;font-size:.82rem;font-weight:400}
+    .lc-site-header .lc-nav a:hover{text-decoration:none;border-bottom-color:#232323}
+    .lc-main-plain{margin:0 auto;padding-top:46px}
+    .lc-page-title{max-width:940px;margin:0 auto 32px;text-align:center}
+    .lc-page-title .lc-eyebrow{color:var(--lc-gold)}
+    .lc-page-title .lc-lead{color:var(--lc-muted)}
+    .lc-film-panel{padding:clamp(18px,4vw,44px)}` : '';
+  const plainHeaderMobileCss = isPlainHeader ? `
+    @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding-top:28px;margin-top:0}.lc-page-title{text-align:left}.lc-page-title h1{font-size:clamp(34px,11vw,50px)}.lc-film-panel{padding:18px}}` : '';
 
   return `<!doctype html>
 <html lang="${htmlLangForRoute(route)}">
@@ -715,7 +769,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     h1{font-size:clamp(38px,7vw,78px);font-weight:400;line-height:1.02;margin:0}
     .lc-lead{max-width:760px;margin:26px auto 0;font-size:clamp(18px,2.2vw,24px);color:#f6efe4}
     main{max-width:1080px;margin:-46px auto 0;padding:0 clamp(18px,4vw,34px) 90px;position:relative}
-    .lc-panel{background:#fff;border:1px solid var(--lc-line);padding:clamp(26px,5vw,56px);box-shadow:0 24px 70px rgba(24,18,12,.08)}
+    .lc-panel{background:#fff;border:1px solid var(--lc-line);padding:clamp(26px,5vw,56px);box-shadow:0 24px 70px rgba(24,18,12,.08)}${plainHeaderCss}
     .lc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
     .lc-faq-layout{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
     .lc-faq-aside{border-left:3px solid var(--lc-gold);padding-left:22px;color:var(--lc-muted)}
@@ -759,31 +813,13 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     footer img{width:154px;height:auto}
     .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
     .copyright{margin-top:20px;color:#b9aa96;font-size:13px}
-    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}
+    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}${plainHeaderMobileCss}
   </style>
 </head>
 <body${pageClass ? ` class="${escapeHtml(pageClass)}"` : ''}>
-  <header class="lc-page-header">
-    <div class="lc-topbar">
-      <a class="lc-logo" href="/" aria-label="Accueil Cognac Léopold Croizet">
-        <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Cognac Léopold Croizet" width="164" height="118" decoding="async">
-      </a>
-      <nav class="lc-nav" aria-label="Navigation principale">
-        <a href="${routes.home}">${nav.home}</a>
-        <a href="${routes.collection}">${nav.collection}</a>
-        <a href="${routes.film}">${nav.film}</a>
-        <a href="${routes.visit}">${nav.visit}</a>
-        <a href="${routes.business}">${nav.business}</a>
-      </nav>
-    </div>
-    <div class="lc-hero">
-      <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
-      <h1>${heading}</h1>
-      <p class="lc-lead">${lead}</p>
-    </div>
-  </header>
-  <main>
-    <div class="lc-panel">
+${headerHtml}
+  <main${isPlainHeader ? ' class="lc-main-plain"' : ''}>${titleHtml}
+    <div class="lc-panel${isPlainHeader ? ' lc-film-panel' : ''}">
       ${body}
       ${note ? `<div class="lc-note">${note}</div>` : ''}
     </div>
@@ -811,6 +847,8 @@ function sourceNavigationCopy(lang) {
     fr: {
       home: 'Accueil',
       collection: 'Collection',
+      knowHow: 'Savoir faire',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'Le film',
       visit: 'Visite',
       business: 'Contact commercial',
@@ -820,8 +858,10 @@ function sourceNavigationCopy(lang) {
     en: {
       home: 'Home',
       collection: 'Collection',
+      knowHow: 'Skill &amp; know how',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'The film',
-      visit: 'Visit',
+      visit: 'Meet us',
       business: 'Trade contact',
       contact: 'Contact us',
       legal: 'Legal notice',
@@ -829,6 +869,8 @@ function sourceNavigationCopy(lang) {
     ru: {
       home: 'Главная',
       collection: 'Коллекция',
+      knowHow: 'Мастерство',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'Фильм',
       visit: 'Визит',
       business: 'Коммерческий контакт',
@@ -838,8 +880,10 @@ function sourceNavigationCopy(lang) {
     da: {
       home: 'Forside',
       collection: 'Kollektion',
+      knowHow: 'Håndværk &amp; savoir-faire',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
-      visit: 'Besøg',
+      visit: 'Mød os',
       business: 'Professionel kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk information',
@@ -847,8 +891,10 @@ function sourceNavigationCopy(lang) {
     sv: {
       home: 'Start',
       collection: 'Kollektion',
+      knowHow: 'Hantverk &amp; kunnande',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
-      visit: 'Besök',
+      visit: 'Möt oss',
       business: 'Professionell kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk information',
@@ -856,8 +902,10 @@ function sourceNavigationCopy(lang) {
     no: {
       home: 'Forside',
       collection: 'Kolleksjon',
+      knowHow: 'Håndverk &amp; savoir-faire',
+      leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
-      visit: 'Besøk',
+      visit: 'Møt oss',
       business: 'Profesjonell kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk informasjon',
@@ -865,8 +913,10 @@ function sourceNavigationCopy(lang) {
     zh: {
       home: '首页',
       collection: '系列',
+      knowHow: '工艺与传承',
+      leopold: 'Léopold&nbsp;Croizet',
       film: '影片',
-      visit: '参观',
+      visit: '走近我们',
       business: '商务联系',
       contact: '联系我们',
       legal: '法律信息',
@@ -878,6 +928,8 @@ function sourceNavigationRoutes(lang) {
   return {
     home: sourceHref(lang === 'fr' ? '/' : `/${lang}/`),
     collection: sourceHref(collectionRouteForLang(lang)),
+    knowHow: sourceHref(knowHowRouteForLang(lang)),
+    leopold: sourceHref(leopoldRouteForLang(lang)),
     film: sourceHref(filmRouteForLang(lang)),
     visit: sourceHref(visitRouteForLang(lang)),
     business: sourceHref('/distribution/'),
@@ -897,6 +949,14 @@ function collectionRouteForLang(lang) {
 
 function filmRouteForLang(lang) {
   return lang === 'fr' ? `/${FILM_SLUG}/` : `/${lang}/${FILM_SLUG}/`;
+}
+
+function knowHowRouteForLang(lang) {
+  return lang === 'fr' ? '/la-matiere/' : `/${lang}/la-matiere/`;
+}
+
+function leopoldRouteForLang(lang) {
+  return lang === 'fr' ? '/leopold-croizet/' : `/${lang}/leopold-croizet/`;
 }
 
 function visitRouteForLang(lang) {
@@ -1001,16 +1061,6 @@ function filmPageHtml(route) {
     '<div class="lc-video-frame">',
     `<iframe src="https://www.youtube-nocookie.com/embed/${FILM_VIDEO_ID}?rel=0&modestbranding=1" title="${escapeHtml(videoTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     '</div>',
-    `<p class="lc-video-caption">${copy.sectionText}</p>`,
-    '</section>',
-    '<section class="lc-section">',
-    `<h2>${copy.sectionTitle}</h2>`,
-    `<p>${copy.lead}</p>`,
-    '<div class="lc-cta-row">',
-    `<a class="lc-button" href="${sourceHref(collectionRouteForLang(lang))}">${copy.collectionCta}</a>`,
-    `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${copy.visitCta}</a>`,
-    `<a class="lc-button secondary" href="https://youtu.be/${FILM_VIDEO_ID}" target="_blank" rel="noopener noreferrer">${copy.youtubeCta}</a>`,
-    '</div>',
     '</section>',
   ].join('\n');
 
@@ -1020,9 +1070,10 @@ function filmPageHtml(route) {
     description: copy.description,
     eyebrow: copy.eyebrow,
     heading: copy.heading,
-    lead: copy.lead,
+    lead: '',
     body,
     pageClass: 'lc-film-page',
+    headerVariant: 'plain',
   });
 }
 
