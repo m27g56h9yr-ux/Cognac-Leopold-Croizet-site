@@ -301,6 +301,7 @@ const GENERATED_TOP_LEVEL = [
   'collection',
   'commander',
   'en',
+  'film-maison-leopold-croizet',
   'heritage',
   'lalchimie',
   'la-matiere',
@@ -1107,7 +1108,7 @@ function applyDeployBase(text) {
 
   const base = DEPLOY_BASE_PATH.replace(/\/$/, '');
   const basePattern = escapeRegExp(base.slice(1));
-  const pageOrAssetPath = '(?:wp-content|wp-includes|assets|api|categorie-produit|cgv|collection|commander|en|da|sv|no|heritage|la-matiere|lalchimie|le-feu|le-temps|leopold-croizet|mentions-legales|mon-compte|panier|pierre-croizet-cocktails|rencontre|ru|zh|robots\\.txt|sitemap\\.xml|site\\.webmanifest|llms\\.txt)';
+  const pageOrAssetPath = '(?:wp-content|wp-includes|assets|api|categorie-produit|cgv|collection|commander|en|da|sv|no|film-maison-leopold-croizet|heritage|la-matiere|lalchimie|le-feu|le-temps|leopold-croizet|mentions-legales|mon-compte|panier|pierre-croizet-cocktails|rencontre|ru|zh|robots\\.txt|sitemap\\.xml|site\\.webmanifest|llms\\.txt)';
   const staticAssetPath = '(?:wp-content|wp-includes|assets)';
   const pageOrAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${pageOrAssetPath}(?:/|$)`, 'i');
   const staticAssetRegex = new RegExp(`^/(?!/|${basePattern}(?:/|$))${staticAssetPath}(?:/|$)`, 'i');

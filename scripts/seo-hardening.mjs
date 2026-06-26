@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs';
@@ -8,7 +8,40 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
+const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
+const FILM_SLUG = 'film-maison-leopold-croizet';
+const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
+const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((prefix) => (
+  prefix === '/' ? `/${FILM_SLUG}/` : `${prefix}${FILM_SLUG}/`
+));
+
+const publishedSourceRoutes = new Set(['/distribution/', ...FILM_ROUTES]);
+
+const faqDraftEntries = [
+  {
+    question: 'Comment servir un cognac pur ?',
+    answer: 'Servir une petite quantité à température ambiante, dans un verre tulipe ou un verre à pied légèrement refermé. Observer la robe, approcher le verre progressivement du nez, puis goûter lentement. Éviter de chauffer le verre : une chaleur excessive peut faire dominer l’alcool sur les arômes. Une goutte d’eau peut être proposée à part pour ouvrir certains arômes, sans transformer la dégustation en cocktail.',
+  },
+  {
+    question: 'Comment conserver une bouteille de cognac ?',
+    answer: 'Une fois embouteillé, le cognac ne vieillit plus comme en fût. Conserver la bouteille debout, bien rebouchée, dans un endroit sec, sombre et à température stable, loin du soleil et des sources de chaleur. Après ouverture, limiter le contact avec l’air : reboucher rapidement et, si la bouteille est très entamée, éviter de la conserver de longs mois ainsi.',
+  },
+  {
+    question: 'Que préparer avant une visite ?',
+    answer: 'La demande de rendez-vous relève de la page Visite. Avant de contacter la maison, préparer le nombre de visiteurs, le créneau souhaité, la langue d’accueil, les contraintes d’accès ou de mobilité, la présence éventuelle de personnes ne dégustant pas d’alcool, et l’organisation d’un retour responsable après dégustation.',
+  },
+  {
+    question: 'Un retrait à Triac-Lautrait est-il possible ?',
+    answer: 'Oui, le retrait est possible à Triac-Lautrait aux heures d’ouverture. Il reste préférable de prévenir la maison avant déplacement afin que la disponibilité et le créneau soient bien organisés.',
+  },
+];
+
+const faqValidationItems = [
+  'Retrait sur place : préciser les heures d’ouverture affichables et le contact à prévenir.',
+  'Visite : confirmer durée moyenne, langues d’accueil, groupes, accessibilité et accueil des personnes ne dégustant pas d’alcool.',
+  'Service : valider les recommandations propres à la maison, notamment les accords mets et cognac et les usages par produit.',
+];
 
 const productNames = new Map([
   ['vs', 'VS'],
@@ -42,6 +75,82 @@ const productImageAltRules = [
   [/pineau-des-charentes-rouge/i, 'Pineau Rouge des Charentes Léopold Croizet'],
   [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, 'Pineau des Charentes Léopold Croizet'],
 ];
+
+const productMedalProofs = new Map([
+  ['napoleon', [
+    {
+      href: 'https://cwsa.org/cwsa-2021-results/',
+      src: '/wp-content/uploads/2021/05/img_diaporama_medailles_cwsa_gold_2021-180x274.png',
+      width: 180,
+      height: 274,
+      alt: 'Médaille CWSA 2021 - Cognac Léopold Croizet Napoléon',
+    },
+  ]],
+  ['xo', [
+    {
+      href: 'https://palmares.concours-general-agricole.fr/produits/1632167-2608',
+      src: '/wp-content/uploads/2021/05/img_diaporama_or_2016-180x274.png',
+      width: 180,
+      height: 274,
+      alt: "Médaille d'or Concours Général Agricole 2016 - Cognac Léopold Croizet XO",
+    },
+  ]],
+  ['xo-exception', [
+    {
+      href: 'https://www.thespiritsbusiness.com/2015/09/the-global-cognac-masters-2015-results/2/',
+      src: '/wp-content/uploads/2021/06/img_diaporama_medailles_sb_or_2015-180x274.png',
+      width: 180,
+      height: 274,
+      alt: "Médaille d'or The Cognac Masters 2015 - Cognac Léopold Croizet XO Exception",
+    },
+    {
+      href: 'https://results.spiritsselection.com/fr/resultats/2024/222113-cognac-leopold-croizet-xo-exception',
+      src: 'https://img.concoursmondial.com/medals/web/ssel2024-silver-medal.png',
+      width: 394,
+      height: 369,
+      alt: "Médaille d'argent Spirits Selection 2024 - Cognac Léopold Croizet XO Exception",
+    },
+  ]],
+  ['pineau-des-charentes', [
+    {
+      href: 'https://palmares.concours-general-agricole.fr/produits/1268378-2608',
+      src: '/wp-content/uploads/2021/05/img_diaporama_argent_2010-180x274.png',
+      width: 180,
+      height: 274,
+      alt: "Médaille d'argent Concours Général Agricole 2010 - Pineau des Charentes Léopold Croizet",
+    },
+    {
+      href: 'https://resultats.concoursmondial.com/fr/resultats/2025/240534-pineau-des-charentes-esprit-organic-2011',
+      src: 'https://img.concoursmondial.com/medals/web/cmb2025-silver-medal.png',
+      width: 394,
+      height: 369,
+      alt: "Médaille d'argent Concours Mondial de Bruxelles 2025 - Pineau des Charentes Léopold Croizet",
+    },
+  ]],
+]);
+
+const productGalleryMedalImages = new Map([
+  ['napoleon', ['img_diaporama_or_2016', 'img_diaporama_medailles_cwsa_gold_2021']],
+  ['xo', ['img_diaporama_medailles_xo']],
+  ['xo-exception', ['img_diaporama_or_2016', 'img_diaporama_medailles_sb_or_2015', 'img_diaporama_argent_2010']],
+]);
+
+const productPrimaryGalleryImages = new Map([
+  ['napoleon', {
+    marker: 'NAPOLEON_2024',
+    html: '<div data-thumb="/wp-content/uploads/2021/06/NAPOLEON_2024.png" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2021/06/NAPOLEON_2024.png"><img width="420" height="642" src="/wp-content/uploads/2021/06/NAPOLEON_2024-420x642.png" class="wp-post-image" alt="Cognac Léopold Croizet Napoléon" title="NAPOLEON_2024" data-caption="" data-src="/wp-content/uploads/2021/06/NAPOLEON_2024.png" data-large_image="/wp-content/uploads/2021/06/NAPOLEON_2024.png" data-large_image_width="720" data-large_image_height="1100" /></a></div>',
+  }],
+  ['xo', {
+    marker: 'XO_2024',
+    html: '<div data-thumb="/wp-content/uploads/2021/06/XO_2024.png" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2021/06/XO_2024.png"><img width="420" height="642" src="/wp-content/uploads/2021/06/XO_2024-420x642.png" class="wp-post-image" alt="Cognac Léopold Croizet XO" title="XO_2024" data-caption="" data-src="/wp-content/uploads/2021/06/XO_2024.png" data-large_image="/wp-content/uploads/2021/06/XO_2024.png" data-large_image_width="720" data-large_image_height="1100" /></a></div>',
+  }],
+  ['xo-exception', {
+    marker: 'img_nom_produit_xo-exception_01',
+    html: '<div data-thumb="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png"><img width="420" height="642" src="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" class="" alt="Cognac Léopold Croizet XO Exception" title="img_nom_produit_xo-exception_01" data-caption="" data-src="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" data-large_image="/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.png" data-large_image_width="720" data-large_image_height="1100" /></a></div>',
+  }],
+]);
+
+const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
 
 const imageDimensionCache = new Map();
 
@@ -78,6 +187,7 @@ const contentGroups = [
   ['/lalchimie/', '/en/lalchimie/', '/ru/lalchimie/', '/da/lalchimie/', '/sv/lalchimie/', '/no/lalchimie/', '/zh/lalchimie/'],
   ['/le-temps/', '/en/le-temps/', '/ru/le-temps/', '/da/le-temps/', '/sv/le-temps/', '/no/le-temps/', '/zh/le-temps/'],
   ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/leopold-croizet/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
+  FILM_ROUTES,
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
   ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
   ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
@@ -306,6 +416,14 @@ const routeMetadata = new Map([
   }],
 ]);
 
+for (const route of FILM_ROUTES) {
+  const copy = filmPageCopy(languageForRoute(route));
+  routeMetadata.set(route, {
+    title: copy.metaTitle,
+    description: copy.description,
+  });
+}
+
 for (const [slug, name] of productNames) {
   if (slug === PINEAU_SLUG) {
     routeMetadata.set(`/collection/${slug}/`, {
@@ -441,6 +559,21 @@ const zhRouteMetadata = new Map([
 
 for (const [route, metadata] of zhRouteMetadata) routeMetadata.set(route, metadata);
 
+for (const [route, metadata] of new Map([
+  ['/faq/', {
+    title: 'Brouillon FAQ à valider | Cognac Léopold Croizet',
+    description: 'Brouillon non indexé pour préparer une future FAQ Cognac Léopold Croizet avec uniquement des réponses vérifiées et utiles.',
+  }],
+  ['/distribution/', {
+    title: 'Contact professionnel confidentiel | Cognac Léopold Croizet',
+    description: 'Contact professionnel Cognac Léopold Croizet pour demandes commerciales, import et distribution, sans publication du réseau d’importateurs ou de revendeurs.',
+  }],
+  ['/preuves/', {
+    title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
+    description: 'Brouillon non indexé pour préparer la page preuves et médailles de Cognac Léopold Croizet, sans publier de distinction non confirmée.',
+  }],
+])) routeMetadata.set(route, metadata);
+
 const noindexRoutes = new Set([
   '/categorie-produit/non-classe/',
   '/en/categorie-produit/non-classe-en/',
@@ -472,11 +605,15 @@ const noindexRoutes = new Set([
   '/sv/checkout/',
   '/no/checkout/',
   '/zh/checkout/',
+  '/faq/',
+  '/preuves/',
 ]);
 
 function isNoindexRoute(route) {
   return noindexRoutes.has(route) || route.startsWith('/_preview/');
 }
+
+await writeSourcePages();
 
 const allHtmlFiles = await walkHtml(ROOT);
 const existingRoutes = new Set(allHtmlFiles.map((file) => routeForFile(file)));
@@ -530,6 +667,473 @@ async function walkHtml(dir) {
     }
   }
   return files;
+}
+
+async function writeSourcePages() {
+  const pages = new Map([
+    ['faq/index.html', faqPageHtml()],
+    ['distribution/index.html', distributionPageHtml()],
+    ['preuves/index.html', proofDraftPageHtml()],
+  ]);
+
+  for (const route of FILM_ROUTES) {
+    pages.set(`${route.replace(/^\//, '')}index.html`, filmPageHtml(route));
+  }
+
+  for (const [relativePath, html] of pages) {
+    const fullPath = path.join(ROOT, relativePath);
+    await mkdir(path.dirname(fullPath), { recursive: true });
+    await writeFile(fullPath, normalizeLegacyDeployBase(normalizeGeneratedWhitespace(html)), 'utf8');
+  }
+}
+
+function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '' }) {
+  const lang = languageForRoute(route);
+  const nav = sourceNavigationCopy(lang);
+  const routes = sourceNavigationRoutes(lang);
+
+  return `<!doctype html>
+<html lang="${htmlLangForRoute(route)}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <style>
+    :root{color-scheme:light;--lc-ink:#15120f;--lc-muted:#675c51;--lc-gold:#b78a3b;--lc-line:#e7ded1;--lc-paper:#fbf8f2;--lc-cream:#f4eadb}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--lc-paper);color:var(--lc-ink);font-family:Georgia,"Times New Roman",serif;line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline;text-underline-offset:0.22em}
+    a:focus-visible,summary:focus-visible{outline:2px solid var(--lc-gold);outline-offset:4px}
+    .lc-page-header{min-height:48vh;padding:28px clamp(20px,5vw,70px) 80px;background:linear-gradient(rgba(18,14,10,.52),rgba(18,14,10,.62)),url("/wp-content/uploads/2024/03/img_slider_footer_01.png") center/cover;color:#fff}
+    .lc-topbar{display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .lc-logo img{display:block;width:164px;height:auto}
+    .lc-nav{display:flex;gap:22px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:13px;letter-spacing:0;text-transform:uppercase}
+    .lc-hero{max-width:920px;margin:86px auto 0;text-align:center}
+    .lc-eyebrow{font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#e6d0a8;margin:0 0 18px}
+    h1{font-size:clamp(38px,7vw,78px);font-weight:400;line-height:1.02;margin:0}
+    .lc-lead{max-width:760px;margin:26px auto 0;font-size:clamp(18px,2.2vw,24px);color:#f6efe4}
+    main{max-width:1080px;margin:-46px auto 0;padding:0 clamp(18px,4vw,34px) 90px;position:relative}
+    .lc-panel{background:#fff;border:1px solid var(--lc-line);padding:clamp(26px,5vw,56px);box-shadow:0 24px 70px rgba(24,18,12,.08)}
+    .lc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+    .lc-faq-layout{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+    .lc-faq-aside{border-left:3px solid var(--lc-gold);padding-left:22px;color:var(--lc-muted)}
+    .lc-faq-aside p{font-size:16px}
+    .lc-aside-label{font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--lc-gold);margin-bottom:10px}
+    .lc-faq-aside strong{display:block;color:var(--lc-ink);font-size:42px;font-weight:400;line-height:1;margin:12px 0 8px}
+    .lc-faq-list{border-top:1px solid var(--lc-line);margin-top:24px}
+    .lc-faq-item{border-bottom:1px solid var(--lc-line)}
+    .lc-faq-item summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 32px;gap:18px;align-items:center;list-style:none;padding:22px 0}
+    .lc-faq-item summary::-webkit-details-marker{display:none}
+    .lc-faq-item h3{font-size:clamp(22px,2.6vw,31px);line-height:1.18;margin:0;color:var(--lc-ink)}
+    .lc-faq-item p{max-width:760px;margin:-4px 50px 24px 0;color:var(--lc-muted);font-size:17px}
+    .lc-faq-toggle{position:relative;width:30px;height:30px;border:1px solid var(--lc-line);border-radius:50%}
+    .lc-faq-toggle::before,.lc-faq-toggle::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:var(--lc-gold)}
+    .lc-faq-toggle::after{transform:rotate(90deg)}
+    .lc-faq-item[open] .lc-faq-toggle::after{display:none}
+    .lc-validation-panel{margin-top:34px;padding:24px 26px;background:#fffdf9;border:1px solid var(--lc-line)}
+    .lc-validation-panel h2{font-size:clamp(22px,2.4vw,30px)}
+    .lc-checklist{display:grid;gap:10px;margin-top:16px;padding-left:0;list-style:none}
+    .lc-checklist li{margin:0;padding-left:18px;position:relative}
+    .lc-checklist li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--lc-gold)}
+    .lc-section{border-top:1px solid var(--lc-line);padding-top:24px;margin-top:28px}
+    .lc-section:first-child{border-top:0;padding-top:0;margin-top:0}
+    .lc-video-section{border-top:0;padding-top:0;margin-top:0}
+    .lc-video-frame{position:relative;overflow:hidden;background:#16110d;aspect-ratio:16/9;border:1px solid var(--lc-line);box-shadow:0 20px 52px rgba(22,17,13,.16)}
+    .lc-video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .lc-video-caption{margin:22px 0 0;color:var(--lc-muted);font-size:18px}
+    h2{font-size:clamp(25px,3vw,36px);font-weight:400;line-height:1.18;margin:0 0 14px}
+    h3{font-size:21px;font-weight:400;margin:0 0 8px}
+    p{margin:0 0 15px}
+    ul{margin:0;padding-left:20px}
+    li{margin:7px 0}
+    .lc-card{border:1px solid var(--lc-line);background:#fffdf9;padding:22px}
+    .lc-card p:last-child,.lc-section p:last-child{margin-bottom:0}
+    .lc-cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
+    .lc-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--lc-gold);font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
+    .lc-button.secondary{border-color:var(--lc-line)}
+    .lc-note{margin-top:32px;padding:18px 20px;background:var(--lc-cream);border-left:3px solid var(--lc-gold);font-size:15px;color:var(--lc-muted)}
+    .lc-proof-image{margin:18px 0 0;max-width:100%;height:auto}
+    footer{padding:42px 20px;text-align:center;background:#17120e;color:#f2eadf}
+    footer img{width:154px;height:auto}
+    .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
+    .copyright{margin-top:20px;color:#b9aa96;font-size:13px}
+    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}
+  </style>
+</head>
+<body${pageClass ? ` class="${escapeHtml(pageClass)}"` : ''}>
+  <header class="lc-page-header">
+    <div class="lc-topbar">
+      <a class="lc-logo" href="/" aria-label="Accueil Cognac Léopold Croizet">
+        <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Cognac Léopold Croizet" width="164" height="118" decoding="async">
+      </a>
+      <nav class="lc-nav" aria-label="Navigation principale">
+        <a href="${routes.home}">${nav.home}</a>
+        <a href="${routes.collection}">${nav.collection}</a>
+        <a href="${routes.film}">${nav.film}</a>
+        <a href="${routes.visit}">${nav.visit}</a>
+        <a href="${routes.business}">${nav.business}</a>
+      </nav>
+    </div>
+    <div class="lc-hero">
+      <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
+      <h1>${heading}</h1>
+      <p class="lc-lead">${lead}</p>
+    </div>
+  </header>
+  <main>
+    <div class="lc-panel">
+      ${body}
+      ${note ? `<div class="lc-note">${note}</div>` : ''}
+    </div>
+  </main>
+  <footer>
+    <a href="/" class="logo-footer">
+      <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Cognac Léopold Croizet" width="154" height="111" decoding="async" loading="lazy">
+    </a>
+    <div class="menu-footer">
+      <ul>
+        <li><a href="${routes.visit}">${nav.contact}</a></li>
+        <li><a href="${routes.business}">${nav.business}</a></li>
+        <li><a href="${routes.legal}">${nav.legal}</a></li>
+        <li><a rel="privacy-policy" href="/cgv/">CGV</a></li>
+      </ul>
+    </div>
+    <div class="copyright">© Léopold Croizet 2026</div>
+  </footer>
+</body>
+</html>`;
+}
+
+function sourceNavigationCopy(lang) {
+  return {
+    fr: {
+      home: 'Accueil',
+      collection: 'Collection',
+      film: 'Le film',
+      visit: 'Visite',
+      business: 'Contact commercial',
+      contact: 'Nous contacter',
+      legal: 'Mentions légales',
+    },
+    en: {
+      home: 'Home',
+      collection: 'Collection',
+      film: 'The film',
+      visit: 'Visit',
+      business: 'Trade contact',
+      contact: 'Contact us',
+      legal: 'Legal notice',
+    },
+    ru: {
+      home: 'Главная',
+      collection: 'Коллекция',
+      film: 'Фильм',
+      visit: 'Визит',
+      business: 'Коммерческий контакт',
+      contact: 'Связаться',
+      legal: 'Правовая информация',
+    },
+    da: {
+      home: 'Forside',
+      collection: 'Kollektion',
+      film: 'Filmen',
+      visit: 'Besøg',
+      business: 'Professionel kontakt',
+      contact: 'Kontakt',
+      legal: 'Juridisk information',
+    },
+    sv: {
+      home: 'Start',
+      collection: 'Kollektion',
+      film: 'Filmen',
+      visit: 'Besök',
+      business: 'Professionell kontakt',
+      contact: 'Kontakt',
+      legal: 'Juridisk information',
+    },
+    no: {
+      home: 'Forside',
+      collection: 'Kolleksjon',
+      film: 'Filmen',
+      visit: 'Besøk',
+      business: 'Profesjonell kontakt',
+      contact: 'Kontakt',
+      legal: 'Juridisk informasjon',
+    },
+    zh: {
+      home: '首页',
+      collection: '系列',
+      film: '影片',
+      visit: '参观',
+      business: '商务联系',
+      contact: '联系我们',
+      legal: '法律信息',
+    },
+  }[lang] || sourceNavigationCopy('fr');
+}
+
+function sourceNavigationRoutes(lang) {
+  return {
+    home: sourceHref(lang === 'fr' ? '/' : `/${lang}/`),
+    collection: sourceHref(collectionRouteForLang(lang)),
+    film: sourceHref(filmRouteForLang(lang)),
+    visit: sourceHref(visitRouteForLang(lang)),
+    business: sourceHref('/distribution/'),
+    legal: sourceHref('/mentions-legales/'),
+  };
+}
+
+function sourceHref(route) {
+  return `${DEPLOY_BASE_PATH}${route}`;
+}
+
+function collectionRouteForLang(lang) {
+  if (lang === 'fr') return '/collection/';
+  if (lang === 'ru') return '/ru/a-faire/';
+  return `/${lang}/shop/`;
+}
+
+function filmRouteForLang(lang) {
+  return lang === 'fr' ? `/${FILM_SLUG}/` : `/${lang}/${FILM_SLUG}/`;
+}
+
+function visitRouteForLang(lang) {
+  return lang === 'fr' ? '/rencontre/' : `/${lang}/rencontre/`;
+}
+
+function filmPageCopy(lang) {
+  return {
+    fr: {
+      metaTitle: 'Le film de la Maison Léopold Croizet | Cognac familial en Fins Bois',
+      description: 'Découvrez le film de la Maison Léopold Croizet : domaine familial, héritage, savoir-faire et cognacs de Fins Bois à Triac-Lautrait.',
+      eyebrow: 'Film de maison',
+      heading: 'Le film de la Maison<br>Léopold&nbsp;Croizet',
+      lead: 'Un instant au domaine, entre vignes, chai, gestes de distillation et temps long des cognacs de Fins Bois.',
+      sectionTitle: 'Une maison à voir vivre',
+      sectionText: 'Cette vidéo présente l’esprit de Cognac Léopold&nbsp;Croizet : une maison familiale à Triac-Lautrait, attachée à ses terres, à ses chais et à la transmission d’un savoir-faire précis.',
+      collectionCta: 'Voir la collection',
+      visitCta: 'Préparer une visite',
+      youtubeCta: 'Voir sur YouTube',
+    },
+    en: {
+      metaTitle: 'The Film of Maison Léopold Croizet | Family Cognac in Fins Bois',
+      description: 'Watch the Maison Léopold Croizet film: family estate, heritage, craft and Fins Bois cognacs in Triac-Lautrait.',
+      eyebrow: 'House film',
+      heading: 'The film of Maison<br>Léopold&nbsp;Croizet',
+      lead: 'A moment at the estate, between vines, cellars, distillation and the long ageing time of Fins Bois cognacs.',
+      sectionTitle: 'A house in motion',
+      sectionText: 'This video introduces the spirit of Cognac Léopold&nbsp;Croizet: a family house in Triac-Lautrait, rooted in its land, its cellars and the transmission of precise know-how.',
+      collectionCta: 'View the collection',
+      visitCta: 'Plan a visit',
+      youtubeCta: 'Watch on YouTube',
+    },
+    ru: {
+      metaTitle: 'Фильм Maison Léopold Croizet | Семейный Cognac Fins Bois',
+      description: 'Посмотрите фильм Maison Léopold Croizet: семейное поместье, наследие, мастерство и cognacs Fins Bois в Triac-Lautrait.',
+      eyebrow: 'Фильм дома',
+      heading: 'Фильм Maison<br>Léopold&nbsp;Croizet',
+      lead: 'Мгновение в поместье: виноградники, погреба, дистилляция и долгое созревание cognacs Fins Bois.',
+      sectionTitle: 'Дом, который можно увидеть',
+      sectionText: 'Видео передает дух Cognac Léopold&nbsp;Croizet: семейного дома в Triac-Lautrait, связанного со своей землей, погребами и передачей точного мастерства.',
+      collectionCta: 'Смотреть коллекцию',
+      visitCta: 'Запланировать визит',
+      youtubeCta: 'Смотреть на YouTube',
+    },
+    da: {
+      metaTitle: 'Filmen om Maison Léopold Croizet | Familiecognac fra Fins Bois',
+      description: 'Se filmen om Maison Léopold Croizet: familieejendom, arv, håndværk og Fins Bois-cognacs i Triac-Lautrait.',
+      eyebrow: 'Husets film',
+      heading: 'Filmen om Maison<br>Léopold&nbsp;Croizet',
+      lead: 'Et øjeblik på ejendommen, mellem vinstokke, kældre, destillation og den lange modning af Fins Bois-cognacs.',
+      sectionTitle: 'Et hus i levende billeder',
+      sectionText: 'Videoen viser ånden i Cognac Léopold&nbsp;Croizet: et familiehus i Triac-Lautrait, forankret i jorden, kældrene og overleveringen af præcist håndværk.',
+      collectionCta: 'Se kollektionen',
+      visitCta: 'Planlæg et besøg',
+      youtubeCta: 'Se på YouTube',
+    },
+    sv: {
+      metaTitle: 'Filmen om Maison Léopold Croizet | Familjecognac från Fins Bois',
+      description: 'Se filmen om Maison Léopold Croizet: familjegård, arv, hantverk och Fins Bois-cognacs i Triac-Lautrait.',
+      eyebrow: 'Husets film',
+      heading: 'Filmen om Maison<br>Léopold&nbsp;Croizet',
+      lead: 'Ett ögonblick på egendomen, mellan vinrankor, källare, destillation och den långa mognaden hos Fins Bois-cognacs.',
+      sectionTitle: 'Ett hus i levande bild',
+      sectionText: 'Videon visar andan hos Cognac Léopold&nbsp;Croizet: ett familjehus i Triac-Lautrait, rotat i jorden, källarna och överföringen av exakt hantverk.',
+      collectionCta: 'Se kollektionen',
+      visitCta: 'Planera ett besök',
+      youtubeCta: 'Se på YouTube',
+    },
+    no: {
+      metaTitle: 'Filmen om Maison Léopold Croizet | Familiecognac fra Fins Bois',
+      description: 'Se filmen om Maison Léopold Croizet: familieeiendom, arv, håndverk og Fins Bois-cognacs i Triac-Lautrait.',
+      eyebrow: 'Husets film',
+      heading: 'Filmen om Maison<br>Léopold&nbsp;Croizet',
+      lead: 'Et øyeblikk på eiendommen, mellom vinstokker, kjellere, destillasjon og den lange modningen av Fins Bois-cognacs.',
+      sectionTitle: 'Et hus i levende bilder',
+      sectionText: 'Videoen viser ånden i Cognac Léopold&nbsp;Croizet: et familiehus i Triac-Lautrait, forankret i jorden, kjellerne og videreføringen av presist håndverk.',
+      collectionCta: 'Se kolleksjonen',
+      visitCta: 'Planlegg et besøk',
+      youtubeCta: 'Se på YouTube',
+    },
+    zh: {
+      metaTitle: 'Maison Léopold Croizet 影片 | Fins Bois 家族 Cognac',
+      description: '观看 Maison Léopold Croizet 影片：Triac-Lautrait 的家族酒庄、传承、工艺与 Fins Bois cognacs。',
+      eyebrow: '酒庄影片',
+      heading: 'Maison<br>Léopold&nbsp;Croizet 影片',
+      lead: '走近酒庄：葡萄园、酒窖、蒸馏工艺，以及 Fins Bois cognacs 的漫长陈酿。',
+      sectionTitle: '以影像走近家族酒庄',
+      sectionText: '这支影片呈现 Cognac Léopold&nbsp;Croizet 的精神：一座位于 Triac-Lautrait 的家族酒庄，扎根土地、酒窖与代代相传的精准工艺。',
+      collectionCta: '查看系列',
+      visitCta: '预约参观',
+      youtubeCta: '在 YouTube 观看',
+    },
+  }[lang] || filmPageCopy('fr');
+}
+
+function filmPageHtml(route) {
+  const lang = languageForRoute(route);
+  const copy = filmPageCopy(lang);
+  const videoTitle = stripTags(copy.metaTitle);
+  const body = [
+    '<section class="lc-section lc-video-section">',
+    '<div class="lc-video-frame">',
+    `<iframe src="https://www.youtube-nocookie.com/embed/${FILM_VIDEO_ID}?rel=0&modestbranding=1" title="${escapeHtml(videoTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    '</div>',
+    `<p class="lc-video-caption">${copy.sectionText}</p>`,
+    '</section>',
+    '<section class="lc-section">',
+    `<h2>${copy.sectionTitle}</h2>`,
+    `<p>${copy.lead}</p>`,
+    '<div class="lc-cta-row">',
+    `<a class="lc-button" href="${sourceHref(collectionRouteForLang(lang))}">${copy.collectionCta}</a>`,
+    `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${copy.visitCta}</a>`,
+    `<a class="lc-button secondary" href="https://youtu.be/${FILM_VIDEO_ID}" target="_blank" rel="noopener noreferrer">${copy.youtubeCta}</a>`,
+    '</div>',
+    '</section>',
+  ].join('\n');
+
+  return sourcePageShell({
+    route,
+    title: copy.metaTitle,
+    description: copy.description,
+    eyebrow: copy.eyebrow,
+    heading: copy.heading,
+    lead: copy.lead,
+    body,
+    pageClass: 'lc-film-page',
+  });
+}
+
+function faqPageHtml() {
+  const body = [
+    '<div class="lc-faq-layout">',
+    '<aside class="lc-faq-aside" aria-label="État du brouillon">',
+    '<p class="lc-aside-label">Brouillon interne</p>',
+    '<strong>4</strong>',
+    '<p>Questions complémentaires, non redondantes avec les pages Visite et Collection.</p>',
+    '<p>La page reste hors index tant que les détails propres à la maison ne sont pas validés.</p>',
+    '</aside>',
+    '<div class="lc-faq-main">',
+    '<section class="lc-section">',
+    '<h2>Questions complémentaires</h2>',
+    '<p>Des réponses pratiques pour préparer une dégustation, conserver une bouteille, organiser une visite et prévoir un retrait sur place.</p>',
+    '<div class="lc-faq-list">',
+    ...faqDraftEntries.map((entry, index) => (
+      `<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary><p>${escapeHtml(entry.answer)}</p></details>`
+    )),
+    '</div>',
+    '</section>',
+    '<section class="lc-validation-panel">',
+    '<h2>À confirmer avant publication</h2>',
+    '<p>Ces points demandent une validation interne. Sans ces réponses, la page doit rester hors index.</p>',
+    `<ul class="lc-checklist">${faqValidationItems.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`,
+    '</section>',
+    '<section class="lc-section">',
+    '<h2>Pages à privilégier</h2>',
+    '<p>Tant que la FAQ n’est pas publiable, les visiteurs doivent être guidés vers les pages qui portent déjà l’information principale.</p>',
+    '<div class="lc-cta-row">',
+    '<a class="lc-button" href="/collection/">Voir la collection</a>',
+    '<a class="lc-button secondary" href="/rencontre/">Préparer une visite</a>',
+    '<a class="lc-button secondary" href="/distribution/">Contact commercial</a>',
+    '</div>',
+    '</section>',
+    '</div>',
+    '</div>',
+  ].join('\n');
+
+  return sourcePageShell({
+    title: 'Brouillon FAQ à valider | Cognac Léopold Croizet',
+    description: 'Brouillon non indexé pour préparer une future FAQ Cognac Léopold Croizet avec uniquement des réponses utiles et vérifiées.',
+    eyebrow: 'Brouillon non indexé',
+    heading: 'FAQ à valider<br>Léopold Croizet',
+    lead: 'La page est conservée comme support de décision éditoriale, sans indexation tant que les réponses manquent de substance.',
+    body,
+    pageClass: 'lc-faq-page',
+  });
+}
+
+function distributionPageHtml() {
+  const body = [
+    '<section class="lc-section">',
+    '<h2>Contact direct, réseau confidentiel</h2>',
+    '<p>Cette page sert uniquement de point d’entrée pour les demandes commerciales, d’import ou de distribution. Elle ne publie pas de liste d’importateurs, de distributeurs, de revendeurs, de pays couverts ou de conditions commerciales. Par principe de confidentialité commerciale, chaque demande est étudiée directement par la maison.</p>',
+    '<div class="lc-grid">',
+    '<article class="lc-card"><h3>Coordonnées vérifiées</h3><p><strong>E-mail</strong><br><a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a></p><p><strong>Téléphone</strong><br><a href="tel:+33545358810">+33 5 45 35 88 10</a></p><p><strong>Adresse</strong><br>30 Rue d’Angoulême<br>16200 Triac-Lautrait<br>France</p></article>',
+    '<article class="lc-card"><h3>Pour une demande qualifiée</h3><ul><li>Nom, société et pays de la demande.</li><li>Activité : caviste, restaurant, hôtel, importateur, distributeur ou autre professionnel.</li><li>Objet de la demande : collection, achat professionnel, import, distribution ou rendez-vous.</li><li>Coordonnées de retour pour organiser un échange direct.</li></ul></article>',
+    '</div>',
+    '</section>',
+    '<section class="lc-section">',
+    '<h2>Informations qui restent confidentielles</h2>',
+    '<p>La maison ne publie pas son réseau commercial. Les importateurs, distributeurs, revendeurs, zones couvertes, conditions tarifaires, disponibilités, volumes et modalités logistiques sont réservés aux échanges directs avec les professionnels concernés.</p>',
+    '<div class="lc-cta-row">',
+    '<a class="lc-button" href="mailto:cognac@mdpierre.com">Envoyer un e-mail</a>',
+    '<a class="lc-button secondary" href="/collection/">Voir la collection</a>',
+    '</div>',
+    '</section>',
+  ].join('\n');
+
+  return sourcePageShell({
+    title: 'Contact professionnel confidentiel | Cognac Léopold Croizet',
+    description: 'Contact professionnel Cognac Léopold Croizet pour demandes commerciales, import et distribution, sans publication du réseau d’importateurs ou de revendeurs.',
+    eyebrow: 'Contact professionnel',
+    heading: 'Contact professionnel<br>confidentiel',
+    lead: 'Les demandes commerciales sont reçues directement par la maison. Le réseau d’importateurs et de partenaires n’est pas publié.',
+    body,
+    note: 'Aucune liste d’importateurs, aucun prix, aucune disponibilité et aucune condition commerciale ne sont affichés sur cette page.',
+  });
+}
+
+function proofDraftPageHtml() {
+  const body = [
+    '<section class="lc-section">',
+    '<h2>État de validation</h2>',
+    '<p>Cette page est un brouillon non indexé. Elle prépare la future page preuves et médailles sans publier de distinction, certification, date, avis, prix ou revendication biologique non confirmés.</p>',
+    '<img class="lc-proof-image" src="/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Visuel de médailles à documenter pour Cognac Léopold Croizet" width="827" height="123" decoding="async" loading="lazy">',
+    '</section>',
+    '<section class="lc-section">',
+    '<h2>À confirmer avant publication indexable</h2>',
+    '<div class="lc-grid">',
+    '<article class="lc-card"><h3>Médailles</h3><ul><li>Nom exact des concours.</li><li>Années des distinctions.</li><li>Produits concernés.</li><li>Niveau exact de chaque distinction.</li><li>Document ou source vérifiable.</li></ul></article>',
+    '<article class="lc-card"><h3>Certifications et revendications</h3><ul><li>Statut exact des mentions liées à la viticulture biologique.</li><li>Documents utilisables publiquement.</li><li>Libellé validé par la maison.</li><li>Éléments à exclure du schema tant qu’ils ne sont pas visibles.</li></ul></article>',
+    '</div>',
+    '</section>',
+    '<section class="lc-section">',
+    '<h2>Décision SEO</h2>',
+    '<p>La page reste en <strong>noindex</strong>, hors sitemap et hors fichiers llms tant que les preuves ne sont pas confirmées. Une fois les éléments validés, elle pourra devenir indexable et recevoir des liens depuis la collection et les pages produit pertinentes.</p>',
+    '</section>',
+  ].join('\n');
+
+  return sourcePageShell({
+    title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
+    description: 'Brouillon interne non indexé pour préparer les preuves, médailles et éléments à confirmer de Cognac Léopold Croizet.',
+    eyebrow: 'Brouillon non indexé',
+    heading: 'Preuves<br>et médailles',
+    lead: 'Aucun fait de récompense ou certification n’est ajouté sans source vérifiable.',
+    body,
+    note: 'Validation humaine requise : concours, années, produits primés, certificats et formulation des revendications doivent être confirmés avant publication indexable.',
+  });
 }
 
 function routeForFile(file) {
@@ -617,11 +1221,28 @@ function hardenHtml(html, route, file) {
   next = localizeResidualLocaleFragments(next, route);
   next = repairLocalizedSeoHeading(next, route);
   next = repairNewsletterBlock(next, route);
+  next = applyProductMedalProofs(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
   next = normalizeGithubPagesLinks(next, route);
+  next = injectFilmNavigationLink(next, route);
   next = repairLanguageMenuLinks(next, route);
+  next = injectFrenchFooterResourceLinks(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function injectFrenchFooterResourceLinks(html, route) {
+  if (languageForRoute(route) !== 'fr' || isNoindexRoute(route)) return html;
+  const items = [];
+  if (!html.includes('href="/distribution/"')) {
+    items.push('<li class="menu-item lc-source-link"><a href="/distribution/">Contact commercial</a></li>');
+  }
+  if (!items.length) return html;
+
+  return html.replace(
+    /(<div class="menu-footer"><ul\b[^>]*>)([\s\S]*?)(<\/ul>)/i,
+    (_match, open, inner, close) => `${open}${inner.trimEnd()}\n${items.join('\n')}\n${close}`,
+  );
 }
 
 function homeHrefForRoute(route) {
@@ -656,6 +1277,32 @@ function normalizeGithubPagesLinks(html, route) {
   }
 
   return next;
+}
+
+function injectFilmNavigationLink(html, route) {
+  if (!/\bid=["']menu-menu-principal(?:-[^"']*)?["']/i.test(html) || /\bclass=["'][^"']*\bfilm-menu\b/i.test(html)) return html;
+
+  const lang = languageForRoute(route);
+  const nav = sourceNavigationCopy(lang);
+  const filmRoute = filmRouteForLang(lang);
+  const href = sourceHref(filmRoute);
+  const active = route === filmRoute;
+  const className = [
+    'film-menu',
+    'menu-item',
+    'menu-item-type-post_type',
+    'menu-item-object-page',
+    active ? 'current-menu-item page_item current_page_item active' : '',
+    'menu-item-film',
+    'nav-item',
+  ].filter(Boolean).join(' ');
+  const ariaCurrent = active ? ' aria-current="page"' : '';
+  const filmItem = `<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-film" class="${className}"><a title="${escapeHtml(nav.film)}" href="${href}" class="nav-link"${ariaCurrent}>${escapeHtml(nav.film)}</a></li>`;
+
+  return html.replace(
+    /(\s*<li\b[^>]*class=["'][^"']*\brencontre\b[^"']*["'][\s\S]*?<\/li>)/i,
+    `\n${filmItem}$1`,
+  );
 }
 
 function repairLanguageMenuLinks(html, route) {
@@ -941,6 +1588,67 @@ function repairNewsletterBlock(html, route) {
   );
 }
 
+function applyProductMedalProofs(html, route) {
+  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
+  if (!slug || (!productMedalProofs.has(slug) && !productGalleryMedalImages.has(slug))) return html;
+
+  let next = html
+    .replace(/\s*<style\b[^>]*id=["']lc-medal-proof-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-medals\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n');
+
+  next = removeGalleryMedalImages(next, productGalleryMedalImages.get(slug) || []);
+  next = ensurePrimaryGalleryImage(next, slug);
+
+  const medals = productMedalProofs.get(slug) || [];
+  if (!medals.length) return next;
+
+  const block = productMedalProofBlock(medals);
+  next = next.replace(
+    /(<figure\b[^>]*class=["'][^"']*\bwoocommerce-product-gallery__wrapper\b[^"']*["'][^>]*>[\s\S]*?<\/figure>)/i,
+    `$1\n${block}`,
+  );
+
+  if (!next.includes('id="lc-medal-proof-style"')) {
+    next = next.replace(/<\/head>/i, `${productMedalProofStyle}\n</head>`);
+  }
+
+  return next;
+}
+
+function removeGalleryMedalImages(html, imageNames) {
+  let next = html;
+  for (const imageName of imageNames) {
+    const galleryItemPattern = new RegExp(
+      String.raw`\s*<div\b(?=[^>]*class=["'][^"']*\bwoocommerce-product-gallery__image\b[^"']*["'])[^>]*>(?:(?!<\/div>)[\s\S])*?${escapeRegExp(imageName)}(?:(?!<\/div>)[\s\S])*?<\/div>\s*`,
+      'gi',
+    );
+    next = next.replace(galleryItemPattern, '\n        ');
+  }
+  return next;
+}
+
+function ensurePrimaryGalleryImage(html, slug) {
+  const primary = productPrimaryGalleryImages.get(slug);
+  if (!primary) return html;
+  return html.replace(
+    /(<figure\b[^>]*class=["'][^"']*\bwoocommerce-product-gallery__wrapper\b[^"']*["'][^>]*>)([\s\S]*?)(<\/figure>)/i,
+    (match, open, inner, close) => (
+      inner.includes(primary.marker) ? match : `${open}\n        ${primary.html}${inner}${close}`
+    ),
+  );
+}
+
+function productMedalProofBlock(medals) {
+  const links = medals.map((medal) => (
+    `      <a class="lc-product-medal-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${medal.alt} - preuve officielle`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>`
+  ));
+  return [
+    '    <div class="lc-product-medals" aria-label="Médailles officielles liées à ce produit">',
+    ...links,
+    '    </div>',
+  ].join('\n');
+}
+
 
 async function improveMediaMarkup(html, route) {
   let next = improveHomepageMediaLoading(html, route);
@@ -1210,6 +1918,7 @@ function keywordsForRoute(route) {
   if (product) base.push(productFullName(slug), `Léopold Croizet ${product}`);
   if (route.includes('pierre-croizet-cocktails')) base.push('干邑鸡尾酒', 'Pineau des Charentes 鸡尾酒');
   if (route.includes('rencontre')) base.push('法国干邑酒窖参观', 'Triac-Lautrait');
+  if (route.includes(FILM_SLUG)) base.push('Cognac Léopold Croizet 影片', 'Fins Bois 家族酒庄影片');
   return base.join(', ');
 }
 
@@ -1277,6 +1986,7 @@ function labelFromRoute(route) {
 
 function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
+  if (route.includes(FILM_SLUG)) return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
@@ -1553,7 +2263,7 @@ function makeSitemap(routes) {
   for (const route of routes) {
     lines.push('  <url>');
     lines.push(`    <loc>${escapeXml(`${PUBLIC_ORIGIN}${route}`)}</loc>`);
-    lines.push(`    <lastmod>${TODAY}</lastmod>`);
+    lines.push(`    <lastmod>${lastmodForRoute(route)}</lastmod>`);
     lines.push(`    <changefreq>${isHomepage(route) ? 'weekly' : 'monthly'}</changefreq>`);
     lines.push(`    <priority>${priorityForRoute(route)}</priority>`);
     for (const alternate of routeToGroup.get(route) || [route]) {
@@ -1568,9 +2278,14 @@ function makeSitemap(routes) {
   return lines.join('\n');
 }
 
+function lastmodForRoute(route) {
+  return publishedSourceRoutes.has(route) ? SOURCE_PAGE_LASTMOD : TODAY;
+}
+
 function priorityForRoute(route) {
   if (isHomepage(route)) return '1.0';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/[^/]+\//.test(route)) return '0.9';
+  if (publishedSourceRoutes.has(route)) return '0.8';
   if (route.includes('pierre-croizet-cocktails') || route.includes('rencontre')) return '0.8';
   return '0.7';
 }
@@ -1597,7 +2312,9 @@ function makeLlmsTxt() {
     '- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.',
     '- [Chinese collection](https://cognac-leopold-croizet.com/zh/shop/): Simplified Chinese Cognac Léopold Croizet range, without public prices.',
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
+    '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
+    '- [Commercial contact](https://cognac-leopold-croizet.com/distribution/): Confidential professional contact page for distribution and import enquiries; no public importer or reseller list.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
     '',
     '## Product Pages',
@@ -1639,12 +2356,17 @@ function makeLlmsFullTxt() {
     '- Blending and alchemy: https://cognac-leopold-croizet.com/lalchimie/',
     '- Time and heritage: https://cognac-leopold-croizet.com/le-temps/',
     '- Léopold Croizet interview: https://cognac-leopold-croizet.com/leopold-croizet/',
+    '- Maison Léopold Croizet film: https://cognac-leopold-croizet.com/film-maison-leopold-croizet/',
     '',
     '## Cocktails',
     'The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.',
     '',
     '## Visit',
     'Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/',
+    '',
+    '## Verified Source Pages',
+    '- Confidential commercial contact and distribution enquiries, with no public importer or reseller list: https://cognac-leopold-croizet.com/distribution/',
+    '- Medal, certification and organic-claim details are not included here unless validated and visible on an indexable source page.',
     '',
     '## Contact',
     '- cognac@mdpierre.com',
