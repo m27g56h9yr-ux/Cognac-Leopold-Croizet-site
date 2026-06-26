@@ -10,6 +10,7 @@ const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
+const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
 const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
 const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((prefix) => (
@@ -245,6 +246,34 @@ const routeMetadata = new Map([
   ['/commander/', {
     title: 'Commander Cognac Léopold Croizet | Boutique officielle',
     description: 'Commandez les cognacs Léopold Croizet depuis la boutique officielle : VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence et Héritage.',
+  }],
+  ['/categorie-produit/non-classe/', {
+    title: 'Collection Cognac Léopold Croizet | Accès aux carafes XO et Extra',
+    description: 'Retrouvez les pages officielles des cognacs Léopold Croizet, dont XO, XO Exception, Extra, Excellence et Héritage.',
+  }],
+  ['/en/categorie-produit/non-classe-en/', {
+    title: 'Cognac Léopold Croizet Collection | XO and Extra Decanters',
+    description: 'Find the official Cognac Léopold Croizet product pages, including XO, XO Exception, Extra, Excellence and Héritage.',
+  }],
+  ['/ru/categorie-produit/non-classe-ru/', {
+    title: 'Коллекция Cognac Léopold Croizet | XO и Extra',
+    description: 'Официальные страницы Cognac Léopold Croizet: XO, XO Exception, Extra, Excellence и Héritage.',
+  }],
+  ['/da/categorie-produit/non-classe-en/', {
+    title: 'Cognac Léopold Croizet kollektion | XO og Extra',
+    description: 'Find de officielle Cognac Léopold Croizet produktsider, herunder XO, XO Exception, Extra, Excellence og Héritage.',
+  }],
+  ['/sv/categorie-produit/non-classe-en/', {
+    title: 'Cognac Léopold Croizet kollektion | XO och Extra',
+    description: 'Hitta de officiella produktsidorna för Cognac Léopold Croizet, inklusive XO, XO Exception, Extra, Excellence och Héritage.',
+  }],
+  ['/no/categorie-produit/non-classe-en/', {
+    title: 'Cognac Léopold Croizet kolleksjon | XO og Extra',
+    description: 'Finn de offisielle produktsidene for Cognac Léopold Croizet, inkludert XO, XO Exception, Extra, Excellence og Héritage.',
+  }],
+  ['/zh/categorie-produit/non-classe-en/', {
+    title: 'Cognac Léopold Croizet 系列 | XO 与 Extra',
+    description: '访问 Cognac Léopold Croizet 官方产品页面，包括 XO、XO Exception、Extra、Excellence 与 Héritage。',
   }],
   ['/la-matiere/', {
     title: 'Le fruit | Vignes et terroir Cognac Léopold Croizet',
@@ -743,7 +772,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     .lc-site-header .lc-nav a{display:block;padding:60px 0;margin:0 15px;color:#232323;border-bottom:2px solid #fff;font-size:.82rem;font-weight:400}
     .lc-site-header .lc-nav a:hover{text-decoration:none;border-bottom-color:#232323}
     .lc-main-plain{max-width:none;margin:0 auto;padding:122px clamp(18px,4vw,34px) 90px;overflow:hidden;background:linear-gradient(#dacdbc 0%,#f6f3ef 270px);position:relative}
-    .lc-paper-tear{position:absolute;top:0;left:0;width:100%;height:118px;object-fit:fill;object-position:top center;pointer-events:none;z-index:0;filter:brightness(0) invert(1);transform:scaleY(-1);transform-origin:center}
+    .lc-paper-tear{position:absolute;top:0;left:0;width:100%;height:118px;object-fit:fill;object-position:top center;pointer-events:none;z-index:0;filter:brightness(0) invert(1);transform:scale(-1,-1);transform-origin:center}
     .lc-page-title{position:relative;z-index:1;max-width:940px;margin:0 auto 60px;text-align:center}
     .lc-page-title .lc-eyebrow{color:var(--lc-gold)}
     .lc-page-title .lc-lead{color:var(--lc-muted)}
@@ -1240,6 +1269,10 @@ function hardenHtml(html, route, file) {
     .replace(/<link[^>]+rel=["']canonical["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '')
+    .replace(/<link[^>]+rel=["'](?:icon|apple-touch-icon|manifest)["'][^>]*>\s*/gi, '')
+    .replace(/<link[^>]+rel=["'][^"']*\b(?:icon|apple-touch-icon|manifest)\b[^"']*["'][^>]*>\s*/gi, '')
+    .replace(/<meta\s+name=["']msapplication-TileImage["'][^>]*>\s*/gi, '')
+    .replace(/<meta\s+name=["']theme-color["'][^>]*>\s*/gi, '')
     .replace(/<script\b[^>]*id=["']lc-language-router["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
     .replace(/<style\b[^>]*id=["']lc-price-guard-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '')
     .replace(/<meta\s+property=["']og:(?:type|title|description|url|image|locale)["'][^>]*>\s*/gi, '')
@@ -1258,6 +1291,7 @@ function hardenHtml(html, route, file) {
     `<meta name="msvalidate.01" content="${BING_SITE_VERIFICATION}">`,
     `<link rel="canonical" href="${canonical}">`,
     ...alternates,
+    ...brandIconTags(),
     `<meta property="og:type" content="${route.includes('/collection/') ? 'product' : 'website'}">`,
     `<meta property="og:locale" content="${localeForRoute(route)}">`,
     `<meta property="og:title" content="${escapeHtml(metadata.title)}">`,
@@ -1286,6 +1320,18 @@ function hardenHtml(html, route, file) {
   next = repairLanguageMenuLinks(next, route);
   next = injectFrenchFooterResourceLinks(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function brandIconTags() {
+  return [
+    '<link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48.png">',
+    '<link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96.png">',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/assets/brand/favicon-192.png">',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/apple-touch-icon.png">',
+    '<link rel="manifest" href="/site.webmanifest">',
+    '<meta name="theme-color" content="#0b0b0b">',
+    '<meta name="msapplication-TileImage" content="/assets/brand/favicon-192.png">',
+  ];
 }
 
 function injectFrenchFooterResourceLinks(html, route) {
@@ -2152,7 +2198,7 @@ function organizationSchema() {
     name: 'Cognac Léopold Croizet',
     alternateName: ['Maison Léopold Croizet', 'Maison Cognac Léopold Croizet', 'Léopold Croizet 干邑', '法国 Léopold Croizet 干邑酒庄'],
     url: PUBLIC_ORIGIN,
-    logo: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg`,
+    logo: `${PUBLIC_ORIGIN}${BRAND_ICON_PATH}`,
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/img_slider_footer_01.png`,
     knowsAbout: ['Cognac', 'Fins Bois', 'Pineau des Charentes', 'French spirits', '法国干邑', '干邑鸡尾酒'],
     email: 'cognac@mdpierre.com',
@@ -2178,11 +2224,16 @@ function webSiteSchema() {
     url: PUBLIC_ORIGIN,
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     inLanguage: ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'],
+    hasPart: keySearchResultPages().map((page) => ({
+      '@type': 'WebPage',
+      name: page.name,
+      url: `${PUBLIC_ORIGIN}${page.url}`,
+    })),
   };
 }
 
 function webPageSchema(route, metadata, image) {
-  return {
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': `${PUBLIC_ORIGIN}${route}#webpage`,
@@ -2194,6 +2245,19 @@ function webPageSchema(route, metadata, image) {
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     primaryImageOfPage: image ? { '@type': 'ImageObject', url: `${PUBLIC_ORIGIN}${image}` } : undefined,
   };
+  if (route === '/') {
+    schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
+  }
+  return schema;
+}
+
+function keySearchResultPages() {
+  return [
+    { name: 'Cognac Léopold Croizet XO', url: '/collection/xo/' },
+    { name: 'Cognac Léopold Croizet XO Exception', url: '/collection/xo-exception/' },
+    { name: 'Collection Cognac et Pineau Léopold Croizet', url: '/collection/' },
+    { name: 'Visite des chais Cognac Léopold Croizet', url: '/rencontre/' },
+  ];
 }
 
 function breadcrumbSchema(route) {
@@ -2341,6 +2405,7 @@ function lastmodForRoute(route) {
 
 function priorityForRoute(route) {
   if (isHomepage(route)) return '1.0';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/(?:xo|xo-exception)\/$/.test(route)) return '0.95';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/[^/]+\//.test(route)) return '0.9';
   if (publishedSourceRoutes.has(route)) return '0.8';
   if (route.includes('pierre-croizet-cocktails') || route.includes('rencontre')) return '0.8';
