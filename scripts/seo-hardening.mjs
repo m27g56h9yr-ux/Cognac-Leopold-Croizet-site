@@ -84,7 +84,7 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/05/img_diaporama_medailles_cwsa_gold_2021-180x274.png',
       width: 180,
       height: 274,
-      alt: 'Médaille CWSA 2021 - Cognac Léopold Croizet Napoléon',
+      alt: "Médaille d'or CWSA 2021 - Cognac Léopold Croizet Napoléon",
     },
   ]],
   ['xo', [
@@ -118,14 +118,14 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/05/img_diaporama_argent_2010-180x274.png',
       width: 180,
       height: 274,
-      alt: "Médaille d'argent Concours Général Agricole 2010 - Pineau des Charentes Léopold Croizet",
+      alt: "Médaille d'argent Concours Général Agricole 2010 - Pineau des Charentes blanc Léopold Croizet",
     },
     {
       href: 'https://resultats.concoursmondial.com/fr/resultats/2025/240534-pineau-des-charentes-esprit-organic-2011',
       src: 'https://img.concoursmondial.com/medals/web/cmb2025-silver-medal.png',
       width: 394,
       height: 369,
-      alt: "Médaille d'argent Concours Mondial de Bruxelles 2025 - Pineau des Charentes Léopold Croizet",
+      alt: "Médaille d'argent Concours Mondial de Bruxelles 2025 - Pineau des Charentes Esprit Organic 2011 Léopold Croizet",
     },
   ]],
 ]);
