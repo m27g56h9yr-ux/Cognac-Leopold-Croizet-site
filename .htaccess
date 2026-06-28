@@ -8,6 +8,9 @@ Options -Indexes
   # WordPress host. Browsers should retry the request on the correct vhost.
   RewriteCond %{HTTP_HOST} ^ancien\.cognac-leopold-croizet\.com$ [NC]
   RewriteRule ^ - [R=421,L]
+
+  # OVH sometimes misses the directory index for this newly created locale page.
+  RewriteRule ^zh/faq/?$ zh/faq/index.html [L]
 </IfModule>
 
 <IfModule mod_headers.c>
