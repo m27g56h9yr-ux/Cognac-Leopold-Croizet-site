@@ -16,8 +16,10 @@ const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
 const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((prefix) => (
   prefix === '/' ? `/${FILM_SLUG}/` : `${prefix}${FILM_SLUG}/`
 ));
+const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
+const FAQ_ROUTES = SITE_LANGUAGES.map((lang) => faqRouteForLang(lang));
 
-const publishedSourceRoutes = new Set(['/faq/', ...FILM_ROUTES]);
+const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES]);
 
 const faqEntries = [
   {
@@ -207,6 +209,250 @@ const faqEntries = [
   },
 ];
 
+const faqGroupKeyByFrench = {
+  Choisir: 'choose',
+  Servir: 'serve',
+  Visiter: 'visit',
+  Demander: 'ask',
+};
+
+const faqLocalizedEntries = {
+  en: [
+    { group: 'choose', question: 'What is cognac?', answer: 'Cognac is a wine spirit produced within the Cognac appellation area. It is made from white grapes, distilled, aged in oak casks, then blended before bottling.' },
+    { group: 'choose', question: 'Is cognac a whisky or a brandy?', answer: 'Cognac is not a whisky: it comes from grapes, while whisky comes from grain. It belongs to the brandy family, with its own origin, production rules and appellation in the Cognac region.' },
+    { group: 'choose', question: 'Where does Cognac Léopold Croizet come from?', answer: 'Cognac Léopold Croizet is rooted in Charente, around the family property in Triac-Lautrait. This local setting shapes the house spirit: a direct link to the Cognac region, ageing time and estate know-how.' },
+    { group: 'choose', question: 'Who invented cognac?', answer: 'Cognac does not have one single inventor. It gradually emerged in the Cognac region through wine trade, Charentais distillation, oak ageing and the craft of the houses.' },
+    { group: 'choose', question: 'How is cognac made?', answer: 'Cognac begins as a white wine intended for distillation. It is distilled in the Charentais tradition, aged in oak casks, then blended to seek balance between fruit, wood, structure and length.' },
+    { group: 'choose', question: 'Which grape varieties are used for cognac?', answer: 'The Cognac appellation relies on white grapes suited to distillation, with ugni blanc as the most common variety. At Léopold Croizet, the vineyard also includes colombard and folle blanche. For details on a specific cuvée, please contact the house.' },
+    { group: 'choose', question: 'Why does cognac age in oak casks?', answer: 'Oak ageing brings colour, structure and aromatic complexity. Wood, time and the cellar influence the spicy, woody, fruity or gourmand notes later found in the glass.' },
+    { group: 'choose', question: 'Why blend several eaux-de-vie?', answer: 'Blending creates a balanced and consistent style. The cellar master combines eaux-de-vie of different ages and profiles to build an aromatic signature, not just a sum of components.' },
+    { group: 'choose', question: 'Which bottle should I choose to discover the collection?', answer: 'The best choice depends on the occasion: discovery, gift, neat tasting, cocktail or celebration. The Collection page is the safest starting point for comparing cuvées, then the house can advise you according to the context.' },
+    { group: 'choose', question: 'What do VS, VSOP, Napoléon, XO, Extra and XXO mean?', answer: 'These mentions indicate the minimum age of the youngest eau-de-vie in the blend: VS from 2 years, VSOP from 4, Napoléon from 6, XO and Extra from 10, XXO from 14. They are useful markers, but style also depends on the blend.' },
+    { group: 'choose', question: 'What does cognac taste like?', answer: 'Taste varies with age, eaux-de-vie, casks and blending. You may find fruit, flowers, spice, wood, dried fruit, vanilla, cocoa or rancio in older cuvées.' },
+    { group: 'choose', question: 'Where can I find details for each cuvée?', answer: 'The Collection pages present the cuvées, visuals and main information. If you are choosing between bottles, the house can guide you according to the occasion, desired style and country for delivery or collection.' },
+    { group: 'choose', question: 'Why can a bottle be unavailable?', answer: 'Availability may depend on stock, country, packaging or distribution channel. To check a specific cuvée, contact the house with the bottle name and your country.' },
+    { group: 'choose', question: 'How do you pronounce Léopold Croizet?', answer: 'In writing, the house name is always used in full: Léopold Croizet. Spoken aloud, it is pronounced as a French name; if you are preparing a visit, presentation or professional use, the team can help you say it naturally.' },
+    { group: 'serve', question: 'How should cognac be served neat?', answer: 'Serve a small measure at room temperature in a tulip glass or slightly closed stem glass. Observe the colour, approach the glass gradually, then taste slowly. Avoid warming the glass too much, as heat can make alcohol dominate the aromas.' },
+    { group: 'serve', question: 'How should a bottle of cognac be stored?', answer: 'Once bottled, cognac no longer ages as it does in cask. Store the bottle upright, well closed, in a dry, dark place at a stable temperature, away from sunlight and heat. After opening, limit contact with air.' },
+    { group: 'serve', question: 'Can cognac expire?', answer: 'A closed bottle stored correctly does not expire like a fresh product. After opening, quality can evolve if the bottle remains exposed to air, light or heat for a long time.' },
+    { group: 'serve', question: 'Should cognac be kept in the refrigerator?', answer: 'It is not necessary for neat tasting. Room temperature in a suitable glass remains the clearest service. For cocktails and long drinks, freshness comes from ice, the glass or the ingredients.' },
+    { group: 'serve', question: 'Can cognac be served on ice?', answer: 'Yes, depending on the style you want. Ice cools the drink and softens the perception of alcohol, but it gradually dilutes the cognac. For tasting cuvées, start neat and adjust if needed.' },
+    { group: 'serve', question: 'Can Cognac Léopold Croizet be served in cocktails?', answer: 'Yes, some cuvées can work in cocktails when the recipe respects the balance of the cognac. The house recipes on the site give good foundations for freshness, precision and responsible enjoyment.' },
+    { group: 'serve', question: 'Which simple mixers work with cognac?', answer: 'For a simple serve, cognac can pair with ginger ale, tonic, sparkling water or citrus, depending on the cuvée and style desired. Start with few ingredients so the cognac can still speak.' },
+    { group: 'serve', question: 'Which cocktail is best for a first discovery?', answer: 'A simple long drink with cognac, ice, quality ginger ale and a citrus zest is an easy way to discover cognac in cocktails without masking it. You can also consult the house recipes on the site.' },
+    { group: 'serve', question: 'What food pairs with cognac?', answer: 'Pairings depend on the cuvée and its intensity. Dark chocolate, lightly sweet desserts, dried fruit, coffee or some cheeses can accompany cognac when the aromatic balance is preserved.' },
+    { group: 'serve', question: 'Does cognac contain gluten or allergens?', answer: 'Cognac is made from grapes, not grain. In case of strong allergy, particular sensitivity or strict medical diet, contact the house with the cuvée concerned before consumption.' },
+    { group: 'serve', question: 'Which nutritional information should I check?', answer: 'Alcohol strength, volume and regulatory statements appear on the bottle label. For a more precise nutritional request or a market-specific question, contact the house with the cuvée name.' },
+    { group: 'serve', question: 'Is cognac vegan, kosher or certified?', answer: 'For any certification request, such as vegan, kosher or other status, the safest approach is to contact the house with the cuvée and country concerned. You will receive an answer adapted to your need.' },
+    { group: 'visit', question: 'Can the house be visited in Triac-Lautrait?', answer: 'Visits are prepared by appointment in Triac-Lautrait, Charente. The Visit page lets you contact the house and prepare your visit in the best conditions.' },
+    { group: 'visit', question: 'How do I book a visit?', answer: 'Send a request with the number of visitors, preferred date, welcome language, any specific constraints and your contact details. Wait for confirmation from the house before organising your journey.' },
+    { group: 'visit', question: 'Should I book in advance and what should I prepare?', answer: 'Yes, it is preferable to book in advance. Prepare the number of visitors, desired time slot, access needs, any non-drinkers and a responsible return plan after tasting.' },
+    { group: 'visit', question: 'Where is the house located?', answer: 'The house is in Triac-Lautrait, Charente, at the address shown on the Visit page. You will also find practical access information there.' },
+    { group: 'visit', question: 'What are the visit days, times and conditions?', answer: 'Times and conditions may vary by season and availability. Before travelling, contact the house to confirm the time slot, group size and tasting arrangements.' },
+    { group: 'ask', question: 'Where can I buy or collect a bottle?', answer: 'Availability depends on the country, cuvée and distribution channel. For collection in Triac-Lautrait or a purchase request, contact the house to check the bottle and possible timing.' },
+    { group: 'ask', question: 'How can I contact the house?', answer: 'For a question, visit, product information or collection, use the official contact details on the site. You can write to cognac@mdpierre.com or call +33 5 45 35 88 10.' },
+    { group: 'ask', question: 'What should I include in a professional request?', answer: 'Please include your name, company, country, activity, type of need, volumes or formats sought and contact details. Import, distribution, hospitality, restaurant and wine-merchant requests are handled directly by the house.' },
+    { group: 'ask', question: 'Does the house buy or value old bottles?', answer: 'For an old bottle, send clear photos of the bottle, fill level, label, capsule and, if possible, any known history. The house can tell you whether an answer is possible, without guaranteeing a valuation or purchase.' },
+    { group: 'ask', question: 'Which formats or packaging are available for professionals?', answer: 'Professional formats, gift boxes, cases and availability vary by cuvée and market. A precise request helps the house answer with information suited to your activity.' },
+    { group: 'ask', question: 'Where can I follow house news?', answer: 'You can follow house news on the official site and the social networks indicated by Cognac Léopold Croizet. The site footer is the best reference point for up-to-date links.' },
+  ],
+  ru: [
+    { group: 'choose', question: 'Что такое cognac?', answer: 'Cognac — это винный дистиллят, произведенный в зоне аппелласьона Cognac. Его делают из белого винограда, дистиллируют, выдерживают в дубовых бочках, затем ассамблируют и разливают по бутылкам.' },
+    { group: 'choose', question: 'Cognac — это whisky или brandy?', answer: 'Cognac — не whisky: он происходит из винограда, а whisky — из зерна. Он относится к семье brandy, но имеет собственное происхождение, правила производства и аппелласьон региона Cognac.' },
+    { group: 'choose', question: 'Откуда происходит Cognac Léopold Croizet?', answer: 'Cognac Léopold Croizet связан с Шарантой и семейным владением в Triac-Lautrait. Это место формирует дух дома: связь с землей Cognac, временем выдержки и мастерством поместья.' },
+    { group: 'choose', question: 'Кто изобрел cognac?', answer: 'У cognac нет одного изобретателя. Он постепенно сложился в регионе Cognac благодаря торговле вином, шарантской дистилляции, выдержке в дубе и мастерству домов.' },
+    { group: 'choose', question: 'Как производится cognac?', answer: 'Cognac начинается с белого вина, предназначенного для дистилляции. Затем его дистиллируют по шарантской традиции, выдерживают в дубовых бочках и ассамблируют ради баланса фруктов, дерева, структуры и длины.' },
+    { group: 'choose', question: 'Какие сорта винограда используют для cognac?', answer: 'Аппелласьон Cognac опирается на белые сорта, подходящие для дистилляции; самый распространенный — ugni blanc. В хозяйстве Léopold Croizet также выращивают colombard и folle blanche. Для точной информации по кюве свяжитесь с домом.' },
+    { group: 'choose', question: 'Почему cognac выдерживают в дубовых бочках?', answer: 'Выдержка в дубе дает цвет, структуру и ароматическую сложность. Дерево, время и погреб влияют на пряные, древесные, фруктовые или гурманские ноты в дегустации.' },
+    { group: 'choose', question: 'Зачем ассамблировать несколько eaux-de-vie?', answer: 'Ассамбляж создает сбалансированный и узнаваемый стиль. Мастер погреба соединяет eaux-de-vie разного возраста и профиля, чтобы построить ароматическую подпись дома.' },
+    { group: 'choose', question: 'Какую бутылку выбрать для знакомства с коллекцией?', answer: 'Выбор зависит от цели: первое знакомство, подарок, дегустация в чистом виде, коктейль или особый случай. Страница Collection помогает сравнить кюве, а дом может дать совет по ситуации.' },
+    { group: 'choose', question: 'Что означают VS, VSOP, Napoléon, XO, Extra и XXO?', answer: 'Эти обозначения показывают минимальный возраст самой молодой eau-de-vie в ассамбляже: VS от 2 лет, VSOP от 4, Napoléon от 6, XO и Extra от 10, XXO от 14. Это ориентир, но стиль зависит и от ассамбляжа.' },
+    { group: 'choose', question: 'Каков вкус cognac?', answer: 'Вкус зависит от возраста, eaux-de-vie, бочек и ассамбляжа. Можно встретить ноты фруктов, цветов, специй, дерева, сухофруктов, ванили, какао или rancio в более старых кюве.' },
+    { group: 'choose', question: 'Где найти детали каждого кюве?', answer: 'Страницы Collection представляют кюве, их визуалы и основную информацию. Если вы выбираете между несколькими бутылками, дом поможет с учетом случая, стиля и страны доставки или самовывоза.' },
+    { group: 'choose', question: 'Почему бутылка может быть недоступна?', answer: 'Доступность зависит от запаса, страны, упаковки или канала продаж. Чтобы проверить конкретное кюве, сообщите дому название бутылки и вашу страну.' },
+    { group: 'choose', question: 'Как произносится Léopold Croizet?', answer: 'В письменном виде название дома всегда используется полностью: Léopold Croizet. В устной речи это французское имя; для визита, презентации или профессионального использования команда поможет произнести его естественно.' },
+    { group: 'serve', question: 'Как подавать cognac в чистом виде?', answer: 'Налейте небольшое количество при комнатной температуре в бокал-тюльпан или слегка закрытый бокал на ножке. Посмотрите цвет, постепенно поднесите бокал к носу и дегустируйте медленно. Не перегревайте бокал.' },
+    { group: 'serve', question: 'Как хранить бутылку cognac?', answer: 'После розлива cognac уже не стареет как в бочке. Храните бутылку вертикально, плотно закрытой, в сухом, темном месте со стабильной температурой, вдали от солнца и тепла. После открытия ограничивайте контакт с воздухом.' },
+    { group: 'serve', question: 'Может ли cognac испортиться?', answer: 'Закрытая бутылка при правильном хранении не портится как свежий продукт. После открытия качество может изменяться, если бутылка долго находится под воздействием воздуха, света или тепла.' },
+    { group: 'serve', question: 'Нужно ли ставить cognac в холодильник?', answer: 'Для дегустации в чистом виде это не нужно. Комнатная температура и подходящий бокал дают самый ясный результат. В коктейле свежесть обеспечивают лед, бокал или ингредиенты.' },
+    { group: 'serve', question: 'Можно ли подавать cognac со льдом?', answer: 'Да, если это соответствует желаемому стилю. Лед охлаждает и смягчает восприятие алкоголя, но постепенно разбавляет cognac. Дегустационные кюве лучше сначала попробовать чистыми.' },
+    { group: 'serve', question: 'Можно ли использовать Cognac Léopold Croizet в коктейлях?', answer: 'Да, некоторые кюве подходят для коктейлей, если рецепт сохраняет баланс cognac. Домашние рецепты на сайте дают хорошую основу для свежести, точности и ответственного потребления.' },
+    { group: 'serve', question: 'Какие простые миксы подходят к cognac?', answer: 'Для простой подачи cognac можно сочетать с ginger ale, tonic, газированной водой или цитрусами, в зависимости от кюве и желаемого стиля. Начинайте с малого числа ингредиентов.' },
+    { group: 'serve', question: 'Какой коктейль выбрать для начала?', answer: 'Простой long drink с cognac, льдом, качественным ginger ale и цитрусовой цедрой позволяет открыть cognac в коктейле, не скрывая его. Можно также посмотреть рецепты дома на сайте.' },
+    { group: 'serve', question: 'С чем сочетать cognac?', answer: 'Сочетания зависят от кюве и его интенсивности. Темный шоколад, не слишком сладкие десерты, сухофрукты, кофе или некоторые сыры могут сопровождать cognac при сохранении ароматического баланса.' },
+    { group: 'serve', question: 'Содержит ли cognac глютен или аллергены?', answer: 'Cognac производится из винограда, а не из зерна. При сильной аллергии, особой чувствительности или строгой медицинской диете свяжитесь с домом по конкретному кюве до употребления.' },
+    { group: 'serve', question: 'Какие пищевые сведения проверить?', answer: 'Крепость, объем и обязательные указания находятся на этикетке бутылки. Для более точного пищевого запроса или вопроса по рынку свяжитесь с домом, указав название кюве.' },
+    { group: 'serve', question: 'Cognac является vegan, kosher или сертифицированным?', answer: 'Для любого вопроса о сертификации, например vegan, kosher или другой, лучше связаться с домом, указав кюве и страну. Вы получите ответ, подходящий к вашему запросу.' },
+    { group: 'visit', question: 'Можно ли посетить дом в Triac-Lautrait?', answer: 'Визиты готовятся по предварительной записи в Triac-Lautrait, Charente. Страница Visit позволяет связаться с домом и подготовить приезд в лучших условиях.' },
+    { group: 'visit', question: 'Как забронировать визит?', answer: 'Отправьте запрос с числом гостей, желаемой датой, языком приема, особыми ограничениями и контактами. Дождитесь подтверждения дома перед организацией поездки.' },
+    { group: 'visit', question: 'Нужно ли бронировать заранее и что подготовить?', answer: 'Да, лучше бронировать заранее. Подготовьте число гостей, желаемое время, вопросы доступа, наличие гостей без дегустации алкоголя и ответственный способ возвращения после дегустации.' },
+    { group: 'visit', question: 'Где находится дом для визита?', answer: 'Дом находится в Triac-Lautrait, Charente, по адресу, указанному на странице Visit. Там же есть практическая информация для подготовки маршрута.' },
+    { group: 'visit', question: 'Какие дни, часы и условия визита?', answer: 'Часы и условия могут меняться по сезону и доступности. Перед поездкой свяжитесь с домом, чтобы подтвердить время, размер группы и условия дегустации.' },
+    { group: 'ask', question: 'Где купить или забрать бутылку?', answer: 'Доступность зависит от страны, кюве и канала продаж. Для самовывоза в Triac-Lautrait или запроса покупки свяжитесь с домом, чтобы проверить бутылку и возможное время.' },
+    { group: 'ask', question: 'Как связаться с домом?', answer: 'Для вопроса, визита, информации о продукте или самовывоза используйте официальные контакты сайта. Можно написать на cognac@mdpierre.com или позвонить +33 5 45 35 88 10.' },
+    { group: 'ask', question: 'Что указать в профессиональном запросе?', answer: 'Укажите имя, компанию, страну, деятельность, тип потребности, желаемые объемы или форматы и контакты. Запросы импорта, дистрибуции, отелей, ресторанов и cavistes рассматриваются напрямую домом.' },
+    { group: 'ask', question: 'Покупает ли дом или оценивает старые бутылки?', answer: 'Для старой бутылки отправьте четкие фото бутылки, уровня, этикетки, капсулы и, если возможно, известную историю. Дом сообщит, возможен ли ответ, без гарантии оценки или выкупа.' },
+    { group: 'ask', question: 'Какие форматы или упаковки доступны профессионалам?', answer: 'Профессиональные форматы, подарочные коробки, ящики и наличие зависят от кюве и рынка. Точный запрос помогает дому ответить информацией, соответствующей вашей деятельности.' },
+    { group: 'ask', question: 'Где следить за новостями дома?', answer: 'Следить за новостями можно на официальном сайте и в социальных сетях, указанных Cognac Léopold Croizet. Нижний раздел сайта остается лучшей точкой для актуальных ссылок.' },
+  ],
+  da: [
+    { group: 'choose', question: 'Hvad er cognac?', answer: 'Cognac er en eau-de-vie af vin, produceret i Cognac-appellationen. Den fremstilles af hvide druer, destilleres, lagres på egetræsfade og blandes derefter før aftapning.' },
+    { group: 'choose', question: 'Er cognac en whisky eller en brandy?', answer: 'Cognac er ikke whisky: den kommer fra druer, mens whisky kommer fra korn. Den hører til brandy-familien, men har sin egen oprindelse, sine regler og sin appellation i Cognac-regionen.' },
+    { group: 'choose', question: 'Hvor kommer Cognac Léopold Croizet fra?', answer: 'Cognac Léopold Croizet er forankret i Charente omkring familiens ejendom i Triac-Lautrait. Stedet præger husets ånd: forbindelsen til Cognac-området, den lange lagring og håndværket på ejendommen.' },
+    { group: 'choose', question: 'Hvem opfandt cognac?', answer: 'Cognac har ikke én opfinder. Den voksede gradvist frem i Cognac-regionen gennem vinhandel, charentais-destillation, lagring på fade og husenes håndværk.' },
+    { group: 'choose', question: 'Hvordan fremstilles cognac?', answer: 'Cognac begynder som en hvidvin til destillation. Den destilleres efter charentais-traditionen, lagres på egetræsfade og blandes for at søge balance mellem frugt, træ, struktur og længde.' },
+    { group: 'choose', question: 'Hvilke druesorter bruges til cognac?', answer: 'Cognac-appellationen bygger på hvide druer, der egner sig til destillation, især ugni blanc. Hos Léopold Croizet dyrkes også colombard og folle blanche. Kontakt huset for præcis information om en cuvée.' },
+    { group: 'choose', question: 'Hvorfor lagrer cognac på egetræsfade?', answer: 'Lagring på egetræ giver farve, struktur og aromatisk kompleksitet. Træ, tid og kælder påvirker krydrede, træagtige, frugtige eller gourmand-noter i smagningen.' },
+    { group: 'choose', question: 'Hvorfor blande flere eaux-de-vie?', answer: 'Blanding skaber en balanceret og sammenhængende stil. Kældermesteren kombinerer eaux-de-vie med forskellig alder og profil for at bygge en aromatisk signatur.' },
+    { group: 'choose', question: 'Hvilken flaske skal jeg vælge for at opdage kollektionen?', answer: 'Valget afhænger af brugen: første smagning, gave, ren degustation, cocktail eller særlig anledning. Collection-siden er det bedste udgangspunkt, og huset kan rådgive efter situationen.' },
+    { group: 'choose', question: 'Hvad betyder VS, VSOP, Napoléon, XO, Extra og XXO?', answer: 'Betegnelserne angiver minimumsalderen på den yngste eau-de-vie i blandingen: VS fra 2 år, VSOP fra 4, Napoléon fra 6, XO og Extra fra 10, XXO fra 14. Stilen afhænger dog også af blandingen.' },
+    { group: 'choose', question: 'Hvordan smager cognac?', answer: 'Smagen varierer efter alder, eaux-de-vie, fade og blanding. Man kan finde frugt, blomster, krydderier, træ, tørret frugt, vanilje, kakao eller rancio i ældre cuvéer.' },
+    { group: 'choose', question: 'Hvor finder jeg detaljer om hver cuvée?', answer: 'Collection-siderne viser cuvéer, billeder og hovedinformation. Hvis du tøver mellem flere flasker, kan huset vejlede efter anledning, ønsket stil og land for levering eller afhentning.' },
+    { group: 'choose', question: 'Hvorfor kan en flaske være utilgængelig?', answer: 'Tilgængelighed kan afhænge af lager, land, emballage eller salgskanal. Kontakt huset med flaske og land for at kende situationen for en bestemt cuvée.' },
+    { group: 'choose', question: 'Hvordan udtales Léopold Croizet?', answer: 'På skrift bruges husets navn altid fuldt: Léopold Croizet. Mundtligt udtales det som et fransk navn; teamet kan hjælpe, hvis du forbereder et besøg, en præsentation eller professionel brug.' },
+    { group: 'serve', question: 'Hvordan serveres cognac rent?', answer: 'Server en lille mængde ved stuetemperatur i et tulipanformet glas eller et let lukket vinglas. Se farven, før glasset langsomt mod næsen, og smag roligt. Undgå at varme glasset for meget.' },
+    { group: 'serve', question: 'Hvordan opbevarer man en flaske cognac?', answer: 'Efter aftapning lagrer cognac ikke længere som på fad. Opbevar flasken stående, godt lukket, tørt, mørkt og ved stabil temperatur, væk fra sol og varme. Efter åbning bør kontakten med luft begrænses.' },
+    { group: 'serve', question: 'Kan cognac blive for gammel?', answer: 'En lukket flaske, der opbevares korrekt, udløber ikke som en friskvare. Efter åbning kan kvaliteten ændre sig, hvis flasken længe udsættes for luft, lys eller varme.' },
+    { group: 'serve', question: 'Skal cognac i køleskabet?', answer: 'Det er ikke nødvendigt til ren smagning. Stuetemperatur og et passende glas giver det tydeligste udtryk. I cocktails kommer friskheden fra is, glas eller ingredienser.' },
+    { group: 'serve', question: 'Kan cognac serveres med is?', answer: 'Ja, afhængigt af den ønskede stil. Is køler og blødgør alkoholoplevelsen, men fortynder gradvist cognacen. Smagecuvéer bør helst prøves rene først.' },
+    { group: 'serve', question: 'Kan Cognac Léopold Croizet bruges i cocktails?', answer: 'Ja, nogle cuvéer kan bruges i cocktails, når opskriften respekterer cognacens balance. Husets opskrifter på siden giver gode baser med friskhed, præcision og ansvarlig nydelse.' },
+    { group: 'serve', question: 'Hvilke enkle miks passer til cognac?', answer: 'Til en enkel servering kan cognac kombineres med ginger ale, tonic, danskvand eller citrus, alt efter cuvée og ønsket stil. Begynd med få ingredienser.' },
+    { group: 'serve', question: 'Hvilken cocktail er god at begynde med?', answer: 'En enkel long drink med cognac, is, god ginger ale og citrusskal gør det let at opdage cognac i cocktail uden at skjule den. Se også husets opskrifter på siden.' },
+    { group: 'serve', question: 'Hvad passer til cognac?', answer: 'Madparringer afhænger af cuvée og intensitet. Mørk chokolade, let søde desserter, tørret frugt, kaffe eller visse oste kan ledsage cognac, når balancen bevares.' },
+    { group: 'serve', question: 'Indeholder cognac gluten eller allergener?', answer: 'Cognac fremstilles af druer, ikke korn. Ved stærk allergi, særlig følsomhed eller streng medicinsk diæt bør huset kontaktes med den pågældende cuvée før indtagelse.' },
+    { group: 'serve', question: 'Hvilke ernæringsoplysninger skal jeg kontrollere?', answer: 'Alkoholstyrke, indhold og lovpligtige oplysninger står på etiketten. For en mere præcis ernæringsforespørgsel eller et markedsspecifikt spørgsmål kontaktes huset med cuvéens navn.' },
+    { group: 'serve', question: 'Er cognac vegansk, kosher eller certificeret?', answer: 'For spørgsmål om certificering, for eksempel vegansk, kosher eller andet, er det bedst at kontakte huset med cuvée og land. Så får du et svar tilpasset dit behov.' },
+    { group: 'visit', question: 'Kan man besøge huset i Triac-Lautrait?', answer: 'Besøg forberedes efter aftale i Triac-Lautrait i Charente. Visit-siden gør det muligt at kontakte huset og planlægge besøget under gode forhold.' },
+    { group: 'visit', question: 'Hvordan reserverer jeg et besøg?', answer: 'Send en forespørgsel med antal besøgende, ønsket dato, sprog, særlige behov og kontaktoplysninger. Vent på bekræftelse fra huset, før du organiserer rejsen.' },
+    { group: 'visit', question: 'Skal man reservere på forhånd, og hvad skal forberedes?', answer: 'Ja, det er bedst at reservere på forhånd. Forbered antal gæster, ønsket tidspunkt, adgangsbehov, personer der ikke smager alkohol, og ansvarlig hjemtransport efter smagningen.' },
+    { group: 'visit', question: 'Hvor ligger huset?', answer: 'Huset ligger i Triac-Lautrait i Charente på adressen angivet på Visit-siden. Der finder du også praktiske adgangsoplysninger.' },
+    { group: 'visit', question: 'Hvilke dage, tider og betingelser gælder for besøg?', answer: 'Tider og betingelser kan variere efter periode og tilgængelighed. Kontakt huset før afrejse for at bekræfte tidspunkt, gruppestørrelse og smagningsforhold.' },
+    { group: 'ask', question: 'Hvor kan jeg købe eller afhente en flaske?', answer: 'Tilgængelighed afhænger af land, cuvée og salgskanal. For afhentning i Triac-Lautrait eller købskontakt skal huset kontaktes for at kontrollere flaske og muligt tidspunkt.' },
+    { group: 'ask', question: 'Hvordan kontakter jeg huset?', answer: 'Til spørgsmål, besøg, produktinformation eller afhentning bruges de officielle kontaktoplysninger på siden. Du kan skrive til cognac@mdpierre.com eller ringe på +33 5 45 35 88 10.' },
+    { group: 'ask', question: 'Hvad skal en professionel forespørgsel indeholde?', answer: 'Angiv navn, virksomhed, land, aktivitet, behovstype, ønskede mængder eller formater og kontaktoplysninger. Import, distribution, hotel, restaurant og vinhandel behandles direkte af huset.' },
+    { group: 'ask', question: 'Køber eller vurderer huset gamle flasker?', answer: 'For en gammel flaske send klare fotos af flasken, niveauet, etiketten, kapslen og eventuel kendt historie. Huset kan fortælle, om et svar er muligt, uden garanti for vurdering eller køb.' },
+    { group: 'ask', question: 'Hvilke formater eller emballager findes for professionelle?', answer: 'Professionelle formater, gaveæsker, kasser og tilgængelighed varierer efter cuvée og marked. En præcis forespørgsel hjælper huset med at svare relevant.' },
+    { group: 'ask', question: 'Hvor kan jeg følge husets nyheder?', answer: 'Du kan følge husets nyheder på den officielle hjemmeside og de sociale netværk, som Cognac Léopold Croizet angiver. Sidens sidefod er det bedste sted for opdaterede links.' },
+  ],
+  sv: [
+    { group: 'choose', question: 'Vad är cognac?', answer: 'Cognac är en vinsprit som produceras inom Cognac-appellationen. Den görs av vita druvor, destilleras, lagras på ekfat och blandas sedan före buteljering.' },
+    { group: 'choose', question: 'Är cognac whisky eller brandy?', answer: 'Cognac är inte whisky: den kommer från druvor, medan whisky kommer från spannmål. Den hör till brandy-familjen men har eget ursprung, egna regler och egen appellation i Cognac-regionen.' },
+    { group: 'choose', question: 'Varifrån kommer Cognac Léopold Croizet?', answer: 'Cognac Léopold Croizet är förankrat i Charente kring familjens egendom i Triac-Lautrait. Platsen formar husets själ: kopplingen till Cognac-området, lagringstiden och hantverket på egendomen.' },
+    { group: 'choose', question: 'Vem uppfann cognac?', answer: 'Cognac har ingen enskild uppfinnare. Den växte gradvis fram i Cognac-regionen genom vinhandel, charentais-destillation, ekfatslagring och husens hantverk.' },
+    { group: 'choose', question: 'Hur tillverkas cognac?', answer: 'Cognac börjar som ett vitt vin avsett för destillation. Det destilleras enligt charentais-traditionen, lagras på ekfat och blandas för balans mellan frukt, trä, struktur och längd.' },
+    { group: 'choose', question: 'Vilka druvsorter används för cognac?', answer: 'Cognac-appellationen bygger på vita druvor som lämpar sig för destillation, främst ugni blanc. Hos Léopold Croizet odlas även colombard och folle blanche. Kontakta huset för exakt information om en cuvée.' },
+    { group: 'choose', question: 'Varför lagras cognac på ekfat?', answer: 'Ekfatslagring ger färg, struktur och aromatisk komplexitet. Trä, tid och källare påverkar kryddiga, träiga, fruktiga eller gourmand-toner i glaset.' },
+    { group: 'choose', question: 'Varför blanda flera eaux-de-vie?', answer: 'Blandning skapar en balanserad och konsekvent stil. Källarmästaren kombinerar eaux-de-vie med olika ålder och profil för att bygga en aromatisk signatur.' },
+    { group: 'choose', question: 'Vilken flaska ska jag välja för att upptäcka kollektionen?', answer: 'Valet beror på användningen: första upptäckt, gåva, ren provning, cocktail eller stor anledning. Collection-sidan är bästa startpunkt, och huset kan ge råd efter sammanhanget.' },
+    { group: 'choose', question: 'Vad betyder VS, VSOP, Napoléon, XO, Extra och XXO?', answer: 'Beteckningarna anger minimiåldern för den yngsta eau-de-vie i blandningen: VS från 2 år, VSOP från 4, Napoléon från 6, XO och Extra från 10, XXO från 14. Stilen beror också på blandningen.' },
+    { group: 'choose', question: 'Hur smakar cognac?', answer: 'Smaken varierar med ålder, eaux-de-vie, fat och blandning. Man kan hitta frukt, blommor, kryddor, trä, torkad frukt, vanilj, kakao eller rancio i äldre cuvéer.' },
+    { group: 'choose', question: 'Var hittar jag detaljer om varje cuvée?', answer: 'Collection-sidorna visar cuvéer, bilder och huvudinformation. Om du väljer mellan flaskor kan huset vägleda efter tillfälle, önskad stil och land för leverans eller upphämtning.' },
+    { group: 'choose', question: 'Varför kan en flaska vara otillgänglig?', answer: 'Tillgänglighet kan bero på lager, land, förpackning eller försäljningskanal. Kontakta huset med flaska och land för att kontrollera en viss cuvée.' },
+    { group: 'choose', question: 'Hur uttalas Léopold Croizet?', answer: 'I skrift används husets namn alltid fullt ut: Léopold Croizet. Muntligt uttalas det som ett franskt namn; teamet kan hjälpa vid besök, presentation eller professionellt bruk.' },
+    { group: 'serve', question: 'Hur serveras cognac ren?', answer: 'Servera en liten mängd vid rumstemperatur i ett tulpanformat glas eller ett lätt slutet glas på fot. Se färgen, närma glaset gradvis till näsan och smaka långsamt. Värm inte glaset för mycket.' },
+    { group: 'serve', question: 'Hur förvaras en flaska cognac?', answer: 'Efter buteljering åldras cognac inte längre som på fat. Förvara flaskan stående, väl stängd, torrt, mörkt och vid stabil temperatur, borta från sol och värme. Efter öppning bör kontakten med luft begränsas.' },
+    { group: 'serve', question: 'Kan cognac bli gammal?', answer: 'En stängd flaska som förvaras korrekt går inte ut som en färskvara. Efter öppning kan kvaliteten förändras om flaskan länge utsätts för luft, ljus eller värme.' },
+    { group: 'serve', question: 'Ska cognac stå i kylskåp?', answer: 'Det behövs inte för ren provning. Rumstemperatur och rätt glas ger tydligast uttryck. I cocktails kommer friskheten från is, glas eller ingredienser.' },
+    { group: 'serve', question: 'Kan cognac serveras med is?', answer: 'Ja, beroende på önskad stil. Is kyler och mjukar upp alkoholkänslan, men späder gradvis ut cognacen. Provningscuvéer bör helst testas rena först.' },
+    { group: 'serve', question: 'Kan Cognac Léopold Croizet användas i cocktails?', answer: 'Ja, vissa cuvéer fungerar i cocktails när receptet respekterar cognacens balans. Husets recept på sidan ger bra grunder för fräschör, precision och ansvarsfull njutning.' },
+    { group: 'serve', question: 'Vilka enkla mixers fungerar med cognac?', answer: 'För en enkel servering kan cognac kombineras med ginger ale, tonic, mineralvatten eller citrus, beroende på cuvée och stil. Börja med få ingredienser.' },
+    { group: 'serve', question: 'Vilken cocktail passar för nybörjare?', answer: 'En enkel long drink med cognac, is, bra ginger ale och citrusskal gör det lätt att upptäcka cognac i cocktail utan att dölja den. Se även husets recept på sidan.' },
+    { group: 'serve', question: 'Vad passar till cognac?', answer: 'Matparningar beror på cuvée och intensitet. Mörk choklad, lätt söta desserter, torkad frukt, kaffe eller vissa ostar kan passa till cognac när balansen bevaras.' },
+    { group: 'serve', question: 'Innehåller cognac gluten eller allergener?', answer: 'Cognac görs av druvor, inte spannmål. Vid stark allergi, särskild känslighet eller strikt medicinsk diet bör huset kontaktas med aktuell cuvée före konsumtion.' },
+    { group: 'serve', question: 'Vilken näringsinformation ska jag kontrollera?', answer: 'Alkoholhalt, volym och obligatoriska uppgifter finns på etiketten. För en mer exakt näringsfråga eller marknadsspecifik fråga, kontakta huset med cuvéens namn.' },
+    { group: 'serve', question: 'Är cognac vegansk, kosher eller certifierad?', answer: 'För frågor om certifiering, till exempel vegansk, kosher eller annan status, är det bäst att kontakta huset med cuvée och land. Du får då ett svar anpassat till ditt behov.' },
+    { group: 'visit', question: 'Kan man besöka huset i Triac-Lautrait?', answer: 'Besök planeras efter tidsbokning i Triac-Lautrait i Charente. Visit-sidan låter dig kontakta huset och förbereda besöket under goda förhållanden.' },
+    { group: 'visit', question: 'Hur bokar jag ett besök?', answer: 'Skicka en förfrågan med antal besökare, önskat datum, språk, särskilda behov och kontaktuppgifter. Vänta på bekräftelse från huset innan du organiserar resan.' },
+    { group: 'visit', question: 'Måste man boka i förväg och vad ska förberedas?', answer: 'Ja, det är bäst att boka i förväg. Förbered antal gäster, önskad tid, tillgänglighetsbehov, personer som inte dricker alkohol och ansvarig hemresa efter provningen.' },
+    { group: 'visit', question: 'Var ligger huset?', answer: 'Huset ligger i Triac-Lautrait i Charente, på adressen som anges på Visit-sidan. Där finns också praktisk information för resan.' },
+    { group: 'visit', question: 'Vilka dagar, tider och villkor gäller för besök?', answer: 'Tider och villkor kan variera med säsong och tillgänglighet. Kontakta huset före resan för att bekräfta tid, gruppstorlek och provningsupplägg.' },
+    { group: 'ask', question: 'Var kan jag köpa eller hämta en flaska?', answer: 'Tillgänglighet beror på land, cuvée och försäljningskanal. För upphämtning i Triac-Lautrait eller köpfråga, kontakta huset för att kontrollera flaska och möjlig tid.' },
+    { group: 'ask', question: 'Hur kontaktar jag huset?', answer: 'För frågor, besök, produktinformation eller upphämtning använder du sidans officiella kontaktuppgifter. Du kan skriva till cognac@mdpierre.com eller ringa +33 5 45 35 88 10.' },
+    { group: 'ask', question: 'Vad ska en professionell förfrågan innehålla?', answer: 'Ange namn, företag, land, verksamhet, behovstyp, önskade volymer eller format och kontaktuppgifter. Import, distribution, hotell, restaurang och vinhandel hanteras direkt av huset.' },
+    { group: 'ask', question: 'Köper eller värderar huset gamla flaskor?', answer: 'För en gammal flaska, skicka tydliga foton av flaska, nivå, etikett, kapsyl och eventuell känd historik. Huset kan säga om ett svar är möjligt, utan garanti för värdering eller köp.' },
+    { group: 'ask', question: 'Vilka format eller förpackningar finns för professionella?', answer: 'Professionella format, presentaskar, lådor och tillgänglighet varierar med cuvée och marknad. En tydlig förfrågan hjälper huset att ge relevant information.' },
+    { group: 'ask', question: 'Var kan jag följa husets nyheter?', answer: 'Du kan följa husets nyheter på den officiella webbplatsen och de sociala nätverk som anges av Cognac Léopold Croizet. Sidfoten är bästa platsen för aktuella länkar.' },
+  ],
+  no: [
+    { group: 'choose', question: 'Hva er cognac?', answer: 'Cognac er en eau-de-vie av vin produsert i Cognac-appellasjonen. Den lages av hvite druer, destilleres, lagres på eikefat og blandes før tapping.' },
+    { group: 'choose', question: 'Er cognac whisky eller brandy?', answer: 'Cognac er ikke whisky: den kommer fra druer, mens whisky kommer fra korn. Den hører til brandy-familien, men har egen opprinnelse, egne produksjonsregler og egen appellasjon i Cognac-regionen.' },
+    { group: 'choose', question: 'Hvor kommer Cognac Léopold Croizet fra?', answer: 'Cognac Léopold Croizet er forankret i Charente rundt familiens eiendom i Triac-Lautrait. Dette stedet preger husets ånd: forbindelsen til Cognac-området, lagringstiden og håndverket på eiendommen.' },
+    { group: 'choose', question: 'Hvem oppfant cognac?', answer: 'Cognac har ikke én oppfinner. Den vokste gradvis frem i Cognac-regionen gjennom vinhandel, charentais-destillasjon, lagring på eikefat og husenes håndverk.' },
+    { group: 'choose', question: 'Hvordan fremstilles cognac?', answer: 'Cognac begynner som en hvitvin beregnet på destillasjon. Den destilleres etter charentais-tradisjonen, lagres på eikefat og blandes for balanse mellom frukt, tre, struktur og lengde.' },
+    { group: 'choose', question: 'Hvilke druetyper brukes til cognac?', answer: 'Cognac-appellasjonen bygger på hvite druer som egner seg for destillasjon, særlig ugni blanc. Hos Léopold Croizet dyrkes også colombard og folle blanche. Kontakt huset for nøyaktig informasjon om en cuvée.' },
+    { group: 'choose', question: 'Hvorfor lagres cognac på eikefat?', answer: 'Lagring på eik gir farge, struktur og aromatisk kompleksitet. Tre, tid og kjeller påvirker krydrede, treaktige, fruktige eller gourmand-preg i glasset.' },
+    { group: 'choose', question: 'Hvorfor blande flere eaux-de-vie?', answer: 'Blanding skaper en balansert og konsekvent stil. Kjellermesteren kombinerer eaux-de-vie med ulik alder og profil for å bygge en aromatisk signatur.' },
+    { group: 'choose', question: 'Hvilken flaske bør jeg velge for å oppdage kolleksjonen?', answer: 'Valget avhenger av bruken: første møte, gave, ren smaking, cocktail eller stor anledning. Collection-siden er beste startpunkt, og huset kan gi råd etter situasjonen.' },
+    { group: 'choose', question: 'Hva betyr VS, VSOP, Napoléon, XO, Extra og XXO?', answer: 'Betegnelsene viser minstealderen på den yngste eau-de-vie i blandingen: VS fra 2 år, VSOP fra 4, Napoléon fra 6, XO og Extra fra 10, XXO fra 14. Stilen avhenger også av blandingen.' },
+    { group: 'choose', question: 'Hvordan smaker cognac?', answer: 'Smaken varierer med alder, eaux-de-vie, fat og blanding. Man kan finne frukt, blomster, krydder, tre, tørket frukt, vanilje, kakao eller rancio i eldre cuvéer.' },
+    { group: 'choose', question: 'Hvor finner jeg detaljer om hver cuvée?', answer: 'Collection-sidene viser cuvéer, bilder og hovedinformasjon. Hvis du velger mellom flasker, kan huset veilede etter anledning, ønsket stil og land for levering eller henting.' },
+    { group: 'choose', question: 'Hvorfor kan en flaske være utilgjengelig?', answer: 'Tilgjengelighet kan avhenge av lager, land, emballasje eller salgskanal. Kontakt huset med flaske og land for å kontrollere en bestemt cuvée.' },
+    { group: 'choose', question: 'Hvordan uttales Léopold Croizet?', answer: 'Skriftlig brukes husets navn alltid fullt: Léopold Croizet. Muntlig uttales det som et fransk navn; teamet kan hjelpe ved besøk, presentasjon eller profesjonell bruk.' },
+    { group: 'serve', question: 'Hvordan serveres cognac ren?', answer: 'Server en liten mengde ved romtemperatur i et tulipanformet glass eller et lett lukket glass på stett. Se på fargen, før glasset gradvis mot nesen og smak langsomt. Ikke varm glasset for mye.' },
+    { group: 'serve', question: 'Hvordan oppbevares en flaske cognac?', answer: 'Etter tapping eldes ikke cognac lenger som på fat. Oppbevar flasken stående, godt lukket, tørt, mørkt og ved stabil temperatur, borte fra sol og varme. Etter åpning bør kontakt med luft begrenses.' },
+    { group: 'serve', question: 'Kan cognac gå ut på dato?', answer: 'En lukket flaske som oppbevares riktig, går ikke ut som en ferskvare. Etter åpning kan kvaliteten endre seg hvis flasken lenge utsettes for luft, lys eller varme.' },
+    { group: 'serve', question: 'Bør cognac stå i kjøleskap?', answer: 'Det er ikke nødvendig for ren smaking. Romtemperatur og et passende glass gir det tydeligste uttrykket. I cocktails kommer friskheten fra is, glass eller ingredienser.' },
+    { group: 'serve', question: 'Kan cognac serveres med is?', answer: 'Ja, avhengig av ønsket stil. Is kjøler og myker opp alkoholopplevelsen, men fortynner cognacen gradvis. Smakecuvéer bør helst prøves rene først.' },
+    { group: 'serve', question: 'Kan Cognac Léopold Croizet brukes i cocktails?', answer: 'Ja, noen cuvéer kan brukes i cocktails når oppskriften respekterer cognacens balanse. Husets oppskrifter på siden gir gode utgangspunkt med friskhet, presisjon og ansvarlig nytelse.' },
+    { group: 'serve', question: 'Hvilke enkle miksere passer med cognac?', answer: 'For enkel servering kan cognac kombineres med ginger ale, tonic, kullsyrevann eller sitrus, avhengig av cuvée og ønsket stil. Begynn med få ingredienser.' },
+    { group: 'serve', question: 'Hvilken cocktail passer for nybegynnere?', answer: 'En enkel long drink med cognac, is, god ginger ale og sitrusskall gjør det lett å oppdage cognac i cocktail uten å skjule den. Se også husets oppskrifter på siden.' },
+    { group: 'serve', question: 'Hva passer til cognac?', answer: 'Matparinger avhenger av cuvée og intensitet. Mørk sjokolade, lite søte desserter, tørket frukt, kaffe eller enkelte oster kan passe til cognac når balansen bevares.' },
+    { group: 'serve', question: 'Inneholder cognac gluten eller allergener?', answer: 'Cognac lages av druer, ikke korn. Ved sterk allergi, spesiell følsomhet eller streng medisinsk diett bør huset kontaktes med aktuell cuvée før konsum.' },
+    { group: 'serve', question: 'Hvilken ernæringsinformasjon bør jeg sjekke?', answer: 'Alkoholstyrke, innhold og lovpålagte opplysninger står på etiketten. For en mer presis ernæringsforespørsel eller et markedsspesifikt spørsmål, kontakt huset med cuvéens navn.' },
+    { group: 'serve', question: 'Er cognac vegansk, kosher eller sertifisert?', answer: 'For spørsmål om sertifisering, for eksempel vegansk, kosher eller annet, er det best å kontakte huset med cuvée og land. Da får du et svar tilpasset behovet ditt.' },
+    { group: 'visit', question: 'Kan man besøke huset i Triac-Lautrait?', answer: 'Besøk planlegges etter avtale i Triac-Lautrait i Charente. Visit-siden lar deg kontakte huset og forberede besøket på gode vilkår.' },
+    { group: 'visit', question: 'Hvordan bestiller jeg et besøk?', answer: 'Send en forespørsel med antall besøkende, ønsket dato, språk, særlige behov og kontaktinformasjon. Vent på bekreftelse fra huset før du organiserer reisen.' },
+    { group: 'visit', question: 'Må man bestille på forhånd, og hva bør forberedes?', answer: 'Ja, det er best å bestille på forhånd. Forbered antall gjester, ønsket tidspunkt, tilgjengelighetsbehov, personer som ikke smaker alkohol, og ansvarlig hjemreise etter smaking.' },
+    { group: 'visit', question: 'Hvor ligger huset?', answer: 'Huset ligger i Triac-Lautrait i Charente, på adressen som vises på Visit-siden. Der finner du også praktisk informasjon for reisen.' },
+    { group: 'visit', question: 'Hvilke dager, tider og vilkår gjelder for besøk?', answer: 'Tider og vilkår kan variere etter sesong og tilgjengelighet. Kontakt huset før reisen for å bekrefte tidspunkt, gruppestørrelse og smakingsopplegg.' },
+    { group: 'ask', question: 'Hvor kan jeg kjøpe eller hente en flaske?', answer: 'Tilgjengelighet avhenger av land, cuvée og salgskanal. For henting i Triac-Lautrait eller kjøpsforespørsel, kontakt huset for å kontrollere flaske og mulig tidspunkt.' },
+    { group: 'ask', question: 'Hvordan kontakter jeg huset?', answer: 'For spørsmål, besøk, produktinformasjon eller henting bruker du de offisielle kontaktopplysningene på siden. Du kan skrive til cognac@mdpierre.com eller ringe +33 5 45 35 88 10.' },
+    { group: 'ask', question: 'Hva bør en profesjonell forespørsel inneholde?', answer: 'Oppgi navn, selskap, land, aktivitet, behovstype, ønskede volumer eller formater og kontaktinformasjon. Import, distribusjon, hotell, restaurant og vinhandel behandles direkte av huset.' },
+    { group: 'ask', question: 'Kjøper eller vurderer huset gamle flasker?', answer: 'For en gammel flaske, send tydelige bilder av flaske, nivå, etikett, kapsel og eventuell kjent historie. Huset kan si om et svar er mulig, uten garanti for vurdering eller kjøp.' },
+    { group: 'ask', question: 'Hvilke formater eller emballasjer finnes for profesjonelle?', answer: 'Profesjonelle formater, gaveesker, kasser og tilgjengelighet varierer med cuvée og marked. En presis forespørsel hjelper huset å svare relevant.' },
+    { group: 'ask', question: 'Hvor kan jeg følge husets nyheter?', answer: 'Du kan følge husets nyheter på den offisielle nettsiden og de sosiale nettverkene som Cognac Léopold Croizet oppgir. Sidens bunntekst er det beste stedet for oppdaterte lenker.' },
+  ],
+  zh: [
+    { group: 'choose', question: '什么是干邑？', answer: '干邑是在 Cognac 法定产区生产的葡萄酒蒸馏酒。它以白葡萄酿成基酒，经蒸馏、橡木桶陈酿，再调配并装瓶。' },
+    { group: 'choose', question: '干邑是威士忌还是白兰地？', answer: '干邑不是威士忌：干邑来自葡萄，威士忌来自谷物。干邑属于白兰地家族，但拥有 Cognac 产区的原产地、生产规则和法定名称。' },
+    { group: 'choose', question: 'Cognac Léopold Croizet 来自哪里？', answer: 'Cognac Léopold Croizet 扎根于夏朗德，围绕 Triac-Lautrait 的家族酒庄而发展。这里体现了酒庄与 Cognac 土地、陈酿时间和庄园工艺的直接联系。' },
+    { group: 'choose', question: '是谁发明了干邑？', answer: '干邑没有单一发明者。它是在 Cognac 地区随着葡萄酒贸易、夏朗德蒸馏、橡木桶陈酿和酒庄技艺逐步形成的。' },
+    { group: 'choose', question: '干邑如何酿造？', answer: '干邑从用于蒸馏的白葡萄酒开始，随后按照夏朗德传统蒸馏，在橡木桶中陈酿，再通过调配追求果香、木质、结构和余味的平衡。' },
+    { group: 'choose', question: '干邑使用哪些葡萄品种？', answer: 'Cognac 法定产区使用适合蒸馏的白葡萄，其中 ugni blanc 最常见。Léopold Croizet 也种植 colombard 和 folle blanche。如需了解某款 cuvée 的准确信息，请联系酒庄。' },
+    { group: 'choose', question: '为什么干邑要在橡木桶中陈酿？', answer: '橡木桶陈酿带来颜色、结构和香气复杂度。木材、时间和酒窖环境会影响香料、木质、果香或甜美风味。' },
+    { group: 'choose', question: '为什么要调配多种 eaux-de-vie？', answer: '调配可以建立平衡而稳定的风格。酒窖大师会结合不同年龄和风格的 eaux-de-vie，形成酒庄的香气签名。' },
+    { group: 'choose', question: '初次了解系列应选择哪一瓶？', answer: '选择取决于用途：初次品鉴、礼物、纯饮、鸡尾酒或重要场合。Collection 页面适合先比较各款 cuvée，之后酒庄可根据具体场景提供建议。' },
+    { group: 'choose', question: 'VS、VSOP、Napoléon、XO、Extra 和 XXO 代表什么？', answer: '这些标识表示调配中最年轻 eaux-de-vie 的最低陈酿年限：VS 至少 2 年，VSOP 至少 4 年，Napoléon 至少 6 年，XO 和 Extra 至少 10 年，XXO 至少 14 年。它们是参考，风格也取决于调配。' },
+    { group: 'choose', question: '干邑是什么味道？', answer: '味道会随年份、eaux-de-vie、橡木桶和调配而变化。可能出现水果、花香、香料、木质、干果、香草、可可或老酒特有的 rancio 风味。' },
+    { group: 'choose', question: '在哪里查看每款 cuvée 的详情？', answer: 'Collection 页面介绍各款 cuvée、视觉图片和主要信息。如果在几瓶之间犹豫，酒庄可根据场合、风格和配送或自取国家提供建议。' },
+    { group: 'choose', question: '为什么某款酒可能暂时没有？', answer: '供应情况可能受库存、国家、包装或销售渠道影响。若要确认某款 cuvée，请联系酒庄并说明酒款和所在国家。' },
+    { group: 'choose', question: 'Léopold Croizet 如何发音？', answer: '书面使用时，酒庄名称始终完整写作 Léopold Croizet。口头上按法语姓名发音；如准备参观、介绍或专业用途，团队可以协助你自然地读出。' },
+    { group: 'serve', question: '如何纯饮干邑？', answer: '在室温下倒少量干邑，使用郁金香杯或杯口略收的高脚杯。先观察颜色，再慢慢闻香，最后小口品尝。避免过度加热酒杯，以免酒精感掩盖香气。' },
+    { group: 'serve', question: '如何保存一瓶干邑？', answer: '装瓶后，干邑不会像在桶中那样继续陈酿。请直立放置、密封保存，置于干燥、避光、温度稳定处，远离阳光和热源。开瓶后应减少与空气接触。' },
+    { group: 'serve', question: '干邑会过期吗？', answer: '未开封且保存良好的干邑不会像新鲜食品那样过期。开瓶后，如果长期暴露在空气、光线或高温中，品质可能发生变化。' },
+    { group: 'serve', question: '干邑需要放冰箱吗？', answer: '纯饮时不需要。室温和合适酒杯最能清晰呈现风味。制作鸡尾酒或长饮时，清爽感通常来自冰块、杯具或配料。' },
+    { group: 'serve', question: '干邑可以加冰吗？', answer: '可以，取决于想要的风格。冰块会降温并柔化酒精感，但也会逐渐稀释干邑。用于品鉴的 cuvée 建议先纯饮，再按需要调整。' },
+    { group: 'serve', question: 'Cognac Léopold Croizet 可以调鸡尾酒吗？', answer: '可以，部分 cuvée 适合用于鸡尾酒，前提是配方尊重干邑的平衡。网站上的酒庄配方提供了清爽、精确且负责任享用的基础。' },
+    { group: 'serve', question: '哪些简单调配适合干邑？', answer: '简单饮用时，可根据 cuvée 和想要的风格搭配 ginger ale、tonic、气泡水或柑橘。建议先使用少量配料，让干邑保持表达。' },
+    { group: 'serve', question: '初次尝试适合哪款鸡尾酒？', answer: '以干邑、冰块、优质 ginger ale 和柑橘皮制成的简单 long drink，能在不遮盖干邑的前提下轻松入门。也可查看网站上的酒庄配方。' },
+    { group: 'serve', question: '干邑适合搭配什么食物？', answer: '搭配取决于 cuvée 和强度。黑巧克力、不过甜的甜点、干果、咖啡或某些奶酪都可与干邑相配，关键是保持香气平衡。' },
+    { group: 'serve', question: '干邑含麸质或过敏原吗？', answer: '干邑来自葡萄，而不是谷物。如有严重过敏、特殊敏感或严格医学饮食要求，请在饮用前带上具体 cuvée 信息联系酒庄。' },
+    { group: 'serve', question: '应查看哪些营养信息？', answer: '酒精度、容量和法规信息标注在瓶身标签上。如需更具体的营养信息或特定市场问题，请带上 cuvée 名称联系酒庄。' },
+    { group: 'serve', question: '干邑是否为 vegan、kosher 或有认证？', answer: '有关 vegan、kosher 或其他认证问题，最稳妥的方式是带上 cuvée 和国家信息联系酒庄。酒庄会根据你的需求回复。' },
+    { group: 'visit', question: '可以参观 Triac-Lautrait 的酒庄吗？', answer: '参观需在 Charente 的 Triac-Lautrait 提前预约。Visit 页面可用于联系酒庄，并帮助你在合适条件下准备来访。' },
+    { group: 'visit', question: '如何预约参观？', answer: '请发送参观人数、期望日期、接待语言、特殊限制和联系方式。请等待酒庄确认后再安排出行。' },
+    { group: 'visit', question: '需要提前预约并准备什么？', answer: '是的，建议提前预约。请准备参观人数、期望时段、出入需求、是否有人不饮酒，以及品鉴后的负责任返程安排。' },
+    { group: 'visit', question: '酒庄位于哪里？', answer: '酒庄位于 Charente 的 Triac-Lautrait，地址见 Visit 页面。该页面也提供准备路线所需的实用信息。' },
+    { group: 'visit', question: '参观日期、时间和条件是什么？', answer: '开放时间和条件可能随季节和可接待情况变化。出发前请联系酒庄确认时段、团队人数和品鉴安排。' },
+    { group: 'ask', question: '在哪里购买或自取一瓶酒？', answer: '供应情况取决于国家、cuvée 和销售渠道。如需在 Triac-Lautrait 自取或提出购买请求，请联系酒庄确认酒款和可行时间。' },
+    { group: 'ask', question: '如何联系酒庄？', answer: '如有问题、参观、产品信息或自取需求，请使用网站上的官方联系方式。你可以写信至 cognac@mdpierre.com，或拨打 +33 5 45 35 88 10。' },
+    { group: 'ask', question: '专业咨询应提供哪些信息？', answer: '请注明姓名、公司、国家、业务类型、需求、期望数量或规格以及联系方式。进口、分销、酒店、餐厅和酒商需求由酒庄直接处理。' },
+    { group: 'ask', question: '酒庄是否收购或估价老酒？', answer: '如有老酒，请发送瓶身、液面、标签、封帽以及已知来源的清晰照片。酒庄可告知是否能够回复，但不保证估价或收购。' },
+    { group: 'ask', question: '专业客户有哪些规格或包装？', answer: '专业规格、礼盒、箱规和供应情况会因 cuvée 和市场而异。清晰具体的请求能帮助酒庄提供适合业务的信息。' },
+    { group: 'ask', question: '在哪里关注酒庄动态？', answer: '你可以通过官方网站和 Cognac Léopold Croizet 标注的社交网络关注酒庄动态。网站页脚是查找最新链接的最佳位置。' },
+  ],
+};
+
 const productNames = new Map([
   ['vs', 'VS'],
   ['vsop', 'VSOP'],
@@ -352,6 +598,7 @@ const contentGroups = [
   ['/le-temps/', '/en/le-temps/', '/ru/le-temps/', '/da/le-temps/', '/sv/le-temps/', '/no/le-temps/', '/zh/le-temps/'],
   ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/leopold-croizet/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
   FILM_ROUTES,
+  FAQ_ROUTES,
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
   ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
   ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
@@ -751,11 +998,15 @@ const zhRouteMetadata = new Map([
 
 for (const [route, metadata] of zhRouteMetadata) routeMetadata.set(route, metadata);
 
+for (const lang of SITE_LANGUAGES) {
+  const copy = faqPageCopy(lang);
+  routeMetadata.set(faqRouteForLang(lang), {
+    title: copy.metaTitle,
+    description: copy.description,
+  });
+}
+
 for (const [route, metadata] of new Map([
-  ['/faq/', {
-    title: 'FAQ Cognac | Cognac Léopold Croizet',
-    description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
-  }],
   ['/preuves/', {
     title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
     description: 'Brouillon non indexé pour préparer la page preuves et médailles de Cognac Léopold Croizet, sans publier de distinction non confirmée.',
@@ -858,9 +1109,12 @@ async function walkHtml(dir) {
 
 async function writeSourcePages() {
   const pages = new Map([
-    ['faq/index.html', faqPageHtml()],
     ['preuves/index.html', proofDraftPageHtml()],
   ]);
+
+  for (const route of FAQ_ROUTES) {
+    pages.set(`${route.replace(/^\//, '')}index.html`, faqPageHtml(route));
+  }
 
   for (const route of FILM_ROUTES) {
     pages.set(`${route.replace(/^\//, '')}index.html`, filmPageHtml(route));
@@ -879,6 +1133,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
   const routes = sourceNavigationRoutes(lang);
   const isPlainHeader = headerVariant === 'plain';
   const isFaqPage = pageClass.split(/\s+/).includes('lc-faq-page');
+  const languageMenu = isFaqPage ? faqLanguageMenuHtml(route) : '';
   const headerHtml = isPlainHeader ? `  <header class="lc-site-header">
     <div class="lc-site-nav">
       <a class="lc-logo-header" href="${routes.home}" aria-label="${nav.home}">
@@ -891,10 +1146,11 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
         <a href="${routes.film}">${nav.film}</a>
         <a href="${routes.visit}">${nav.visit}</a>
       </nav>
+      ${languageMenu}
     </div>
   </header>` : `  <header class="lc-page-header">
     <div class="lc-topbar">
-      <a class="lc-logo" href="/" aria-label="Accueil Cognac Léopold Croizet">
+      <a class="lc-logo" href="${routes.home}" aria-label="${nav.home}">
         <img src="/wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Logo Cognac Léopold Croizet" width="164" height="118" decoding="async">
       </a>
       <nav class="lc-nav" aria-label="Navigation principale">
@@ -903,6 +1159,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
         <a href="${routes.film}">${nav.film}</a>
         <a href="${routes.visit}">${nav.visit}</a>
       </nav>
+      ${languageMenu}
     </div>
     <div class="lc-hero">
       <p class="lc-eyebrow">${escapeHtml(eyebrow)}</p>
@@ -938,6 +1195,14 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
   const plainHeaderMobileCss = isPlainHeader ? `
     @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding:88px 18px 90px;margin-top:0;background:linear-gradient(#dacdbc 0%,#f6f3ef 220px)}.lc-paper-tear{height:82px}.lc-page-title{text-align:left;margin-bottom:34px}.lc-film-title{font-size:clamp(26px,8vw,36px);line-height:1.22}.lc-film-panel{padding:18px}}` : '';
   const faqShellCss = isFaqPage ? `    .lc-nowrap{white-space:nowrap}
+    .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
+    .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
+    .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:106px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
+    .lc-faq-language-menu .lc-language-menu-list li{margin:0}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 12px;color:#f5eadb;text-decoration:none}
+    .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
     body.lc-faq-page .lc-page-header{min-height:56vh;background:linear-gradient(rgba(12,10,8,.42),rgba(12,10,8,.66)),url("/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg") center/cover;color:#fff}
     body.lc-faq-page .lc-hero{margin-top:104px;text-shadow:0 2px 20px rgba(0,0,0,.28)}
     .lc-faq-path{display:grid;grid-template-columns:minmax(260px,1.06fr) repeat(2,minmax(0,.94fr));grid-auto-rows:224px;gap:14px;margin:0 0 44px}
@@ -1059,6 +1324,7 @@ ${headerHtml}
     </a>
     <div class="menu-footer">
       <ul>
+        <li><a href="${routes.faq}">${nav.faq}</a></li>
         <li><a href="${routes.visit}">${nav.contact}</a></li>
         <li><a href="${routes.legal}">${nav.legal}</a></li>
         <li><a rel="privacy-policy" href="/cgv/">CGV</a></li>
@@ -1066,6 +1332,7 @@ ${headerHtml}
     </div>
     <div class="copyright">© Léopold Croizet 2026</div>
   </footer>
+${isFaqPage ? faqLanguageMenuScript() : ''}
 </body>
 </html>`;
 }
@@ -1079,6 +1346,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Le film',
       visit: 'Visite',
+      faq: 'FAQ',
       contact: 'Nous contacter',
       legal: 'Mentions légales',
     },
@@ -1089,6 +1357,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'The film',
       visit: 'Meet us',
+      faq: 'FAQ',
       contact: 'Contact us',
       legal: 'Legal notice',
     },
@@ -1099,6 +1368,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Фильм',
       visit: 'Визит',
+      faq: 'FAQ',
       contact: 'Связаться',
       legal: 'Правовая информация',
     },
@@ -1109,6 +1379,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Mød os',
+      faq: 'FAQ',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -1119,6 +1390,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Möt oss',
+      faq: 'FAQ',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -1129,6 +1401,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Møt oss',
+      faq: 'FAQ',
       contact: 'Kontakt',
       legal: 'Juridisk informasjon',
     },
@@ -1139,6 +1412,7 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: '影片',
       visit: '走近我们',
+      faq: '常见问题',
       contact: '联系我们',
       legal: '法律信息',
     },
@@ -1153,6 +1427,7 @@ function sourceNavigationRoutes(lang) {
     leopold: sourceHref(leopoldRouteForLang(lang)),
     film: sourceHref(filmRouteForLang(lang)),
     visit: sourceHref(visitRouteForLang(lang)),
+    faq: sourceHref(faqRouteForLang(lang)),
     legal: sourceHref('/mentions-legales/'),
   };
 }
@@ -1181,6 +1456,48 @@ function leopoldRouteForLang(lang) {
 
 function visitRouteForLang(lang) {
   return lang === 'fr' ? '/rencontre/' : `/${lang}/rencontre/`;
+}
+
+function faqRouteForLang(lang) {
+  return lang === 'fr' ? '/faq/' : `/${lang}/faq/`;
+}
+
+function faqLanguageMenuHtml(route) {
+  const currentLang = languageForRoute(route);
+  const labels = { fr: 'Fr', en: 'En', ru: 'Ру', da: 'Da', sv: 'Sv', no: 'No', zh: '中文' };
+  const items = SITE_LANGUAGES.map((lang) => {
+    const hrefLang = lang === 'zh' ? 'zh-CN' : lang;
+    const current = lang === currentLang;
+    return `<li class="${current ? 'wpml-ls-current-language ' : ''}wpml-ls-item"><a href="${sourceHref(faqRouteForLang(lang))}" hreflang="${hrefLang}" lang="${htmlLangForRoute(faqRouteForLang(lang))}"${current ? ' aria-current="page"' : ''}>${labels[lang]}</a></li>`;
+  }).join('');
+
+  return `<div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false">${labels[currentLang]}</button><ul class="lc-language-menu-list" hidden>${items}</ul></div>`;
+}
+
+function faqLanguageMenuScript() {
+  return `<script id="lc-faq-language-menu">
+document.addEventListener('click', function(event) {
+  var menu = event.target.closest('[data-lc-language-menu]');
+  document.querySelectorAll('[data-lc-language-menu]').forEach(function(candidate) {
+    if (candidate !== menu) {
+      candidate.classList.remove('is-open');
+      var candidateButton = candidate.querySelector('.lc-language-menu-toggle');
+      var candidateList = candidate.querySelector('.lc-language-menu-list');
+      if (candidateButton) candidateButton.setAttribute('aria-expanded', 'false');
+      if (candidateList) candidateList.hidden = true;
+    }
+  });
+  if (!menu) return;
+  var button = event.target.closest('.lc-language-menu-toggle');
+  if (!button) return;
+  var list = menu.querySelector('.lc-language-menu-list');
+  if (!list) return;
+  var open = !menu.classList.contains('is-open');
+  menu.classList.toggle('is-open', open);
+  button.setAttribute('aria-expanded', open ? 'true' : 'false');
+  list.hidden = !open;
+});
+</script>`;
 }
 
 function filmPageCopy(lang) {
@@ -1301,70 +1618,254 @@ function escapeFaqText(value) {
   return escapeHtml(value).replace(/Léopold Croizet/g, '<span class="lc-nowrap">Léopold Croizet</span>');
 }
 
-function faqPageHtml() {
+function faqEntriesForLang(lang) {
+  if (lang === 'fr') {
+    return faqEntries.map((entry) => ({
+      ...entry,
+      group: faqGroupKeyByFrench[entry.group] || 'choose',
+    }));
+  }
+  return faqLocalizedEntries[lang] || faqEntriesForLang('fr');
+}
+
+function faqPageCopy(lang) {
+  return {
+    fr: {
+      metaTitle: 'FAQ Cognac | Cognac Léopold Croizet',
+      description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
+      eyebrow: 'Questions fréquentes',
+      heading: 'Questions fréquentes<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Choisir, servir, visiter ou contacter la maison : les réponses essentielles pour préparer votre découverte du cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Parcours de questions',
+      groupLabels: { choose: 'Choisir', serve: 'Servir', visit: 'Visiter', ask: 'Demander' },
+      steps: {
+        choose: { title: 'Quelle bouteille ?', text: 'Usage, cadeau, dégustation ou grande occasion.', alt: 'Coffret rouge et carafe Cognac Léopold Croizet' },
+        serve: { title: 'Comment déguster ?', text: 'Verre, température, conservation et cocktail.', alt: 'Cognac Léopold Croizet servi dans un verre' },
+        visit: { title: 'Que préparer ?', text: 'Rendez-vous, groupe, accès et retour responsable.', alt: 'Propriété familiale Cognac Léopold Croizet à Triac-Lautrait' },
+        ask: { title: 'À qui écrire ?', text: 'Retrait, demande professionnelle et réponse personnalisée.', alt: 'Archive manuscrite de la maison Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Questions fréquentes',
+      intro: 'Une base claire pour comprendre le cognac, choisir une bouteille, servir avec justesse, organiser une visite ou formuler une demande professionnelle.',
+      moreTitle: 'Pour aller plus loin',
+      moreText: 'Les pages de la collection et de visite complètent cette FAQ avec les informations les plus utiles selon votre projet.',
+      collectionCta: 'Voir la collection',
+      visitCta: 'Préparer une visite',
+    },
+    en: {
+      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet FAQ: origin, cuvée choice, serving, cocktails, visit in Triac-Lautrait, purchase, collection and professional requests.',
+      eyebrow: 'Frequently Asked Questions',
+      heading: 'Frequently asked questions<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Choose, serve, visit or contact the house: essential answers for discovering Cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Question paths',
+      groupLabels: { choose: 'Choose', serve: 'Serve', visit: 'Visit', ask: 'Ask' },
+      steps: {
+        choose: { title: 'Which bottle?', text: 'Discovery, gift, tasting or special occasion.', alt: 'Red box and decanter Cognac Léopold Croizet' },
+        serve: { title: 'How to taste?', text: 'Glass, temperature, storage and cocktails.', alt: 'Cognac Léopold Croizet served in a glass' },
+        visit: { title: 'What to prepare?', text: 'Appointment, group, access and responsible return.', alt: 'Cognac Léopold Croizet family estate in Triac-Lautrait' },
+        ask: { title: 'Who to write to?', text: 'Collection, professional request and tailored answer.', alt: 'Handwritten archive of Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Frequently Asked Questions',
+      intro: 'A clear base to understand cognac, choose a bottle, serve it well, plan a visit or send a professional request.',
+      moreTitle: 'Go further',
+      moreText: 'The Collection and Visit pages complete this FAQ with the most useful information for your project.',
+      collectionCta: 'View the collection',
+      visitCta: 'Plan a visit',
+    },
+    ru: {
+      metaTitle: 'FAQ Cognac | Cognac Léopold Croizet',
+      description: 'FAQ Cognac Léopold Croizet: происхождение, выбор кюве, подача, коктейли, визит в Triac-Lautrait, покупка, самовывоз и профессиональные запросы.',
+      eyebrow: 'FAQ',
+      heading: 'Вопросы и ответы<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Выбор, подача, визит или связь с домом: основные ответы для знакомства с Cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Разделы вопросов',
+      groupLabels: { choose: 'Выбрать', serve: 'Подача', visit: 'Визит', ask: 'Обратиться' },
+      steps: {
+        choose: { title: 'Какую бутылку?', text: 'Первое знакомство, подарок, дегустация или особый случай.', alt: 'Красная коробка и декантер Cognac Léopold Croizet' },
+        serve: { title: 'Как дегустировать?', text: 'Бокал, температура, хранение и коктейли.', alt: 'Cognac Léopold Croizet в бокале' },
+        visit: { title: 'Что подготовить?', text: 'Запись, группа, доступ и ответственное возвращение.', alt: 'Семейное поместье Cognac Léopold Croizet в Triac-Lautrait' },
+        ask: { title: 'Кому писать?', text: 'Самовывоз, профессиональный запрос и персональный ответ.', alt: 'Рукописный архив Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Вопросы и ответы',
+      intro: 'Понятная база, чтобы разобраться в cognac, выбрать бутылку, правильно подать, подготовить визит или отправить профессиональный запрос.',
+      moreTitle: 'Продолжить',
+      moreText: 'Страницы Collection и Visit дополняют эту FAQ полезной информацией для вашего проекта.',
+      collectionCta: 'Смотреть коллекцию',
+      visitCta: 'Запланировать визит',
+    },
+    da: {
+      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet FAQ: oprindelse, valg af cuvée, servering, cocktails, besøg i Triac-Lautrait, køb, afhentning og professionelle forespørgsler.',
+      eyebrow: 'Ofte stillede spørgsmål',
+      heading: 'Ofte stillede spørgsmål<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Vælg, server, besøg eller kontakt huset: de vigtigste svar for at opdage Cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Spørgsmålsforløb',
+      groupLabels: { choose: 'Vælge', serve: 'Servere', visit: 'Besøge', ask: 'Spørge' },
+      steps: {
+        choose: { title: 'Hvilken flaske?', text: 'Første smagning, gave, degustation eller særlig anledning.', alt: 'Rød æske og karaffel Cognac Léopold Croizet' },
+        serve: { title: 'Hvordan smager man?', text: 'Glas, temperatur, opbevaring og cocktails.', alt: 'Cognac Léopold Croizet serveret i et glas' },
+        visit: { title: 'Hvad skal forberedes?', text: 'Aftale, gruppe, adgang og ansvarlig hjemtransport.', alt: 'Cognac Léopold Croizet familieejendom i Triac-Lautrait' },
+        ask: { title: 'Hvem skriver man til?', text: 'Afhentning, professionel forespørgsel og tilpasset svar.', alt: 'Håndskrevet arkiv fra Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Ofte stillede spørgsmål',
+      intro: 'Et klart udgangspunkt for at forstå cognac, vælge en flaske, servere korrekt, planlægge et besøg eller sende en professionel forespørgsel.',
+      moreTitle: 'Gå videre',
+      moreText: 'Collection- og Visit-siderne supplerer denne FAQ med nyttig information til dit projekt.',
+      collectionCta: 'Se kollektionen',
+      visitCta: 'Planlæg et besøg',
+    },
+    sv: {
+      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet FAQ: ursprung, val av cuvée, servering, cocktails, besök i Triac-Lautrait, köp, upphämtning och professionella frågor.',
+      eyebrow: 'Vanliga frågor',
+      heading: 'Vanliga frågor<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Välj, servera, besök eller kontakta huset: de viktigaste svaren för att upptäcka Cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Frågeområden',
+      groupLabels: { choose: 'Välja', serve: 'Servera', visit: 'Besöka', ask: 'Fråga' },
+      steps: {
+        choose: { title: 'Vilken flaska?', text: 'Första upptäckt, gåva, provning eller särskilt tillfälle.', alt: 'Röd ask och karaff Cognac Léopold Croizet' },
+        serve: { title: 'Hur smakar man?', text: 'Glas, temperatur, förvaring och cocktails.', alt: 'Cognac Léopold Croizet serverad i ett glas' },
+        visit: { title: 'Vad ska förberedas?', text: 'Bokning, grupp, tillgång och ansvarsfull hemresa.', alt: 'Cognac Léopold Croizet familjeegendom i Triac-Lautrait' },
+        ask: { title: 'Vem skriver man till?', text: 'Upphämtning, professionell fråga och anpassat svar.', alt: 'Handskrivet arkiv från Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Vanliga frågor',
+      intro: 'En tydlig grund för att förstå cognac, välja en flaska, servera rätt, planera ett besök eller skicka en professionell fråga.',
+      moreTitle: 'Gå vidare',
+      moreText: 'Collection- och Visit-sidorna kompletterar denna FAQ med användbar information för ditt projekt.',
+      collectionCta: 'Se kollektionen',
+      visitCta: 'Planera ett besök',
+    },
+    no: {
+      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet FAQ: opprinnelse, valg av cuvée, servering, cocktails, besøk i Triac-Lautrait, kjøp, henting og profesjonelle forespørsler.',
+      eyebrow: 'Ofte stilte spørsmål',
+      heading: 'Ofte stilte spørsmål<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Velg, server, besøk eller kontakt huset: de viktigste svarene for å oppdage Cognac Léopold&nbsp;Croizet.',
+      pathLabel: 'Spørsmålsområder',
+      groupLabels: { choose: 'Velge', serve: 'Servere', visit: 'Besøke', ask: 'Spørre' },
+      steps: {
+        choose: { title: 'Hvilken flaske?', text: 'Første møte, gave, smaking eller spesiell anledning.', alt: 'Rød eske og karaffel Cognac Léopold Croizet' },
+        serve: { title: 'Hvordan smake?', text: 'Glass, temperatur, oppbevaring og cocktails.', alt: 'Cognac Léopold Croizet servert i et glass' },
+        visit: { title: 'Hva bør forberedes?', text: 'Avtale, gruppe, tilgang og ansvarlig hjemreise.', alt: 'Cognac Léopold Croizet familieeiendom i Triac-Lautrait' },
+        ask: { title: 'Hvem skriver man til?', text: 'Henting, profesjonell forespørsel og tilpasset svar.', alt: 'Håndskrevet arkiv fra Cognac Léopold Croizet' },
+      },
+      sectionTitle: 'Ofte stilte spørsmål',
+      intro: 'Et tydelig utgangspunkt for å forstå cognac, velge en flaske, servere riktig, planlegge et besøk eller sende en profesjonell forespørsel.',
+      moreTitle: 'Gå videre',
+      moreText: 'Collection- og Visit-sidene supplerer denne FAQ-en med nyttig informasjon for prosjektet ditt.',
+      collectionCta: 'Se kolleksjonen',
+      visitCta: 'Planlegg et besøk',
+    },
+    zh: {
+      metaTitle: '干邑常见问题 | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet 常见问题：产地、cuvée 选择、饮用、鸡尾酒、Triac-Lautrait 参观、购买、自取与专业咨询。',
+      eyebrow: '常见问题',
+      heading: '常见问题<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: '选择、饮用、参观或联系酒庄：了解 Cognac Léopold&nbsp;Croizet 的核心问题都在这里。',
+      pathLabel: '问题分类',
+      groupLabels: { choose: '选择', serve: '饮用', visit: '参观', ask: '咨询' },
+      steps: {
+        choose: { title: '选择哪一瓶？', text: '初次了解、礼物、品鉴或重要场合。', alt: 'Cognac Léopold Croizet 红色礼盒与醒酒瓶' },
+        serve: { title: '如何品尝？', text: '酒杯、温度、保存与鸡尾酒。', alt: '杯中的 Cognac Léopold Croizet' },
+        visit: { title: '准备什么？', text: '预约、团队、交通与负责任返程。', alt: 'Triac-Lautrait 的 Cognac Léopold Croizet 家族酒庄' },
+        ask: { title: '联系谁？', text: '自取、专业咨询与个性化回复。', alt: 'Cognac Léopold Croizet 手写档案' },
+      },
+      sectionTitle: '常见问题',
+      intro: '帮助你理解干邑、选择酒款、正确饮用、准备参观或提出专业咨询。',
+      moreTitle: '继续了解',
+      moreText: 'Collection 与 Visit 页面会根据你的计划补充最有用的信息。',
+      collectionCta: '查看系列',
+      visitCta: '预约参观',
+    },
+  }[lang] || faqPageCopy('fr');
+}
+
+function faqPageHtml(route = '/faq/') {
+  const lang = languageForRoute(route);
+  const copy = faqPageCopy(lang);
   let previousGroup = '';
   const groupAnchors = {
-    Choisir: 'faq-choisir',
-    Servir: 'faq-servir',
-    Visiter: 'faq-visiter',
-    Demander: 'faq-demander',
-    Acheter: 'faq-demander',
-    Professionnels: 'faq-professionnels',
+    choose: 'faq-choose',
+    serve: 'faq-serve',
+    visit: 'faq-visit',
+    ask: 'faq-ask',
   };
-  const faqItems = faqEntries.map((entry, index) => {
+  const faqItems = faqEntriesForLang(lang).map((entry, index) => {
     const groupId = groupAnchors[entry.group];
+    const localizedGroup = copy.groupLabels[entry.group] || entry.group;
     const idAttribute = groupId ? ` id="${groupId}"` : '';
     const groupLabel = entry.group !== previousGroup
-      ? `<p class="lc-faq-group-label"${idAttribute}>${escapeHtml(entry.group)}</p>`
+      ? `<p class="lc-faq-group-label"${idAttribute}>${escapeHtml(localizedGroup)}</p>`
       : '';
     previousGroup = entry.group;
     return `${groupLabel}<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeFaqText(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary><p>${escapeFaqText(entry.answer)}</p></details>`;
   }).join('\n');
 
+  const stepImages = {
+    choose: {
+      className: 'lc-faq-step lc-faq-step-product',
+      src: '/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png',
+      width: 420,
+      height: 426,
+    },
+    serve: {
+      className: 'lc-faq-step',
+      src: '/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg',
+      width: 715,
+      height: 693,
+    },
+    visit: {
+      className: 'lc-faq-step',
+      src: '/wp-content/uploads/2022/02/propriete_02-scaled.jpg',
+      width: 2560,
+      height: 2088,
+    },
+    ask: {
+      className: 'lc-faq-step lc-faq-step-wide',
+      src: '/wp-content/uploads/2021/05/img_home_carre_archive.jpg',
+      width: 715,
+      height: 693,
+    },
+  };
+  const pathItems = ['choose', 'serve', 'visit', 'ask'].map((key) => {
+    const image = stepImages[key];
+    const step = copy.steps[key];
+    return `<a class="${image.className}" href="#${groupAnchors[key]}">
+<img src="${image.src}" alt="${escapeHtml(step.alt)}" width="${image.width}" height="${image.height}" decoding="async" loading="eager">
+<span class="lc-faq-step-copy"><span>${escapeHtml(copy.groupLabels[key])}</span><strong>${escapeHtml(step.title)}</strong><p>${escapeHtml(step.text)}</p></span>
+</a>`;
+  }).join('\n');
+
   const body = [
-    '<nav class="lc-faq-path" aria-label="Parcours de questions">',
-    '<a class="lc-faq-step lc-faq-step-product" href="#faq-choisir">',
-    '<img src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" alt="Coffret rouge et carafe Cognac Léopold Croizet" width="420" height="426" decoding="async" loading="eager">',
-    '<span class="lc-faq-step-copy"><span>Choisir</span><strong>Quelle bouteille ?</strong><p>Usage, cadeau, dégustation ou grande occasion.</p></span>',
-    '</a>',
-    '<a class="lc-faq-step" href="#faq-servir">',
-    '<img src="/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg" alt="Cognac Léopold Croizet servi dans un verre" width="715" height="693" decoding="async" loading="eager">',
-    '<span class="lc-faq-step-copy"><span>Servir</span><strong>Comment déguster ?</strong><p>Verre, température, conservation et cocktail.</p></span>',
-    '</a>',
-    '<a class="lc-faq-step" href="#faq-visiter">',
-    '<img src="/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="Propriété familiale Cognac Léopold Croizet à Triac-Lautrait" width="2560" height="2088" decoding="async" loading="eager">',
-    '<span class="lc-faq-step-copy"><span>Visiter</span><strong>Que préparer ?</strong><p>Rendez-vous, groupe, accès et retour responsable.</p></span>',
-    '</a>',
-    '<a class="lc-faq-step lc-faq-step-wide" href="#faq-demander">',
-    '<img src="/wp-content/uploads/2021/05/img_home_carre_archive.jpg" alt="Archive manuscrite de la maison Cognac Léopold Croizet" width="715" height="693" decoding="async" loading="eager">',
-    '<span class="lc-faq-step-copy"><span>Demander</span><strong>À qui écrire ?</strong><p>Retrait, demande professionnelle et réponse personnalisée.</p></span>',
-    '</a>',
+    `<nav class="lc-faq-path" aria-label="${escapeHtml(copy.pathLabel)}">`,
+    pathItems,
     '</nav>',
     '<div class="lc-faq-main">',
     '<section class="lc-section">',
-    '<h2>Questions fréquentes</h2>',
-    '<p class="lc-faq-intro">Une base claire pour comprendre le cognac, choisir une bouteille, servir avec justesse, organiser une visite ou formuler une demande professionnelle.</p>',
+    `<h2>${escapeHtml(copy.sectionTitle)}</h2>`,
+    `<p class="lc-faq-intro">${escapeHtml(copy.intro)}</p>`,
     '<div class="lc-faq-list">',
     faqItems,
     '</div>',
     '</section>',
     '<section class="lc-section">',
-    '<h2>Pour aller plus loin</h2>',
-    '<p>Les pages de la collection et de visite complètent cette FAQ avec les informations les plus utiles selon votre projet.</p>',
+    `<h2>${escapeHtml(copy.moreTitle)}</h2>`,
+    `<p>${escapeHtml(copy.moreText)}</p>`,
     '<div class="lc-cta-row">',
-    '<a class="lc-button" href="/collection/">Voir la collection</a>',
-    '<a class="lc-button secondary" href="/rencontre/">Préparer une visite</a>',
+    `<a class="lc-button" href="${sourceHref(collectionRouteForLang(lang))}">${escapeHtml(copy.collectionCta)}</a>`,
+    `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${escapeHtml(copy.visitCta)}</a>`,
     '</div>',
     '</section>',
     '</div>',
   ].join('\n');
 
   return sourcePageShell({
-    title: 'FAQ Cognac | Cognac Léopold Croizet',
-    description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
-    eyebrow: 'Questions fréquentes',
-    heading: 'Questions fréquentes<br><span class="lc-nowrap">Léopold Croizet</span>',
-    lead: 'Choisir, servir, visiter ou contacter la maison : les réponses essentielles pour préparer votre découverte du cognac Léopold Croizet.',
+    route,
+    title: copy.metaTitle,
+    description: copy.description,
+    eyebrow: copy.eyebrow,
+    heading: copy.heading,
+    lead: copy.lead,
     body,
     pageClass: 'lc-faq-page',
   });
@@ -1514,7 +2015,20 @@ function brandIconTags() {
 }
 
 function injectFrenchFooterResourceLinks(html, route) {
-  return html.replace(/\n?<li class="menu-item lc-source-link"><a href="\/distribution\/">Contact commercial<\/a><\/li>/g, '');
+  let next = html.replace(/\n?<li class="menu-item lc-source-link"><a href="\/distribution\/">Contact commercial<\/a><\/li>/g, '');
+  if (isNoindexRoute(route)) return next;
+
+  const lang = languageForRoute(route);
+  const nav = sourceNavigationCopy(lang);
+  const faqHref = sourceHref(faqRouteForLang(lang));
+  const hasFaqLink = new RegExp(`href=(["'])${escapeRegExp(faqHref)}\\1`).test(next);
+  if (hasFaqLink) return next;
+
+  const faqItem = `<li class="menu-item lc-source-link"><a href="${faqHref}">${nav.faq}</a></li>`;
+  return next.replace(
+    /(<div\b[^>]*class=["'][^"']*\bmenu-footer\b[^"']*["'][^>]*>\s*<ul\b[^>]*>)/i,
+    `$1\n${faqItem}`,
+  );
 }
 
 function homeHrefForRoute(route) {
@@ -2259,6 +2773,7 @@ function labelFromRoute(route) {
 function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes(FILM_SLUG)) return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?faq\/$/.test(route)) return '/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
@@ -2425,6 +2940,7 @@ function keySearchResultPages() {
     { name: 'Cognac Léopold Croizet XO', url: '/collection/xo/' },
     { name: 'Cognac Léopold Croizet XO Exception', url: '/collection/xo-exception/' },
     { name: 'Collection Cognac et Pineau Léopold Croizet', url: '/collection/' },
+    { name: 'FAQ Cognac Léopold Croizet', url: '/faq/' },
     { name: 'Visite des chais Cognac Léopold Croizet', url: '/rencontre/' },
   ];
 }
@@ -2603,6 +3119,9 @@ function makeLlmsTxt() {
     '- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.',
     '- [Chinese collection](https://cognac-leopold-croizet.com/zh/shop/): Simplified Chinese Cognac Léopold Croizet range, without public prices.',
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
+    '- [FAQ](https://cognac-leopold-croizet.com/faq/): Visitor-ready answers about cognac, cuvée choice, serving, visits and professional requests.',
+    '- [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.',
+    '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
@@ -2647,6 +3166,16 @@ function makeLlmsFullTxt() {
     '- Time and heritage: https://cognac-leopold-croizet.com/le-temps/',
     '- Léopold Croizet interview: https://cognac-leopold-croizet.com/leopold-croizet/',
     '- Maison Léopold Croizet film: https://cognac-leopold-croizet.com/film-maison-leopold-croizet/',
+    '',
+    '## FAQ',
+    'The FAQ answers visitor questions about cognac origins, grape varieties, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:',
+    '- French FAQ: https://cognac-leopold-croizet.com/faq/',
+    '- English FAQ: https://cognac-leopold-croizet.com/en/faq/',
+    '- Russian FAQ: https://cognac-leopold-croizet.com/ru/faq/',
+    '- Danish FAQ: https://cognac-leopold-croizet.com/da/faq/',
+    '- Swedish FAQ: https://cognac-leopold-croizet.com/sv/faq/',
+    '- Norwegian FAQ: https://cognac-leopold-croizet.com/no/faq/',
+    '- Simplified Chinese FAQ: https://cognac-leopold-croizet.com/zh/faq/',
     '',
     '## Cocktails',
     'The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.',

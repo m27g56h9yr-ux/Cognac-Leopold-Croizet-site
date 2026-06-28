@@ -36,6 +36,16 @@ The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as 
 - Léopold Croizet interview: https://cognac-leopold-croizet.com/leopold-croizet/
 - Maison Léopold Croizet film: https://cognac-leopold-croizet.com/film-maison-leopold-croizet/
 
+## FAQ
+The FAQ answers visitor questions about cognac origins, grape varieties, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:
+- French FAQ: https://cognac-leopold-croizet.com/faq/
+- English FAQ: https://cognac-leopold-croizet.com/en/faq/
+- Russian FAQ: https://cognac-leopold-croizet.com/ru/faq/
+- Danish FAQ: https://cognac-leopold-croizet.com/da/faq/
+- Swedish FAQ: https://cognac-leopold-croizet.com/sv/faq/
+- Norwegian FAQ: https://cognac-leopold-croizet.com/no/faq/
+- Simplified Chinese FAQ: https://cognac-leopold-croizet.com/zh/faq/
+
 ## Cocktails
 The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.
 
