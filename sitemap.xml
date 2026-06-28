@@ -484,13 +484,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/shop/" />
   </url>
   <url>
-    <loc>https://cognac-leopold-croizet.com/distribution/</loc>
-    <lastmod>2026-06-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/distribution/" />
-  </url>
-  <url>
     <loc>https://cognac-leopold-croizet.com/en/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -783,6 +776,13 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/shop/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/shop/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/shop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/faq/</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/faq/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/film-maison-leopold-croizet/</loc>

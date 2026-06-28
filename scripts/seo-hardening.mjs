@@ -17,31 +17,194 @@ const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((p
   prefix === '/' ? `/${FILM_SLUG}/` : `${prefix}${FILM_SLUG}/`
 ));
 
-const publishedSourceRoutes = new Set(['/distribution/', ...FILM_ROUTES]);
+const publishedSourceRoutes = new Set(['/faq/', ...FILM_ROUTES]);
 
-const faqDraftEntries = [
+const faqEntries = [
   {
+    group: 'Choisir',
+    question: 'Qu’est-ce que le cognac ?',
+    answer: 'Le cognac est une eau-de-vie de vin produite dans l’aire d’appellation Cognac. Il naît de raisins blancs vinifiés, distillés puis vieillis en fûts de chêne avant d’être assemblé et mis en bouteille.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Le cognac est-il un whisky ou un brandy ?',
+    answer: 'Le cognac n’est pas un whisky : il vient du raisin, alors que le whisky vient de céréales. Il appartient à la famille des brandies, mais avec une origine, des règles de production et une appellation propres à la région de Cognac.',
+  },
+  {
+    group: 'Choisir',
+    question: 'D’où vient le cognac Léopold Croizet ?',
+    answer: 'Le cognac Léopold Croizet est ancré en Charente, autour de la propriété familiale de Triac-Lautrait. Cet environnement fait partie de l’esprit de la maison : un lien direct au territoire du cognac, au temps du vieillissement et au savoir-faire transmis au domaine.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Qui a inventé le cognac ?',
+    answer: 'Le cognac n’a pas un inventeur unique. Il s’est construit progressivement dans la région de Cognac, par le commerce des vins, la distillation charentaise, le vieillissement en fûts et le savoir-faire des maisons.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Comment le cognac est-il élaboré ?',
+    answer: 'Le cognac naît d’un vin blanc destiné à la distillation. Il est ensuite distillé selon la tradition charentaise, vieilli en fûts de chêne puis assemblé pour rechercher un équilibre entre fruit, bois, structure et longueur.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Quels cépages sont utilisés pour le cognac ?',
+    answer: 'L’appellation Cognac repose sur des raisins blancs adaptés à la distillation, dont l’ugni blanc est le cépage le plus courant. Chez Léopold Croizet, la vigne comprend aussi du colombard et de la folle blanche. Pour une information précise sur une cuvée, vous pouvez contacter directement la maison.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Pourquoi le cognac vieillit-il en fût de chêne ?',
+    answer: 'Le vieillissement en fût apporte couleur, structure et complexité aromatique. Le bois, le temps et le chai influencent les notes épicées, boisées, fruitées ou gourmandes que l’on retrouve ensuite à la dégustation.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Pourquoi assembler plusieurs eaux-de-vie ?',
+    answer: 'L’assemblage permet de construire un style équilibré et cohérent. Le maître de chai associe des eaux-de-vie d’âges et de profils différents pour rechercher une signature aromatique plutôt qu’une simple addition de composants.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Quelle bouteille choisir pour découvrir la collection ?',
+    answer: 'Le choix dépend d’abord de l’usage : découverte, cadeau, dégustation pure, cocktail ou grande occasion. La page Collection reste la porte d’entrée la plus sûre pour comparer les cuvées déjà présentées, puis demander conseil à la maison si le contexte du cadeau ou du repas compte autant que la bouteille.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Que signifient VS, VSOP, Napoléon, XO, Extra et XXO ?',
+    answer: 'Ces mentions indiquent l’âge minimal de la plus jeune eau-de-vie de l’assemblage : VS à partir de 2 ans, VSOP à partir de 4 ans, Napoléon à partir de 6 ans, XO et Extra à partir de 10 ans, XXO à partir de 14 ans. Elles donnent un repère, mais le style dépend aussi de l’assemblage.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Quel goût a le cognac ?',
+    answer: 'Le goût varie selon l’âge, les eaux-de-vie, les fûts et l’assemblage. On peut rencontrer des notes de fruits, fleurs, épices, bois, fruits secs, vanille, cacao ou rancio sur les cuvées plus âgées.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Où trouver les détails de chaque cuvée ?',
+    answer: 'Les pages de la Collection présentent les cuvées, leurs visuels et leurs informations principales. Si vous hésitez entre plusieurs bouteilles, la maison peut aussi vous orienter selon l’occasion, le style recherché et le pays de livraison ou de retrait.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Pourquoi une bouteille peut-elle être indisponible ?',
+    answer: 'La disponibilité peut dépendre du stock, du pays, du conditionnement ou du circuit de distribution. Pour connaître la situation d’une cuvée précise, contactez la maison en indiquant la bouteille souhaitée et votre pays.',
+  },
+  {
+    group: 'Choisir',
+    question: 'Comment prononcer Léopold Croizet ?',
+    answer: 'À l’écrit, le nom de la maison s’utilise toujours complet : Léopold Croizet. À l’oral, il se prononce comme un nom français ; si vous préparez une visite, une présentation ou un usage professionnel, l’équipe peut vous aider à le dire naturellement.',
+  },
+  {
+    group: 'Servir',
     question: 'Comment servir un cognac pur ?',
     answer: 'Servir une petite quantité à température ambiante, dans un verre tulipe ou un verre à pied légèrement refermé. Observer la robe, approcher le verre progressivement du nez, puis goûter lentement. Éviter de chauffer le verre : une chaleur excessive peut faire dominer l’alcool sur les arômes. Une goutte d’eau peut être proposée à part pour ouvrir certains arômes, sans transformer la dégustation en cocktail.',
   },
   {
+    group: 'Servir',
     question: 'Comment conserver une bouteille de cognac ?',
     answer: 'Une fois embouteillé, le cognac ne vieillit plus comme en fût. Conserver la bouteille debout, bien rebouchée, dans un endroit sec, sombre et à température stable, loin du soleil et des sources de chaleur. Après ouverture, limiter le contact avec l’air : reboucher rapidement et, si la bouteille est très entamée, éviter de la conserver de longs mois ainsi.',
   },
   {
-    question: 'Que préparer avant une visite ?',
-    answer: 'La demande de rendez-vous relève de la page Visite. Avant de contacter la maison, préparer le nombre de visiteurs, le créneau souhaité, la langue d’accueil, les contraintes d’accès ou de mobilité, la présence éventuelle de personnes ne dégustant pas d’alcool, et l’organisation d’un retour responsable après dégustation.',
+    group: 'Servir',
+    question: 'Le cognac peut-il se périmer ?',
+    answer: 'Une bouteille fermée et correctement conservée ne se périme pas comme un produit frais. Après ouverture, la qualité peut évoluer si la bouteille reste longtemps exposée à l’air, à la lumière ou à la chaleur.',
   },
   {
-    question: 'Un retrait à Triac-Lautrait est-il possible ?',
-    answer: 'Oui, le retrait est possible à Triac-Lautrait aux heures d’ouverture. Il reste préférable de prévenir la maison avant déplacement afin que la disponibilité et le créneau soient bien organisés.',
+    group: 'Servir',
+    question: 'Faut-il mettre le cognac au réfrigérateur ?',
+    answer: 'Ce n’est pas nécessaire pour une dégustation pure. Un service à température ambiante, dans un verre adapté, reste le plus lisible. Pour un cocktail ou un long drink, la fraîcheur vient plutôt de la glace, du verre ou des ingrédients.',
   },
-];
-
-const faqValidationItems = [
-  'Retrait sur place : préciser les heures d’ouverture affichables et le contact à prévenir.',
-  'Visite : confirmer durée moyenne, langues d’accueil, groupes, accessibilité et accueil des personnes ne dégustant pas d’alcool.',
-  'Service : valider les recommandations propres à la maison, notamment les accords mets et cognac et les usages par produit.',
+  {
+    group: 'Servir',
+    question: 'Peut-on servir le cognac sur glace ?',
+    answer: 'Oui, selon le style recherché. La glace rafraîchit et adoucit la perception de l’alcool, mais elle dilue progressivement le cognac. Pour les cuvées de dégustation, il vaut mieux commencer pur, puis ajuster si besoin.',
+  },
+  {
+    group: 'Servir',
+    question: 'Peut-on servir un cognac Léopold Croizet en cocktail ?',
+    answer: 'Oui, certaines cuvées peuvent se servir en cocktail lorsque la recette respecte l’équilibre du cognac. Les recettes maison du site donnent de bonnes bases pour travailler avec fraîcheur, précision et consommation responsable.',
+  },
+  {
+    group: 'Servir',
+    question: 'Quels mélanges simples fonctionnent avec le cognac ?',
+    answer: 'Pour un service simple, le cognac peut s’associer à du ginger ale, du tonic, de l’eau pétillante ou des agrumes, selon la cuvée et le style recherché. Commencez avec peu d’ingrédients afin de laisser le cognac s’exprimer.',
+  },
+  {
+    group: 'Servir',
+    question: 'Quel cocktail conseiller pour débuter ?',
+    answer: 'Un long drink simple, autour du cognac, de glace, d’un ginger ale de qualité et d’un zeste d’agrume, permet de découvrir le cognac en cocktail sans le masquer. Vous pouvez aussi consulter les recettes maison déjà publiées sur le site.',
+  },
+  {
+    group: 'Servir',
+    question: 'Avec quoi accorder le cognac ?',
+    answer: 'Les accords dépendent de la cuvée et de son intensité. Le chocolat noir, les desserts peu sucrés, les fruits secs, le café ou certains fromages peuvent accompagner un cognac, à condition de préserver l’équilibre aromatique.',
+  },
+  {
+    group: 'Servir',
+    question: 'Le cognac contient-il du gluten ou des allergènes ?',
+    answer: 'Le cognac est issu du raisin, non de céréales. En cas d’allergie forte, de sensibilité particulière ou de régime médical strict, contactez la maison avec la cuvée concernée avant consommation.',
+  },
+  {
+    group: 'Servir',
+    question: 'Quelles informations nutritionnelles faut-il vérifier ?',
+    answer: 'Le degré alcoolique, la contenance et les mentions réglementaires figurent sur l’étiquette de la bouteille. Pour une demande nutritionnelle plus précise ou liée à un marché particulier, contactez la maison avec le nom de la cuvée.',
+  },
+  {
+    group: 'Servir',
+    question: 'Le cognac est-il végétalien, casher ou certifié ?',
+    answer: 'Pour toute demande de certification, par exemple végétalienne, casher ou autre, le plus sûr est de contacter la maison avec la cuvée et le pays concernés. Vous recevrez ainsi une réponse adaptée à votre besoin.',
+  },
+  {
+    group: 'Visiter',
+    question: 'Peut-on visiter la maison à Triac-Lautrait ?',
+    answer: 'Les visites se préparent sur rendez-vous à Triac-Lautrait, en Charente. La page Visite permet de prendre contact avec la maison et de préparer votre venue dans les meilleures conditions.',
+  },
+  {
+    group: 'Visiter',
+    question: 'Comment réserver une visite ?',
+    answer: 'Envoyez une demande en indiquant le nombre de visiteurs, la date souhaitée, la langue d’accueil, les éventuelles contraintes particulières et vos coordonnées. Attendez la confirmation de la maison avant d’organiser votre déplacement.',
+  },
+  {
+    group: 'Visiter',
+    question: 'Faut-il réserver à l’avance et que préparer ?',
+    answer: 'Oui, il est préférable de réserver à l’avance. Préparer le nombre de visiteurs, le créneau souhaité, les contraintes d’accès, la présence de personnes ne dégustant pas d’alcool et l’organisation d’un retour responsable après dégustation.',
+  },
+  {
+    group: 'Visiter',
+    question: 'Où se situe la maison à visiter ?',
+    answer: 'La maison se situe à Triac-Lautrait, en Charente, à l’adresse indiquée sur la page Visite. Vous y trouverez aussi les informations d’accès utiles pour préparer votre trajet.',
+  },
+  {
+    group: 'Visiter',
+    question: 'Quels sont les jours, horaires et conditions de visite ?',
+    answer: 'Les horaires et conditions peuvent varier selon la période et les disponibilités. Avant de vous déplacer, contactez la maison pour confirmer le créneau, la taille du groupe et les modalités de dégustation.',
+  },
+  {
+    group: 'Demander',
+    question: 'Où acheter ou retirer une bouteille ?',
+    answer: 'La disponibilité dépend du pays, de la cuvée et du circuit de distribution. Pour un retrait à Triac-Lautrait ou une demande d’achat, contactez la maison afin de vérifier la bouteille souhaitée et le créneau possible.',
+  },
+  {
+    group: 'Demander',
+    question: 'Comment contacter la maison ?',
+    answer: 'Pour une question, une visite, une information produit ou un retrait, utilisez les coordonnées officielles du site. Vous pouvez écrire à cognac@mdpierre.com ou appeler le +33 5 45 35 88 10.',
+  },
+  {
+    group: 'Demander',
+    question: 'Que fournir pour une demande commerciale ou professionnelle ?',
+    answer: 'Indiquez votre nom, votre société, votre pays, votre activité, le type de besoin, les volumes ou formats recherchés et vos coordonnées. Les demandes d’import, de distribution, d’hôtellerie, de restauration ou de caviste sont traitées directement par la maison.',
+  },
+  {
+    group: 'Demander',
+    question: 'La maison achète-t-elle ou estime-t-elle les anciennes bouteilles ?',
+    answer: 'Pour une ancienne bouteille, envoyez des photos nettes de la bouteille, du niveau, de l’étiquette, de la capsule et, si possible, son historique connu. La maison pourra vous indiquer si une réponse est possible, sans garantie d’estimation ou de rachat.',
+  },
+  {
+    group: 'Demander',
+    question: 'Quels formats ou conditionnements existent pour les professionnels ?',
+    answer: 'Les formats, coffrets, caisses et disponibilités professionnelles varient selon la cuvée et le marché. Une demande précise permet à la maison de vous répondre avec les informations adaptées à votre activité.',
+  },
+  {
+    group: 'Demander',
+    question: 'Où suivre les actualités de la maison ?',
+    answer: 'Vous pouvez suivre les actualités de la maison depuis le site officiel et les réseaux sociaux indiqués par Cognac Léopold Croizet. Le pied de page du site reste le meilleur point de repère pour retrouver les liens à jour.',
+  },
 ];
 
 const productNames = new Map([
@@ -590,12 +753,8 @@ for (const [route, metadata] of zhRouteMetadata) routeMetadata.set(route, metada
 
 for (const [route, metadata] of new Map([
   ['/faq/', {
-    title: 'Brouillon FAQ à valider | Cognac Léopold Croizet',
-    description: 'Brouillon non indexé pour préparer une future FAQ Cognac Léopold Croizet avec uniquement des réponses vérifiées et utiles.',
-  }],
-  ['/distribution/', {
-    title: 'Contact professionnel confidentiel | Cognac Léopold Croizet',
-    description: 'Contact professionnel Cognac Léopold Croizet pour demandes commerciales, import et distribution, sans publication du réseau d’importateurs ou de revendeurs.',
+    title: 'FAQ Cognac | Cognac Léopold Croizet',
+    description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
   }],
   ['/preuves/', {
     title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
@@ -634,7 +793,6 @@ const noindexRoutes = new Set([
   '/sv/checkout/',
   '/no/checkout/',
   '/zh/checkout/',
-  '/faq/',
   '/preuves/',
 ]);
 
@@ -701,7 +859,6 @@ async function walkHtml(dir) {
 async function writeSourcePages() {
   const pages = new Map([
     ['faq/index.html', faqPageHtml()],
-    ['distribution/index.html', distributionPageHtml()],
     ['preuves/index.html', proofDraftPageHtml()],
   ]);
 
@@ -721,6 +878,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
   const nav = sourceNavigationCopy(lang);
   const routes = sourceNavigationRoutes(lang);
   const isPlainHeader = headerVariant === 'plain';
+  const isFaqPage = pageClass.split(/\s+/).includes('lc-faq-page');
   const headerHtml = isPlainHeader ? `  <header class="lc-site-header">
     <div class="lc-site-nav">
       <a class="lc-logo-header" href="${routes.home}" aria-label="${nav.home}">
@@ -744,7 +902,6 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
         <a href="${routes.collection}">${nav.collection}</a>
         <a href="${routes.film}">${nav.film}</a>
         <a href="${routes.visit}">${nav.visit}</a>
-        <a href="${routes.business}">${nav.business}</a>
       </nav>
     </div>
     <div class="lc-hero">
@@ -780,6 +937,62 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     .lc-film-panel{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(18px,4vw,44px)}` : '';
   const plainHeaderMobileCss = isPlainHeader ? `
     @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding:88px 18px 90px;margin-top:0;background:linear-gradient(#dacdbc 0%,#f6f3ef 220px)}.lc-paper-tear{height:82px}.lc-page-title{text-align:left;margin-bottom:34px}.lc-film-title{font-size:clamp(26px,8vw,36px);line-height:1.22}.lc-film-panel{padding:18px}}` : '';
+  const faqShellCss = isFaqPage ? `    .lc-nowrap{white-space:nowrap}
+    body.lc-faq-page .lc-page-header{min-height:56vh;background:linear-gradient(rgba(12,10,8,.42),rgba(12,10,8,.66)),url("/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg") center/cover;color:#fff}
+    body.lc-faq-page .lc-hero{margin-top:104px;text-shadow:0 2px 20px rgba(0,0,0,.28)}
+    .lc-faq-path{display:grid;grid-template-columns:minmax(260px,1.06fr) repeat(2,minmax(0,.94fr));grid-auto-rows:224px;gap:14px;margin:0 0 44px}
+    .lc-faq-step{position:relative;display:block;min-height:0;overflow:hidden;background:#17110d;border:1px solid rgba(183,138,59,.34);color:#fff;text-decoration:none;isolation:isolate}
+    .lc-faq-step:hover{text-decoration:none}
+    .lc-faq-step::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(13,9,7,.04) 0%,rgba(13,9,7,.32) 44%,rgba(13,9,7,.88) 100%);pointer-events:none}
+    .lc-faq-step::after{content:"";position:absolute;inset:12px;z-index:2;border:1px solid rgba(255,255,255,.22);pointer-events:none}
+    .lc-faq-step img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.05);transform:scale(1.01);transition:transform .6s ease}
+    .lc-faq-step:hover img{transform:scale(1.045)}
+    .lc-faq-step-copy{position:absolute;left:22px;right:22px;bottom:22px;z-index:3}
+    .lc-faq-step-copy > span{display:block;margin-bottom:10px;font-family:Arial,sans-serif;font-size:11px;text-transform:uppercase;color:#e5c988}
+    .lc-faq-step strong{display:block;color:#fff;font-size:clamp(23px,2.1vw,30px);font-weight:400;line-height:1.12;text-shadow:0 2px 18px rgba(0,0,0,.42)}
+    .lc-faq-step p{margin:10px 0 0;color:#f5eadb;font-size:14px;line-height:1.42;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+    .lc-faq-step-product{background:radial-gradient(circle at 58% 31%,#76332d 0%,#2b1712 48%,#130e0b 100%)}
+    .lc-faq-step-product{grid-row:span 2}
+    .lc-faq-step-product img{inset:24px 8% auto 8%;width:84%;height:70%;object-fit:contain;filter:drop-shadow(0 24px 32px rgba(0,0,0,.38));transform:none}
+    .lc-faq-step-product:hover img{transform:translateY(-3px)}
+    .lc-faq-step-wide{grid-column:span 2}
+    .lc-faq-main{max-width:860px;margin:0 auto}
+    .lc-faq-intro{font-size:18px;color:var(--lc-muted);max-width:760px}
+    .lc-faq-list{border-top:1px solid var(--lc-line);margin-top:24px}
+    .lc-faq-group-label{font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--lc-gold);margin:28px 0 0;padding-top:22px;border-top:1px solid var(--lc-line);scroll-margin-top:28px}
+    .lc-faq-list .lc-faq-group-label:first-child{margin-top:0;padding-top:0;border-top:0}
+    .lc-faq-item{border-bottom:1px solid var(--lc-line)}
+    .lc-faq-item summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 32px;gap:18px;align-items:center;list-style:none;padding:22px 0}
+    .lc-faq-item summary::-webkit-details-marker{display:none}
+    .lc-faq-item h3{font-size:clamp(22px,2.6vw,31px);line-height:1.18;margin:0;color:var(--lc-ink)}
+    .lc-faq-item p{max-width:760px;margin:-4px 50px 24px 0;color:var(--lc-muted);font-size:17px}
+    .lc-faq-toggle{position:relative;width:30px;height:30px;border:1px solid var(--lc-line);border-radius:50%}
+    .lc-faq-toggle::before,.lc-faq-toggle::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:var(--lc-gold)}
+    .lc-faq-toggle::after{transform:rotate(90deg)}
+    .lc-faq-item[open] .lc-faq-toggle::after{display:none}` : `    .lc-faq-layout{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+    .lc-faq-aside{border-left:3px solid var(--lc-gold);padding-left:22px;color:var(--lc-muted)}
+    .lc-faq-aside p{font-size:16px}
+    .lc-aside-label{font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--lc-gold);margin-bottom:10px}
+    .lc-faq-aside strong{display:block;color:var(--lc-ink);font-size:42px;font-weight:400;line-height:1;margin:12px 0 8px}
+    .lc-faq-list{border-top:1px solid var(--lc-line);margin-top:24px}
+    .lc-faq-item{border-bottom:1px solid var(--lc-line)}
+    .lc-faq-item summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 32px;gap:18px;align-items:center;list-style:none;padding:22px 0}
+    .lc-faq-item summary::-webkit-details-marker{display:none}
+    .lc-faq-item h3{font-size:clamp(22px,2.6vw,31px);line-height:1.18;margin:0;color:var(--lc-ink)}
+    .lc-faq-item p{max-width:760px;margin:-4px 50px 24px 0;color:var(--lc-muted);font-size:17px}
+    .lc-faq-toggle{position:relative;width:30px;height:30px;border:1px solid var(--lc-line);border-radius:50%}
+    .lc-faq-toggle::before,.lc-faq-toggle::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:var(--lc-gold)}
+    .lc-faq-toggle::after{transform:rotate(90deg)}
+    .lc-faq-item[open] .lc-faq-toggle::after{display:none}
+    .lc-validation-panel{margin-top:34px;padding:24px 26px;background:#fffdf9;border:1px solid var(--lc-line)}
+    .lc-validation-panel h2{font-size:clamp(22px,2.4vw,30px)}
+    .lc-checklist{display:grid;gap:10px;margin-top:16px;padding-left:0;list-style:none}
+    .lc-checklist li{margin:0;padding-left:18px;position:relative}
+    .lc-checklist li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--lc-gold)}`;
+  const faqMobileCss = isFaqPage
+    ? `    @media (max-width:1040px){.lc-faq-path{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto}.lc-faq-step,.lc-faq-step-product{min-height:286px;grid-column:auto;grid-row:auto}.lc-faq-step-wide{grid-column:span 2}}
+    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-path{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-path{gap:12px;margin-bottom:34px}.lc-faq-step,.lc-faq-step-wide{min-height:242px;grid-column:auto}.lc-faq-step-product{min-height:270px}.lc-faq-step-copy{left:18px;right:18px;bottom:18px}.lc-faq-step strong{font-size:24px}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}`
+    : `    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}`;
 
   return `<!doctype html>
 <html lang="${htmlLangForRoute(route)}">
@@ -806,26 +1019,7 @@ ${fontLinkHtml}  <title>${escapeHtml(title)}</title>
     main{max-width:1080px;margin:-46px auto 0;padding:0 clamp(18px,4vw,34px) 90px;position:relative}
     .lc-panel{background:#fff;border:1px solid var(--lc-line);padding:clamp(26px,5vw,56px);box-shadow:0 24px 70px rgba(24,18,12,.08)}${plainHeaderCss}
     .lc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-    .lc-faq-layout{display:grid;grid-template-columns:minmax(210px,300px) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
-    .lc-faq-aside{border-left:3px solid var(--lc-gold);padding-left:22px;color:var(--lc-muted)}
-    .lc-faq-aside p{font-size:16px}
-    .lc-aside-label{font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;color:var(--lc-gold);margin-bottom:10px}
-    .lc-faq-aside strong{display:block;color:var(--lc-ink);font-size:42px;font-weight:400;line-height:1;margin:12px 0 8px}
-    .lc-faq-list{border-top:1px solid var(--lc-line);margin-top:24px}
-    .lc-faq-item{border-bottom:1px solid var(--lc-line)}
-    .lc-faq-item summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 32px;gap:18px;align-items:center;list-style:none;padding:22px 0}
-    .lc-faq-item summary::-webkit-details-marker{display:none}
-    .lc-faq-item h3{font-size:clamp(22px,2.6vw,31px);line-height:1.18;margin:0;color:var(--lc-ink)}
-    .lc-faq-item p{max-width:760px;margin:-4px 50px 24px 0;color:var(--lc-muted);font-size:17px}
-    .lc-faq-toggle{position:relative;width:30px;height:30px;border:1px solid var(--lc-line);border-radius:50%}
-    .lc-faq-toggle::before,.lc-faq-toggle::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:var(--lc-gold)}
-    .lc-faq-toggle::after{transform:rotate(90deg)}
-    .lc-faq-item[open] .lc-faq-toggle::after{display:none}
-    .lc-validation-panel{margin-top:34px;padding:24px 26px;background:#fffdf9;border:1px solid var(--lc-line)}
-    .lc-validation-panel h2{font-size:clamp(22px,2.4vw,30px)}
-    .lc-checklist{display:grid;gap:10px;margin-top:16px;padding-left:0;list-style:none}
-    .lc-checklist li{margin:0;padding-left:18px;position:relative}
-    .lc-checklist li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--lc-gold)}
+${faqShellCss}
     .lc-section{border-top:1px solid var(--lc-line);padding-top:24px;margin-top:28px}
     .lc-section:first-child{border-top:0;padding-top:0;margin-top:0}
     .lc-video-section{border-top:0;padding-top:0;margin-top:0}
@@ -848,7 +1042,7 @@ ${fontLinkHtml}  <title>${escapeHtml(title)}</title>
     footer img{width:154px;height:auto}
     .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
     .copyright{margin-top:20px;color:#b9aa96;font-size:13px}
-    @media (max-width:760px){.lc-topbar{align-items:flex-start;flex-direction:column}.lc-nav{gap:14px}.lc-page-header{padding-bottom:70px}.lc-hero{text-align:left;margin-top:62px}.lc-grid,.lc-faq-layout{grid-template-columns:1fr}main{margin-top:-36px}.lc-panel{padding:24px 20px}.lc-faq-aside{border-left:0;border-top:3px solid var(--lc-gold);padding:16px 0 0}.lc-faq-item p{margin-right:0}.lc-faq-item summary{grid-template-columns:minmax(0,1fr) 28px}}${plainHeaderMobileCss}
+${faqMobileCss}${plainHeaderMobileCss}
   </style>
 </head>
 <body${pageClass ? ` class="${escapeHtml(pageClass)}"` : ''}>
@@ -866,7 +1060,6 @@ ${headerHtml}
     <div class="menu-footer">
       <ul>
         <li><a href="${routes.visit}">${nav.contact}</a></li>
-        <li><a href="${routes.business}">${nav.business}</a></li>
         <li><a href="${routes.legal}">${nav.legal}</a></li>
         <li><a rel="privacy-policy" href="/cgv/">CGV</a></li>
       </ul>
@@ -886,7 +1079,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Le film',
       visit: 'Visite',
-      business: 'Contact commercial',
       contact: 'Nous contacter',
       legal: 'Mentions légales',
     },
@@ -897,7 +1089,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'The film',
       visit: 'Meet us',
-      business: 'Trade contact',
       contact: 'Contact us',
       legal: 'Legal notice',
     },
@@ -908,7 +1099,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Фильм',
       visit: 'Визит',
-      business: 'Коммерческий контакт',
       contact: 'Связаться',
       legal: 'Правовая информация',
     },
@@ -919,7 +1109,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Mød os',
-      business: 'Professionel kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -930,7 +1119,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Möt oss',
-      business: 'Professionell kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -941,7 +1129,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: 'Filmen',
       visit: 'Møt oss',
-      business: 'Profesjonell kontakt',
       contact: 'Kontakt',
       legal: 'Juridisk informasjon',
     },
@@ -952,7 +1139,6 @@ function sourceNavigationCopy(lang) {
       leopold: 'Léopold&nbsp;Croizet',
       film: '影片',
       visit: '走近我们',
-      business: '商务联系',
       contact: '联系我们',
       legal: '法律信息',
     },
@@ -967,7 +1153,6 @@ function sourceNavigationRoutes(lang) {
     leopold: sourceHref(leopoldRouteForLang(lang)),
     film: sourceHref(filmRouteForLang(lang)),
     visit: sourceHref(visitRouteForLang(lang)),
-    business: sourceHref('/distribution/'),
     legal: sourceHref('/mentions-legales/'),
   };
 }
@@ -1112,82 +1297,76 @@ function filmPageHtml(route) {
   });
 }
 
+function escapeFaqText(value) {
+  return escapeHtml(value).replace(/Léopold Croizet/g, '<span class="lc-nowrap">Léopold Croizet</span>');
+}
+
 function faqPageHtml() {
+  let previousGroup = '';
+  const groupAnchors = {
+    Choisir: 'faq-choisir',
+    Servir: 'faq-servir',
+    Visiter: 'faq-visiter',
+    Demander: 'faq-demander',
+    Acheter: 'faq-demander',
+    Professionnels: 'faq-professionnels',
+  };
+  const faqItems = faqEntries.map((entry, index) => {
+    const groupId = groupAnchors[entry.group];
+    const idAttribute = groupId ? ` id="${groupId}"` : '';
+    const groupLabel = entry.group !== previousGroup
+      ? `<p class="lc-faq-group-label"${idAttribute}>${escapeHtml(entry.group)}</p>`
+      : '';
+    previousGroup = entry.group;
+    return `${groupLabel}<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeFaqText(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary><p>${escapeFaqText(entry.answer)}</p></details>`;
+  }).join('\n');
+
   const body = [
-    '<div class="lc-faq-layout">',
-    '<aside class="lc-faq-aside" aria-label="État du brouillon">',
-    '<p class="lc-aside-label">Brouillon interne</p>',
-    '<strong>4</strong>',
-    '<p>Questions complémentaires, non redondantes avec les pages Visite et Collection.</p>',
-    '<p>La page reste hors index tant que les détails propres à la maison ne sont pas validés.</p>',
-    '</aside>',
+    '<nav class="lc-faq-path" aria-label="Parcours de questions">',
+    '<a class="lc-faq-step lc-faq-step-product" href="#faq-choisir">',
+    '<img src="/wp-content/uploads/2026/06/extra-bt-devant-coffret-420.png" alt="Coffret rouge et carafe Cognac Léopold Croizet" width="420" height="426" decoding="async" loading="eager">',
+    '<span class="lc-faq-step-copy"><span>Choisir</span><strong>Quelle bouteille ?</strong><p>Usage, cadeau, dégustation ou grande occasion.</p></span>',
+    '</a>',
+    '<a class="lc-faq-step" href="#faq-servir">',
+    '<img src="/wp-content/uploads/2021/05/img_home_carre_cocktail.jpg" alt="Cognac Léopold Croizet servi dans un verre" width="715" height="693" decoding="async" loading="eager">',
+    '<span class="lc-faq-step-copy"><span>Servir</span><strong>Comment déguster ?</strong><p>Verre, température, conservation et cocktail.</p></span>',
+    '</a>',
+    '<a class="lc-faq-step" href="#faq-visiter">',
+    '<img src="/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="Propriété familiale Cognac Léopold Croizet à Triac-Lautrait" width="2560" height="2088" decoding="async" loading="eager">',
+    '<span class="lc-faq-step-copy"><span>Visiter</span><strong>Que préparer ?</strong><p>Rendez-vous, groupe, accès et retour responsable.</p></span>',
+    '</a>',
+    '<a class="lc-faq-step lc-faq-step-wide" href="#faq-demander">',
+    '<img src="/wp-content/uploads/2021/05/img_home_carre_archive.jpg" alt="Archive manuscrite de la maison Cognac Léopold Croizet" width="715" height="693" decoding="async" loading="eager">',
+    '<span class="lc-faq-step-copy"><span>Demander</span><strong>À qui écrire ?</strong><p>Retrait, demande professionnelle et réponse personnalisée.</p></span>',
+    '</a>',
+    '</nav>',
     '<div class="lc-faq-main">',
     '<section class="lc-section">',
-    '<h2>Questions complémentaires</h2>',
-    '<p>Des réponses pratiques pour préparer une dégustation, conserver une bouteille, organiser une visite et prévoir un retrait sur place.</p>',
+    '<h2>Questions fréquentes</h2>',
+    '<p class="lc-faq-intro">Une base claire pour comprendre le cognac, choisir une bouteille, servir avec justesse, organiser une visite ou formuler une demande professionnelle.</p>',
     '<div class="lc-faq-list">',
-    ...faqDraftEntries.map((entry, index) => (
-      `<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeHtml(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary><p>${escapeHtml(entry.answer)}</p></details>`
-    )),
+    faqItems,
     '</div>',
     '</section>',
-    '<section class="lc-validation-panel">',
-    '<h2>À confirmer avant publication</h2>',
-    '<p>Ces points demandent une validation interne. Sans ces réponses, la page doit rester hors index.</p>',
-    `<ul class="lc-checklist">${faqValidationItems.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`,
-    '</section>',
     '<section class="lc-section">',
-    '<h2>Pages à privilégier</h2>',
-    '<p>Tant que la FAQ n’est pas publiable, les visiteurs doivent être guidés vers les pages qui portent déjà l’information principale.</p>',
+    '<h2>Pour aller plus loin</h2>',
+    '<p>Les pages de la collection et de visite complètent cette FAQ avec les informations les plus utiles selon votre projet.</p>',
     '<div class="lc-cta-row">',
     '<a class="lc-button" href="/collection/">Voir la collection</a>',
     '<a class="lc-button secondary" href="/rencontre/">Préparer une visite</a>',
-    '<a class="lc-button secondary" href="/distribution/">Contact commercial</a>',
     '</div>',
     '</section>',
-    '</div>',
     '</div>',
   ].join('\n');
 
   return sourcePageShell({
-    title: 'Brouillon FAQ à valider | Cognac Léopold Croizet',
-    description: 'Brouillon non indexé pour préparer une future FAQ Cognac Léopold Croizet avec uniquement des réponses utiles et vérifiées.',
-    eyebrow: 'Brouillon non indexé',
-    heading: 'FAQ à valider<br>Léopold Croizet',
-    lead: 'La page est conservée comme support de décision éditoriale, sans indexation tant que les réponses manquent de substance.',
+    title: 'FAQ Cognac | Cognac Léopold Croizet',
+    description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
+    eyebrow: 'Questions fréquentes',
+    heading: 'Questions fréquentes<br><span class="lc-nowrap">Léopold Croizet</span>',
+    lead: 'Choisir, servir, visiter ou contacter la maison : les réponses essentielles pour préparer votre découverte du cognac Léopold Croizet.',
     body,
     pageClass: 'lc-faq-page',
-  });
-}
-
-function distributionPageHtml() {
-  const body = [
-    '<section class="lc-section">',
-    '<h2>Contact direct, réseau confidentiel</h2>',
-    '<p>Cette page sert uniquement de point d’entrée pour les demandes commerciales, d’import ou de distribution. Elle ne publie pas de liste d’importateurs, de distributeurs, de revendeurs, de pays couverts ou de conditions commerciales. Par principe de confidentialité commerciale, chaque demande est étudiée directement par la maison.</p>',
-    '<div class="lc-grid">',
-    '<article class="lc-card"><h3>Coordonnées vérifiées</h3><p><strong>E-mail</strong><br><a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a></p><p><strong>Téléphone</strong><br><a href="tel:+33545358810">+33 5 45 35 88 10</a></p><p><strong>Adresse</strong><br>30 Rue d’Angoulême<br>16200 Triac-Lautrait<br>France</p></article>',
-    '<article class="lc-card"><h3>Pour une demande qualifiée</h3><ul><li>Nom, société et pays de la demande.</li><li>Activité : caviste, restaurant, hôtel, importateur, distributeur ou autre professionnel.</li><li>Objet de la demande : collection, achat professionnel, import, distribution ou rendez-vous.</li><li>Coordonnées de retour pour organiser un échange direct.</li></ul></article>',
-    '</div>',
-    '</section>',
-    '<section class="lc-section">',
-    '<h2>Informations qui restent confidentielles</h2>',
-    '<p>La maison ne publie pas son réseau commercial. Les importateurs, distributeurs, revendeurs, zones couvertes, conditions tarifaires, disponibilités, volumes et modalités logistiques sont réservés aux échanges directs avec les professionnels concernés.</p>',
-    '<div class="lc-cta-row">',
-    '<a class="lc-button" href="mailto:cognac@mdpierre.com">Envoyer un e-mail</a>',
-    '<a class="lc-button secondary" href="/collection/">Voir la collection</a>',
-    '</div>',
-    '</section>',
-  ].join('\n');
-
-  return sourcePageShell({
-    title: 'Contact professionnel confidentiel | Cognac Léopold Croizet',
-    description: 'Contact professionnel Cognac Léopold Croizet pour demandes commerciales, import et distribution, sans publication du réseau d’importateurs ou de revendeurs.',
-    eyebrow: 'Contact professionnel',
-    heading: 'Contact professionnel<br>confidentiel',
-    lead: 'Les demandes commerciales sont reçues directement par la maison. Le réseau d’importateurs et de partenaires n’est pas publié.',
-    body,
-    note: 'Aucune liste d’importateurs, aucun prix, aucune disponibilité et aucune condition commerciale ne sont affichés sur cette page.',
   });
 }
 
@@ -1335,17 +1514,7 @@ function brandIconTags() {
 }
 
 function injectFrenchFooterResourceLinks(html, route) {
-  if (languageForRoute(route) !== 'fr' || isNoindexRoute(route)) return html;
-  const items = [];
-  if (!html.includes('href="/distribution/"')) {
-    items.push('<li class="menu-item lc-source-link"><a href="/distribution/">Contact commercial</a></li>');
-  }
-  if (!items.length) return html;
-
-  return html.replace(
-    /(<div class="menu-footer"><ul\b[^>]*>)([\s\S]*?)(<\/ul>)/i,
-    (_match, open, inner, close) => `${open}${inner.trimEnd()}\n${items.join('\n')}\n${close}`,
-  );
+  return html.replace(/\n?<li class="menu-item lc-source-link"><a href="\/distribution\/">Contact commercial<\/a><\/li>/g, '');
 }
 
 function homeHrefForRoute(route) {
@@ -2436,7 +2605,6 @@ function makeLlmsTxt() {
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
-    '- [Commercial contact](https://cognac-leopold-croizet.com/distribution/): Confidential professional contact page for distribution and import enquiries; no public importer or reseller list.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
     '',
     '## Product Pages',
@@ -2487,7 +2655,6 @@ function makeLlmsFullTxt() {
     'Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/',
     '',
     '## Verified Source Pages',
-    '- Confidential commercial contact and distribution enquiries, with no public importer or reseller list: https://cognac-leopold-croizet.com/distribution/',
     '- Medal, certification and organic-claim details are not included here unless validated and visible on an indexable source page.',
     '',
     '## Contact',
