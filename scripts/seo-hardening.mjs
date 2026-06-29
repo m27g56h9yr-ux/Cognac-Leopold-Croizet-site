@@ -2243,7 +2243,7 @@ function proofPageHtml(route = '/environnement/') {
     '<section class="lc-section">',
     `<h2>${escapeHtml(copy.confirmTitle)}</h2>`,
     `<p>${escapeHtml(copy.confirmText)}</p>`,
-    `<img class="lc-proof-image" src="/wp-content/uploads/2026/06/environnement-vignes-triac-lautrait.jpg" alt="${escapeHtml(copy.imageAlt)}" width="1080" height="650" decoding="async" loading="lazy">`,
+    `<img class="lc-proof-image" src="/assets/environment/environnement-vignes-triac-lautrait.jpg" alt="${escapeHtml(copy.imageAlt)}" width="1080" height="650" decoding="async" loading="lazy">`,
     '</section>',
     '<section class="lc-section">',
     '<div class="lc-grid">',
@@ -3250,7 +3250,7 @@ function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes(FILM_SLUG)) return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?faq\/$/.test(route)) return '/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg';
-  if (PROOF_ROUTES.includes(route)) return '/wp-content/uploads/2026/06/environnement-vignes-triac-lautrait.jpg';
+  if (PROOF_ROUTES.includes(route)) return '/assets/environment/environnement-vignes-triac-lautrait.jpg';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
