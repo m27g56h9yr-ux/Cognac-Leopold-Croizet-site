@@ -47,9 +47,10 @@ The FAQ answers visitor questions about cognac origins, grape varieties, HVE, Ce
 - Simplified Chinese FAQ: https://cognac-leopold-croizet.com/zh/faq/
 
 ## Environment
+The Cognac Léopold Croizet environment page presents vineyard commitments in Triac-Lautrait and explains how soil, water, biodiversity and landscape care support eau-de-vie quality.
 Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.
 HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.
-CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page and the French business directory entry for Domaine de la Grande Versenne.
+CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page, Bureau Veritas CEC information and the French business directory entry for Domaine de la Grande Versenne SCEA.
 - French environment page: https://cognac-leopold-croizet.com/environnement/
 - English environment page: https://cognac-leopold-croizet.com/en/environnement/
 - Russian environment page: https://cognac-leopold-croizet.com/ru/environnement/
