@@ -26,7 +26,8 @@ const proofSourceUrls = {
   hveDirectory: 'https://www.data.gouv.fr/datasets/annuaire-des-exploitations-certifiees-haute-valeur-environnementale',
   hveAgriculture: 'https://agriculture.gouv.fr/ou-trouver-des-exploitations-certifiees-haute-valeur-environnementale-en-france',
   cecCognac: 'https://www.cognac.fr/sengager/certification-environnementale-cognac/',
-  cecBureauVeritas: 'https://www.bureauveritas.fr/besoin/certification-environnementale-cognac-cec',
+  cecFaq: 'https://www.cognac.fr/faq/',
+  cecActions: 'https://www.cognac.fr/actualites/nos-actions/',
 };
 const proofDocumentUrls = {
   cecAttestation: '/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf',
@@ -2049,11 +2050,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Annuaire public HVE - data.gouv.fr', proofSourceUrls.hveDirectory, 'Base officielle des exploitations HVE ; rechercher “SCEA Domaine de la Grande Versenne”.'],
         ['Ministère de l’Agriculture - HVE', proofSourceUrls.hveAgriculture, 'Explication officielle de l’annuaire et du dispositif Haute Valeur Environnementale.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Référentiel public de la filière Cognac et de ses objectifs environnementaux.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Présentation par un organisme certificateur du cadre Certification Environnementale Cognac.'],
+        ['FAQ Cognac.fr - environnement', proofSourceUrls.cecFaq, 'Réponses courtes et plus accessibles sur la CEC et ses objectifs.'],
+        ['Cognac.fr - Nos actions pour l’environnement', proofSourceUrls.cecActions, 'Présentation grand public des engagements environnementaux de la filière Cognac.'],
       ],
-      documentsTitle: 'Documents justificatifs',
-      documentsIntro: 'Documents disponibles en téléchargement, pour consultation.',
       documents: [
         ['Attestation CEC 2025-2028', proofDocumentUrls.cecAttestation],
         ['Certificat HVE 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2084,11 +2083,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Public HVE directory - data.gouv.fr', proofSourceUrls.hveDirectory, 'Official database of HVE farms; search for “SCEA Domaine de la Grande Versenne”.'],
         ['French Ministry of Agriculture - HVE', proofSourceUrls.hveAgriculture, 'Official explanation of the Haute Valeur Environnementale directory and scheme.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Public framework from the Cognac sector and its environmental goals.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentation of Certification Environnementale Cognac by a certification body.'],
+        ['Cognac.fr FAQ - environment', proofSourceUrls.cecFaq, 'Shorter public answers about CEC and its environmental goals.'],
+        ['Cognac.fr - Environmental actions', proofSourceUrls.cecActions, 'A more accessible overview of the Cognac sector’s environmental commitments.'],
       ],
-      documentsTitle: 'Supporting documents',
-      documentsIntro: 'Documents available for download and review.',
       documents: [
         ['CEC attestation 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE certificate 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2119,11 +2116,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Публичный реестр HVE - data.gouv.fr', proofSourceUrls.hveDirectory, 'Официальная база хозяйств HVE; искать “SCEA Domaine de la Grande Versenne”.'],
         ['Министерство сельского хозяйства Франции - HVE', proofSourceUrls.hveAgriculture, 'Официальное объяснение реестра и схемы Haute Valeur Environnementale.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Публичный стандарт сектора Cognac и его экологические цели.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Описание Certification Environnementale Cognac органом сертификации.'],
+        ['FAQ Cognac.fr - экология', proofSourceUrls.cecFaq, 'Более краткие публичные ответы о CEC и её экологических целях.'],
+        ['Cognac.fr - экологические действия', proofSourceUrls.cecActions, 'Более доступный обзор экологических обязательств сектора Cognac.'],
       ],
-      documentsTitle: 'Подтверждающие документы',
-      documentsIntro: 'Документы доступны для скачивания и проверки.',
       documents: [
         ['Аттестация CEC 2025-2028', proofDocumentUrls.cecAttestation],
         ['Сертификат HVE 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2154,11 +2149,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Offentligt HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Officiel database over HVE-bedrifter; søg efter “SCEA Domaine de la Grande Versenne”.'],
         ['Det franske landbrugsministerium - HVE', proofSourceUrls.hveAgriculture, 'Officiel forklaring af Haute Valeur Environnementale-registeret og ordningen.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentlig ramme fra Cognac-sektoren og dens miljømål.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Præsentation af Certification Environnementale Cognac fra et certificeringsorgan.'],
+        ['Cognac.fr FAQ - miljø', proofSourceUrls.cecFaq, 'Kortere offentlige svar om CEC og dens miljømål.'],
+        ['Cognac.fr - miljøhandlinger', proofSourceUrls.cecActions, 'En mere tilgængelig oversigt over Cognac-sektorens miljøengagement.'],
       ],
-      documentsTitle: 'Dokumentation',
-      documentsIntro: 'Dokumenter til download og gennemsyn.',
       documents: [
         ['CEC-attestation 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2189,11 +2182,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Offentligt HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Officiell databas över HVE-gårdar; sök efter “SCEA Domaine de la Grande Versenne”.'],
         ['Franska jordbruksministeriet - HVE', proofSourceUrls.hveAgriculture, 'Officiell förklaring av Haute Valeur Environnementale-registret och systemet.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentligt ramverk från Cognac-sektorn och dess miljömål.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentation av Certification Environnementale Cognac från ett certifieringsorgan.'],
+        ['Cognac.fr FAQ - miljö', proofSourceUrls.cecFaq, 'Kortare offentliga svar om CEC och dess miljömål.'],
+        ['Cognac.fr - miljöåtgärder', proofSourceUrls.cecActions, 'En mer tillgänglig översikt över Cognac-sektorns miljöåtaganden.'],
       ],
-      documentsTitle: 'Styrkande dokument',
-      documentsIntro: 'Dokument för nedladdning och granskning.',
       documents: [
         ['CEC-intyg 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2224,11 +2215,9 @@ function proofPageCopy(lang) {
       sources: [
         ['Offentlig HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Offisiell database over HVE-gårder; søk etter “SCEA Domaine de la Grande Versenne”.'],
         ['Det franske landbruksdepartementet - HVE', proofSourceUrls.hveAgriculture, 'Offisiell forklaring av Haute Valeur Environnementale-registeret og ordningen.'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentlig rammeverk fra Cognac-sektoren og miljømålene.'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentasjon av Certification Environnementale Cognac fra et sertifiseringsorgan.'],
+        ['Cognac.fr FAQ - miljø', proofSourceUrls.cecFaq, 'Kortere offentlige svar om CEC og miljømålene.'],
+        ['Cognac.fr - miljøtiltak', proofSourceUrls.cecActions, 'En mer tilgjengelig oversikt over Cognac-sektorens miljøengasjement.'],
       ],
-      documentsTitle: 'Dokumentasjon',
-      documentsIntro: 'Dokumenter for nedlasting og gjennomgang.',
       documents: [
         ['CEC-attest 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-sertifikat 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2259,11 +2248,9 @@ function proofPageCopy(lang) {
       sources: [
         ['HVE 公开名录 - data.gouv.fr', proofSourceUrls.hveDirectory, '法国 HVE 农业经营主体官方数据库；搜索 “SCEA Domaine de la Grande Versenne”。'],
         ['法国农业部 - HVE', proofSourceUrls.hveAgriculture, 'Haute Valeur Environnementale 名录和制度的官方说明。'],
-        ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, '干邑行业环境目标和 CEC 框架的公开说明。'],
-        ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, '认证机构对 Certification Environnementale Cognac 的介绍。'],
+        ['Cognac.fr 常见问题 - 环境', proofSourceUrls.cecFaq, '关于 CEC 及其环境目标的更简短公开说明。'],
+        ['Cognac.fr - 环境行动', proofSourceUrls.cecActions, '更易理解的干邑行业环境承诺介绍。'],
       ],
-      documentsTitle: '证明文件',
-      documentsIntro: '可下载并查阅的文件。',
       documents: [
         ['CEC 证明 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE 证书 2024-2027', proofDocumentUrls.hveCertificate],
@@ -2305,8 +2292,6 @@ function proofPageHtml(route = '/environnement/') {
     sources,
     '</div>',
     documents ? '<div class="lc-documents">' : '',
-    documents ? `<h3>${escapeHtml(copy.documentsTitle)}</h3>` : '',
-    documents && copy.documentsIntro ? `<p>${escapeHtml(copy.documentsIntro)}</p>` : '',
     documents ? '<div class="lc-doc-row">' : '',
     documents,
     documents ? '</div>' : '',
@@ -3486,7 +3471,8 @@ function webPageSchema(route, metadata, image) {
       proofSourceUrls.hveDirectory,
       proofSourceUrls.hveAgriculture,
       proofSourceUrls.cecCognac,
-      proofSourceUrls.cecBureauVeritas,
+      proofSourceUrls.cecFaq,
+      proofSourceUrls.cecActions,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.cecAttestation}`,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate}`,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.cecDiploma}`,
