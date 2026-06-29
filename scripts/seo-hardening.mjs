@@ -27,7 +27,11 @@ const proofSourceUrls = {
   hveAgriculture: 'https://agriculture.gouv.fr/ou-trouver-des-exploitations-certifiees-haute-valeur-environnementale-en-france',
   cecCognac: 'https://www.cognac.fr/sengager/certification-environnementale-cognac/',
   cecBureauVeritas: 'https://www.bureauveritas.fr/besoin/certification-environnementale-cognac-cec',
-  grandeVersenne: 'https://annuaire-entreprises.data.gouv.fr/entreprise/domaine-de-la-grande-versenne-837918226',
+};
+const proofDocumentUrls = {
+  cecAttestation: '/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf',
+  hveCertificate: '/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf',
+  cecDiploma: '/assets/environment/diplome-cec-grande-versenne-2021.pdf',
 };
 
 const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES]);
@@ -1237,7 +1241,7 @@ async function writeSourcePages() {
   }
 }
 
-function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '', headerVariant = 'hero' }) {
+function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '', headerVariant = 'hero', extraCss = '' }) {
   const lang = languageForRoute(route);
   const nav = sourceNavigationCopy(lang);
   const routes = sourceNavigationRoutes(lang);
@@ -1412,10 +1416,8 @@ ${faqShellCss}
     .lc-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid var(--lc-gold);font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
     .lc-button.secondary{border-color:var(--lc-line)}
     .lc-note{margin-top:32px;padding:18px 20px;background:var(--lc-cream);border-left:3px solid var(--lc-gold);font-size:15px;color:var(--lc-muted)}
-    .lc-proof-image{display:block;margin:24px 0 0;max-width:100%;height:auto;border:1px solid var(--lc-line);box-shadow:0 18px 48px rgba(22,17,13,.12)}
-    .lc-source-grid{margin-top:18px}
-    .lc-source-grid a{text-decoration:none}
-    .lc-source-grid a:hover{text-decoration:underline;text-underline-offset:.22em}
+    .lc-proof-image{margin:18px 0 0;max-width:100%;height:auto}
+${extraCss}
     footer{padding:42px 20px;text-align:center;background:#17120e;color:#f2eadf}
     footer img{width:154px;height:auto}
     .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
@@ -2043,13 +2045,19 @@ function proofPageCopy(lang) {
       cecText: 'La Certification Environnementale Cognac est un référentiel propre au vignoble charentais. Elle accompagne les exploitations vers des pratiques plus exigeantes pour la biodiversité, l’eau, les sols, la protection du vignoble et la sobriété carbone.',
       cecFact: 'Le Domaine de la Grande Versenne SCEA répond à cette démarche CEC. Les liens publics ci-dessous présentent le cadre officiel ; pour une attestation nominative destinée à un dossier professionnel, contactez la maison.',
       sourcesTitle: 'Preuves publiques et référentiels',
-      sourcesIntro: 'Ces liens permettent de consulter les bases publiques HVE, le cadre de la Certification Environnementale Cognac et l’identité publique du Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'Ces liens permettent de consulter les bases publiques HVE et le cadre de la Certification Environnementale Cognac.',
       sources: [
         ['Annuaire public HVE - data.gouv.fr', proofSourceUrls.hveDirectory, 'Base officielle des exploitations HVE ; rechercher “SCEA Domaine de la Grande Versenne”.'],
         ['Ministère de l’Agriculture - HVE', proofSourceUrls.hveAgriculture, 'Explication officielle de l’annuaire et du dispositif Haute Valeur Environnementale.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Référentiel public de la filière Cognac et de ses objectifs environnementaux.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Présentation par un organisme certificateur du cadre Certification Environnementale Cognac.'],
-        ['Annuaire des entreprises', proofSourceUrls.grandeVersenne, 'Fiche publique du Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Documents justificatifs',
+      documentsIntro: 'Documents disponibles en téléchargement, pour consultation.',
+      documents: [
+        ['Attestation CEC 2025-2028', proofDocumentUrls.cecAttestation],
+        ['Certificat HVE 2024-2027', proofDocumentUrls.hveCertificate],
+        ['Diplôme CEC 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'Pour vos dossiers professionnels',
       requestText: 'Import, distribution, référencement ou conformité documentaire : indiquez la cuvée, le pays concerné et le document attendu. La maison vous orientera vers la pièce adaptée.',
@@ -2072,13 +2080,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac is a framework specific to the Charente vineyard. It supports more demanding practices for biodiversity, water, soils, vineyard protection and carbon efficiency.',
       cecFact: 'Domaine de la Grande Versenne SCEA meets this CEC approach. The public links below present the official framework; for a named certificate required for a professional file, please contact the house.',
       sourcesTitle: 'Useful public sources',
-      sourcesIntro: 'These links provide access to public HVE records, the Certification Environnementale Cognac framework and the public identity of Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'These links provide access to public HVE records and the Certification Environnementale Cognac framework.',
       sources: [
         ['Public HVE directory - data.gouv.fr', proofSourceUrls.hveDirectory, 'Official database of HVE farms; search for “SCEA Domaine de la Grande Versenne”.'],
         ['French Ministry of Agriculture - HVE', proofSourceUrls.hveAgriculture, 'Official explanation of the Haute Valeur Environnementale directory and scheme.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Public framework from the Cognac sector and its environmental goals.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentation of Certification Environnementale Cognac by a certification body.'],
-        ['French business directory', proofSourceUrls.grandeVersenne, 'Public listing for Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Supporting documents',
+      documentsIntro: 'Documents available for download and review.',
+      documents: [
+        ['CEC attestation 2025-2028', proofDocumentUrls.cecAttestation],
+        ['HVE certificate 2024-2027', proofDocumentUrls.hveCertificate],
+        ['CEC diploma 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'For professional files',
       requestText: 'For import, distribution, listing or compliance documentation, state the cuvée, country concerned and document expected. The house will direct you to the appropriate document.',
@@ -2101,13 +2115,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac - это стандарт для виноградников Шаранты. Он поддерживает более требовательные практики в области биоразнообразия, воды, почв, защиты виноградника и снижения углеродного следа.',
       cecFact: 'Domaine de la Grande Versenne SCEA соответствует этому подходу CEC. Публичные ссылки ниже представляют официальный стандарт; для именной аттестации в профессиональном досье свяжитесь с домом.',
       sourcesTitle: 'Полезные публичные источники',
-      sourcesIntro: 'Эти ссылки дают доступ к публичным данным HVE, стандарту Certification Environnementale Cognac и публичной информации о Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'Эти ссылки дают доступ к публичным данным HVE и стандарту Certification Environnementale Cognac.',
       sources: [
         ['Публичный реестр HVE - data.gouv.fr', proofSourceUrls.hveDirectory, 'Официальная база хозяйств HVE; искать “SCEA Domaine de la Grande Versenne”.'],
         ['Министерство сельского хозяйства Франции - HVE', proofSourceUrls.hveAgriculture, 'Официальное объяснение реестра и схемы Haute Valeur Environnementale.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Публичный стандарт сектора Cognac и его экологические цели.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Описание Certification Environnementale Cognac органом сертификации.'],
-        ['Французский реестр предприятий', proofSourceUrls.grandeVersenne, 'Публичная карточка Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Подтверждающие документы',
+      documentsIntro: 'Документы доступны для скачивания и проверки.',
+      documents: [
+        ['Аттестация CEC 2025-2028', proofDocumentUrls.cecAttestation],
+        ['Сертификат HVE 2024-2027', proofDocumentUrls.hveCertificate],
+        ['Диплом CEC 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'Для профессиональных досье',
       requestText: 'Для импорта, дистрибуции, листинга или документов соответствия укажите cuvée, страну и ожидаемый документ. Дом подскажет подходящее подтверждение.',
@@ -2130,13 +2150,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac er en ramme for vinmarkerne i Charente. Den støtter mere krævende praksisser for biodiversitet, vand, jord, beskyttelse af vinmarken og kulstofeffektivitet.',
       cecFact: 'Domaine de la Grande Versenne SCEA opfylder denne CEC-tilgang. De offentlige links nedenfor præsenterer den officielle ramme; kontakt huset for et navngivet certifikat til et professionelt dossier.',
       sourcesTitle: 'Nyttige offentlige kilder',
-      sourcesIntro: 'Disse links giver adgang til offentlige HVE-data, Certification Environnementale Cognac-rammen og den offentlige identitet for Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'Disse links giver adgang til offentlige HVE-data og Certification Environnementale Cognac-rammen.',
       sources: [
         ['Offentligt HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Officiel database over HVE-bedrifter; søg efter “SCEA Domaine de la Grande Versenne”.'],
         ['Det franske landbrugsministerium - HVE', proofSourceUrls.hveAgriculture, 'Officiel forklaring af Haute Valeur Environnementale-registeret og ordningen.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentlig ramme fra Cognac-sektoren og dens miljømål.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Præsentation af Certification Environnementale Cognac fra et certificeringsorgan.'],
-        ['Fransk virksomhedsregister', proofSourceUrls.grandeVersenne, 'Offentlig registrering for Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Dokumentation',
+      documentsIntro: 'Dokumenter til download og gennemsyn.',
+      documents: [
+        ['CEC-attestation 2025-2028', proofDocumentUrls.cecAttestation],
+        ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'Til professionelle dossiers',
       requestText: 'Ved import, distribution, listing eller compliance-dokumentation skal du angive cuvée, land og ønsket dokument. Huset kan henvise til den rette dokumentation.',
@@ -2159,13 +2185,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac är ett ramverk för Charentes vingårdar. Det stödjer mer krävande praxis för biologisk mångfald, vatten, jordar, skydd av vingården och koldioxideffektivitet.',
       cecFact: 'Domaine de la Grande Versenne SCEA uppfyller denna CEC-metod. De offentliga länkarna nedan presenterar den officiella ramen; kontakta huset för ett namngivet certifikat till professionella underlag.',
       sourcesTitle: 'Användbara offentliga källor',
-      sourcesIntro: 'Dessa länkar ger tillgång till offentliga HVE-uppgifter, Certification Environnementale Cognac-ramen och den offentliga identiteten för Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'Dessa länkar ger tillgång till offentliga HVE-uppgifter och Certification Environnementale Cognac-ramen.',
       sources: [
         ['Offentligt HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Officiell databas över HVE-gårdar; sök efter “SCEA Domaine de la Grande Versenne”.'],
         ['Franska jordbruksministeriet - HVE', proofSourceUrls.hveAgriculture, 'Officiell förklaring av Haute Valeur Environnementale-registret och systemet.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentligt ramverk från Cognac-sektorn och dess miljömål.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentation av Certification Environnementale Cognac från ett certifieringsorgan.'],
-        ['Franskt företagsregister', proofSourceUrls.grandeVersenne, 'Offentlig post för Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Styrkande dokument',
+      documentsIntro: 'Dokument för nedladdning och granskning.',
+      documents: [
+        ['CEC-intyg 2025-2028', proofDocumentUrls.cecAttestation],
+        ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'För professionella underlag',
       requestText: 'För import, distribution, listning eller compliance-dokumentation, ange cuvée, land och önskat dokument. Huset kan hänvisa till rätt underlag.',
@@ -2188,13 +2220,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac er et rammeverk for Charente-vinmarkene. Det støtter mer krevende praksis for biologisk mangfold, vann, jord, beskyttelse av vinmarken og karbonnøkternhet.',
       cecFact: 'Domaine de la Grande Versenne SCEA oppfyller denne CEC-tilnærmingen. De offentlige lenkene nedenfor presenterer den offisielle rammen; kontakt huset for et navngitt sertifikat til profesjonelle underlag.',
       sourcesTitle: 'Nyttige offentlige kilder',
-      sourcesIntro: 'Disse lenkene gir tilgang til offentlige HVE-data, Certification Environnementale Cognac-rammen og den offentlige identiteten til Domaine de la Grande Versenne SCEA.',
+      sourcesIntro: 'Disse lenkene gir tilgang til offentlige HVE-data og Certification Environnementale Cognac-rammen.',
       sources: [
         ['Offentlig HVE-register - data.gouv.fr', proofSourceUrls.hveDirectory, 'Offisiell database over HVE-gårder; søk etter “SCEA Domaine de la Grande Versenne”.'],
         ['Det franske landbruksdepartementet - HVE', proofSourceUrls.hveAgriculture, 'Offisiell forklaring av Haute Valeur Environnementale-registeret og ordningen.'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, 'Offentlig rammeverk fra Cognac-sektoren og miljømålene.'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, 'Presentasjon av Certification Environnementale Cognac fra et sertifiseringsorgan.'],
-        ['Fransk foretaksregister', proofSourceUrls.grandeVersenne, 'Offentlig oppføring for Domaine de la Grande Versenne SCEA.'],
+      ],
+      documentsTitle: 'Dokumentasjon',
+      documentsIntro: 'Dokumenter for nedlasting og gjennomgang.',
+      documents: [
+        ['CEC-attest 2025-2028', proofDocumentUrls.cecAttestation],
+        ['HVE-sertifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: 'For profesjonelle underlag',
       requestText: 'For import, distribusjon, listing eller compliance-dokumentasjon, oppgi cuvée, land og ønsket dokument. Huset kan vise til riktig dokumentasjon.',
@@ -2217,13 +2255,19 @@ function proofPageCopy(lang) {
       cecText: 'Certification Environnementale Cognac 是 Charente 葡萄园专属的环境框架，推动在生物多样性、水资源、土壤、葡萄园保护和碳效率方面采用更严格的实践。',
       cecFact: 'Domaine de la Grande Versenne SCEA 符合这一 CEC 方法。下方公开链接展示官方框架；如专业文件需要具名证明，请联系酒庄。',
       sourcesTitle: '有用的公开来源',
-      sourcesIntro: '这些链接可查看 HVE 公开资料、Certification Environnementale Cognac 框架以及 Domaine de la Grande Versenne SCEA 的公开身份信息。',
+      sourcesIntro: '这些链接可查看 HVE 公开资料以及 Certification Environnementale Cognac 框架。',
       sources: [
         ['HVE 公开名录 - data.gouv.fr', proofSourceUrls.hveDirectory, '法国 HVE 农业经营主体官方数据库；搜索 “SCEA Domaine de la Grande Versenne”。'],
         ['法国农业部 - HVE', proofSourceUrls.hveAgriculture, 'Haute Valeur Environnementale 名录和制度的官方说明。'],
         ['Certification Environnementale Cognac - Cognac.fr', proofSourceUrls.cecCognac, '干邑行业环境目标和 CEC 框架的公开说明。'],
         ['Bureau Veritas - CEC', proofSourceUrls.cecBureauVeritas, '认证机构对 Certification Environnementale Cognac 的介绍。'],
-        ['法国企业名录', proofSourceUrls.grandeVersenne, 'Domaine de la Grande Versenne SCEA 的公开企业信息。'],
+      ],
+      documentsTitle: '证明文件',
+      documentsIntro: '可下载并查阅的文件。',
+      documents: [
+        ['CEC 证明 2025-2028', proofDocumentUrls.cecAttestation],
+        ['HVE 证书 2024-2027', proofDocumentUrls.hveCertificate],
+        ['CEC 证书 2021', proofDocumentUrls.cecDiploma],
       ],
       requestTitle: '用于专业文件',
       requestText: '如进口、分销、上架或合规文件需要证明，请说明 cuvée、相关国家和所需文件。酒庄可协助提供合适资料。',
@@ -2238,6 +2282,9 @@ function proofPageHtml(route = '/environnement/') {
   const copy = proofPageCopy(lang);
   const sources = copy.sources.map(([label, href, text]) => (
     `<article class="lc-card"><h3><a href="${href}" target="_blank" rel="noopener">${escapeHtml(label)}</a></h3><p>${escapeHtml(text)}</p></article>`
+  )).join('\n');
+  const documents = (copy.documents || []).map(([label, href]) => (
+    `<a class="lc-doc-link" href="${href}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`
   )).join('\n');
   const body = [
     '<section class="lc-section">',
@@ -2257,6 +2304,13 @@ function proofPageHtml(route = '/environnement/') {
     '<div class="lc-grid lc-source-grid">',
     sources,
     '</div>',
+    documents ? '<div class="lc-documents">' : '',
+    documents ? `<h3>${escapeHtml(copy.documentsTitle)}</h3>` : '',
+    documents && copy.documentsIntro ? `<p>${escapeHtml(copy.documentsIntro)}</p>` : '',
+    documents ? '<div class="lc-doc-row">' : '',
+    documents,
+    documents ? '</div>' : '',
+    documents ? '</div>' : '',
     '</section>',
     '<section class="lc-section">',
     `<h2>${escapeHtml(copy.requestTitle)}</h2>`,
@@ -2267,6 +2321,15 @@ function proofPageHtml(route = '/environnement/') {
     '</div>',
     '</section>',
   ].filter(Boolean).join('\n');
+  const proofPageCss = `    .lc-proof-image{display:block;margin:24px 0 0;max-width:100%;height:auto;border:1px solid var(--lc-line);box-shadow:0 18px 48px rgba(22,17,13,.12)}
+    .lc-source-grid{margin-top:18px}
+    .lc-source-grid a{text-decoration:none}
+    .lc-source-grid a:hover{text-decoration:underline;text-underline-offset:.22em}
+    .lc-documents{margin-top:20px;padding-top:16px;border-top:1px solid var(--lc-line);color:var(--lc-muted)}
+    .lc-documents h3{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold);margin:0 0 8px}
+    .lc-documents p{font-size:15px;margin-bottom:10px}
+    .lc-doc-row{display:flex;flex-wrap:wrap;gap:10px 16px}
+    .lc-doc-link{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;border-bottom:1px solid var(--lc-line)}`;
 
   return sourcePageShell({
     route,
@@ -2277,6 +2340,7 @@ function proofPageHtml(route = '/environnement/') {
     lead: copy.lead,
     body,
     pageClass: 'lc-faq-page lc-proof-page',
+    extraCss: proofPageCss,
   });
 }
 
@@ -3423,7 +3487,9 @@ function webPageSchema(route, metadata, image) {
       proofSourceUrls.hveAgriculture,
       proofSourceUrls.cecCognac,
       proofSourceUrls.cecBureauVeritas,
-      proofSourceUrls.grandeVersenne,
+      `${PUBLIC_ORIGIN}${proofDocumentUrls.cecAttestation}`,
+      `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate}`,
+      `${PUBLIC_ORIGIN}${proofDocumentUrls.cecDiploma}`,
     ];
   }
   if (route === '/') {
@@ -3702,7 +3768,7 @@ function makeLlmsFullTxt() {
     'The Cognac Léopold Croizet environment page presents vineyard commitments in Triac-Lautrait and explains how soil, water, biodiversity and landscape care support eau-de-vie quality.',
     'Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.',
     'HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.',
-    'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page, Bureau Veritas CEC information and the French business directory entry for Domaine de la Grande Versenne SCEA.',
+    'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page, Bureau Veritas CEC information and downloadable HVE and CEC supporting documents.',
     '- French environment page: https://cognac-leopold-croizet.com/environnement/',
     '- English environment page: https://cognac-leopold-croizet.com/en/environnement/',
     '- Russian environment page: https://cognac-leopold-croizet.com/ru/environnement/',
