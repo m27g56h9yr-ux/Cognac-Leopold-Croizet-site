@@ -9,6 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
+const FAQ_PAGE_LASTMOD = '2026-06-29';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
@@ -214,6 +215,93 @@ const faqGroupKeyByFrench = {
   Servir: 'serve',
   Visiter: 'visit',
   Demander: 'ask',
+};
+
+const faqEnvironmentalEntries = {
+  fr: [
+    {
+      group: 'choose',
+      question: 'Qu’est-ce que la HVE ?',
+      answer: 'HVE signifie Haute Valeur Environnementale. C’est une certification française qui reconnaît des pratiques agricoles plus attentives à la biodiversité, à l’eau, aux sols et à la limitation des pressions sur l’environnement. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet est issu d’exploitations agricoles répondant à la certification HVE.',
+    },
+    {
+      group: 'choose',
+      question: 'Qu’est-ce que la CEC ?',
+      answer: 'CEC signifie Certification Environnementale Cognac. C’est une démarche environnementale propre à la filière Cognac, adaptée au vignoble charentais et aux enjeux de la production d’eaux-de-vie. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet est issu d’exploitations agricoles répondant à la certification CEC.',
+    },
+  ],
+  en: [
+    {
+      group: 'choose',
+      question: 'What is HVE?',
+      answer: 'HVE stands for Haute Valeur Environnementale, a French certification recognising farming practices that pay closer attention to biodiversity, water, soils and reduced environmental pressure. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from farms meeting HVE certification.',
+    },
+    {
+      group: 'choose',
+      question: 'What is CEC?',
+      answer: 'CEC stands for Certification Environnementale Cognac. It is an environmental approach specific to the Cognac sector, adapted to the Charente vineyard and to the production of eaux-de-vie. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from farms meeting CEC certification.',
+    },
+  ],
+  ru: [
+    {
+      group: 'choose',
+      question: 'Что такое HVE?',
+      answer: 'HVE означает Haute Valeur Environnementale — французскую сертификацию, которая отмечает сельскохозяйственные практики, более внимательные к биоразнообразию, воде, почвам и снижению воздействия на окружающую среду. Основная часть eaux-de-vie, входящих в бутылки Cognac Léopold Croizet, поступает из хозяйств, соответствующих сертификации HVE.',
+    },
+    {
+      group: 'choose',
+      question: 'Что такое CEC?',
+      answer: 'CEC означает Certification Environnementale Cognac. Это экологическая сертификация, созданная для сектора Cognac и адаптированная к виноградникам Шаранты и производству eaux-de-vie. Основная часть eaux-de-vie, входящих в бутылки Cognac Léopold Croizet, поступает из хозяйств, соответствующих сертификации CEC.',
+    },
+  ],
+  da: [
+    {
+      group: 'choose',
+      question: 'Hvad er HVE?',
+      answer: 'HVE står for Haute Valeur Environnementale, en fransk certificering, der anerkender landbrugspraksis med større opmærksomhed på biodiversitet, vand, jord og mindre miljøbelastning. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra landbrug, der opfylder HVE-certificeringen.',
+    },
+    {
+      group: 'choose',
+      question: 'Hvad er CEC?',
+      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøcertificering for Cognac-sektoren, tilpasset Charente-vinmarkerne og produktionen af eaux-de-vie. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra landbrug, der opfylder CEC-certificeringen.',
+    },
+  ],
+  sv: [
+    {
+      group: 'choose',
+      question: 'Vad är HVE?',
+      answer: 'HVE står för Haute Valeur Environnementale, en fransk certifiering som erkänner jordbruksmetoder med större hänsyn till biologisk mångfald, vatten, jordar och minskad miljöpåverkan. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från gårdar som uppfyller HVE-certifieringen.',
+    },
+    {
+      group: 'choose',
+      question: 'Vad är CEC?',
+      answer: 'CEC står för Certification Environnementale Cognac. Det är en miljöcertifiering för Cognac-sektorn, anpassad till vinodlingen i Charente och produktionen av eaux-de-vie. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från gårdar som uppfyller CEC-certifieringen.',
+    },
+  ],
+  no: [
+    {
+      group: 'choose',
+      question: 'Hva er HVE?',
+      answer: 'HVE står for Haute Valeur Environnementale, en fransk sertifisering som anerkjenner landbrukspraksis med større hensyn til biologisk mangfold, vann, jord og lavere miljøbelastning. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra gårder som oppfyller HVE-sertifiseringen.',
+    },
+    {
+      group: 'choose',
+      question: 'Hva er CEC?',
+      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøsertifisering for Cognac-sektoren, tilpasset vinmarkene i Charente og produksjonen av eaux-de-vie. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra gårder som oppfyller CEC-sertifiseringen.',
+    },
+  ],
+  zh: [
+    {
+      group: 'choose',
+      question: '什么是 HVE？',
+      answer: 'HVE 指 Haute Valeur Environnementale，即法国“高环境价值”认证，用于认可更重视生物多样性、水资源、土壤和减少环境压力的农业实践。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 HVE 认证的农业生产者。',
+    },
+    {
+      group: 'choose',
+      question: '什么是 CEC？',
+      answer: 'CEC 指 Certification Environnementale Cognac，即干邑行业的环境认证，适用于 Charente 葡萄园和 eaux-de-vie 的生产特点。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 CEC 认证的农业生产者。',
+    },
+  ],
 };
 
 const faqLocalizedEntries = {
@@ -1619,13 +1707,28 @@ function escapeFaqText(value) {
 }
 
 function faqEntriesForLang(lang) {
-  if (lang === 'fr') {
-    return faqEntries.map((entry) => ({
+  const entries = lang === 'fr'
+    ? faqEntries.map((entry) => ({
+      ...entry,
+      group: faqGroupKeyByFrench[entry.group] || 'choose',
+    }))
+    : faqLocalizedEntries[lang] || faqEntries.map((entry) => ({
       ...entry,
       group: faqGroupKeyByFrench[entry.group] || 'choose',
     }));
-  }
-  return faqLocalizedEntries[lang] || faqEntriesForLang('fr');
+
+  return withFaqEnvironmentalEntries(entries, lang);
+}
+
+function withFaqEnvironmentalEntries(entries, lang) {
+  const additions = faqEnvironmentalEntries[lang] || faqEnvironmentalEntries.fr;
+  const insertIndex = entries.findIndex((entry) => /\bugni blanc\b/i.test(entry.answer));
+  if (insertIndex === -1) return [...entries, ...additions];
+  return [
+    ...entries.slice(0, insertIndex + 1),
+    ...additions,
+    ...entries.slice(insertIndex + 1),
+  ];
 }
 
 function faqPageCopy(lang) {
@@ -3085,6 +3188,7 @@ function makeSitemap(routes) {
 }
 
 function lastmodForRoute(route) {
+  if (FAQ_ROUTES.includes(route)) return FAQ_PAGE_LASTMOD;
   return publishedSourceRoutes.has(route) ? SOURCE_PAGE_LASTMOD : TODAY;
 }
 
