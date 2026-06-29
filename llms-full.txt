@@ -37,7 +37,7 @@ The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as 
 - Maison Léopold Croizet film: https://cognac-leopold-croizet.com/film-maison-leopold-croizet/
 
 ## FAQ
-The FAQ answers visitor questions about cognac origins, grape varieties, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:
+The FAQ answers visitor questions about cognac origins, grape varieties, HVE, Certification Environnementale Cognac, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:
 - French FAQ: https://cognac-leopold-croizet.com/faq/
 - English FAQ: https://cognac-leopold-croizet.com/en/faq/
 - Russian FAQ: https://cognac-leopold-croizet.com/ru/faq/
@@ -46,6 +46,18 @@ The FAQ answers visitor questions about cognac origins, grape varieties, serving
 - Norwegian FAQ: https://cognac-leopold-croizet.com/no/faq/
 - Simplified Chinese FAQ: https://cognac-leopold-croizet.com/zh/faq/
 
+## Environmental Proof
+Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.
+HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.
+CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The public proof page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page and the French business directory entry for Domaine de la Grande Versenne.
+- French proof page: https://cognac-leopold-croizet.com/preuves/
+- English proof page: https://cognac-leopold-croizet.com/en/preuves/
+- Russian proof page: https://cognac-leopold-croizet.com/ru/preuves/
+- Danish proof page: https://cognac-leopold-croizet.com/da/preuves/
+- Swedish proof page: https://cognac-leopold-croizet.com/sv/preuves/
+- Norwegian proof page: https://cognac-leopold-croizet.com/no/preuves/
+- Simplified Chinese proof page: https://cognac-leopold-croizet.com/zh/preuves/
+
 ## Cocktails
 The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.
 
@@ -53,7 +65,8 @@ The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and 
 Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/
 
 ## Verified Source Pages
-- Medal, certification and organic-claim details are not included here unless validated and visible on an indexable source page.
+- Environmental proof page: https://cognac-leopold-croizet.com/preuves/
+- Medal and organic-claim details are not included here unless validated and visible on an indexable source page.
 
 ## Contact
 - cognac@mdpierre.com

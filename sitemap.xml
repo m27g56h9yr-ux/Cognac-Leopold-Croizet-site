@@ -470,6 +470,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/da/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/da/rencontre/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -776,6 +790,20 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/rencontre/</loc>
@@ -1184,6 +1212,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/no/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/no/rencontre/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1224,6 +1266,20 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/rencontre/</loc>
@@ -1534,6 +1590,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/ru/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/ru/rencontre/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
@@ -1826,6 +1896,20 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/rencontre/</loc>
@@ -2134,6 +2218,20 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/pierre-croizet-cocktails/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/pierre-croizet-cocktails/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/preuves/</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/preuves/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/preuves/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/preuves/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/preuves/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/preuves/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/preuves/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/preuves/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/preuves/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/rencontre/</loc>

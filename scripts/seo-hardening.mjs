@@ -10,6 +10,7 @@ const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-06-29';
+const PROOF_PAGE_LASTMOD = '2026-06-29';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
@@ -19,8 +20,15 @@ const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((p
 ));
 const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const FAQ_ROUTES = SITE_LANGUAGES.map((lang) => faqRouteForLang(lang));
+const PROOF_ROUTES = SITE_LANGUAGES.map((lang) => proofRouteForLang(lang));
+const proofSourceUrls = {
+  hveDirectory: 'https://www.data.gouv.fr/datasets/annuaire-des-exploitations-certifiees-haute-valeur-environnementale',
+  hveAgriculture: 'https://agriculture.gouv.fr/ou-trouver-des-exploitations-certifiees-haute-valeur-environnementale-en-france',
+  cecCognac: 'https://www.cognac.fr/sengager/certification-environnementale-cognac/',
+  grandeVersenne: 'https://annuaire-entreprises.data.gouv.fr/entreprise/domaine-de-la-grande-versenne-837918226',
+};
 
-const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES]);
+const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES]);
 
 const faqEntries = [
   {
@@ -222,84 +230,84 @@ const faqEnvironmentalEntries = {
     {
       group: 'choose',
       question: 'Qu’est-ce que la HVE ?',
-      answer: 'HVE signifie Haute Valeur Environnementale. C’est une certification française qui reconnaît des pratiques agricoles plus attentives à la biodiversité, à l’eau, aux sols et à la limitation des pressions sur l’environnement. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet est issu d’exploitations agricoles répondant à la certification HVE.',
+      answer: 'HVE signifie Haute Valeur Environnementale. C’est une certification française qui reconnaît des pratiques agricoles plus attentives à la biodiversité, à l’eau, aux sols et à la limitation des pressions sur l’environnement. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet provient du Domaine de la Grande Versenne SCEA, exploitation répondant à la certification HVE.',
     },
     {
       group: 'choose',
       question: 'Qu’est-ce que la CEC ?',
-      answer: 'CEC signifie Certification Environnementale Cognac. C’est une démarche environnementale propre à la filière Cognac, adaptée au vignoble charentais et aux enjeux de la production d’eaux-de-vie. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet est issu d’exploitations agricoles répondant à la certification CEC.',
+      answer: 'CEC signifie Certification Environnementale Cognac. C’est une démarche environnementale propre à la filière Cognac, adaptée au vignoble charentais et aux enjeux de la production d’eaux-de-vie. L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet provient du Domaine de la Grande Versenne SCEA, exploitation répondant à la certification CEC.',
     },
   ],
   en: [
     {
       group: 'choose',
       question: 'What is HVE?',
-      answer: 'HVE stands for Haute Valeur Environnementale, a French certification recognising farming practices that pay closer attention to biodiversity, water, soils and reduced environmental pressure. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from farms meeting HVE certification.',
+      answer: 'HVE stands for Haute Valeur Environnementale, a French certification recognising farming practices that pay closer attention to biodiversity, water, soils and reduced environmental pressure. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA, an estate meeting HVE certification.',
     },
     {
       group: 'choose',
       question: 'What is CEC?',
-      answer: 'CEC stands for Certification Environnementale Cognac. It is an environmental approach specific to the Cognac sector, adapted to the Charente vineyard and to the production of eaux-de-vie. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from farms meeting CEC certification.',
+      answer: 'CEC stands for Certification Environnementale Cognac. It is an environmental approach specific to the Cognac sector, adapted to the Charente vineyard and to the production of eaux-de-vie. Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA, an estate meeting CEC certification.',
     },
   ],
   ru: [
     {
       group: 'choose',
       question: 'Что такое HVE?',
-      answer: 'HVE означает Haute Valeur Environnementale — французскую сертификацию, которая отмечает сельскохозяйственные практики, более внимательные к биоразнообразию, воде, почвам и снижению воздействия на окружающую среду. Основная часть eaux-de-vie, входящих в бутылки Cognac Léopold Croizet, поступает из хозяйств, соответствующих сертификации HVE.',
+      answer: 'HVE означает Haute Valeur Environnementale — французскую сертификацию, которая отмечает сельскохозяйственные практики, более внимательные к биоразнообразию, воде, почвам и снижению воздействия на окружающую среду. Основная часть eaux-de-vie для бутылок Cognac Léopold Croizet поступает из Domaine de la Grande Versenne SCEA, хозяйства, соответствующего сертификации HVE.',
     },
     {
       group: 'choose',
       question: 'Что такое CEC?',
-      answer: 'CEC означает Certification Environnementale Cognac. Это экологическая сертификация, созданная для сектора Cognac и адаптированная к виноградникам Шаранты и производству eaux-de-vie. Основная часть eaux-de-vie, входящих в бутылки Cognac Léopold Croizet, поступает из хозяйств, соответствующих сертификации CEC.',
+      answer: 'CEC означает Certification Environnementale Cognac. Это экологическая сертификация, созданная для сектора Cognac и адаптированная к виноградникам Шаранты и производству eaux-de-vie. Основная часть eaux-de-vie для бутылок Cognac Léopold Croizet поступает из Domaine de la Grande Versenne SCEA, хозяйства, соответствующего сертификации CEC.',
     },
   ],
   da: [
     {
       group: 'choose',
       question: 'Hvad er HVE?',
-      answer: 'HVE står for Haute Valeur Environnementale, en fransk certificering, der anerkender landbrugspraksis med større opmærksomhed på biodiversitet, vand, jord og mindre miljøbelastning. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra landbrug, der opfylder HVE-certificeringen.',
+      answer: 'HVE står for Haute Valeur Environnementale, en fransk certificering, der anerkender landbrugspraksis med større opmærksomhed på biodiversitet, vand, jord og mindre miljøbelastning. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA, en ejendom der opfylder HVE-certificeringen.',
     },
     {
       group: 'choose',
       question: 'Hvad er CEC?',
-      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøcertificering for Cognac-sektoren, tilpasset Charente-vinmarkerne og produktionen af eaux-de-vie. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra landbrug, der opfylder CEC-certificeringen.',
+      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøcertificering for Cognac-sektoren, tilpasset Charente-vinmarkerne og produktionen af eaux-de-vie. Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA, en ejendom der opfylder CEC-certificeringen.',
     },
   ],
   sv: [
     {
       group: 'choose',
       question: 'Vad är HVE?',
-      answer: 'HVE står för Haute Valeur Environnementale, en fransk certifiering som erkänner jordbruksmetoder med större hänsyn till biologisk mångfald, vatten, jordar och minskad miljöpåverkan. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från gårdar som uppfyller HVE-certifieringen.',
+      answer: 'HVE står för Haute Valeur Environnementale, en fransk certifiering som erkänner jordbruksmetoder med större hänsyn till biologisk mångfald, vatten, jordar och minskad miljöpåverkan. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från Domaine de la Grande Versenne SCEA, en egendom som uppfyller HVE-certifieringen.',
     },
     {
       group: 'choose',
       question: 'Vad är CEC?',
-      answer: 'CEC står för Certification Environnementale Cognac. Det är en miljöcertifiering för Cognac-sektorn, anpassad till vinodlingen i Charente och produktionen av eaux-de-vie. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från gårdar som uppfyller CEC-certifieringen.',
+      answer: 'CEC står för Certification Environnementale Cognac. Det är en miljöcertifiering för Cognac-sektorn, anpassad till vinodlingen i Charente och produktionen av eaux-de-vie. Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från Domaine de la Grande Versenne SCEA, en egendom som uppfyller CEC-certifieringen.',
     },
   ],
   no: [
     {
       group: 'choose',
       question: 'Hva er HVE?',
-      answer: 'HVE står for Haute Valeur Environnementale, en fransk sertifisering som anerkjenner landbrukspraksis med større hensyn til biologisk mangfold, vann, jord og lavere miljøbelastning. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra gårder som oppfyller HVE-sertifiseringen.',
+      answer: 'HVE står for Haute Valeur Environnementale, en fransk sertifisering som anerkjenner landbrukspraksis med større hensyn til biologisk mangfold, vann, jord og lavere miljøbelastning. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA, en eiendom som oppfyller HVE-sertifiseringen.',
     },
     {
       group: 'choose',
       question: 'Hva er CEC?',
-      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøsertifisering for Cognac-sektoren, tilpasset vinmarkene i Charente og produksjonen av eaux-de-vie. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra gårder som oppfyller CEC-sertifiseringen.',
+      answer: 'CEC står for Certification Environnementale Cognac. Det er en miljøsertifisering for Cognac-sektoren, tilpasset vinmarkene i Charente og produksjonen av eaux-de-vie. Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA, en eiendom som oppfyller CEC-sertifiseringen.',
     },
   ],
   zh: [
     {
       group: 'choose',
       question: '什么是 HVE？',
-      answer: 'HVE 指 Haute Valeur Environnementale，即法国“高环境价值”认证，用于认可更重视生物多样性、水资源、土壤和减少环境压力的农业实践。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 HVE 认证的农业生产者。',
+      answer: 'HVE 指 Haute Valeur Environnementale，即法国“高环境价值”认证，用于认可更重视生物多样性、水资源、土壤和减少环境压力的农业实践。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 HVE 认证的 Domaine de la Grande Versenne SCEA。',
     },
     {
       group: 'choose',
       question: '什么是 CEC？',
-      answer: 'CEC 指 Certification Environnementale Cognac，即干邑行业的环境认证，适用于 Charente 葡萄园和 eaux-de-vie 的生产特点。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 CEC 认证的农业生产者。',
+      answer: 'CEC 指 Certification Environnementale Cognac，即干邑行业的环境认证，适用于 Charente 葡萄园和 eaux-de-vie 的生产特点。Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自符合 CEC 认证的 Domaine de la Grande Versenne SCEA。',
     },
   ],
 };
@@ -687,6 +695,7 @@ const contentGroups = [
   ['/leopold-croizet/', '/en/leopold-croizet/', '/ru/leopold-croizet/', '/da/leopold-croizet/', '/sv/leopold-croizet/', '/no/leopold-croizet/', '/zh/leopold-croizet/'],
   FILM_ROUTES,
   FAQ_ROUTES,
+  PROOF_ROUTES,
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
   ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
   ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
@@ -1094,12 +1103,13 @@ for (const lang of SITE_LANGUAGES) {
   });
 }
 
-for (const [route, metadata] of new Map([
-  ['/preuves/', {
-    title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
-    description: 'Brouillon non indexé pour préparer la page preuves et médailles de Cognac Léopold Croizet, sans publier de distinction non confirmée.',
-  }],
-])) routeMetadata.set(route, metadata);
+for (const lang of SITE_LANGUAGES) {
+  const copy = proofPageCopy(lang);
+  routeMetadata.set(proofRouteForLang(lang), {
+    title: copy.metaTitle,
+    description: copy.description,
+  });
+}
 
 const noindexRoutes = new Set([
   '/categorie-produit/non-classe/',
@@ -1132,7 +1142,6 @@ const noindexRoutes = new Set([
   '/sv/checkout/',
   '/no/checkout/',
   '/zh/checkout/',
-  '/preuves/',
 ]);
 
 function isNoindexRoute(route) {
@@ -1196,12 +1205,14 @@ async function walkHtml(dir) {
 }
 
 async function writeSourcePages() {
-  const pages = new Map([
-    ['preuves/index.html', proofDraftPageHtml()],
-  ]);
+  const pages = new Map();
 
   for (const route of FAQ_ROUTES) {
     pages.set(`${route.replace(/^\//, '')}index.html`, faqPageHtml(route));
+  }
+
+  for (const route of PROOF_ROUTES) {
+    pages.set(`${route.replace(/^\//, '')}index.html`, proofPageHtml(route));
   }
 
   for (const route of FILM_ROUTES) {
@@ -1413,6 +1424,7 @@ ${headerHtml}
     <div class="menu-footer">
       <ul>
         <li><a href="${routes.faq}">${nav.faq}</a></li>
+        <li><a href="${routes.proof}">${nav.proof}</a></li>
         <li><a href="${routes.visit}">${nav.contact}</a></li>
         <li><a href="${routes.legal}">${nav.legal}</a></li>
         <li><a rel="privacy-policy" href="/cgv/">CGV</a></li>
@@ -1435,6 +1447,7 @@ function sourceNavigationCopy(lang) {
       film: 'Le film',
       visit: 'Visite',
       faq: 'FAQ',
+      proof: 'Preuves',
       contact: 'Nous contacter',
       legal: 'Mentions légales',
     },
@@ -1446,6 +1459,7 @@ function sourceNavigationCopy(lang) {
       film: 'The film',
       visit: 'Meet us',
       faq: 'FAQ',
+      proof: 'Proof',
       contact: 'Contact us',
       legal: 'Legal notice',
     },
@@ -1457,6 +1471,7 @@ function sourceNavigationCopy(lang) {
       film: 'Фильм',
       visit: 'Визит',
       faq: 'FAQ',
+      proof: 'Подтверждения',
       contact: 'Связаться',
       legal: 'Правовая информация',
     },
@@ -1468,6 +1483,7 @@ function sourceNavigationCopy(lang) {
       film: 'Filmen',
       visit: 'Mød os',
       faq: 'FAQ',
+      proof: 'Dokumentation',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -1479,6 +1495,7 @@ function sourceNavigationCopy(lang) {
       film: 'Filmen',
       visit: 'Möt oss',
       faq: 'FAQ',
+      proof: 'Dokumentation',
       contact: 'Kontakt',
       legal: 'Juridisk information',
     },
@@ -1490,6 +1507,7 @@ function sourceNavigationCopy(lang) {
       film: 'Filmen',
       visit: 'Møt oss',
       faq: 'FAQ',
+      proof: 'Dokumentasjon',
       contact: 'Kontakt',
       legal: 'Juridisk informasjon',
     },
@@ -1501,6 +1519,7 @@ function sourceNavigationCopy(lang) {
       film: '影片',
       visit: '走近我们',
       faq: '常见问题',
+      proof: '证明',
       contact: '联系我们',
       legal: '法律信息',
     },
@@ -1516,6 +1535,7 @@ function sourceNavigationRoutes(lang) {
     film: sourceHref(filmRouteForLang(lang)),
     visit: sourceHref(visitRouteForLang(lang)),
     faq: sourceHref(faqRouteForLang(lang)),
+    proof: sourceHref(proofRouteForLang(lang)),
     legal: sourceHref('/mentions-legales/'),
   };
 }
@@ -1550,13 +1570,18 @@ function faqRouteForLang(lang) {
   return lang === 'fr' ? '/faq/' : `/${lang}/faq/`;
 }
 
+function proofRouteForLang(lang) {
+  return lang === 'fr' ? '/preuves/' : `/${lang}/preuves/`;
+}
+
 function faqLanguageMenuHtml(route) {
   const currentLang = languageForRoute(route);
   const labels = { fr: 'Fr', en: 'En', ru: 'Ру', da: 'Da', sv: 'Sv', no: 'No', zh: '中文' };
+  const routeForLang = PROOF_ROUTES.includes(route) ? proofRouteForLang : faqRouteForLang;
   const items = SITE_LANGUAGES.map((lang) => {
     const hrefLang = lang === 'zh' ? 'zh-CN' : lang;
     const current = lang === currentLang;
-    return `<li class="${current ? 'wpml-ls-current-language ' : ''}wpml-ls-item"><a href="${sourceHref(faqRouteForLang(lang))}" hreflang="${hrefLang}" lang="${htmlLangForRoute(faqRouteForLang(lang))}"${current ? ' aria-current="page"' : ''}>${labels[lang]}</a></li>`;
+    return `<li class="${current ? 'wpml-ls-current-language ' : ''}wpml-ls-item"><a href="${sourceHref(routeForLang(lang))}" hreflang="${hrefLang}" lang="${htmlLangForRoute(routeForLang(lang))}"${current ? ' aria-current="page"' : ''}>${labels[lang]}</a></li>`;
   }).join('');
 
   return `<div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false">${labels[currentLang]}</button><ul class="lc-language-menu-list" hidden>${items}</ul></div>`;
@@ -1753,6 +1778,7 @@ function faqPageCopy(lang) {
       moreText: 'Les pages de la collection et de visite complètent cette FAQ avec les informations les plus utiles selon votre projet.',
       collectionCta: 'Voir la collection',
       visitCta: 'Préparer une visite',
+      proofCta: 'Voir les preuves environnementales',
     },
     en: {
       metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
@@ -1774,6 +1800,7 @@ function faqPageCopy(lang) {
       moreText: 'The Collection and Visit pages complete this FAQ with the most useful information for your project.',
       collectionCta: 'View the collection',
       visitCta: 'Plan a visit',
+      proofCta: 'View environmental proof',
     },
     ru: {
       metaTitle: 'FAQ Cognac | Cognac Léopold Croizet',
@@ -1795,6 +1822,7 @@ function faqPageCopy(lang) {
       moreText: 'Страницы Collection и Visit дополняют эту FAQ полезной информацией для вашего проекта.',
       collectionCta: 'Смотреть коллекцию',
       visitCta: 'Запланировать визит',
+      proofCta: 'Посмотреть подтверждения',
     },
     da: {
       metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
@@ -1816,6 +1844,7 @@ function faqPageCopy(lang) {
       moreText: 'Collection- og Visit-siderne supplerer denne FAQ med nyttig information til dit projekt.',
       collectionCta: 'Se kollektionen',
       visitCta: 'Planlæg et besøg',
+      proofCta: 'Se miljødokumentation',
     },
     sv: {
       metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
@@ -1837,6 +1866,7 @@ function faqPageCopy(lang) {
       moreText: 'Collection- och Visit-sidorna kompletterar denna FAQ med användbar information för ditt projekt.',
       collectionCta: 'Se kollektionen',
       visitCta: 'Planera ett besök',
+      proofCta: 'Se miljödokumentation',
     },
     no: {
       metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
@@ -1858,6 +1888,7 @@ function faqPageCopy(lang) {
       moreText: 'Collection- og Visit-sidene supplerer denne FAQ-en med nyttig informasjon for prosjektet ditt.',
       collectionCta: 'Se kolleksjonen',
       visitCta: 'Planlegg et besøk',
+      proofCta: 'Se miljødokumentasjon',
     },
     zh: {
       metaTitle: '干邑常见问题 | Cognac Léopold Croizet',
@@ -1879,6 +1910,7 @@ function faqPageCopy(lang) {
       moreText: 'Collection 与 Visit 页面会根据你的计划补充最有用的信息。',
       collectionCta: '查看系列',
       visitCta: '预约参观',
+      proofCta: '查看环境证明',
     },
   }[lang] || faqPageCopy('fr');
 }
@@ -1957,6 +1989,7 @@ function faqPageHtml(route = '/faq/') {
     '<div class="lc-cta-row">',
     `<a class="lc-button" href="${sourceHref(collectionRouteForLang(lang))}">${escapeHtml(copy.collectionCta)}</a>`,
     `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${escapeHtml(copy.visitCta)}</a>`,
+    `<a class="lc-button secondary" href="${sourceHref(proofRouteForLang(lang))}">${escapeHtml(copy.proofCta)}</a>`,
     '</div>',
     '</section>',
     '</div>',
@@ -1974,34 +2007,234 @@ function faqPageHtml(route = '/faq/') {
   });
 }
 
-function proofDraftPageHtml() {
+function proofPageCopy(lang) {
+  return {
+    fr: {
+      metaTitle: 'Certifications HVE et CEC | Cognac Léopold Croizet',
+      description: 'Preuves environnementales Cognac Léopold Croizet : HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA et sources publiques.',
+      eyebrow: 'Preuves environnementales',
+      heading: 'HVE et CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'L’essentiel des eaux-de-vie assemblées dans les bouteilles de Cognac Léopold Croizet provient du Domaine de la Grande Versenne SCEA, à Triac-Lautrait.',
+      confirmTitle: 'Ce que cette page confirme',
+      confirmText: 'Cette page rassemble les liens publics utiles pour comprendre la certification HVE et la Certification Environnementale Cognac. Elle distingue les preuves nominatives publiques disponibles et les informations publiques de filière.',
+      hveTitle: 'Qu’est-ce que la HVE ?',
+      hveText: 'HVE signifie Haute Valeur Environnementale. C’est une certification française des exploitations agricoles, construite autour de pratiques liées notamment à la biodiversité, à la stratégie phytosanitaire, à la fertilisation et à la gestion de l’eau.',
+      hveFact: 'L’annuaire public HVE mentionne SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, en viticulture, avec une date de certification au 23 décembre 2024.',
+      cecTitle: 'Qu’est-ce que la CEC ?',
+      cecText: 'CEC signifie Certification Environnementale Cognac. C’est une démarche environnementale propre à la filière Cognac, pensée pour les exploitations viticoles charentaises et la production d’eaux-de-vie.',
+      cecFact: 'Le Domaine de la Grande Versenne SCEA répond aussi à la Certification Environnementale Cognac. Les liens publics ci-dessous expliquent le cadre CEC ; pour un dossier professionnel nécessitant une attestation nominative, contactez la maison.',
+      sourcesTitle: 'Sources publiques utiles',
+      sources: [
+        ['Annuaire officiel HVE', proofSourceUrls.hveDirectory, 'rechercher “SCEA Domaine de la Grande Versenne”.'],
+        ['Ministère de l’Agriculture', proofSourceUrls.hveAgriculture, 'présentation de l’annuaire des exploitations certifiées HVE.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'présentation publique de la démarche CEC par la filière Cognac.'],
+        ['Annuaire des entreprises', proofSourceUrls.grandeVersenne, 'fiche publique du Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Besoin d’une attestation ?',
+      requestText: 'Pour une demande d’import, de distribution ou de conformité documentaire, indiquez la cuvée, le pays concerné et le document attendu. La maison pourra vous orienter vers la pièce adaptée.',
+      faqCta: 'Lire la FAQ',
+      visitCta: 'Contacter la maison',
+    },
+    en: {
+      metaTitle: 'HVE and CEC Certifications | Cognac Léopold Croizet',
+      description: 'Environmental proof for Cognac Léopold Croizet: HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA and public sources.',
+      eyebrow: 'Environmental proof',
+      heading: 'HVE and CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.',
+      confirmTitle: 'What this page confirms',
+      confirmText: 'This page gathers public links to understand HVE certification and Certification Environnementale Cognac. It separates available public named evidence from public information about the Cognac sector framework.',
+      hveTitle: 'What is HVE?',
+      hveText: 'HVE stands for Haute Valeur Environnementale. It is a French farm certification built around practices including biodiversity, plant-protection strategy, fertilisation and water management.',
+      hveFact: 'The public HVE directory lists SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, in viticulture, with a certification date of 23 December 2024.',
+      cecTitle: 'What is CEC?',
+      cecText: 'CEC stands for Certification Environnementale Cognac. It is an environmental approach specific to the Cognac sector, designed for Charente vineyards and eaux-de-vie production.',
+      cecFact: 'Domaine de la Grande Versenne SCEA also meets Certification Environnementale Cognac. The public links below explain the CEC framework; for a professional file requiring a named certificate, please contact the house.',
+      sourcesTitle: 'Useful public sources',
+      sources: [
+        ['Official HVE directory', proofSourceUrls.hveDirectory, 'search for “SCEA Domaine de la Grande Versenne”.'],
+        ['French Ministry of Agriculture', proofSourceUrls.hveAgriculture, 'presentation of the directory of HVE-certified farms.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'public presentation of the CEC approach by the Cognac sector.'],
+        ['French business directory', proofSourceUrls.grandeVersenne, 'public listing for Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Need a certificate?',
+      requestText: 'For import, distribution or compliance documentation, state the cuvée, country concerned and document expected. The house can direct you to the appropriate evidence.',
+      faqCta: 'Read the FAQ',
+      visitCta: 'Contact the house',
+    },
+    ru: {
+      metaTitle: 'Сертификации HVE и CEC | Cognac Léopold Croizet',
+      description: 'Экологические подтверждения Cognac Léopold Croizet: HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA и публичные источники.',
+      eyebrow: 'Экологические подтверждения',
+      heading: 'HVE и CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Основная часть eaux-de-vie для бутылок Cognac Léopold Croizet поступает из Domaine de la Grande Versenne SCEA в Triac-Lautrait.',
+      confirmTitle: 'Что подтверждает эта страница',
+      confirmText: 'Здесь собраны публичные ссылки, помогающие понять сертификацию HVE и Certification Environnementale Cognac. Страница отделяет доступное публичное именное подтверждение от общих публичных сведений о стандарте отрасли Cognac.',
+      hveTitle: 'Что такое HVE?',
+      hveText: 'HVE означает Haute Valeur Environnementale. Это французская сертификация сельскохозяйственных хозяйств, связанная с практиками биоразнообразия, фитосанитарной стратегии, удобрения и управления водой.',
+      hveFact: 'Публичный реестр HVE указывает SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, viticulture, с датой сертификации 23 декабря 2024 года.',
+      cecTitle: 'Что такое CEC?',
+      cecText: 'CEC означает Certification Environnementale Cognac. Это экологическая сертификация для сектора Cognac, адаптированная к виноградникам Шаранты и производству eaux-de-vie.',
+      cecFact: 'Domaine de la Grande Versenne SCEA также соответствует Certification Environnementale Cognac. Ссылки ниже объясняют публичный стандарт CEC; для профессионального досье с именной аттестацией свяжитесь с домом.',
+      sourcesTitle: 'Полезные публичные источники',
+      sources: [
+        ['Официальный реестр HVE', proofSourceUrls.hveDirectory, 'искать “SCEA Domaine de la Grande Versenne”.'],
+        ['Министерство сельского хозяйства Франции', proofSourceUrls.hveAgriculture, 'описание реестра хозяйств с сертификацией HVE.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'публичное описание подхода CEC сектором Cognac.'],
+        ['Французский реестр предприятий', proofSourceUrls.grandeVersenne, 'публичная карточка Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Нужна аттестация?',
+      requestText: 'Для импорта, дистрибуции или документов соответствия укажите cuvée, страну и ожидаемый документ. Дом подскажет подходящее подтверждение.',
+      faqCta: 'Читать FAQ',
+      visitCta: 'Связаться с домом',
+    },
+    da: {
+      metaTitle: 'HVE- og CEC-certificeringer | Cognac Léopold Croizet',
+      description: 'Miljødokumentation for Cognac Léopold Croizet: HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA og offentlige kilder.',
+      eyebrow: 'Miljødokumentation',
+      heading: 'HVE og CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Størstedelen af de eaux-de-vie, der indgår i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA i Triac-Lautrait.',
+      confirmTitle: 'Hvad denne side bekræfter',
+      confirmText: 'Denne side samler offentlige links til at forstå HVE-certificeringen og Certification Environnementale Cognac. Den skelner mellem tilgængelig offentlig navngiven dokumentation og offentlige oplysninger om Cognac-sektorens ramme.',
+      hveTitle: 'Hvad er HVE?',
+      hveText: 'HVE står for Haute Valeur Environnementale. Det er en fransk landbrugscertificering baseret på praksisser omkring blandt andet biodiversitet, plantesundhedsstrategi, gødskning og vandforvaltning.',
+      hveFact: 'Det offentlige HVE-register nævner SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, inden for viticulture, med certificeringsdato 23. december 2024.',
+      cecTitle: 'Hvad er CEC?',
+      cecText: 'CEC står for Certification Environnementale Cognac. Det er en miljøcertificering for Cognac-sektoren, tilpasset Charentes vinmarker og produktionen af eaux-de-vie.',
+      cecFact: 'Domaine de la Grande Versenne SCEA opfylder også Certification Environnementale Cognac. Linkene nedenfor forklarer den offentlige CEC-ramme; kontakt huset for et professionelt dossier, der kræver et navngivet certifikat.',
+      sourcesTitle: 'Nyttige offentlige kilder',
+      sources: [
+        ['Officielt HVE-register', proofSourceUrls.hveDirectory, 'søg efter “SCEA Domaine de la Grande Versenne”.'],
+        ['Det franske landbrugsministerium', proofSourceUrls.hveAgriculture, 'præsentation af registeret over HVE-certificerede landbrug.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'offentlig præsentation af CEC-tilgangen i Cognac-sektoren.'],
+        ['Fransk virksomhedsregister', proofSourceUrls.grandeVersenne, 'offentlig registrering for Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Brug for et certifikat?',
+      requestText: 'Ved import, distribution eller compliance-dokumentation skal du angive cuvée, land og ønsket dokument. Huset kan henvise til den rette dokumentation.',
+      faqCta: 'Læs FAQ',
+      visitCta: 'Kontakt huset',
+    },
+    sv: {
+      metaTitle: 'HVE- och CEC-certifieringar | Cognac Léopold Croizet',
+      description: 'Miljödokumentation för Cognac Léopold Croizet: HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA och offentliga källor.',
+      eyebrow: 'Miljödokumentation',
+      heading: 'HVE och CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Huvuddelen av de eaux-de-vie som blandas i Cognac Léopold Croizet flaskor kommer från Domaine de la Grande Versenne SCEA i Triac-Lautrait.',
+      confirmTitle: 'Vad denna sida bekräftar',
+      confirmText: 'Denna sida samlar offentliga länkar för att förstå HVE-certifiering och Certification Environnementale Cognac. Den skiljer mellan offentlig namngiven dokumentation och offentliga uppgifter om Cognac-sektorns ramverk.',
+      hveTitle: 'Vad är HVE?',
+      hveText: 'HVE står för Haute Valeur Environnementale. Det är en fransk jordbrukscertifiering med praxis kring bland annat biologisk mångfald, växtskyddsstrategi, gödsling och vattenförvaltning.',
+      hveFact: 'Det offentliga HVE-registret nämner SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, inom viticulture, med certifieringsdatum 23 december 2024.',
+      cecTitle: 'Vad är CEC?',
+      cecText: 'CEC står för Certification Environnementale Cognac. Det är en miljöcertifiering för Cognac-sektorn, anpassad till Charentes vinodlingar och produktionen av eaux-de-vie.',
+      cecFact: 'Domaine de la Grande Versenne SCEA uppfyller också Certification Environnementale Cognac. Länkarna nedan förklarar det offentliga CEC-ramverket; kontakta huset för ett professionellt underlag som kräver ett namngivet certifikat.',
+      sourcesTitle: 'Användbara offentliga källor',
+      sources: [
+        ['Officiellt HVE-register', proofSourceUrls.hveDirectory, 'sök efter “SCEA Domaine de la Grande Versenne”.'],
+        ['Franska jordbruksministeriet', proofSourceUrls.hveAgriculture, 'presentation av registret över HVE-certifierade jordbruk.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'offentlig presentation av CEC-metoden inom Cognac-sektorn.'],
+        ['Franskt företagsregister', proofSourceUrls.grandeVersenne, 'offentlig post för Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Behöver du ett certifikat?',
+      requestText: 'För import, distribution eller compliance-dokumentation, ange cuvée, land och önskat dokument. Huset kan hänvisa till rätt underlag.',
+      faqCta: 'Läs FAQ',
+      visitCta: 'Kontakta huset',
+    },
+    no: {
+      metaTitle: 'HVE- og CEC-sertifiseringer | Cognac Léopold Croizet',
+      description: 'Miljødokumentasjon for Cognac Léopold Croizet: HVE, Certification Environnementale Cognac, Domaine de la Grande Versenne SCEA og offentlige kilder.',
+      eyebrow: 'Miljødokumentasjon',
+      heading: 'HVE og CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Hoveddelen av de eaux-de-vie som blandes i Cognac Léopold Croizet flasker, kommer fra Domaine de la Grande Versenne SCEA i Triac-Lautrait.',
+      confirmTitle: 'Hva denne siden bekrefter',
+      confirmText: 'Denne siden samler offentlige lenker for å forstå HVE-sertifisering og Certification Environnementale Cognac. Den skiller mellom tilgjengelig offentlig navngitt dokumentasjon og offentlige opplysninger om Cognac-sektorens rammeverk.',
+      hveTitle: 'Hva er HVE?',
+      hveText: 'HVE står for Haute Valeur Environnementale. Det er en fransk landbrukssertifisering med praksis rundt blant annet biologisk mangfold, plantevernstrategi, gjødsling og vannforvaltning.',
+      hveFact: 'Det offentlige HVE-registeret nevner SCEA Domaine de la Grande Versenne, 30 rue d’Angoulême, 16200 Triac-Lautrait, innen viticulture, med sertifiseringsdato 23. desember 2024.',
+      cecTitle: 'Hva er CEC?',
+      cecText: 'CEC står for Certification Environnementale Cognac. Det er en miljøsertifisering for Cognac-sektoren, tilpasset Charente-vinmarkene og produksjonen av eaux-de-vie.',
+      cecFact: 'Domaine de la Grande Versenne SCEA oppfyller også Certification Environnementale Cognac. Lenkene nedenfor forklarer det offentlige CEC-rammeverket; kontakt huset for et profesjonelt underlag som krever et navngitt sertifikat.',
+      sourcesTitle: 'Nyttige offentlige kilder',
+      sources: [
+        ['Offisielt HVE-register', proofSourceUrls.hveDirectory, 'søk etter “SCEA Domaine de la Grande Versenne”.'],
+        ['Det franske landbruksdepartementet', proofSourceUrls.hveAgriculture, 'presentasjon av registeret over HVE-sertifiserte landbruk.'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, 'offentlig presentasjon av CEC-tilnærmingen i Cognac-sektoren.'],
+        ['Fransk foretaksregister', proofSourceUrls.grandeVersenne, 'offentlig oppføring for Domaine de la Grande Versenne.'],
+      ],
+      requestTitle: 'Trenger du et sertifikat?',
+      requestText: 'For import, distribusjon eller compliance-dokumentasjon, oppgi cuvée, land og ønsket dokument. Huset kan vise til riktig dokumentasjon.',
+      faqCta: 'Les FAQ',
+      visitCta: 'Kontakt huset',
+    },
+    zh: {
+      metaTitle: 'HVE 与 CEC 认证 | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet 环境证明：HVE、Certification Environnementale Cognac、Domaine de la Grande Versenne SCEA 与公开资料来源。',
+      eyebrow: '环境证明',
+      heading: 'HVE 与 CEC<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Cognac Léopold Croizet 酒瓶中调配的大部分 eaux-de-vie 来自 Triac-Lautrait 的 Domaine de la Grande Versenne SCEA。',
+      confirmTitle: '本页面说明什么',
+      confirmText: '本页面汇集公开链接，帮助理解 HVE 认证和 Certification Environnementale Cognac。页面区分可公开查询的命名证明与干邑行业认证框架的公开说明。',
+      hveTitle: '什么是 HVE？',
+      hveText: 'HVE 指 Haute Valeur Environnementale，是法国农业经营主体的环境认证，涉及生物多样性、植保策略、施肥和水资源管理等实践。',
+      hveFact: '法国公开 HVE 名录列有 SCEA Domaine de la Grande Versenne，地址 30 rue d’Angoulême, 16200 Triac-Lautrait，类别为 viticulture，认证日期为 2024 年 12 月 23 日。',
+      cecTitle: '什么是 CEC？',
+      cecText: 'CEC 指 Certification Environnementale Cognac，是干邑行业的环境认证，适用于 Charente 葡萄园和 eaux-de-vie 生产特点。',
+      cecFact: 'Domaine de la Grande Versenne SCEA 也符合 Certification Environnementale Cognac。下方公开链接解释 CEC 框架；如专业文件需要具名证明，请联系酒庄。',
+      sourcesTitle: '有用的公开来源',
+      sources: [
+        ['HVE 官方名录', proofSourceUrls.hveDirectory, '搜索 “SCEA Domaine de la Grande Versenne”。'],
+        ['法国农业部', proofSourceUrls.hveAgriculture, 'HVE 认证农业经营主体名录说明。'],
+        ['Certification Environnementale Cognac', proofSourceUrls.cecCognac, '干邑行业对 CEC 方法的公开说明。'],
+        ['法国企业名录', proofSourceUrls.grandeVersenne, 'Domaine de la Grande Versenne 的公开企业信息。'],
+      ],
+      requestTitle: '需要证明文件？',
+      requestText: '如进口、分销或合规文件需要证明，请说明 cuvée、相关国家和所需文件。酒庄可协助提供合适资料。',
+      faqCta: '阅读常见问题',
+      visitCta: '联系酒庄',
+    },
+  }[lang] || proofPageCopy('fr');
+}
+
+function proofPageHtml(route = '/preuves/') {
+  const lang = languageForRoute(route);
+  const copy = proofPageCopy(lang);
+  const sources = copy.sources.map(([label, href, text]) => (
+    `<li><a href="${href}">${escapeHtml(label)}</a> — ${escapeHtml(text)}</li>`
+  )).join('\n');
   const body = [
     '<section class="lc-section">',
-    '<h2>État de validation</h2>',
-    '<p>Cette page est un brouillon non indexé. Elle prépare la future page preuves et médailles sans publier de distinction, certification, date, avis, prix ou revendication biologique non confirmés.</p>',
-    '<img class="lc-proof-image" src="/wp-content/uploads/2021/11/img_footer_medailles.png" alt="Visuel de médailles à documenter pour Cognac Léopold Croizet" width="827" height="123" decoding="async" loading="lazy">',
+    `<h2>${escapeHtml(copy.confirmTitle)}</h2>`,
+    `<p>${escapeHtml(copy.confirmText)}</p>`,
+    '<img class="lc-proof-image" src="/wp-content/uploads/2022/02/propriete_02-scaled.jpg" alt="Domaine familial de Cognac Léopold Croizet à Triac-Lautrait" width="2560" height="2088" decoding="async" loading="lazy">',
     '</section>',
     '<section class="lc-section">',
-    '<h2>À confirmer avant publication indexable</h2>',
     '<div class="lc-grid">',
-    '<article class="lc-card"><h3>Médailles</h3><ul><li>Nom exact des concours.</li><li>Années des distinctions.</li><li>Produits concernés.</li><li>Niveau exact de chaque distinction.</li><li>Document ou source vérifiable.</li></ul></article>',
-    '<article class="lc-card"><h3>Certifications et revendications</h3><ul><li>Statut exact des mentions liées à la viticulture biologique.</li><li>Documents utilisables publiquement.</li><li>Libellé validé par la maison.</li><li>Éléments à exclure du schema tant qu’ils ne sont pas visibles.</li></ul></article>',
+    `<article class="lc-card"><h3>${escapeHtml(copy.hveTitle)}</h3><p>${escapeHtml(copy.hveText)}</p><p>${escapeHtml(copy.hveFact)}</p></article>`,
+    `<article class="lc-card"><h3>${escapeHtml(copy.cecTitle)}</h3><p>${escapeHtml(copy.cecText)}</p><p>${escapeHtml(copy.cecFact)}</p></article>`,
     '</div>',
     '</section>',
     '<section class="lc-section">',
-    '<h2>Décision SEO</h2>',
-    '<p>La page reste en <strong>noindex</strong>, hors sitemap et hors fichiers llms tant que les preuves ne sont pas confirmées. Une fois les éléments validés, elle pourra devenir indexable et recevoir des liens depuis la collection et les pages produit pertinentes.</p>',
+    `<h2>${escapeHtml(copy.sourcesTitle)}</h2>`,
+    `<ul>${sources}</ul>`,
+    '</section>',
+    '<section class="lc-section">',
+    `<h2>${escapeHtml(copy.requestTitle)}</h2>`,
+    `<p>${escapeHtml(copy.requestText)}</p>`,
+    '<div class="lc-cta-row">',
+    `<a class="lc-button" href="${sourceHref(faqRouteForLang(lang))}">${escapeHtml(copy.faqCta)}</a>`,
+    `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${escapeHtml(copy.visitCta)}</a>`,
+    '</div>',
     '</section>',
   ].join('\n');
 
   return sourcePageShell({
-    title: 'Preuves et médailles à confirmer | Cognac Léopold Croizet',
-    description: 'Brouillon interne non indexé pour préparer les preuves, médailles et éléments à confirmer de Cognac Léopold Croizet.',
-    eyebrow: 'Brouillon non indexé',
-    heading: 'Preuves<br>et médailles',
-    lead: 'Aucun fait de récompense ou certification n’est ajouté sans source vérifiable.',
+    route,
+    title: copy.metaTitle,
+    description: copy.description,
+    eyebrow: copy.eyebrow,
+    heading: copy.heading,
+    lead: copy.lead,
     body,
-    note: 'Validation humaine requise : concours, années, produits primés, certificats et formulation des revendications doivent être confirmés avant publication indexable.',
+    pageClass: 'lc-faq-page lc-proof-page',
   });
 }
 
@@ -2124,13 +2357,18 @@ function injectFrenchFooterResourceLinks(html, route) {
   const lang = languageForRoute(route);
   const nav = sourceNavigationCopy(lang);
   const faqHref = sourceHref(faqRouteForLang(lang));
+  const proofHref = sourceHref(proofRouteForLang(lang));
   const hasFaqLink = new RegExp(`href=(["'])${escapeRegExp(faqHref)}\\1`).test(next);
-  if (hasFaqLink) return next;
+  const hasProofLink = new RegExp(`href=(["'])${escapeRegExp(proofHref)}\\1`).test(next);
+  if (hasFaqLink && hasProofLink) return next;
 
-  const faqItem = `<li class="menu-item lc-source-link"><a href="${faqHref}">${nav.faq}</a></li>`;
+  const items = [
+    hasFaqLink ? '' : `<li class="menu-item lc-source-link"><a href="${faqHref}">${nav.faq}</a></li>`,
+    hasProofLink ? '' : `<li class="menu-item lc-source-link"><a href="${proofHref}">${nav.proof}</a></li>`,
+  ].filter(Boolean).join('');
   return next.replace(
     /(<div\b[^>]*class=["'][^"']*\bmenu-footer\b[^"']*["'][^>]*>\s*<ul\b[^>]*>)/i,
-    `$1\n${faqItem}`,
+    `$1\n${items}`,
   );
 }
 
@@ -2877,6 +3115,7 @@ function bestImageForPage(html, route) {
   if (route === '/' || route === '/en/' || route === '/ru/' || route === '/da/' || route === '/sv/' || route === '/no/' || route === '/zh/') return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (route.includes(FILM_SLUG)) return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?faq\/$/.test(route)) return '/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg';
+  if (PROOF_ROUTES.includes(route)) return '/wp-content/uploads/2022/02/propriete_02-scaled.jpg';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
@@ -2966,6 +3205,8 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
 
 function replaceStructuredData(html, route, metadata, image) {
   const schemas = [organizationSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
+  const faq = faqPageSchema(route);
+  if (faq) schemas.push(faq);
   const product = productSchema(route, metadata, image);
   if (product) schemas.push(product);
   const recipes = cocktailRecipesSchema(route);
@@ -3030,12 +3271,48 @@ function webPageSchema(route, metadata, image) {
     inLanguage: htmlLangForRoute(route),
     isPartOf: { '@id': `${PUBLIC_ORIGIN}/#website` },
     publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
+    dateModified: lastmodForRoute(route),
     primaryImageOfPage: image ? { '@type': 'ImageObject', url: `${PUBLIC_ORIGIN}${image}` } : undefined,
   };
+  if (FAQ_ROUTES.includes(route) || PROOF_ROUTES.includes(route)) {
+    schema.lastReviewed = lastmodForRoute(route);
+  }
+  if (PROOF_ROUTES.includes(route)) {
+    schema.about = [
+      { '@type': 'Thing', name: 'Haute Valeur Environnementale' },
+      { '@type': 'Thing', name: 'Certification Environnementale Cognac' },
+      { '@type': 'Organization', name: 'Domaine de la Grande Versenne SCEA' },
+    ];
+    schema.significantLink = [
+      proofSourceUrls.hveDirectory,
+      proofSourceUrls.cecCognac,
+      proofSourceUrls.grandeVersenne,
+    ];
+  }
   if (route === '/') {
     schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
   }
   return schema;
+}
+
+function faqPageSchema(route) {
+  if (!FAQ_ROUTES.includes(route)) return null;
+  const lang = languageForRoute(route);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${PUBLIC_ORIGIN}${route}#faq`,
+    mainEntityOfPage: { '@id': `${PUBLIC_ORIGIN}${route}#webpage` },
+    inLanguage: htmlLangForRoute(route),
+    mainEntity: faqEntriesForLang(lang).map((entry) => ({
+      '@type': 'Question',
+      name: stripTags(entry.question),
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: stripTags(entry.answer),
+      },
+    })),
+  };
 }
 
 function keySearchResultPages() {
@@ -3044,6 +3321,7 @@ function keySearchResultPages() {
     { name: 'Cognac Léopold Croizet XO Exception', url: '/collection/xo-exception/' },
     { name: 'Collection Cognac et Pineau Léopold Croizet', url: '/collection/' },
     { name: 'FAQ Cognac Léopold Croizet', url: '/faq/' },
+    { name: 'Preuves environnementales Cognac Léopold Croizet', url: '/preuves/' },
     { name: 'Visite des chais Cognac Léopold Croizet', url: '/rencontre/' },
   ];
 }
@@ -3189,6 +3467,7 @@ function makeSitemap(routes) {
 
 function lastmodForRoute(route) {
   if (FAQ_ROUTES.includes(route)) return FAQ_PAGE_LASTMOD;
+  if (PROOF_ROUTES.includes(route)) return PROOF_PAGE_LASTMOD;
   return publishedSourceRoutes.has(route) ? SOURCE_PAGE_LASTMOD : TODAY;
 }
 
@@ -3226,6 +3505,7 @@ function makeLlmsTxt() {
     '- [FAQ](https://cognac-leopold-croizet.com/faq/): Visitor-ready answers about cognac, cuvée choice, serving, visits and professional requests.',
     '- [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.',
     '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
+    '- [Environmental proof](https://cognac-leopold-croizet.com/preuves/): HVE, Certification Environnementale Cognac and public source links for Domaine de la Grande Versenne SCEA.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
@@ -3272,7 +3552,7 @@ function makeLlmsFullTxt() {
     '- Maison Léopold Croizet film: https://cognac-leopold-croizet.com/film-maison-leopold-croizet/',
     '',
     '## FAQ',
-    'The FAQ answers visitor questions about cognac origins, grape varieties, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:',
+    'The FAQ answers visitor questions about cognac origins, grape varieties, HVE, Certification Environnementale Cognac, serving, storage, cocktails, visits in Triac-Lautrait, purchasing, collection and professional requests. It is available in all site languages:',
     '- French FAQ: https://cognac-leopold-croizet.com/faq/',
     '- English FAQ: https://cognac-leopold-croizet.com/en/faq/',
     '- Russian FAQ: https://cognac-leopold-croizet.com/ru/faq/',
@@ -3281,6 +3561,18 @@ function makeLlmsFullTxt() {
     '- Norwegian FAQ: https://cognac-leopold-croizet.com/no/faq/',
     '- Simplified Chinese FAQ: https://cognac-leopold-croizet.com/zh/faq/',
     '',
+    '## Environmental Proof',
+    'Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.',
+    'HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.',
+    'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The public proof page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page and the French business directory entry for Domaine de la Grande Versenne.',
+    '- French proof page: https://cognac-leopold-croizet.com/preuves/',
+    '- English proof page: https://cognac-leopold-croizet.com/en/preuves/',
+    '- Russian proof page: https://cognac-leopold-croizet.com/ru/preuves/',
+    '- Danish proof page: https://cognac-leopold-croizet.com/da/preuves/',
+    '- Swedish proof page: https://cognac-leopold-croizet.com/sv/preuves/',
+    '- Norwegian proof page: https://cognac-leopold-croizet.com/no/preuves/',
+    '- Simplified Chinese proof page: https://cognac-leopold-croizet.com/zh/preuves/',
+    '',
     '## Cocktails',
     'The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.',
     '',
@@ -3288,7 +3580,8 @@ function makeLlmsFullTxt() {
     'Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/',
     '',
     '## Verified Source Pages',
-    '- Medal, certification and organic-claim details are not included here unless validated and visible on an indexable source page.',
+    '- Environmental proof page: https://cognac-leopold-croizet.com/preuves/',
+    '- Medal and organic-claim details are not included here unless validated and visible on an indexable source page.',
     '',
     '## Contact',
     '- cognac@mdpierre.com',
