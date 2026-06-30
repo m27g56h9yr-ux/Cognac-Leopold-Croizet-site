@@ -20,9 +20,14 @@ const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((p
   prefix === '/' ? `/${FILM_SLUG}/` : `${prefix}${FILM_SLUG}/`
 ));
 const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
+const NUTRITION_PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
 const FAQ_ROUTES = SITE_LANGUAGES.map((lang) => faqRouteForLang(lang));
 const PROOF_ROUTES = SITE_LANGUAGES.map((lang) => proofRouteForLang(lang));
-const NUTRITION_ROUTES = SITE_LANGUAGES.map((lang) => nutritionRouteForLang(lang));
+const NUTRITION_INDEX_ROUTES = SITE_LANGUAGES.map((lang) => nutritionRouteForLang(lang));
+const NUTRITION_PRODUCT_ROUTES = SITE_LANGUAGES.flatMap((lang) => (
+  NUTRITION_PRODUCT_SLUGS.map((slug) => nutritionProductRouteForLang(lang, slug))
+));
+const NUTRITION_ROUTES = [...NUTRITION_INDEX_ROUTES, ...NUTRITION_PRODUCT_ROUTES];
 const LEGACY_PROOF_ROUTES = SITE_LANGUAGES.map((lang) => legacyProofRouteForLang(lang));
 const proofSourceUrls = {
   hveDirectory: 'https://www.data.gouv.fr/datasets/annuaire-des-exploitations-certifiees-haute-valeur-environnementale',
@@ -572,35 +577,61 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
-const nutritionProductSlugs = new Set(['vs', 'vsop', 'napoleon', 'xo']);
+const nutritionProductSlugs = new Set(NUTRITION_PRODUCT_SLUGS);
 const nutritionProductData = [
   {
     slug: 'vs',
     name: 'VS',
+    productKind: 'cognac',
     sourceName: 'Fondation VS',
     valueGroup: 'young',
+    ingredientsGroup: 'cognac',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/fondation-vs.html',
   },
   {
     slug: 'vsop',
     name: 'VSOP',
+    productKind: 'cognac',
     sourceName: 'Conviction VSOP',
     valueGroup: 'young',
+    ingredientsGroup: 'cognac',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/conviction-vsop.html',
   },
   {
     slug: 'napoleon',
     name: 'Napoléon',
+    productKind: 'cognac',
     sourceName: 'Cohesion Napoléon',
     valueGroup: 'older',
+    ingredientsGroup: 'cognac',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/cohesion-napoleon.html',
   },
   {
     slug: 'xo',
     name: 'XO',
+    productKind: 'cognac',
     sourceName: 'Transmission XO',
     valueGroup: 'older',
+    ingredientsGroup: 'cognac',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/transmission-xo.html',
+  },
+  {
+    slug: 'pineau-des-charentes',
+    name: 'Pineau des Charentes',
+    productKind: 'pineauWhite',
+    sourceName: 'Pineau blanc',
+    valueGroup: 'pineauWhite',
+    ingredientsGroup: 'pineau',
+    sourceUrl: 'https://cognac-esprit-organic.com/produits/pineau.html',
+  },
+  {
+    slug: 'pineau-des-charentes-rouge',
+    name: 'Pineau Rouge des Charentes',
+    productKind: 'pineauRed',
+    sourceName: 'Pineau rouge',
+    valueGroup: 'pineauRed',
+    ingredientsGroup: 'pineau',
+    sourceUrl: 'https://cognac-esprit-organic.com/produits/pineau-rouge.html',
   },
 ];
 
@@ -623,6 +654,26 @@ const nutritionValues = {
     ['carbohydrate', '0 g', '0,3 g'],
     ['sugars', '0 g', '0,3 g'],
     ['protein', '0 g', '0 g'],
+    ['salt', '0 g', '0 g'],
+  ],
+  pineauWhite: [
+    ['energy', '198 kJ / 46,2 kcal', '660 kJ / 154 kcal'],
+    ['alcohol', '4,14 g', '13,8 g'],
+    ['fat', '0,5 g', '0,5 g'],
+    ['saturates', '0,5 g', '0,5 g'],
+    ['carbohydrate', '4,2 g', '14 g'],
+    ['sugars', '4,2 g', '14 g'],
+    ['protein', '0,5 g', '0,5 g'],
+    ['salt', '0 g', '0 g'],
+  ],
+  pineauRed: [
+    ['energy', '196,5 kJ / 47,1 kcal', '655 kJ / 157 kcal'],
+    ['alcohol', '4,14 g', '13,8 g'],
+    ['fat', '0,5 g', '0,5 g'],
+    ['saturates', '0,5 g', '0,5 g'],
+    ['carbohydrate', '4,8 g', '16 g'],
+    ['sugars', '4,8 g', '16 g'],
+    ['protein', '0,5 g', '0,5 g'],
     ['salt', '0 g', '0 g'],
   ],
 };
@@ -761,7 +812,8 @@ const contentGroups = [
   FILM_ROUTES,
   FAQ_ROUTES,
   PROOF_ROUTES,
-  NUTRITION_ROUTES,
+  NUTRITION_INDEX_ROUTES,
+  ...NUTRITION_PRODUCT_SLUGS.map((slug) => SITE_LANGUAGES.map((lang) => nutritionProductRouteForLang(lang, slug))),
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
   ['/pierre-croizet-cocktails/', '/en/pierre-croizet-cocktails/', '/ru/pierre-croizet-cocktails/', '/da/pierre-croizet-cocktails/', '/sv/pierre-croizet-cocktails/', '/no/pierre-croizet-cocktails/', '/zh/pierre-croizet-cocktails/'],
   ...[...productNames.keys()].map((slug) => [`/collection/${slug}/`, `/en/collection/${slug}/`, `/ru/collection/${slug}/`, `/da/collection/${slug}/`, `/sv/collection/${slug}/`, `/no/collection/${slug}/`, `/zh/collection/${slug}/`]),
@@ -1184,9 +1236,12 @@ for (const lang of SITE_LANGUAGES) {
 for (const lang of SITE_LANGUAGES) {
   const copy = nutritionPageCopy(lang);
   routeMetadata.set(nutritionRouteForLang(lang), {
-    title: copy.metaTitle,
-    description: copy.description,
+    title: copy.indexMetaTitle,
+    description: copy.indexDescription,
   });
+  for (const product of nutritionProductData) {
+    routeMetadata.set(nutritionProductRouteForLang(lang, product.slug), nutritionProductMetadata(product, copy));
+  }
 }
 
 const noindexRoutes = new Set([
@@ -1294,8 +1349,15 @@ async function writeSourcePages() {
     pages.set(`${route.replace(/^\//, '')}index.html`, proofPageHtml(route));
   }
 
-  for (const route of NUTRITION_ROUTES) {
-    pages.set(`${route.replace(/^\//, '')}index.html`, nutritionPageHtml(route));
+  for (const route of NUTRITION_INDEX_ROUTES) {
+    pages.set(`${route.replace(/^\//, '')}index.html`, nutritionIndexPageHtml(route));
+  }
+
+  for (const product of nutritionProductData) {
+    for (const lang of SITE_LANGUAGES) {
+      const route = nutritionProductRouteForLang(lang, product.slug);
+      pages.set(`${route.replace(/^\//, '')}index.html`, nutritionProductPageHtml(route, product));
+    }
   }
 
   for (const route of LEGACY_PROOF_ROUTES) {
@@ -1663,6 +1725,10 @@ function proofRouteForLang(lang) {
 
 function nutritionRouteForLang(lang) {
   return lang === 'fr' ? '/valeurs-nutritionnelles/' : `/${lang}/nutrition/`;
+}
+
+function nutritionProductRouteForLang(lang, slug) {
+  return `${nutritionRouteForLang(lang)}${slug}/`;
 }
 
 function legacyProofRouteForLang(lang) {
@@ -2406,20 +2472,35 @@ function proofPageHtml(route = '/environnement/') {
 function nutritionPageCopy(lang) {
   const copies = {
     fr: {
-      metaTitle: 'Valeurs nutritionnelles et ingrédients | Cognac Léopold\u00a0Croizet',
-      description: 'Ingrédients et valeurs nutritionnelles des cognacs Léopold\u00a0Croizet VS, VSOP, Napoléon et XO, pour 30 ml et 100 ml.',
+      indexMetaTitle: 'Valeurs nutritionnelles par produit | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Accès aux pages d’ingrédients et valeurs nutritionnelles par produit pour les cognacs et Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Valeurs nutritionnelles et ingrédients',
+      productDescription: 'Ingrédients et valeurs nutritionnelles de %s, pour 30 ml et 100 ml.',
       eyebrow: 'Information produit',
-      heading: 'Ingrédients et valeurs nutritionnelles',
-      lead: 'Données moyennes indiquées pour 30 ml et 100 ml, avec l’énergie dans l’ordre kJ / kcal.',
+      indexHeading: 'Valeurs nutritionnelles par produit',
+      productHeading: 'Ingrédients et valeurs nutritionnelles',
+      indexLead: 'Choisissez un produit pour consulter uniquement ses ingrédients et ses valeurs nutritionnelles.',
+      productLead: 'Données moyennes indiquées pour 30 ml et 100 ml, avec l’énergie dans l’ordre kJ / kcal.',
       caption: 'Valeurs nutritionnelles moyennes',
       nutrient: 'Nutriment',
       per30: 'Pour 30 ml',
       per100: 'Pour 100 ml',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'Pineau des Charentes blanc',
+        pineauRed: 'Pineau des Charentes rouge',
+      },
+      productListLabel: 'Produits',
       ingredientsLabel: 'Ingrédients',
       statementLabel: 'Mention',
-      ingredients: 'Vin distillé ; eau',
-      statement: 'Sans sulfites ajoutés',
+      ingredients: {
+        cognac: 'Vin distillé ; eau',
+        pineau: 'Moût de raisin ; eau-de-vie de Cognac',
+      },
+      statement: {
+        cognac: 'Sans sulfites ajoutés',
+        pineau: 'Sans sulfites ajoutés',
+      },
       rowLabels: {
         energy: 'Valeur énergétique',
         alcohol: 'Alcool',
@@ -2432,20 +2513,35 @@ function nutritionPageCopy(lang) {
       },
     },
     en: {
-      metaTitle: 'Nutritional Values and Ingredients | Cognac Léopold\u00a0Croizet',
-      description: 'Ingredients and nutritional values for Cognac Léopold\u00a0Croizet VS, VSOP, Napoléon and XO, per 30 ml and 100 ml.',
+      indexMetaTitle: 'Nutritional Values by Product | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Product-by-product access to ingredients and nutritional values for Cognac and Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Nutritional Values and Ingredients',
+      productDescription: 'Ingredients and nutritional values for %s, per 30 ml and 100 ml.',
       eyebrow: 'Product information',
-      heading: 'Ingredients and nutritional values',
-      lead: 'Average values are shown per 30 ml and per 100 ml, with energy in kJ / kcal order.',
+      indexHeading: 'Nutritional values by product',
+      productHeading: 'Ingredients and nutritional values',
+      indexLead: 'Choose a product to view only its ingredients and nutritional values.',
+      productLead: 'Average values are shown per 30 ml and per 100 ml, with energy in kJ / kcal order.',
       caption: 'Average nutritional values',
       nutrient: 'Nutrient',
       per30: 'Per 30 ml',
       per100: 'Per 100 ml',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'White Pineau des Charentes',
+        pineauRed: 'Red Pineau des Charentes',
+      },
+      productListLabel: 'Products',
       ingredientsLabel: 'Ingredients',
       statementLabel: 'Statement',
-      ingredients: 'Distilled wine; water',
-      statement: 'No added sulphites',
+      ingredients: {
+        cognac: 'Distilled wine; water',
+        pineau: 'Grape must; Cognac eau-de-vie',
+      },
+      statement: {
+        cognac: 'No added sulphites',
+        pineau: 'No added sulphites',
+      },
       rowLabels: {
         energy: 'Energy',
         alcohol: 'Alcohol',
@@ -2458,20 +2554,35 @@ function nutritionPageCopy(lang) {
       },
     },
     ru: {
-      metaTitle: 'Пищевая ценность и ингредиенты | Cognac Léopold\u00a0Croizet',
-      description: 'Ингредиенты и пищевая ценность Cognac Léopold\u00a0Croizet VS, VSOP, Napoléon и XO на 30 мл и 100 мл.',
+      indexMetaTitle: 'Пищевая ценность по продуктам | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Отдельные страницы ингредиентов и пищевой ценности для Cognac и Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Пищевая ценность и ингредиенты',
+      productDescription: 'Ингредиенты и пищевая ценность %s на 30 мл и 100 мл.',
       eyebrow: 'Информация о продукте',
-      heading: 'Ингредиенты и пищевая ценность',
-      lead: 'Средние значения указаны для 30 мл и 100 мл; энергия приведена в порядке кДж / ккал.',
+      indexHeading: 'Пищевая ценность по продуктам',
+      productHeading: 'Ингредиенты и пищевая ценность',
+      indexLead: 'Выберите продукт, чтобы открыть только его ингредиенты и пищевую ценность.',
+      productLead: 'Средние значения указаны для 30 мл и 100 мл; энергия приведена в порядке кДж / ккал.',
       caption: 'Средняя пищевая ценность',
       nutrient: 'Показатель',
       per30: 'На 30 мл',
       per100: 'На 100 мл',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'Белый Pineau des Charentes',
+        pineauRed: 'Красный Pineau des Charentes',
+      },
+      productListLabel: 'Продукты',
       ingredientsLabel: 'Ингредиенты',
       statementLabel: 'Указание',
-      ingredients: 'Дистиллированное вино; вода',
-      statement: 'Без добавленных сульфитов',
+      ingredients: {
+        cognac: 'Дистиллированное вино; вода',
+        pineau: 'Виноградное сусло; коньячный спирт',
+      },
+      statement: {
+        cognac: 'Без добавленных сульфитов',
+        pineau: 'Без добавленных сульфитов',
+      },
       rowLabels: {
         energy: 'Энергетическая ценность',
         alcohol: 'Алкоголь',
@@ -2484,20 +2595,35 @@ function nutritionPageCopy(lang) {
       },
     },
     da: {
-      metaTitle: 'Næringsværdier og ingredienser | Cognac Léopold\u00a0Croizet',
-      description: 'Ingredienser og næringsværdier for Cognac Léopold\u00a0Croizet VS, VSOP, Napoléon og XO pr. 30 ml og 100 ml.',
+      indexMetaTitle: 'Næringsværdier efter produkt | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Produktspecifik adgang til ingredienser og næringsværdier for Cognac og Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Næringsværdier og ingredienser',
+      productDescription: 'Ingredienser og næringsværdier for %s pr. 30 ml og 100 ml.',
       eyebrow: 'Produktinformation',
-      heading: 'Ingredienser og næringsværdier',
-      lead: 'Gennemsnitsværdier er angivet pr. 30 ml og pr. 100 ml, med energi i rækkefølgen kJ / kcal.',
+      indexHeading: 'Næringsværdier efter produkt',
+      productHeading: 'Ingredienser og næringsværdier',
+      indexLead: 'Vælg et produkt for kun at se dets ingredienser og næringsværdier.',
+      productLead: 'Gennemsnitsværdier er angivet pr. 30 ml og pr. 100 ml, med energi i rækkefølgen kJ / kcal.',
       caption: 'Gennemsnitlige næringsværdier',
       nutrient: 'Næringsstof',
       per30: 'Pr. 30 ml',
       per100: 'Pr. 100 ml',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'Hvid Pineau des Charentes',
+        pineauRed: 'Rød Pineau des Charentes',
+      },
+      productListLabel: 'Produkter',
       ingredientsLabel: 'Ingredienser',
       statementLabel: 'Angivelse',
-      ingredients: 'Destilleret vin; vand',
-      statement: 'Uden tilsatte sulfitter',
+      ingredients: {
+        cognac: 'Destilleret vin; vand',
+        pineau: 'Druemost; Cognac eau-de-vie',
+      },
+      statement: {
+        cognac: 'Uden tilsatte sulfitter',
+        pineau: 'Uden tilsatte sulfitter',
+      },
       rowLabels: {
         energy: 'Energi',
         alcohol: 'Alkohol',
@@ -2510,20 +2636,35 @@ function nutritionPageCopy(lang) {
       },
     },
     sv: {
-      metaTitle: 'Näringsvärden och ingredienser | Cognac Léopold\u00a0Croizet',
-      description: 'Ingredienser och näringsvärden för Cognac Léopold\u00a0Croizet VS, VSOP, Napoléon och XO per 30 ml och 100 ml.',
+      indexMetaTitle: 'Näringsvärden per produkt | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Produktspecifika sidor med ingredienser och näringsvärden för Cognac och Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Näringsvärden och ingredienser',
+      productDescription: 'Ingredienser och näringsvärden för %s per 30 ml och 100 ml.',
       eyebrow: 'Produktinformation',
-      heading: 'Ingredienser och näringsvärden',
-      lead: 'Genomsnittliga värden anges per 30 ml och per 100 ml, med energi i ordningen kJ / kcal.',
+      indexHeading: 'Näringsvärden per produkt',
+      productHeading: 'Ingredienser och näringsvärden',
+      indexLead: 'Välj en produkt för att endast visa dess ingredienser och näringsvärden.',
+      productLead: 'Genomsnittliga värden anges per 30 ml och per 100 ml, med energi i ordningen kJ / kcal.',
       caption: 'Genomsnittliga näringsvärden',
       nutrient: 'Näringsämne',
       per30: 'Per 30 ml',
       per100: 'Per 100 ml',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'Vit Pineau des Charentes',
+        pineauRed: 'Röd Pineau des Charentes',
+      },
+      productListLabel: 'Produkter',
       ingredientsLabel: 'Ingredienser',
       statementLabel: 'Uppgift',
-      ingredients: 'Destillerat vin; vatten',
-      statement: 'Utan tillsatta sulfiter',
+      ingredients: {
+        cognac: 'Destillerat vin; vatten',
+        pineau: 'Druvmust; Cognac eau-de-vie',
+      },
+      statement: {
+        cognac: 'Utan tillsatta sulfiter',
+        pineau: 'Utan tillsatta sulfiter',
+      },
       rowLabels: {
         energy: 'Energi',
         alcohol: 'Alkohol',
@@ -2536,20 +2677,35 @@ function nutritionPageCopy(lang) {
       },
     },
     no: {
-      metaTitle: 'Næringsverdier og ingredienser | Cognac Léopold\u00a0Croizet',
-      description: 'Ingredienser og næringsverdier for Cognac Léopold\u00a0Croizet VS, VSOP, Napoléon og XO per 30 ml og 100 ml.',
+      indexMetaTitle: 'Næringsverdier per produkt | Cognac Léopold\u00a0Croizet',
+      indexDescription: 'Produktsider med ingredienser og næringsverdier for Cognac og Pineau Léopold\u00a0Croizet.',
+      productMetaTitle: '%s | Næringsverdier og ingredienser',
+      productDescription: 'Ingredienser og næringsverdier for %s per 30 ml og 100 ml.',
       eyebrow: 'Produktinformasjon',
-      heading: 'Ingredienser og næringsverdier',
-      lead: 'Gjennomsnittsverdier er oppgitt per 30 ml og per 100 ml, med energi i rekkefølgen kJ / kcal.',
+      indexHeading: 'Næringsverdier per produkt',
+      productHeading: 'Ingredienser og næringsverdier',
+      indexLead: 'Velg et produkt for å se kun dets ingredienser og næringsverdier.',
+      productLead: 'Gjennomsnittsverdier er oppgitt per 30 ml og per 100 ml, med energi i rekkefølgen kJ / kcal.',
       caption: 'Gjennomsnittlige næringsverdier',
       nutrient: 'Næringsstoff',
       per30: 'Per 30 ml',
       per100: 'Per 100 ml',
-      productType: 'Cognac %s',
+      productType: {
+        cognac: 'Cognac %s',
+        pineauWhite: 'Hvit Pineau des Charentes',
+        pineauRed: 'Rød Pineau des Charentes',
+      },
+      productListLabel: 'Produkter',
       ingredientsLabel: 'Ingredienser',
       statementLabel: 'Opplysning',
-      ingredients: 'Destillert vin; vann',
-      statement: 'Uten tilsatte sulfitter',
+      ingredients: {
+        cognac: 'Destillert vin; vann',
+        pineau: 'Druemost; Cognac eau-de-vie',
+      },
+      statement: {
+        cognac: 'Uten tilsatte sulfitter',
+        pineau: 'Uten tilsatte sulfitter',
+      },
       rowLabels: {
         energy: 'Energi',
         alcohol: 'Alkohol',
@@ -2562,20 +2718,35 @@ function nutritionPageCopy(lang) {
       },
     },
     zh: {
-      metaTitle: '营养信息与成分 | Cognac Léopold\u00a0Croizet',
-      description: 'Cognac Léopold\u00a0Croizet VS、VSOP、Napoléon 与 XO 的成分及营养信息，按 30 ml 与 100 ml 标示。',
+      indexMetaTitle: '按产品查看营养信息 | Cognac Léopold\u00a0Croizet',
+      indexDescription: '按产品查看 Cognac 与 Pineau Léopold\u00a0Croizet 的成分及营养信息。',
+      productMetaTitle: '%s | 营养信息与成分',
+      productDescription: '%s 的成分及营养信息，按 30 ml 与 100 ml 标示。',
       eyebrow: '产品信息',
-      heading: '成分与营养信息',
-      lead: '平均值按 30 ml 与 100 ml 标示，能量按 kJ / kcal 顺序显示。',
+      indexHeading: '按产品查看营养信息',
+      productHeading: '成分与营养信息',
+      indexLead: '请选择一个产品，只查看该产品的成分与营养信息。',
+      productLead: '平均值按 30 ml 与 100 ml 标示，能量按 kJ / kcal 顺序显示。',
       caption: '平均营养信息',
       nutrient: '项目',
       per30: '每 30 ml',
       per100: '每 100 ml',
-      productType: '%s 干邑',
+      productType: {
+        cognac: '%s 干邑',
+        pineauWhite: '白 Pineau des Charentes',
+        pineauRed: '红 Pineau des Charentes',
+      },
+      productListLabel: '产品',
       ingredientsLabel: '成分',
       statementLabel: '说明',
-      ingredients: '蒸馏葡萄酒；水',
-      statement: '未添加亚硫酸盐',
+      ingredients: {
+        cognac: '蒸馏葡萄酒；水',
+        pineau: '葡萄汁；干邑白兰地原酒',
+      },
+      statement: {
+        cognac: '未添加亚硫酸盐',
+        pineau: '未添加亚硫酸盐',
+      },
       rowLabels: {
         energy: '能量',
         alcohol: '酒精',
@@ -2591,32 +2762,103 @@ function nutritionPageCopy(lang) {
   return copies[lang] || copies.fr;
 }
 
-function nutritionPageHtml(route = '/valeurs-nutritionnelles/') {
+function nutritionProductMetadata(product, copy) {
+  const productName = nutritionProductPlainName(product);
+  return {
+    title: copy.productMetaTitle.replace('%s', productName),
+    description: copy.productDescription.replace('%s', productName),
+  };
+}
+
+function nutritionIndexPageHtml(route = '/valeurs-nutritionnelles/') {
   const lang = languageForRoute(route);
   const copy = nutritionPageCopy(lang);
-  const jumpLinks = nutritionProductData.map((product) => (
-    `<a href="#${product.slug}">${escapeHtml(product.name)}</a>`
+  const links = nutritionProductData.map((product) => (
+    `<a href="${sourceHref(nutritionProductRouteForLang(lang, product.slug))}">${nutritionProductTitleHtml(product)}</a>`
   )).join('');
-  const cards = nutritionProductData.map((product) => nutritionProductCardHtml(product, copy)).join('\n');
   const body = [
     '<section class="lc-section lc-nutrition-intro">',
-    `<p>${escapeHtml(copy.lead)}</p>`,
-    `<nav class="lc-nutrition-jump-list" aria-label="${escapeHtml(copy.heading)}">${jumpLinks}</nav>`,
-    '</section>',
-    '<section class="lc-section lc-nutrition-list">',
-    cards,
+    `<p>${escapeHtml(copy.indexLead)}</p>`,
+    `<nav class="lc-nutrition-product-grid" aria-label="${escapeHtml(copy.productListLabel)}">${links}</nav>`,
     '</section>',
   ].join('\n');
-  const css = `    .lc-nowrap{white-space:nowrap}
+
+  return sourcePageShell({
+    route,
+    title: copy.indexMetaTitle,
+    description: copy.indexDescription,
+    eyebrow: copy.eyebrow,
+    heading: escapeHtml(copy.indexHeading),
+    lead: '',
+    body,
+    pageClass: 'lc-nutrition-page',
+    headerVariant: 'plain',
+    extraCss: nutritionPageCss(),
+  });
+}
+
+function nutritionProductPageHtml(route, product) {
+  const lang = languageForRoute(route);
+  const copy = nutritionPageCopy(lang);
+  const metadata = nutritionProductMetadata(product, copy);
+  const body = [
+    '<section class="lc-section lc-nutrition-intro">',
+    `<p>${escapeHtml(copy.productLead)}</p>`,
+    '</section>',
+    '<section class="lc-section lc-nutrition-list">',
+    nutritionProductCardHtml(product, copy),
+    '</section>',
+  ].join('\n');
+
+  return sourcePageShell({
+    route,
+    title: metadata.title,
+    description: metadata.description,
+    eyebrow: copy.eyebrow,
+    heading: copy.productHeading,
+    lead: '',
+    body,
+    pageClass: 'lc-nutrition-page',
+    headerVariant: 'plain',
+    extraCss: nutritionPageCss(),
+  });
+}
+
+function nutritionProductCardHtml(product, copy) {
+  const type = copy.productType[product.productKind].replace('%s', product.name);
+  const ingredients = copy.ingredients[product.ingredientsGroup];
+  const statement = copy.statement[product.ingredientsGroup];
+  const rows = nutritionValues[product.valueGroup].map(([key, per30, per100]) => (
+    `<tr><th scope="row">${escapeHtml(copy.rowLabels[key])}</th><td>${escapeHtml(per30)}</td><td>${escapeHtml(per100)}</td></tr>`
+  )).join('');
+
+  return `<article class="lc-nutrition-card">
+  <h2>${nutritionProductTitleHtml(product)}</h2>
+  <p class="lc-nutrition-type">${escapeHtml(type)}</p>
+  <div class="lc-nutrition-table-wrap">
+    <table class="lc-nutrition-table">
+      <caption>${escapeHtml(copy.caption)}</caption>
+      <thead><tr><th scope="col">${escapeHtml(copy.nutrient)}</th><th scope="col">${escapeHtml(copy.per30)}</th><th scope="col">${escapeHtml(copy.per100)}</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+  <dl class="lc-nutrition-meta">
+    <div><dt>${escapeHtml(copy.ingredientsLabel)}</dt><dd>${escapeHtml(ingredients)}</dd></div>
+    <div><dt>${escapeHtml(copy.statementLabel)}</dt><dd>${escapeHtml(statement)}</dd></div>
+  </dl>
+</article>`;
+}
+
+function nutritionPageCss() {
+  return `    .lc-nowrap{white-space:nowrap}
     .lc-nutrition-page .lc-panel{max-width:980px;margin:0 auto}
     .lc-nutrition-intro{color:var(--lc-muted)}
     .lc-nutrition-intro p{font-size:18px}
-    .lc-nutrition-jump-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase}
-    .lc-nutrition-jump-list a{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 13px;border:1px solid var(--lc-line);background:#fffdf9;color:var(--lc-ink);text-decoration:none}
-    .lc-nutrition-jump-list a:hover{border-color:var(--lc-gold);text-decoration:none}
+    .lc-nutrition-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
+    .lc-nutrition-product-grid a{display:flex;align-items:center;min-height:58px;padding:14px 16px;border:1px solid var(--lc-line);background:#fffdf9;color:var(--lc-ink);text-decoration:none}
+    .lc-nutrition-product-grid a:hover{border-color:var(--lc-gold);text-decoration:none}
     .lc-nutrition-list{display:grid;gap:24px}
-    .lc-nutrition-card{padding:0 0 24px;border-bottom:1px solid var(--lc-line);scroll-margin-top:28px}
-    .lc-nutrition-card:last-child{padding-bottom:0;border-bottom:0}
+    .lc-nutrition-card{padding:0;scroll-margin-top:28px}
     .lc-nutrition-card h2{margin-bottom:2px}
     .lc-nutrition-type{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold);margin:0 0 16px}
     .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid var(--lc-line);background:#fff}
@@ -2629,44 +2871,19 @@ function nutritionPageHtml(route = '/valeurs-nutritionnelles/') {
     .lc-nutrition-meta div{padding:14px 16px;background:#fffdf9;border:1px solid var(--lc-line)}
     .lc-nutrition-meta dt{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold);margin:0 0 4px}
     .lc-nutrition-meta dd{margin:0;color:var(--lc-ink)}
-    @media (max-width:760px){.lc-nutrition-meta{grid-template-columns:1fr}.lc-nutrition-table{min-width:560px}.lc-nutrition-card h2{font-size:25px}}`;
-
-  return sourcePageShell({
-    route,
-    title: copy.metaTitle,
-    description: copy.description,
-    eyebrow: copy.eyebrow,
-    heading: escapeHtml(copy.heading),
-    lead: '',
-    body,
-    pageClass: 'lc-nutrition-page',
-    headerVariant: 'plain',
-    extraCss: css,
-  });
+    @media (max-width:760px){.lc-nutrition-product-grid,.lc-nutrition-meta{grid-template-columns:1fr}.lc-nutrition-table{min-width:560px}.lc-nutrition-card h2{font-size:25px}}`;
 }
 
-function nutritionProductCardHtml(product, copy) {
-  const productTitle = `Cognac <span class="lc-nowrap">Léopold&nbsp;Croizet</span> ${escapeHtml(product.name)}`;
-  const type = copy.productType.replace('%s', product.name);
-  const rows = nutritionValues[product.valueGroup].map(([key, per30, per100]) => (
-    `<tr><th scope="row">${escapeHtml(copy.rowLabels[key])}</th><td>${escapeHtml(per30)}</td><td>${escapeHtml(per100)}</td></tr>`
-  )).join('');
+function nutritionProductPlainName(product) {
+  if (product.productKind === 'pineauWhite') return 'Pineau des Charentes Léopold\u00a0Croizet';
+  if (product.productKind === 'pineauRed') return 'Pineau Rouge des Charentes Léopold\u00a0Croizet';
+  return `Cognac Léopold\u00a0Croizet ${product.name}`;
+}
 
-  return `<article class="lc-nutrition-card" id="${product.slug}">
-  <h2>${productTitle}</h2>
-  <p class="lc-nutrition-type">${escapeHtml(type)}</p>
-  <div class="lc-nutrition-table-wrap">
-    <table class="lc-nutrition-table">
-      <caption>${escapeHtml(copy.caption)}</caption>
-      <thead><tr><th scope="col">${escapeHtml(copy.nutrient)}</th><th scope="col">${escapeHtml(copy.per30)}</th><th scope="col">${escapeHtml(copy.per100)}</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  </div>
-  <dl class="lc-nutrition-meta">
-    <div><dt>${escapeHtml(copy.ingredientsLabel)}</dt><dd>${escapeHtml(copy.ingredients)}</dd></div>
-    <div><dt>${escapeHtml(copy.statementLabel)}</dt><dd>${escapeHtml(copy.statement)}</dd></div>
-  </dl>
-</article>`;
+function nutritionProductTitleHtml(product) {
+  if (product.productKind === 'pineauWhite') return 'Pineau des Charentes <span class="lc-nowrap">Léopold&nbsp;Croizet</span>';
+  if (product.productKind === 'pineauRed') return 'Pineau Rouge des Charentes <span class="lc-nowrap">Léopold&nbsp;Croizet</span>';
+  return `Cognac <span class="lc-nowrap">Léopold&nbsp;Croizet</span> ${escapeHtml(product.name)}`;
 }
 
 function legacyProofRedirectHtml(route = '/preuves/') {
@@ -3300,7 +3517,7 @@ function injectProductNutritionLink(html, route) {
   if (!/<\/main><\/div>/i.test(next)) return next;
 
   const lang = languageForRoute(route);
-  const href = `${sourceHref(nutritionRouteForLang(lang))}#${slug}`;
+  const href = sourceHref(nutritionProductRouteForLang(lang, slug));
   const label = nutritionLinkLabel(lang);
   const block = `\n<div class="lc-product-nutrition-link"><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></div>\n`;
   next = next.replace(/(\s*<\/main><\/div>)/i, `${block}$1`);
@@ -4067,7 +4284,7 @@ function makeLlmsTxt() {
     '- [Chinese homepage](https://cognac-leopold-croizet.com/zh/): Official Simplified Chinese homepage.',
     '- [Chinese collection](https://cognac-leopold-croizet.com/zh/shop/): Simplified Chinese Cognac Léopold Croizet range, without public prices.',
     '- [Collection](https://cognac-leopold-croizet.com/collection/): Full Cognac Léopold Croizet range.',
-    '- [Nutritional values](https://cognac-leopold-croizet.com/valeurs-nutritionnelles/): Ingredients and average nutritional values for VS, VSOP, Napoléon and XO.',
+    '- [Nutritional values](https://cognac-leopold-croizet.com/valeurs-nutritionnelles/): Product-by-product ingredients and average nutritional values.',
     '- [FAQ](https://cognac-leopold-croizet.com/faq/): Visitor-ready answers about cognac, cuvée choice, serving, visits and professional requests.',
     '- [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.',
     '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
@@ -4110,7 +4327,8 @@ function makeLlmsFullTxt() {
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
     '',
     '## Nutrition',
-    'The nutritional values page lists ingredients and average values per 30 ml and per 100 ml for Cognac Léopold Croizet VS, VSOP, Napoléon and XO: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/',
+    'Nutrition pages list ingredients and average values per 30 ml and per 100 ml by product:',
+    ...nutritionProductData.map((product) => `- ${nutritionProductPlainName(product)}: https://cognac-leopold-croizet.com${nutritionProductRouteForLang('fr', product.slug)}`),
     '',
     '## Craft Topics',
     '- Vineyard and fruit: https://cognac-leopold-croizet.com/la-matiere/',

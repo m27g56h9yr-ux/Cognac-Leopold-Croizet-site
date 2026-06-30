@@ -29,7 +29,13 @@ The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as 
 - Pineau Rouge des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/
 
 ## Nutrition
-The nutritional values page lists ingredients and average values per 30 ml and per 100 ml for Cognac Léopold Croizet VS, VSOP, Napoléon and XO: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/
+Nutrition pages list ingredients and average values per 30 ml and per 100 ml by product:
+- Cognac Léopold Croizet VS: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/
+- Cognac Léopold Croizet VSOP: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/
+- Cognac Léopold Croizet Napoléon: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/
+- Cognac Léopold Croizet XO: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/
+- Pineau des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/
+- Pineau Rouge des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/
 
 ## Craft Topics
 - Vineyard and fruit: https://cognac-leopold-croizet.com/la-matiere/
