@@ -518,7 +518,6 @@ async function updateCollectionWithPineauBlanc() {
     }
 
     let next = removePineauMegaMenuItems(html);
-    next = removePineauCollectionCards(next);
     next = addPineauCollectionEndPageItems(next, config);
     next = next.replace(
       /Les cognacs et Pineau Blanc des Charentes Léopold(?:&nbsp;|\s)Croizet sont issus/,
@@ -536,33 +535,63 @@ function removePineauMegaMenuItems(html) {
   );
 }
 
-function removePineauCollectionCards(html) {
+function addPineauCollectionEndPageItems(html, config) {
+  const headingMatch = html.match(/<div class="end-page">\s*<div class="container-end-page">\s*<div class="texte">([\s\S]*?)<\/div>/i);
+  if (!headingMatch) {
+    throw new Error(`Collection end page block not found in ${config.localPath}`);
+  }
+
   return html.replace(
-    /\s*<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/pineau-des-charentes(?:-blanc|-rouge)?\/"[\s\S]*?(?=\s*<div class="container-collection-produit"|\s*<\/div>\s*<\/div>\s*<footer>)/gi,
-    '\n',
+    /<div class="end-page">\s*<div class="container-end-page">\s*<div class="texte">[\s\S]*?(?=\s*<footer\b)/i,
+    collectionEndPageBlock(config, headingMatch[1].trim()),
   );
 }
 
-function addPineauCollectionEndPageItems(html, config) {
-  if (html.includes(config.route) || html.includes(`/${PINEAU_SLUG}/`)) return html;
+function collectionEndPageBlock(config, headingHtml) {
+  const cards = [collectionEndPageCard({
+    route: localizedCollectionRoute(config.route, 'valentine'),
+    image: '/wp-content/uploads/2021/06/img_produit_valentine_base.png',
+    title: 'Valentine XO',
+    alt: 'Cognac Léopold Croizet Valentine XO',
+    bottleSize: '35 cl',
+    price: '49',
+    width: 600,
+    height: 1167,
+    order: russianCollectionOrder(config.route),
+  })];
 
-  const cards = [pineauCollectionCard(config)];
+  cards.push(collectionEndPageCard(config));
   if (config.redRoute) {
-    cards.push(pineauCollectionCard({
+    cards.push(collectionEndPageCard({
       route: config.redRoute,
       title: config.redTitle,
       image: PINEAU_RED_COLLECTION_IMAGE,
       alt: 'Pineau Rouge des Charentes Léopold Croizet',
+      noSrcset: true,
     }));
   }
 
-  return html.replace(
-    /(<div class="container-collection-produit">\s*<div class="image-produit-collection">\s*<a href="[^"]*\/collection\/valentine\/"[\s\S]*?<\/div>\s*<\/div>)/i,
-    `$1\n\n${cards.join('\n\n')}`,
-  );
+  return `<div class="end-page">
+    <div class="container-end-page">
+        <div class="texte">${headingHtml || '& aussi...'}</div>
+
+${cards.join('\n')}
+    </div>
+</div>
+`;
 }
 
-function pineauCollectionCard(config) {
+function localizedCollectionRoute(route, slug) {
+  const locale = route.match(/^\/(en|ru|da|sv|no|zh)\//)?.[1];
+  return `${locale ? `/${locale}` : ''}/collection/${slug}/`;
+}
+
+function russianCollectionOrder(route) {
+  if (!route.startsWith('/ru/')) return null;
+  return { href: '/ru/a-faire/', label: 'Заказать' };
+}
+
+function collectionEndPageCard(config) {
   const base = deployBase();
   const image = config.image || PINEAU_COLLECTION_IMAGE;
   const isPineauRedCard = config.route?.includes(PINEAU_RED_SLUG);
@@ -570,21 +599,32 @@ function pineauCollectionCard(config) {
     throw new Error(`Pineau Rouge collection card must use the full product image, not ${image}`);
   }
   const alt = config.alt || 'Pineau des Charentes';
-  const srcsetAttribute = isPineauRedCard ? '' : ` srcset="${collectionDensitySrcset(base, image)}"`;
+  const srcsetAttribute = config.noSrcset || isPineauRedCard ? '' : ` srcset="${collectionDensitySrcset(base, image)}"`;
+  const width = config.width || 720;
+  const height = config.height || 1100;
+  const priceHtml = config.price
+    ? `
+                                                    <div class="prix-produit-collection">
+                                <span>${escapeHtml(config.price)}</span>€
+                            </div>`
+    : '';
+  const orderHtml = config.order
+    ? `
+                                                    <a href="${base}${config.order.href}" class="commander-produit">${escapeHtml(config.order.label)}</a>`
+    : '';
   return `                <div class="container-collection-produit">
 
                     <div class="image-produit-collection">
                         <a href="${base}${config.route}">
-                            <img src="${base}${image}" alt="${escapeHtml(alt)}"${srcsetAttribute}>
+                            <img src="${base}${image}" alt="${escapeHtml(alt)}"${srcsetAttribute} width="${width}" height="${height}" decoding="async" loading="lazy">
                         </a>
                     </div>
                     <div class="informations-produit-collection">
                         <h3 class="titre-produit-collection">
                             ${config.title}                        </h3>
                         <div class="contenance-produit-collection">
-                            - 75 cl -
-                        </div>
-
+                            - ${config.bottleSize || '75 cl'} -
+                        </div>${priceHtml}${orderHtml}
                     </div>
                 </div>
 `;

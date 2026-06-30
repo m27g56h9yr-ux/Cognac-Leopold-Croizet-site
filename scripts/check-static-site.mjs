@@ -12,6 +12,7 @@ const dynamicReferences = [];
 const brandViolations = [];
 const pineauRedCollectionViolations = [];
 const pineauRedProductNavigationViolations = [];
+const collectionEndPageLayoutViolations = [];
 const legacyDeployBaseViolations = [];
 const imageDimensionViolations = [];
 const formLabelViolations = [];
@@ -72,6 +73,7 @@ for (const file of checkedFiles) {
     homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
     pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
     pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
+    collectionEndPageLayoutViolations.push(...findCollectionEndPageLayoutViolations(text, relativeFile));
   }
 }
 
@@ -81,6 +83,7 @@ if (
   || brandViolations.length
   || pineauRedCollectionViolations.length
   || pineauRedProductNavigationViolations.length
+  || collectionEndPageLayoutViolations.length
   || legacyDeployBaseViolations.length
   || imageDimensionViolations.length
   || formLabelViolations.length
@@ -110,6 +113,11 @@ if (
   if (pineauRedProductNavigationViolations.length) {
     console.error('Pineau Rouge product navigation regressions:');
     for (const item of pineauRedProductNavigationViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (collectionEndPageLayoutViolations.length) {
+    console.error('Collection end-page layout regressions:');
+    for (const item of collectionEndPageLayoutViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   if (legacyDeployBaseViolations.length) {
@@ -324,6 +332,45 @@ function findPineauRedCollectionViolations(html, relativeFile) {
   }
 
   return violations;
+}
+
+function findCollectionEndPageLayoutViolations(html, relativeFile) {
+  const collectionPages = new Set([
+    'collection/index.html',
+    'en/shop/index.html',
+    'ru/a-faire/index.html',
+    'da/shop/index.html',
+    'sv/shop/index.html',
+    'no/shop/index.html',
+    'zh/shop/index.html',
+  ]);
+  if (!collectionPages.has(relativeFile)) return [];
+
+  const block = html.match(/<div class="end-page">[\s\S]*?(?=\s*<footer\b)/i)?.[0];
+  if (!block) return [`${relativeFile}: missing collection end-page block`];
+
+  const cardStarts = [...block.matchAll(/<div class="container-collection-produit">/g)];
+  const violations = [];
+  if (cardStarts.length !== 3) {
+    violations.push(`${relativeFile}: expected 3 end-page collection cards, found ${cardStarts.length}`);
+  }
+
+  for (let index = 0; index < cardStarts.length - 1; index++) {
+    const segment = block.slice(cardStarts[index].index, cardStarts[index + 1].index);
+    if (divDepth(segment) !== 0) {
+      violations.push(`${relativeFile}: collection card ${index + 1} is not closed before the next card`);
+    }
+  }
+
+  return violations;
+}
+
+function divDepth(html) {
+  let depth = 0;
+  for (const token of html.match(/<\/?div\b[^>]*>/gi) || []) {
+    depth += token.startsWith('</') ? -1 : 1;
+  }
+  return depth;
 }
 
 function findPineauRedProductNavigationViolations(html, relativeFile) {
