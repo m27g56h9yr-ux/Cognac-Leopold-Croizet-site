@@ -577,6 +577,21 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
+const productGtinVariants = new Map([
+  ['vsop', [
+    {
+      name: 'Cognac Léopold Croizet VSOP 35 cl',
+      size: '350 ml',
+      gtin13: '3322870011588',
+    },
+    {
+      name: 'Caisse Cognac Léopold Croizet VSOP 12 x 35 cl',
+      size: '12 x 350 ml',
+      gtin13: '3322870011595',
+    },
+  ]],
+]);
+
 const nutritionProductSlugs = new Set(NUTRITION_PRODUCT_SLUGS);
 const nutritionProductData = [
   {
@@ -4136,9 +4151,11 @@ function productSchema(route, metadata, image) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
   const name = productNames.get(slug);
   if (!name) return null;
-  return {
+  const id = `${PUBLIC_ORIGIN}${route}#product`;
+  const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': id,
     name: productFullName(slug),
     description: metadata.description,
     image: image ? `${PUBLIC_ORIGIN}${image}` : undefined,
@@ -4149,6 +4166,17 @@ function productSchema(route, metadata, image) {
     },
     manufacturer: { '@id': `${PUBLIC_ORIGIN}/#organization` },
   };
+  const variants = productGtinVariants.get(slug);
+  if (variants) {
+    schema.hasVariant = variants.map((variant) => ({
+      '@type': 'Product',
+      name: variant.name,
+      size: variant.size,
+      gtin13: variant.gtin13,
+      isVariantOf: { '@id': id },
+    }));
+  }
+  return schema;
 }
 
 function cocktailRecipesSchema(route) {
