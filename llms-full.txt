@@ -73,6 +73,22 @@ The environment page presents the official Certification Environnementale Cognac
 - HVE certificate 2021-2024: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf
 - CEC diploma 2021: https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf
 
+## Medals and Awards
+The medals page lists only medals already visible on product pages. Each medal links to available external proof, and each relevant product links back to its official product page.
+- French medals page: https://cognac-leopold-croizet.com/medailles/
+- English medals page: https://cognac-leopold-croizet.com/en/medailles/
+- Russian medals page: https://cognac-leopold-croizet.com/ru/medailles/
+- Danish medals page: https://cognac-leopold-croizet.com/da/medailles/
+- Swedish medals page: https://cognac-leopold-croizet.com/sv/medailles/
+- Norwegian medals page: https://cognac-leopold-croizet.com/no/medailles/
+- Simplified Chinese medals page: https://cognac-leopold-croizet.com/zh/medailles/
+- Cognac Léopold Croizet Napoléon: Gold medal - CWSA 2021; product https://cognac-leopold-croizet.com/collection/napoleon/; proof https://cwsa.org/cwsa-2021-results/
+- Cognac Léopold Croizet XO: Gold medal - Concours Général Agricole 2016; product https://cognac-leopold-croizet.com/collection/xo/; proof https://palmares.concours-general-agricole.fr/produits/1632167-2608
+- Cognac Léopold Croizet XO Exception: Gold medal - The Cognac Masters 2015; product https://cognac-leopold-croizet.com/collection/xo-exception/; proof https://www.thespiritsbusiness.com/2015/09/the-global-cognac-masters-2015-results/2/
+- Cognac Léopold Croizet XO Exception: Silver medal - Spirits Selection 2024; product https://cognac-leopold-croizet.com/collection/xo-exception/; proof https://results.spiritsselection.com/fr/resultats/2024/222113-cognac-leopold-croizet-xo-exception
+- Pineau des Charentes Léopold Croizet: Silver medal - Concours Général Agricole 2010; product https://cognac-leopold-croizet.com/collection/pineau-des-charentes/; proof https://palmares.concours-general-agricole.fr/produits/1268378-2608
+- Pineau des Charentes Léopold Croizet: Silver medal - Concours Mondial de Bruxelles 2025; product https://cognac-leopold-croizet.com/collection/pineau-des-charentes/; proof https://resultats.concoursmondial.com/fr/resultats/2025/240534-pineau-des-charentes-esprit-organic-2011
+
 ## Cocktails
 The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.
 
@@ -81,7 +97,7 @@ Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leo
 
 ## Verified Source Pages
 - Environment and proof page: https://cognac-leopold-croizet.com/environnement/
-- Medal and organic-claim details are not included here unless validated and visible on an indexable source page.
+- Medals and awards page: https://cognac-leopold-croizet.com/medailles/
 
 ## Contact
 - cognac@mdpierre.com

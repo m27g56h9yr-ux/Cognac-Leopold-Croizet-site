@@ -11,6 +11,7 @@ const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-06-29';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
+const MEDAL_PAGE_LASTMOD = '2026-07-01';
 const NUTRITION_PAGE_LASTMOD = '2026-06-30';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
@@ -23,6 +24,7 @@ const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const NUTRITION_PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
 const FAQ_ROUTES = SITE_LANGUAGES.map((lang) => faqRouteForLang(lang));
 const PROOF_ROUTES = SITE_LANGUAGES.map((lang) => proofRouteForLang(lang));
+const MEDAL_ROUTES = SITE_LANGUAGES.map((lang) => medalRouteForLang(lang));
 const NUTRITION_INDEX_ROUTES = SITE_LANGUAGES.map((lang) => nutritionRouteForLang(lang));
 const NUTRITION_PRODUCT_ROUTES = SITE_LANGUAGES.flatMap((lang) => (
   NUTRITION_PRODUCT_SLUGS.map((slug) => nutritionProductRouteForLang(lang, slug))
@@ -47,7 +49,7 @@ const proofLogoUrls = {
   hve: '/assets/environment/logo-hve-noir.png',
 };
 
-const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES, ...NUTRITION_ROUTES]);
+const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES, ...MEDAL_ROUTES, ...NUTRITION_ROUTES]);
 
 const faqEntries = [
   {
@@ -796,6 +798,9 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/05/img_diaporama_medailles_cwsa_gold_2021-180x274.png',
       width: 180,
       height: 274,
+      level: 'gold',
+      award: 'CWSA',
+      year: '2021',
       alt: "Médaille d'or CWSA 2021 - Cognac Léopold Croizet Napoléon",
     },
   ]],
@@ -805,6 +810,9 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/05/img_diaporama_or_2016-180x274.png',
       width: 180,
       height: 274,
+      level: 'gold',
+      award: 'Concours Général Agricole',
+      year: '2016',
       alt: "Médaille d'or Concours Général Agricole 2016 - Cognac Léopold Croizet XO",
     },
   ]],
@@ -814,6 +822,9 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/06/img_diaporama_medailles_sb_or_2015-180x274.png',
       width: 180,
       height: 274,
+      level: 'gold',
+      award: 'The Cognac Masters',
+      year: '2015',
       alt: "Médaille d'or The Cognac Masters 2015 - Cognac Léopold Croizet XO Exception",
     },
     {
@@ -821,6 +832,9 @@ const productMedalProofs = new Map([
       src: 'https://img.concoursmondial.com/medals/web/ssel2024-silver-medal.png',
       width: 394,
       height: 369,
+      level: 'silver',
+      award: 'Spirits Selection',
+      year: '2024',
       alt: "Médaille d'argent Spirits Selection 2024 - Cognac Léopold Croizet XO Exception",
     },
   ]],
@@ -830,6 +844,9 @@ const productMedalProofs = new Map([
       src: '/wp-content/uploads/2021/05/img_diaporama_argent_2010-180x274.png',
       width: 180,
       height: 274,
+      level: 'silver',
+      award: 'Concours Général Agricole',
+      year: '2010',
       alt: "Médaille d'argent Concours Général Agricole 2010 - Pineau des Charentes blanc Léopold Croizet",
     },
     {
@@ -837,6 +854,9 @@ const productMedalProofs = new Map([
       src: 'https://img.concoursmondial.com/medals/web/cmb2025-silver-medal.png',
       width: 394,
       height: 369,
+      level: 'silver',
+      award: 'Concours Mondial de Bruxelles',
+      year: '2025',
       alt: "Médaille d'argent Concours Mondial de Bruxelles 2025 - Pineau des Charentes Esprit Organic 2011 Léopold Croizet",
     },
   ]],
@@ -906,6 +926,7 @@ const contentGroups = [
   FILM_ROUTES,
   FAQ_ROUTES,
   PROOF_ROUTES,
+  MEDAL_ROUTES,
   NUTRITION_INDEX_ROUTES,
   ...NUTRITION_PRODUCT_SLUGS.map((slug) => SITE_LANGUAGES.map((lang) => nutritionProductRouteForLang(lang, slug))),
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
@@ -1328,6 +1349,14 @@ for (const lang of SITE_LANGUAGES) {
 }
 
 for (const lang of SITE_LANGUAGES) {
+  const copy = medalPageCopy(lang);
+  routeMetadata.set(medalRouteForLang(lang), {
+    title: copy.metaTitle,
+    description: copy.description,
+  });
+}
+
+for (const lang of SITE_LANGUAGES) {
   const copy = nutritionPageCopy(lang);
   routeMetadata.set(nutritionRouteForLang(lang), {
     title: copy.indexMetaTitle,
@@ -1441,6 +1470,10 @@ async function writeSourcePages() {
 
   for (const route of PROOF_ROUTES) {
     pages.set(`${route.replace(/^\//, '')}index.html`, proofPageHtml(route));
+  }
+
+  for (const route of MEDAL_ROUTES) {
+    pages.set(`${route.replace(/^\//, '')}index.html`, medalPageHtml(route));
   }
 
   for (const route of NUTRITION_INDEX_ROUTES) {
@@ -1793,6 +1826,10 @@ function collectionRouteForLang(lang) {
   return `/${lang}/shop/`;
 }
 
+function productRouteForLang(lang, slug) {
+  return lang === 'fr' ? `/collection/${slug}/` : `/${lang}/collection/${slug}/`;
+}
+
 function filmRouteForLang(lang) {
   return lang === 'fr' ? `/${FILM_SLUG}/` : `/${lang}/${FILM_SLUG}/`;
 }
@@ -1817,6 +1854,10 @@ function proofRouteForLang(lang) {
   return lang === 'fr' ? '/environnement/' : `/${lang}/environnement/`;
 }
 
+function medalRouteForLang(lang) {
+  return lang === 'fr' ? '/medailles/' : `/${lang}/medailles/`;
+}
+
 function nutritionRouteForLang(lang) {
   return lang === 'fr' ? '/valeurs-nutritionnelles/' : `/${lang}/nutrition/`;
 }
@@ -1832,7 +1873,11 @@ function legacyProofRouteForLang(lang) {
 function faqLanguageMenuHtml(route) {
   const currentLang = languageForRoute(route);
   const labels = { fr: 'Fr', en: 'En', ru: 'Ру', da: 'Da', sv: 'Sv', no: 'No', zh: '中文' };
-  const routeForLang = PROOF_ROUTES.includes(route) ? proofRouteForLang : faqRouteForLang;
+  const routeForLang = PROOF_ROUTES.includes(route)
+    ? proofRouteForLang
+    : MEDAL_ROUTES.includes(route)
+      ? medalRouteForLang
+      : faqRouteForLang;
   const items = SITE_LANGUAGES.map((lang) => {
     const hrefLang = lang === 'zh' ? 'zh-CN' : lang;
     const current = lang === currentLang;
@@ -1997,7 +2042,7 @@ function faqEntriesForLang(lang) {
       group: faqGroupKeyByFrench[entry.group] || 'choose',
     }));
 
-  return withFaqEnvironmentalEntries(entries, lang);
+  return withFaqMedalEntries(withFaqEnvironmentalEntries(entries, lang), lang);
 }
 
 function withFaqEnvironmentalEntries(entries, lang) {
@@ -2009,6 +2054,59 @@ function withFaqEnvironmentalEntries(entries, lang) {
     ...additions,
     ...entries.slice(insertIndex + 1),
   ];
+}
+
+function withFaqMedalEntries(entries, lang) {
+  const medalEntry = faqMedalEntry(lang);
+  const insertIndex = entries.findIndex((entry) => (
+    entry.group === 'choose'
+    && /détails|details|подроб|detaljer|detaljerna|详细|信息/i.test(`${entry.question} ${entry.answer || ''}`)
+  ));
+  if (insertIndex === -1) return [...entries, medalEntry];
+  return [
+    ...entries.slice(0, insertIndex + 1),
+    medalEntry,
+    ...entries.slice(insertIndex + 1),
+  ];
+}
+
+function faqMedalEntry(lang) {
+  const href = sourceHref(medalRouteForLang(lang));
+  const copy = {
+    fr: {
+      question: 'Quelles distinctions les cuvées Cognac Léopold Croizet ont-elles reçues ?',
+      answerHtml: `Les médailles actuellement citées sur les fiches produit sont rassemblées sur <a href="${href}">la page médailles et distinctions</a>. Chaque distinction y renvoie vers la preuve externe disponible, et chaque produit concerné renvoie vers sa fiche officielle.`,
+    },
+    en: {
+      question: 'Which awards are linked to Cognac Léopold Croizet cuvées?',
+      answerHtml: `The medals currently shown on product pages are gathered on the <a href="${href}">medals and awards page</a>. Each award links to the available external proof, and each relevant product links back to its official page.`,
+    },
+    ru: {
+      question: 'Какие награды указаны для cuvées Cognac Léopold Croizet?',
+      answerHtml: `Медали, которые сейчас указаны на страницах продуктов, собраны на <a href="${href}">странице медалей и наград</a>. Каждая награда ведет к доступному внешнему подтверждению, а каждый продукт - к своей официальной странице.`,
+    },
+    da: {
+      question: 'Hvilke medaljer er knyttet til Cognac Léopold Croizet cuvéer?',
+      answerHtml: `De medaljer, der aktuelt vises på produktsiderne, er samlet på <a href="${href}">siden med medaljer og udmærkelser</a>. Hver udmærkelse linker til den tilgængelige eksterne dokumentation, og hvert relevant produkt linker til sin officielle side.`,
+    },
+    sv: {
+      question: 'Vilka medaljer är kopplade till Cognac Léopold Croizet cuvéer?',
+      answerHtml: `De medaljer som för närvarande visas på produktsidorna är samlade på <a href="${href}">sidan för medaljer och utmärkelser</a>. Varje utmärkelse länkar till tillgängligt externt bevis, och varje berörd produkt länkar till sin officiella sida.`,
+    },
+    no: {
+      question: 'Hvilke medaljer er knyttet til Cognac Léopold Croizet cuvéer?',
+      answerHtml: `Medaljene som for øyeblikket vises på produktsidene, er samlet på <a href="${href}">siden for medaljer og utmerkelser</a>. Hver utmerkelse lenker til tilgjengelig ekstern dokumentasjon, og hvert berørt produkt lenker til sin offisielle side.`,
+    },
+    zh: {
+      question: 'Cognac Léopold Croizet 酒款获得过哪些奖项？',
+      answerHtml: `目前产品页展示的奖牌集中在 <a href="${href}">奖牌与荣誉页面</a>。每一项奖牌都链接到可用的外部证明，每一款相关产品也链接回其官方产品页。`,
+    },
+  }[lang] || {};
+  return {
+    group: 'choose',
+    question: copy.question || faqMedalEntry('fr').question,
+    answerHtml: copy.answerHtml || faqMedalEntry('fr').answerHtml,
+  };
 }
 
 function faqPageCopy(lang) {
@@ -2188,7 +2286,7 @@ function faqPageHtml(route = '/faq/') {
       ? `<p class="lc-faq-group-label"${idAttribute}>${escapeHtml(localizedGroup)}</p>`
       : '';
     previousGroup = entry.group;
-    return `${groupLabel}<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeFaqText(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary><p>${escapeFaqText(entry.answer)}</p></details>`;
+    return `${groupLabel}<details class="lc-faq-item"${index === 0 ? ' open' : ''}><summary><h3>${escapeFaqText(entry.question)}</h3><span class="lc-faq-toggle" aria-hidden="true"></span></summary>${faqAnswerHtml(entry)}</details>`;
   }).join('\n');
 
   const stepImages = {
@@ -2260,6 +2358,11 @@ function faqPageHtml(route = '/faq/') {
     body,
     pageClass: 'lc-faq-page',
   });
+}
+
+function faqAnswerHtml(entry) {
+  if (entry.answerHtml) return `<p>${entry.answerHtml}</p>`;
+  return `<p>${escapeFaqText(entry.answer)}</p>`;
 }
 
 function proofPageCopy(lang) {
@@ -2582,6 +2685,162 @@ function proofPageHtml(route = '/environnement/') {
     pageClass: 'lc-faq-page lc-proof-page',
     extraCss: proofPageCss,
   });
+}
+
+function medalPageCopy(lang) {
+  return {
+    fr: {
+      metaTitle: 'Médailles et distinctions | Cognac Léopold Croizet',
+      description: 'Liste des médailles citées sur les fiches produit Cognac Léopold Croizet, avec produits concernés et liens vers les preuves externes disponibles.',
+      eyebrow: 'Preuves',
+      heading: 'Médailles et distinctions<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Les distinctions ci-dessous reprennent uniquement les médailles déjà citées sur les fiches produit du site, avec un lien vers la preuve externe disponible.',
+      introTitle: 'Distinctions citées sur les fiches produit',
+      introText: 'Chaque médaille reste cliquable vers sa source externe. Chaque produit concerné renvoie vers sa fiche officielle afin de garder le lien entre preuve, cuvée et contexte de dégustation.',
+      productLabel: 'Produit concerné',
+      proofLabel: 'Voir la preuve externe',
+      level: { gold: "Médaille d'or", silver: "Médaille d'argent" },
+      note: 'Cette page ne crée pas de nouvelles revendications : elle rassemble les distinctions déjà visibles sur les pages produit et les relie aux sources publiques disponibles.',
+    },
+    en: {
+      metaTitle: 'Medals and Awards | Cognac Léopold Croizet',
+      description: 'Medals listed on Cognac Léopold Croizet product pages, with the relevant products and links to available external proof.',
+      eyebrow: 'Proof',
+      heading: 'Medals and awards<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'The awards below only gather medals already cited on product pages, with links to the available external proof.',
+      introTitle: 'Awards cited on product pages',
+      introText: 'Each medal remains clickable to its external source. Each relevant product links to its official product page, keeping proof, cuvée and tasting context connected.',
+      productLabel: 'Relevant product',
+      proofLabel: 'View external proof',
+      level: { gold: 'Gold medal', silver: 'Silver medal' },
+      note: 'This page does not create new claims: it gathers distinctions already visible on product pages and links them to available public sources.',
+    },
+    ru: {
+      metaTitle: 'Медали и награды | Cognac Léopold Croizet',
+      description: 'Медали, указанные на страницах продуктов Cognac Léopold Croizet, с продуктами и ссылками на доступные внешние подтверждения.',
+      eyebrow: 'Подтверждения',
+      heading: 'Медали и награды<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Ниже собраны только медали, уже указанные на страницах продуктов, со ссылками на доступные внешние подтверждения.',
+      introTitle: 'Награды, указанные на страницах продуктов',
+      introText: 'Каждая медаль остается кликабельной и ведет к внешнему источнику. Каждый продукт ведет к своей официальной странице, чтобы сохранять связь между подтверждением, cuvée и контекстом дегустации.',
+      productLabel: 'Продукт',
+      proofLabel: 'Открыть внешнее подтверждение',
+      level: { gold: 'Золотая медаль', silver: 'Серебряная медаль' },
+      note: 'Эта страница не создает новых заявлений: она объединяет награды, уже видимые на страницах продуктов, и связывает их с доступными публичными источниками.',
+    },
+    da: {
+      metaTitle: 'Medaljer og udmærkelser | Cognac Léopold Croizet',
+      description: 'Medaljer nævnt på Cognac Léopold Croizet produktsider, med relevante produkter og links til tilgængelig ekstern dokumentation.',
+      eyebrow: 'Dokumentation',
+      heading: 'Medaljer og udmærkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Nedenfor samles kun de medaljer, der allerede nævnes på produktsiderne, med links til tilgængelig ekstern dokumentation.',
+      introTitle: 'Udmærkelser nævnt på produktsider',
+      introText: 'Hver medalje kan klikkes videre til sin eksterne kilde. Hvert relevant produkt linker til sin officielle produktside, så dokumentation, cuvée og smagskontekst hænger sammen.',
+      productLabel: 'Relevant produkt',
+      proofLabel: 'Se ekstern dokumentation',
+      level: { gold: 'Guldmedalje', silver: 'Sølvmedalje' },
+      note: 'Denne side skaber ikke nye påstande: den samler udmærkelser, der allerede vises på produktsiderne, og linker dem til tilgængelige offentlige kilder.',
+    },
+    sv: {
+      metaTitle: 'Medaljer och utmärkelser | Cognac Léopold Croizet',
+      description: 'Medaljer som nämns på Cognac Léopold Croizet produktsidor, med berörda produkter och länkar till tillgängliga externa bevis.',
+      eyebrow: 'Bevis',
+      heading: 'Medaljer och utmärkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Nedan samlas endast medaljer som redan nämns på produktsidorna, med länkar till tillgängliga externa bevis.',
+      introTitle: 'Utmärkelser som nämns på produktsidor',
+      introText: 'Varje medalj är klickbar till sin externa källa. Varje berörd produkt länkar till sin officiella produktsida, så att bevis, cuvée och provningssammanhang hålls samman.',
+      productLabel: 'Berörd produkt',
+      proofLabel: 'Visa externt bevis',
+      level: { gold: 'Guldmedalj', silver: 'Silvermedalj' },
+      note: 'Denna sida skapar inga nya påståenden: den samlar utmärkelser som redan visas på produktsidorna och länkar dem till tillgängliga offentliga källor.',
+    },
+    no: {
+      metaTitle: 'Medaljer og utmerkelser | Cognac Léopold Croizet',
+      description: 'Medaljer nevnt på Cognac Léopold Croizet produktsider, med berørte produkter og lenker til tilgjengelig ekstern dokumentasjon.',
+      eyebrow: 'Dokumentasjon',
+      heading: 'Medaljer og utmerkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: 'Nedenfor samles bare medaljene som allerede er nevnt på produktsidene, med lenker til tilgjengelig ekstern dokumentasjon.',
+      introTitle: 'Utmerkelser nevnt på produktsider',
+      introText: 'Hver medalje kan klikkes videre til sin eksterne kilde. Hvert berørt produkt lenker til sin offisielle produktside, slik at dokumentasjon, cuvée og smakssammenheng henger sammen.',
+      productLabel: 'Berørt produkt',
+      proofLabel: 'Se ekstern dokumentasjon',
+      level: { gold: 'Gullmedalje', silver: 'Sølvmedalje' },
+      note: 'Denne siden skaper ikke nye påstander: den samler utmerkelser som allerede vises på produktsidene, og lenker dem til tilgjengelige offentlige kilder.',
+    },
+    zh: {
+      metaTitle: '奖牌与荣誉 | Cognac Léopold Croizet',
+      description: 'Cognac Léopold Croizet 产品页所列奖牌，包含相关产品以及可用外部证明链接。',
+      eyebrow: '证明',
+      heading: '奖牌与荣誉<br><span class="lc-nowrap">Léopold Croizet</span>',
+      lead: '以下内容仅汇总产品页已经列出的奖牌，并提供可用的外部证明链接。',
+      introTitle: '产品页中列出的荣誉',
+      introText: '每一枚奖牌都可点击进入外部来源。每一款相关产品也链接至其官方产品页，以保留证明、酒款与品鉴语境之间的联系。',
+      productLabel: '相关产品',
+      proofLabel: '查看外部证明',
+      level: { gold: '金奖', silver: '银奖' },
+      note: '本页面不新增任何奖项声明：它只汇总产品页已经可见的荣誉，并链接到可用公开来源。',
+    },
+  }[lang] || medalPageCopy('fr');
+}
+
+function medalPageHtml(route = '/medailles/') {
+  const lang = languageForRoute(route);
+  const copy = medalPageCopy(lang);
+  const medalCards = medalPageEntries(lang).map(({ slug, medal }) => {
+    const productHref = sourceHref(productRouteForLang(lang, slug));
+    const productName = productFullName(slug);
+    const level = copy.level[medal.level] || medal.level;
+    const title = `${level} - ${medal.award} ${medal.year}`;
+    return `<article class="lc-medal-card">
+<a class="lc-medal-proof-image" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${title} - ${productName} - ${copy.proofLabel}`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>
+<div class="lc-medal-copy">
+<p class="lc-medal-level">${escapeHtml(level)}</p>
+<h3>${escapeHtml(`${medal.award} ${medal.year}`)}</h3>
+<p><span>${escapeHtml(copy.productLabel)} : </span><a href="${productHref}">${escapeHtml(productName)}</a></p>
+<p><a class="lc-medal-proof-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener">${escapeHtml(copy.proofLabel)}</a></p>
+</div>
+</article>`;
+  }).join('\n');
+
+  const body = [
+    '<section class="lc-section">',
+    `<h2>${escapeHtml(copy.introTitle)}</h2>`,
+    `<p>${escapeHtml(copy.introText)}</p>`,
+    '</section>',
+    '<section class="lc-section">',
+    '<div class="lc-medal-grid">',
+    medalCards,
+    '</div>',
+    '</section>',
+    `<p class="lc-note">${escapeHtml(copy.note)}</p>`,
+  ].join('\n');
+  const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    .lc-medal-card{display:grid;grid-template-columns:116px minmax(0,1fr);gap:20px;align-items:center;border:1px solid var(--lc-line);background:#fffdf9;padding:20px}
+    .lc-medal-proof-image{display:flex;align-items:center;justify-content:center;min-height:126px;text-decoration:none}
+    .lc-medal-proof-image img{display:block;width:auto;max-width:100%;height:auto;max-height:132px}
+    .lc-medal-copy p{margin:0 0 9px}
+    .lc-medal-copy p:last-child{margin-bottom:0}
+    .lc-medal-level{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold)}
+    .lc-medal-proof-link{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;border-bottom:1px solid var(--lc-line)}
+    @media(max-width:860px){.lc-medal-grid{grid-template-columns:1fr}.lc-medal-card{grid-template-columns:94px minmax(0,1fr);gap:16px}.lc-medal-proof-image img{max-height:116px}}`;
+
+  return sourcePageShell({
+    route,
+    title: copy.metaTitle,
+    description: copy.description,
+    eyebrow: copy.eyebrow,
+    heading: copy.heading,
+    lead: copy.lead,
+    body,
+    pageClass: 'lc-faq-page lc-medal-page',
+    extraCss: medalCss,
+  });
+}
+
+function medalPageEntries() {
+  return [...productMedalProofs.entries()].flatMap(([slug, medals]) => (
+    medals.map((medal) => ({ slug, medal }))
+  ));
 }
 
 function nutritionPageCopy(lang) {
@@ -3152,6 +3411,7 @@ function hardenHtml(html, route, file) {
   next = repairNewsletterBlock(next, route);
   next = repairRememberMeInput(next, route);
   next = repairDecorativeImageAlts(next);
+  next = linkFooterMedalImage(next, route);
   next = applyProductMedalProofs(next, route);
   next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
@@ -3204,6 +3464,30 @@ function injectFrenchFooterResourceLinks(html, route) {
   return next.replace(
     /(<div\b[^>]*class=["'][^"']*\bmenu-footer\b[^"']*["'][^>]*>\s*<ul\b[^>]*>)/i,
     `$1\n${items}`,
+  );
+}
+
+function linkFooterMedalImage(html, route) {
+  let next = html.replace(
+    /<a\b(?=[^>]*class=["'][^"']*\blc-medal-footer-link\b[^"']*["'])[^>]*>\s*(<img\b(?=[^>]*class=["'][^"']*\bmedailles-footer\b[^"']*["'])[^>]*>)\s*<\/a>/gi,
+    '$1',
+  );
+  if (!isHomepage(route) || !next.includes('medailles-footer')) return next;
+  const lang = languageForRoute(route);
+  const href = sourceHref(medalRouteForLang(lang));
+  const label = {
+    fr: 'Voir les médailles et distinctions Cognac Léopold Croizet',
+    en: 'View Cognac Léopold Croizet medals and awards',
+    ru: 'Смотреть медали и награды Cognac Léopold Croizet',
+    da: 'Se Cognac Léopold Croizet medaljer og udmærkelser',
+    sv: 'Se Cognac Léopold Croizet medaljer och utmärkelser',
+    no: 'Se Cognac Léopold Croizet medaljer og utmerkelser',
+    zh: '查看 Cognac Léopold Croizet 奖牌与荣誉',
+  }[lang] || 'Voir les médailles et distinctions Cognac Léopold Croizet';
+
+  return next.replace(
+    /(<img\b(?=[^>]*class=["'][^"']*\bmedailles-footer\b[^"']*["'])[^>]*>)/gi,
+    `<a class="lc-medal-footer-link" href="${href}" aria-label="${escapeHtml(label)}">$1</a>`,
   );
 }
 
@@ -4282,6 +4566,17 @@ function labelFromRoute(route) {
       zh: '环境',
     }[languageForRoute(route)] || 'Environnement';
   }
+  if (/\/medailles\/?$/.test(route)) {
+    return {
+      fr: 'Médailles',
+      en: 'Medals',
+      ru: 'Медали',
+      da: 'Medaljer',
+      sv: 'Medaljer',
+      no: 'Medaljer',
+      zh: '奖牌',
+    }[languageForRoute(route)] || 'Médailles';
+  }
   return decodeURIComponent(route.split('/').filter(Boolean).pop() || 'Cognac')
     .replace(/-/g, ' ')
     .replace(/\b\p{L}/gu, (letter) => letter.toUpperCase());
@@ -4292,6 +4587,7 @@ function bestImageForPage(html, route) {
   if (route.includes(FILM_SLUG)) return '/wp-content/uploads/2024/03/img_slider_footer_01.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?faq\/$/.test(route)) return '/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg';
   if (PROOF_ROUTES.includes(route)) return '/assets/environment/environnement-vignes-triac-lautrait.jpg';
+  if (MEDAL_ROUTES.includes(route)) return '/wp-content/uploads/2021/11/img_footer_medailles.png';
   if (route.includes('pierre-croizet-cocktails')) return '/wp-content/uploads/2026/06/cocktails/heure-doree-scene.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes\/$/.test(route)) return '/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
@@ -4383,6 +4679,8 @@ function replaceStructuredData(html, route, metadata, image) {
   const schemas = [organizationSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
   const faq = faqPageSchema(route);
   if (faq) schemas.push(faq);
+  const medalList = medalItemListSchema(route);
+  if (medalList) schemas.push(medalList);
   const product = productSchema(route, metadata, image);
   if (product) schemas.push(product);
   const recipes = cocktailRecipesSchema(route);
@@ -4450,7 +4748,7 @@ function webPageSchema(route, metadata, image) {
     dateModified: lastmodForRoute(route),
     primaryImageOfPage: image ? { '@type': 'ImageObject', url: `${PUBLIC_ORIGIN}${image}` } : undefined,
   };
-  if (FAQ_ROUTES.includes(route) || PROOF_ROUTES.includes(route)) {
+  if (FAQ_ROUTES.includes(route) || PROOF_ROUTES.includes(route) || MEDAL_ROUTES.includes(route)) {
     schema.lastReviewed = lastmodForRoute(route);
   }
   if (PROOF_ROUTES.includes(route)) {
@@ -4473,10 +4771,48 @@ function webPageSchema(route, metadata, image) {
       `${PUBLIC_ORIGIN}${proofLogoUrls.hve}`,
     ];
   }
+  if (MEDAL_ROUTES.includes(route)) {
+    const lang = languageForRoute(route);
+    schema.about = [
+      { '@type': 'Thing', name: 'Cognac awards' },
+      { '@type': 'Thing', name: 'Cognac medals' },
+      { '@type': 'Brand', name: 'Cognac Léopold Croizet' },
+    ];
+    schema.significantLink = medalPageEntries().flatMap(({ slug, medal }) => [
+      medal.href,
+      `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}`,
+    ]);
+  }
   if (route === '/') {
     schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
   }
   return schema;
+}
+
+function medalItemListSchema(route) {
+  if (!MEDAL_ROUTES.includes(route)) return null;
+  const lang = languageForRoute(route);
+  const copy = medalPageCopy(lang);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${PUBLIC_ORIGIN}${route}#medals`,
+    name: copy.metaTitle,
+    itemListElement: medalPageEntries().map(({ slug, medal }, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: `${copy.level[medal.level] || medal.level} - ${medal.award} ${medal.year}`,
+        url: medal.href,
+        about: {
+          '@type': 'Product',
+          name: productFullName(slug),
+          url: `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}`,
+        },
+      },
+    })),
+  };
 }
 
 function faqPageSchema(route) {
@@ -4493,7 +4829,7 @@ function faqPageSchema(route) {
       name: stripTags(entry.question),
       acceptedAnswer: {
         '@type': 'Answer',
-        text: stripTags(entry.answer),
+        text: stripTags(entry.answer || entry.answerHtml),
       },
     })),
   };
@@ -4506,6 +4842,7 @@ function keySearchResultPages() {
     { name: 'Collection Cognac et Pineau Léopold Croizet', url: '/collection/' },
     { name: 'FAQ Cognac Léopold Croizet', url: '/faq/' },
     { name: 'Environnement Cognac Léopold Croizet', url: '/environnement/' },
+    { name: 'Médailles Cognac Léopold Croizet', url: '/medailles/' },
     { name: 'Visite des chais Cognac Léopold Croizet', url: '/rencontre/' },
   ];
 }
@@ -4710,6 +5047,7 @@ function makeSitemap(routes) {
 function lastmodForRoute(route) {
   if (FAQ_ROUTES.includes(route)) return FAQ_PAGE_LASTMOD;
   if (PROOF_ROUTES.includes(route)) return PROOF_PAGE_LASTMOD;
+  if (MEDAL_ROUTES.includes(route)) return MEDAL_PAGE_LASTMOD;
   if (NUTRITION_ROUTES.includes(route)) return NUTRITION_PAGE_LASTMOD;
   return publishedSourceRoutes.has(route) ? SOURCE_PAGE_LASTMOD : TODAY;
 }
@@ -4750,6 +5088,7 @@ function makeLlmsTxt() {
     '- [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.',
     '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
     '- [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.',
+    '- [Medals and awards](https://cognac-leopold-croizet.com/medailles/): product medals cited on the site, with links to external proof and to the relevant product pages.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
@@ -4762,6 +5101,9 @@ function makeLlmsTxt() {
     '- [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.',
     '- [HVE certificate 2021-2024](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf): earlier Haute Valeur Environnementale supporting document.',
     '- [CEC diploma 2021](https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf): earlier CEC supporting document.',
+    '',
+    '## Medal Proofs',
+    ...medalPageEntries().map(({ slug, medal }) => `- ${productFullName(slug)}: ${englishMedalLevel(medal.level)} - ${medal.award} ${medal.year}; product https://cognac-leopold-croizet.com${productRouteForLang('fr', slug)}; proof ${medal.href}`),
     '',
     '## Contact',
     '- Email: cognac@mdpierre.com',
@@ -4833,6 +5175,17 @@ function makeLlmsFullTxt() {
     '- HVE certificate 2021-2024: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf',
     '- CEC diploma 2021: https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf',
     '',
+    '## Medals and Awards',
+    'The medals page lists only medals already visible on product pages. Each medal links to available external proof, and each relevant product links back to its official product page.',
+    '- French medals page: https://cognac-leopold-croizet.com/medailles/',
+    '- English medals page: https://cognac-leopold-croizet.com/en/medailles/',
+    '- Russian medals page: https://cognac-leopold-croizet.com/ru/medailles/',
+    '- Danish medals page: https://cognac-leopold-croizet.com/da/medailles/',
+    '- Swedish medals page: https://cognac-leopold-croizet.com/sv/medailles/',
+    '- Norwegian medals page: https://cognac-leopold-croizet.com/no/medailles/',
+    '- Simplified Chinese medals page: https://cognac-leopold-croizet.com/zh/medailles/',
+    ...medalPageEntries().map(({ slug, medal }) => `- ${productFullName(slug)}: ${englishMedalLevel(medal.level)} - ${medal.award} ${medal.year}; product https://cognac-leopold-croizet.com${productRouteForLang('fr', slug)}; proof ${medal.href}`),
+    '',
     '## Cocktails',
     'The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.',
     '',
@@ -4841,7 +5194,7 @@ function makeLlmsFullTxt() {
     '',
     '## Verified Source Pages',
     '- Environment and proof page: https://cognac-leopold-croizet.com/environnement/',
-    '- Medal and organic-claim details are not included here unless validated and visible on an indexable source page.',
+    '- Medals and awards page: https://cognac-leopold-croizet.com/medailles/',
     '',
     '## Contact',
     '- cognac@mdpierre.com',
@@ -4870,6 +5223,10 @@ function escapeHtml(value) {
 function productFullName(slug) {
   const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
   return slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
+}
+
+function englishMedalLevel(level) {
+  return { gold: 'Gold medal', silver: 'Silver medal' }[level] || level;
 }
 
 function productCategory(slug) {
