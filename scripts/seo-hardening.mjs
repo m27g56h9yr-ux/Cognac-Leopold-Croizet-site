@@ -591,6 +591,7 @@ const productPrimaryGtins = new Map([
   ['extra', { size: '700 ml', gtin13: '3322870008885' }],
   ['excellence', { size: '700 ml', gtin13: '3322870009998' }],
   ['valentine', { size: '350 ml', gtin13: '3322870006669' }],
+  ['pineau-des-charentes', { size: '750 ml', gtin13: '3322870002227' }],
 ]);
 
 const productGtinVariants = new Map([
@@ -647,7 +648,7 @@ const productVolumeOrderBySlug = new Map([
   ['napoleon', ['700 ml', '1 L']],
 ]);
 
-// The GENCOD workbook also lists a Pineau 75 code with an invalid GTIN check digit, so it is intentionally omitted.
+// The GENCOD workbook lists the Pineau 75 row with a wrong check digit; this map uses the corrected GTIN-13 key.
 
 const nutritionProductSlugs = new Set(NUTRITION_PRODUCT_SLUGS);
 const nutritionProductData = [
