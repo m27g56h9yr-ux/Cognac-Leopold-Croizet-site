@@ -1,2 +1,8 @@
 /api/newsletter-config.php
 .DS_Store
+
+# Local Codex/audit work artifacts
+.agents/
+outputs/
+tmp/
+SEO_AUDIT_COMPLET_2026-06-21.md

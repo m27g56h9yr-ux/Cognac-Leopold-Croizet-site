@@ -10,7 +10,7 @@ const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-06-29';
-const PROOF_PAGE_LASTMOD = '2026-06-29';
+const PROOF_PAGE_LASTMOD = '2026-07-01';
 const NUTRITION_PAGE_LASTMOD = '2026-06-30';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
@@ -39,7 +39,12 @@ const proofSourceUrls = {
 const proofDocumentUrls = {
   cecAttestation: '/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf',
   hveCertificate: '/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf',
+  hveCertificate2021: '/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf',
   cecDiploma: '/assets/environment/diplome-cec-grande-versenne-2021.pdf',
+};
+const proofLogoUrls = {
+  cec: '/assets/environment/logo-cec-cuivre-rvb.png',
+  hve: '/assets/environment/logo-hve-noir.png',
 };
 
 const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES, ...NUTRITION_ROUTES]);
@@ -2230,12 +2235,9 @@ function proofPageCopy(lang) {
       documents: [
         ['Attestation CEC 2025-2028', proofDocumentUrls.cecAttestation],
         ['Certificat HVE 2024-2027', proofDocumentUrls.hveCertificate],
+        ['Certificat HVE 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['Diplôme CEC 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'Pour vos dossiers professionnels',
-      requestText: 'Import, distribution, référencement ou conformité documentaire : indiquez la cuvée, le pays concerné et le document attendu. La maison vous orientera vers la pièce adaptée.',
-      faqCta: 'Lire la FAQ',
-      visitCta: 'Contacter la maison',
     },
     en: {
       metaTitle: 'Environment and Sustainable Viticulture | Cognac Léopold Croizet',
@@ -2263,12 +2265,9 @@ function proofPageCopy(lang) {
       documents: [
         ['CEC attestation 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE certificate 2024-2027', proofDocumentUrls.hveCertificate],
+        ['HVE certificate 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['CEC diploma 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'For professional files',
-      requestText: 'For import, distribution, listing or compliance documentation, state the cuvée, country concerned and document expected. The house will direct you to the appropriate document.',
-      faqCta: 'Read the FAQ',
-      visitCta: 'Contact the house',
     },
     ru: {
       metaTitle: 'Экология и ответственное виноградарство | Cognac Léopold Croizet',
@@ -2296,12 +2295,9 @@ function proofPageCopy(lang) {
       documents: [
         ['Аттестация CEC 2025-2028', proofDocumentUrls.cecAttestation],
         ['Сертификат HVE 2024-2027', proofDocumentUrls.hveCertificate],
+        ['Сертификат HVE 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['Диплом CEC 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'Для профессиональных досье',
-      requestText: 'Для импорта, дистрибуции, листинга или документов соответствия укажите cuvée, страну и ожидаемый документ. Дом подскажет подходящее подтверждение.',
-      faqCta: 'Читать FAQ',
-      visitCta: 'Связаться с домом',
     },
     da: {
       metaTitle: 'Miljø og bæredygtig vindyrkning | Cognac Léopold Croizet',
@@ -2329,12 +2325,9 @@ function proofPageCopy(lang) {
       documents: [
         ['CEC-attestation 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['HVE-certifikat 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'Til professionelle dossiers',
-      requestText: 'Ved import, distribution, listing eller compliance-dokumentation skal du angive cuvée, land og ønsket dokument. Huset kan henvise til den rette dokumentation.',
-      faqCta: 'Læs FAQ',
-      visitCta: 'Kontakt huset',
     },
     sv: {
       metaTitle: 'Miljö och hållbar vinodling | Cognac Léopold Croizet',
@@ -2362,12 +2355,9 @@ function proofPageCopy(lang) {
       documents: [
         ['CEC-intyg 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-certifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['HVE-certifikat 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'För professionella underlag',
-      requestText: 'För import, distribution, listning eller compliance-dokumentation, ange cuvée, land och önskat dokument. Huset kan hänvisa till rätt underlag.',
-      faqCta: 'Läs FAQ',
-      visitCta: 'Kontakta huset',
     },
     no: {
       metaTitle: 'Miljø og bærekraftig vinmark | Cognac Léopold Croizet',
@@ -2395,12 +2385,9 @@ function proofPageCopy(lang) {
       documents: [
         ['CEC-attest 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE-sertifikat 2024-2027', proofDocumentUrls.hveCertificate],
+        ['HVE-sertifikat 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['CEC-diplom 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: 'For profesjonelle underlag',
-      requestText: 'For import, distribusjon, listing eller compliance-dokumentasjon, oppgi cuvée, land og ønsket dokument. Huset kan vise til riktig dokumentasjon.',
-      faqCta: 'Les FAQ',
-      visitCta: 'Kontakt huset',
     },
     zh: {
       metaTitle: '环境与可持续葡萄种植 | Cognac Léopold Croizet',
@@ -2428,19 +2415,57 @@ function proofPageCopy(lang) {
       documents: [
         ['CEC 证明 2025-2028', proofDocumentUrls.cecAttestation],
         ['HVE 证书 2024-2027', proofDocumentUrls.hveCertificate],
+        ['HVE 证书 2021-2024', proofDocumentUrls.hveCertificate2021],
         ['CEC 证书 2021', proofDocumentUrls.cecDiploma],
       ],
-      requestTitle: '用于专业文件',
-      requestText: '如进口、分销、上架或合规文件需要证明，请说明 cuvée、相关国家和所需文件。酒庄可协助提供合适资料。',
-      faqCta: '阅读常见问题',
-      visitCta: '联系酒庄',
     },
   }[lang] || proofPageCopy('fr');
+}
+
+function proofLogoCopy(lang) {
+  return {
+    fr: {
+      hveAlt: 'Logo officiel Haute Valeur Environnementale',
+      cecAlt: 'Logo officiel Certification Environnementale Cognac',
+      cecHveLabel: 'Logos officiels Certification Environnementale Cognac et HVE',
+    },
+    en: {
+      hveAlt: 'Official Haute Valeur Environnementale logo',
+      cecAlt: 'Official Certification Environnementale Cognac logo',
+      cecHveLabel: 'Official Certification Environnementale Cognac and HVE logos',
+    },
+    ru: {
+      hveAlt: 'Официальный логотип Haute Valeur Environnementale',
+      cecAlt: 'Официальный логотип Certification Environnementale Cognac',
+      cecHveLabel: 'Официальные логотипы Certification Environnementale Cognac и HVE',
+    },
+    da: {
+      hveAlt: 'Officielt Haute Valeur Environnementale-logo',
+      cecAlt: 'Officielt Certification Environnementale Cognac-logo',
+      cecHveLabel: 'Officielle Certification Environnementale Cognac- og HVE-logoer',
+    },
+    sv: {
+      hveAlt: 'Officiell Haute Valeur Environnementale-logotyp',
+      cecAlt: 'Officiell Certification Environnementale Cognac-logotyp',
+      cecHveLabel: 'Officiella Certification Environnementale Cognac- och HVE-logotyper',
+    },
+    no: {
+      hveAlt: 'Offisiell Haute Valeur Environnementale-logo',
+      cecAlt: 'Offisiell Certification Environnementale Cognac-logo',
+      cecHveLabel: 'Offisielle Certification Environnementale Cognac- og HVE-logoer',
+    },
+    zh: {
+      hveAlt: 'Haute Valeur Environnementale 官方标识',
+      cecAlt: 'Certification Environnementale Cognac 官方标识',
+      cecHveLabel: 'Certification Environnementale Cognac 与 HVE 官方标识',
+    },
+  }[lang] || proofLogoCopy('fr');
 }
 
 function proofPageHtml(route = '/environnement/') {
   const lang = languageForRoute(route);
   const copy = proofPageCopy(lang);
+  const logo = proofLogoCopy(lang);
   const sources = copy.sources.map(([label, href, text]) => (
     `<article class="lc-card"><h3><a href="${href}" target="_blank" rel="noopener">${escapeHtml(label)}</a></h3><p>${escapeHtml(text)}</p></article>`
   )).join('\n');
@@ -2455,8 +2480,8 @@ function proofPageHtml(route = '/environnement/') {
     '</section>',
     '<section class="lc-section">',
     '<div class="lc-grid">',
-    `<article class="lc-card"><h3>${escapeHtml(copy.hveTitle)}</h3><p>${escapeHtml(copy.hveText)}</p><p>${escapeHtml(copy.hveFact)}</p></article>`,
-    `<article class="lc-card"><h3>${escapeHtml(copy.cecTitle)}</h3><p>${escapeHtml(copy.cecText)}</p><p>${escapeHtml(copy.cecFact)}</p></article>`,
+    `<article class="lc-card lc-cert-card"><div class="lc-card-heading"><h3>${escapeHtml(copy.hveTitle)}</h3><img class="lc-card-logo lc-hve-card-logo" src="${proofLogoUrls.hve}" alt="${escapeHtml(logo.hveAlt)}" width="255" height="258" decoding="async" loading="lazy"></div><p>${escapeHtml(copy.hveText)}</p><p>${escapeHtml(copy.hveFact)}</p></article>`,
+    `<article class="lc-card lc-cert-card"><div class="lc-card-heading"><h3>${escapeHtml(copy.cecTitle)}</h3><span class="lc-cec-logo-pair" aria-label="${escapeHtml(logo.cecHveLabel)}"><img class="lc-card-logo lc-cec-card-logo" src="${proofLogoUrls.cec}" alt="${escapeHtml(logo.cecAlt)}" width="592" height="592" decoding="async" loading="lazy"><img class="lc-card-logo lc-hve-pair-logo" src="${proofLogoUrls.hve}" alt="${escapeHtml(logo.hveAlt)}" width="255" height="258" decoding="async" loading="lazy"></span></div><p>${escapeHtml(copy.cecText)}</p><p>${escapeHtml(copy.cecFact)}</p></article>`,
     '</div>',
     '</section>',
     '<section class="lc-section">',
@@ -2471,16 +2496,16 @@ function proofPageHtml(route = '/environnement/') {
     documents ? '</div>' : '',
     documents ? '</div>' : '',
     '</section>',
-    '<section class="lc-section">',
-    `<h2>${escapeHtml(copy.requestTitle)}</h2>`,
-    `<p>${escapeHtml(copy.requestText)}</p>`,
-    '<div class="lc-cta-row">',
-    `<a class="lc-button" href="${sourceHref(faqRouteForLang(lang))}">${escapeHtml(copy.faqCta)}</a>`,
-    `<a class="lc-button secondary" href="${sourceHref(visitRouteForLang(lang))}">${escapeHtml(copy.visitCta)}</a>`,
-    '</div>',
-    '</section>',
   ].filter(Boolean).join('\n');
   const proofPageCss = `    .lc-proof-image{display:block;margin:24px 0 0;max-width:100%;height:auto;border:1px solid var(--lc-line);box-shadow:0 18px 48px rgba(22,17,13,.12)}
+    .lc-cert-card{position:relative;overflow:hidden;padding:24px}
+    .lc-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin:0 0 10px}
+    .lc-card-heading h3{min-width:0;margin:0;line-height:1.2}
+    .lc-card-logo{display:block;height:auto;object-fit:contain;flex:0 0 auto}
+    .lc-hve-card-logo{width:44px}
+    .lc-cec-logo-pair{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+    .lc-cec-card-logo{width:58px}
+    .lc-hve-pair-logo{width:19px}
     .lc-source-grid{margin-top:18px}
     .lc-source-grid a{text-decoration:none}
     .lc-source-grid a:hover{text-decoration:underline;text-underline-offset:.22em}
@@ -2488,7 +2513,8 @@ function proofPageHtml(route = '/environnement/') {
     .lc-documents h3{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold);margin:0 0 8px}
     .lc-documents p{font-size:15px;margin-bottom:10px}
     .lc-doc-row{display:flex;flex-wrap:wrap;gap:10px 16px}
-    .lc-doc-link{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;border-bottom:1px solid var(--lc-line)}`;
+    .lc-doc-link{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;border-bottom:1px solid var(--lc-line)}
+    @media(max-width:767px){.lc-cert-card{padding:20px}.lc-card-heading{gap:14px}.lc-hve-card-logo{width:38px}.lc-cec-card-logo{width:50px}.lc-hve-pair-logo{width:17px}}`;
 
   return sourcePageShell({
     route,
@@ -4292,7 +4318,10 @@ function webPageSchema(route, metadata, image) {
       proofSourceUrls.cecActions,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.cecAttestation}`,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate}`,
+      `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate2021}`,
       `${PUBLIC_ORIGIN}${proofDocumentUrls.cecDiploma}`,
+      `${PUBLIC_ORIGIN}${proofLogoUrls.cec}`,
+      `${PUBLIC_ORIGIN}${proofLogoUrls.hve}`,
     ];
   }
   if (route === '/') {
@@ -4537,6 +4566,7 @@ function makeLlmsTxt() {
     '## Public Proof Documents',
     '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
     '- [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.',
+    '- [HVE certificate 2021-2024](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf): earlier Haute Valeur Environnementale supporting document.',
     '- [CEC diploma 2021](https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf): earlier CEC supporting document.',
     '',
     '## Contact',
@@ -4596,6 +4626,7 @@ function makeLlmsFullTxt() {
     'Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.',
     'HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.',
     'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, Cognac.fr public explanations of CEC and environmental actions, and downloadable HVE and CEC supporting documents.',
+    'The environment page presents the official Certification Environnementale Cognac mark with the black HVE logo in the CEC-HVE charter order.',
     '- French environment page: https://cognac-leopold-croizet.com/environnement/',
     '- English environment page: https://cognac-leopold-croizet.com/en/environnement/',
     '- Russian environment page: https://cognac-leopold-croizet.com/ru/environnement/',
@@ -4605,6 +4636,7 @@ function makeLlmsFullTxt() {
     '- Simplified Chinese environment page: https://cognac-leopold-croizet.com/zh/environnement/',
     '- CEC attestation 2025-2028: https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf',
     '- HVE certificate 2024-2027: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf',
+    '- HVE certificate 2021-2024: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf',
     '- CEC diploma 2021: https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf',
     '',
     '## Cocktails',

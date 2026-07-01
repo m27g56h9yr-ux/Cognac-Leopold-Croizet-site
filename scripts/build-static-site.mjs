@@ -1632,7 +1632,8 @@ function enhanceSeo(html, page) {
     .replace(/<meta\s+name=["']robots["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']canonical["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']alternate["'][^>]+hreflang=["'][^"']+["'][^>]*>\s*/gi, '')
-    .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '');
+    .replace(/<link[^>]+hreflang=["'][^"']+["'][^>]+rel=["']alternate["'][^>]*>\s*/gi, '')
+    .replace(/<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bas=["']style["'])(?=[^>]*\bhref=["'][^"']*\/wp-content\/themes\/theme-site-pc\/style\.css(?:\?[^"']*)?["'])[^>]*>\s*/gi, '');
 
   if (/<html[^>]*lang=/i.test(enhanced)) {
     enhanced = enhanced.replace(/<html([^>]*)lang=["'][^"']*["']([^>]*)>/i, `<html$1lang="${lang}"$2>`);

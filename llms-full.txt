@@ -60,6 +60,7 @@ The Cognac Léopold Croizet environment page presents vineyard commitments in Tr
 Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.
 HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.
 CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, Cognac.fr public explanations of CEC and environmental actions, and downloadable HVE and CEC supporting documents.
+The environment page presents the official Certification Environnementale Cognac mark with the black HVE logo in the CEC-HVE charter order.
 - French environment page: https://cognac-leopold-croizet.com/environnement/
 - English environment page: https://cognac-leopold-croizet.com/en/environnement/
 - Russian environment page: https://cognac-leopold-croizet.com/ru/environnement/
@@ -69,6 +70,7 @@ CEC means Certification Environnementale Cognac, an environmental framework spec
 - Simplified Chinese environment page: https://cognac-leopold-croizet.com/zh/environnement/
 - CEC attestation 2025-2028: https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf
 - HVE certificate 2024-2027: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf
+- HVE certificate 2021-2024: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2021-2024.pdf
 - CEC diploma 2021: https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf
 
 ## Cocktails
