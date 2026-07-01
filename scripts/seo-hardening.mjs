@@ -601,6 +601,9 @@ const nutritionProductData = [
     sourceName: 'Fondation VS',
     valueGroup: 'young',
     ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/fondation-vs.html',
   },
   {
@@ -610,6 +613,9 @@ const nutritionProductData = [
     sourceName: 'Conviction VSOP',
     valueGroup: 'young',
     ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/conviction-vsop.html',
   },
   {
@@ -619,6 +625,9 @@ const nutritionProductData = [
     sourceName: 'Cohesion Napoléon',
     valueGroup: 'older',
     ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/cohesion-napoleon.html',
   },
   {
@@ -628,6 +637,9 @@ const nutritionProductData = [
     sourceName: 'Transmission XO',
     valueGroup: 'older',
     ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/transmission-xo.html',
   },
   {
@@ -637,6 +649,9 @@ const nutritionProductData = [
     sourceName: 'Pineau blanc',
     valueGroup: 'pineauWhite',
     ingredientsGroup: 'pineau',
+    volume: '750 ml',
+    abv: '17,5 % vol',
+    grapes: 'Colombard, Ugni Blanc',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/pineau.html',
   },
   {
@@ -646,9 +661,13 @@ const nutritionProductData = [
     sourceName: 'Pineau rouge',
     valueGroup: 'pineauRed',
     ingredientsGroup: 'pineau',
+    volume: '750 ml',
+    abv: '17,5 % vol',
+    grapes: 'Merlot, Ugni Blanc',
     sourceUrl: 'https://cognac-esprit-organic.com/produits/pineau-rouge.html',
   },
 ];
+const nutritionProductsBySlug = new Map(nutritionProductData.map((product) => [product.slug, product]));
 
 const nutritionValues = {
   young: [
@@ -787,7 +806,7 @@ const productPrimaryGalleryImages = new Map([
 ]);
 
 const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
-const productNutritionLinkStyle = '<style id="lc-product-nutrition-link-style">.lc-product-nutrition-link{clear:both;max-width:1120px;margin:14px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase;text-align:right;color:#726858}.lc-product-nutrition-link a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-nutrition-link a:hover{color:#2f261d;border-bottom-color:#2f261d}@media(max-width:767px){.lc-product-nutrition-link{text-align:center;margin:16px auto 4px;font-size:11px}}</style>';
+const productDetailsAccordionStyle = '<style id="lc-product-details-accordion-style">.lc-product-details-accordion{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;color:#726858}.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}.lc-product-details-accordion summary span{border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-details-accordion summary:hover{color:#2f261d}.lc-product-details-accordion summary:hover span{border-bottom-color:#2f261d}.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}.lc-product-details-list{display:grid;gap:8px;margin:0}.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}.lc-product-details-list dt,.lc-product-details-list dd{margin:0}.lc-product-details-list dt{font-weight:700;color:#8a806f}.lc-product-details-list dd{color:#2f261d}.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}@media(max-width:767px){.lc-product-details-accordion{margin:16px auto 4px}.lc-product-details-accordion summary{text-align:center}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}</style>';
 
 const imageDimensionCache = new Map();
 
@@ -3053,7 +3072,7 @@ function hardenHtml(html, route, file) {
   next = repairRememberMeInput(next, route);
   next = repairDecorativeImageAlts(next);
   next = applyProductMedalProofs(next, route);
-  next = injectProductNutritionLink(next, route);
+  next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
   next = normalizeGithubPagesLinks(next, route);
@@ -3539,38 +3558,200 @@ function productMedalProofBlock(medals) {
   ].join('\n');
 }
 
-function injectProductNutritionLink(html, route) {
+function injectProductDetailsAccordion(html, route) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
   if (!slug || !nutritionProductSlugs.has(slug)) return html;
+  const product = nutritionProductsBySlug.get(slug);
+  if (!product) return html;
 
   let next = html
     .replace(/\s*<style\b[^>]*id=["']lc-product-nutrition-link-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
-    .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-nutrition-link\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n');
+    .replace(/\s*<style\b[^>]*id=["']lc-product-details-accordion-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-nutrition-link\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
+    .replace(/\s*<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b[^"']*["'][^>]*>[\s\S]*?<\/details>\s*/gi, '\n');
   if (!/<\/main><\/div>/i.test(next)) return next;
 
   const lang = languageForRoute(route);
-  const href = sourceHref(nutritionProductRouteForLang(lang, slug));
-  const label = nutritionLinkLabel(lang);
-  const block = `\n<div class="lc-product-nutrition-link"><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></div>\n`;
+  const block = productDetailsAccordionHtml(product, lang);
   next = next.replace(/(\s*<\/main><\/div>)/i, `${block}$1`);
 
-  if (!next.includes('id="lc-product-nutrition-link-style"')) {
-    next = next.replace(/<\/head>/i, `${productNutritionLinkStyle}\n</head>`);
+  if (!next.includes('id="lc-product-details-accordion-style"')) {
+    next = next.replace(/<\/head>/i, `${productDetailsAccordionStyle}\n</head>`);
   }
 
   return next;
 }
 
-function nutritionLinkLabel(lang) {
+function productDetailsAccordionHtml(product, lang) {
+  const detailsCopy = productDetailsCopy(lang);
+  const nutritionCopy = nutritionPageCopy(lang);
+  const detailRows = productDetailRows(product, detailsCopy, lang).map(([label, value]) => (
+    `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`
+  )).join('');
+
+  return `
+<details class="lc-product-details-accordion">
+  <summary><span>${escapeHtml(detailsCopy.summary)}</span></summary>
+  <div class="lc-product-details-body">
+    <section class="lc-product-details-section">
+      <h3>${escapeHtml(detailsCopy.detailsTitle)}</h3>
+      <dl class="lc-product-details-list">${detailRows}</dl>
+    </section>
+    <section class="lc-product-details-section">
+      <h3>${escapeHtml(detailsCopy.nutritionTitle)}</h3>
+      ${productNutritionTableHtml(product, nutritionCopy)}
+    </section>
+  </div>
+</details>
+`;
+}
+
+function productDetailsCopy(lang) {
   return {
-    fr: 'Ingrédients et valeurs nutritionnelles',
-    en: 'Ingredients and nutritional values',
-    ru: 'Ингредиенты и пищевая ценность',
-    da: 'Ingredienser og næringsværdier',
-    sv: 'Ingredienser och näringsvärden',
-    no: 'Ingredienser og næringsverdier',
-    zh: '成分与营养信息',
-  }[lang] || 'Ingrédients et valeurs nutritionnelles';
+    fr: {
+      summary: 'Détails',
+      detailsTitle: 'Détails produit',
+      nutritionTitle: 'Valeurs nutritionnelles',
+      category: 'Catégorie',
+      origin: 'Origine',
+      originValue: 'France',
+      volume: 'Contenance',
+      abv: 'Titre alcoométrique',
+      grapes: 'Cépages',
+      gtinVariant: 'GTIN variante %s',
+    },
+    en: {
+      summary: 'Details',
+      detailsTitle: 'Product details',
+      nutritionTitle: 'Nutritional values',
+      category: 'Category',
+      origin: 'Origin',
+      originValue: 'France',
+      volume: 'Bottle size',
+      abv: 'Alcohol by volume',
+      grapes: 'Grape varieties',
+      gtinVariant: 'GTIN variant %s',
+    },
+    ru: {
+      summary: 'Детали',
+      detailsTitle: 'Сведения о продукте',
+      nutritionTitle: 'Пищевая ценность',
+      category: 'Категория',
+      origin: 'Происхождение',
+      originValue: 'Франция',
+      volume: 'Объем',
+      abv: 'Крепость',
+      grapes: 'Сорта винограда',
+      gtinVariant: 'GTIN вариант %s',
+    },
+    da: {
+      summary: 'Detaljer',
+      detailsTitle: 'Produktdetaljer',
+      nutritionTitle: 'Næringsværdier',
+      category: 'Kategori',
+      origin: 'Oprindelse',
+      originValue: 'Frankrig',
+      volume: 'Flaskestørrelse',
+      abv: 'Alkoholprocent',
+      grapes: 'Druer',
+      gtinVariant: 'GTIN-variant %s',
+    },
+    sv: {
+      summary: 'Detaljer',
+      detailsTitle: 'Produktdetaljer',
+      nutritionTitle: 'Näringsvärden',
+      category: 'Kategori',
+      origin: 'Ursprung',
+      originValue: 'Frankrike',
+      volume: 'Flaskstorlek',
+      abv: 'Alkoholhalt',
+      grapes: 'Druvor',
+      gtinVariant: 'GTIN-variant %s',
+    },
+    no: {
+      summary: 'Detaljer',
+      detailsTitle: 'Produktdetaljer',
+      nutritionTitle: 'Næringsverdier',
+      category: 'Kategori',
+      origin: 'Opprinnelse',
+      originValue: 'Frankrike',
+      volume: 'Flaskestørrelse',
+      abv: 'Alkoholstyrke',
+      grapes: 'Druer',
+      gtinVariant: 'GTIN-variant %s',
+    },
+    zh: {
+      summary: '详情',
+      detailsTitle: '产品详情',
+      nutritionTitle: '营养信息',
+      category: '类别',
+      origin: '产地',
+      originValue: '法国',
+      volume: '容量',
+      abv: '酒精度',
+      grapes: '葡萄品种',
+      gtinVariant: 'GTIN 规格 %s',
+    },
+  }[lang] || productDetailsCopy('fr');
+}
+
+function productDetailRows(product, copy, lang) {
+  const rows = [
+    [copy.category, productDetailCategory(product, lang)],
+    [copy.origin, copy.originValue],
+    [copy.volume, product.volume],
+    [copy.abv, product.abv],
+    [copy.grapes, product.grapes],
+  ];
+  const variants = productGtinVariants.get(product.slug) || [];
+  for (const variant of variants) {
+    rows.push([copy.gtinVariant.replace('%s', variant.size), variant.gtin13]);
+  }
+  return rows;
+}
+
+function productDetailCategory(product, lang) {
+  const pineauWhite = {
+    fr: 'Pineau des Charentes blanc',
+    en: 'White Pineau des Charentes',
+    ru: 'Белый Pineau des Charentes',
+    da: 'Hvid Pineau des Charentes',
+    sv: 'Vit Pineau des Charentes',
+    no: 'Hvit Pineau des Charentes',
+    zh: '白 Pineau des Charentes',
+  };
+  const pineauRed = {
+    fr: 'Pineau des Charentes rouge',
+    en: 'Red Pineau des Charentes',
+    ru: 'Красный Pineau des Charentes',
+    da: 'Rød Pineau des Charentes',
+    sv: 'Röd Pineau des Charentes',
+    no: 'Rød Pineau des Charentes',
+    zh: '红 Pineau des Charentes',
+  };
+  if (product.productKind === 'pineauWhite') return pineauWhite[lang] || pineauWhite.fr;
+  if (product.productKind === 'pineauRed') return pineauRed[lang] || pineauRed.fr;
+  return `Cognac ${product.name}`;
+}
+
+function productNutritionTableHtml(product, copy) {
+  const ingredients = copy.ingredients[product.ingredientsGroup];
+  const statement = copy.statement[product.ingredientsGroup];
+  const rows = nutritionValues[product.valueGroup].map(([key, per30, per100]) => (
+    `<tr><th scope="row">${escapeHtml(copy.rowLabels[key])}</th><td>${escapeHtml(per30)}</td><td>${escapeHtml(per100)}</td></tr>`
+  )).join('');
+
+  return `<div class="lc-nutrition-table-wrap">
+    <table class="lc-nutrition-table">
+      <caption>${escapeHtml(copy.caption)}</caption>
+      <thead><tr><th scope="col">${escapeHtml(copy.nutrient)}</th><th scope="col">${escapeHtml(copy.per30)}</th><th scope="col">${escapeHtml(copy.per100)}</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+  <dl class="lc-nutrition-meta">
+    <div><dt>${escapeHtml(copy.ingredientsLabel)}</dt><dd>${escapeHtml(ingredients)}</dd></div>
+    <div><dt>${escapeHtml(copy.statementLabel)}</dt><dd>${escapeHtml(statement)}</dd></div>
+  </dl>`;
 }
 
 
