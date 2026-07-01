@@ -582,8 +582,24 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
+const productPrimaryGtins = new Map([
+  ['vs', { size: '700 ml', gtin13: '3322870003330' }],
+  ['vsop', { size: '700 ml', gtin13: '3322870004443' }],
+  ['napoleon', { size: '700 ml', gtin13: '3322870005556' }],
+  ['xo', { size: '700 ml', gtin13: '3322870007772' }],
+  ['xo-exception', { size: '700 ml', gtin13: '3322870007796' }],
+  ['extra', { size: '700 ml', gtin13: '3322870008885' }],
+  ['excellence', { size: '700 ml', gtin13: '3322870009998' }],
+  ['valentine', { size: '350 ml', gtin13: '3322870006669' }],
+]);
+
 const productGtinVariants = new Map([
   ['vsop', [
+    {
+      name: 'Cognac Léopold Croizet VSOP 70 cl avec étui',
+      size: '700 ml',
+      gtin13: '3322870004450',
+    },
     {
       name: 'Cognac Léopold Croizet VSOP 35 cl',
       size: '350 ml',
@@ -594,8 +610,44 @@ const productGtinVariants = new Map([
       size: '12 x 350 ml',
       gtin13: '3322870011595',
     },
+    {
+      name: 'Cognac Léopold Croizet VSOP 1 L',
+      size: '1 L',
+      gtin13: '3322870010802',
+    },
+    {
+      name: 'Cognac Léopold Croizet VSOP 3 L',
+      size: '3 L',
+      gtin13: '3322870010307',
+    },
+  ]],
+  ['napoleon', [
+    {
+      name: 'Cognac Léopold Croizet Napoléon 70 cl avec étui',
+      size: '700 ml',
+      gtin13: '3322870005563',
+    },
+    {
+      name: 'Cognac Léopold Croizet Napoléon 1 L',
+      size: '1 L',
+      gtin13: '3322870010758',
+    },
+  ]],
+  ['xo', [
+    {
+      name: 'Cognac Léopold Croizet XO 70 cl avec étui',
+      size: '700 ml',
+      gtin13: '3322870007789',
+    },
   ]],
 ]);
+
+const productVolumeOrderBySlug = new Map([
+  ['vsop', ['700 ml', '350 ml', '1 L', '3 L']],
+  ['napoleon', ['700 ml', '1 L']],
+]);
+
+// The GENCOD workbook also lists a Pineau 75 code with an invalid GTIN check digit, so it is intentionally omitted.
 
 const nutritionProductSlugs = new Set(NUTRITION_PRODUCT_SLUGS);
 const nutritionProductData = [
@@ -812,6 +864,8 @@ const productPrimaryGalleryImages = new Map([
 
 const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
 const productDetailsAccordionStyle = '<style id="lc-product-details-accordion-style">.lc-product-details-accordion{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;color:#726858}.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}.lc-product-details-accordion summary span{border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-details-accordion summary:hover{color:#2f261d}.lc-product-details-accordion summary:hover span{border-bottom-color:#2f261d}.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}.lc-product-details-list{display:grid;gap:8px;margin:0}.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}.lc-product-details-list dt,.lc-product-details-list dd{margin:0}.lc-product-details-list dt{font-weight:700;color:#8a806f}.lc-product-details-list dd{color:#2f261d}.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}@media(max-width:767px){.lc-product-details-accordion{margin:16px auto 4px}.lc-product-details-accordion summary{text-align:center}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}</style>';
+const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
+const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
 
 const imageDimensionCache = new Map();
 
@@ -3593,6 +3647,8 @@ function injectProductDetailsAccordion(html, route) {
   let next = html
     .replace(/\s*<style\b[^>]*id=["']lc-product-nutrition-link-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-details-accordion-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<style\b[^>]*id=["']lc-product-volume-selector-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<script\b[^>]*id=["']lc-product-volume-selector-script["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n')
     .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-nutrition-link\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
     .replace(/\s*<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b[^"']*["'][^>]*>[\s\S]*?<\/details>\s*/gi, '\n');
   if (!/<\/main><\/div>/i.test(next)) return next;
@@ -3604,6 +3660,12 @@ function injectProductDetailsAccordion(html, route) {
   if (!next.includes('id="lc-product-details-accordion-style"')) {
     next = next.replace(/<\/head>/i, `${productDetailsAccordionStyle}\n</head>`);
   }
+  if (block.includes('data-volume-selector') && !next.includes('id="lc-product-volume-selector-style"')) {
+    next = next.replace(/<\/head>/i, `${productVolumeSelectorStyle}\n</head>`);
+  }
+  if (block.includes('data-volume-selector') && !next.includes('id="lc-product-volume-selector-script"')) {
+    next = next.replace(/<\/body>/i, `${productVolumeSelectorScript}\n</body>`);
+  }
 
   return next;
 }
@@ -3611,9 +3673,7 @@ function injectProductDetailsAccordion(html, route) {
 function productDetailsAccordionHtml(product, lang) {
   const detailsCopy = productDetailsCopy(lang);
   const nutritionCopy = nutritionPageCopy(lang);
-  const detailRows = productDetailRows(product, detailsCopy, lang).map(([label, value]) => (
-    `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`
-  )).join('');
+  const detailRows = productDetailRows(product, detailsCopy, lang).map(productDetailRowHtml).join('');
 
   return `
 <details class="lc-product-details-accordion">
@@ -3632,6 +3692,12 @@ function productDetailsAccordionHtml(product, lang) {
 `;
 }
 
+function productDetailRowHtml(row) {
+  const attrs = row.attrs ? ` ${row.attrs}` : '';
+  const value = row.html ? row.value : escapeHtml(row.value);
+  return `<div${attrs}><dt>${escapeHtml(row.label)}</dt><dd>${value}</dd></div>`;
+}
+
 function productDetailsCopy(lang) {
   return {
     fr: {
@@ -3644,7 +3710,10 @@ function productDetailsCopy(lang) {
       volume: 'Contenance',
       abv: 'Titre alcoométrique',
       grapes: 'Cépages',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN variante %s',
+      volumeSelectAria: 'Choisir la contenance',
+      volumeOptionsAria: 'Contenances disponibles',
     },
     en: {
       summary: 'Details',
@@ -3656,7 +3725,10 @@ function productDetailsCopy(lang) {
       volume: 'Bottle size',
       abv: 'Alcohol by volume',
       grapes: 'Grape varieties',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN variant %s',
+      volumeSelectAria: 'Select bottle size',
+      volumeOptionsAria: 'Available bottle sizes',
     },
     ru: {
       summary: 'Детали',
@@ -3668,7 +3740,10 @@ function productDetailsCopy(lang) {
       volume: 'Объем',
       abv: 'Крепость',
       grapes: 'Сорта винограда',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN вариант %s',
+      volumeSelectAria: 'Выбрать объем',
+      volumeOptionsAria: 'Доступные объемы',
     },
     da: {
       summary: 'Detaljer',
@@ -3680,7 +3755,10 @@ function productDetailsCopy(lang) {
       volume: 'Flaskestørrelse',
       abv: 'Alkoholprocent',
       grapes: 'Druer',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN-variant %s',
+      volumeSelectAria: 'Vælg indhold',
+      volumeOptionsAria: 'Tilgængelige størrelser',
     },
     sv: {
       summary: 'Detaljer',
@@ -3692,7 +3770,10 @@ function productDetailsCopy(lang) {
       volume: 'Flaskstorlek',
       abv: 'Alkoholhalt',
       grapes: 'Druvor',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN-variant %s',
+      volumeSelectAria: 'Välj volym',
+      volumeOptionsAria: 'Tillgängliga volymer',
     },
     no: {
       summary: 'Detaljer',
@@ -3704,7 +3785,10 @@ function productDetailsCopy(lang) {
       volume: 'Flaskestørrelse',
       abv: 'Alkoholstyrke',
       grapes: 'Druer',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN-variant %s',
+      volumeSelectAria: 'Velg innhold',
+      volumeOptionsAria: 'Tilgjengelige størrelser',
     },
     zh: {
       summary: '详情',
@@ -3716,24 +3800,88 @@ function productDetailsCopy(lang) {
       volume: '容量',
       abv: '酒精度',
       grapes: '葡萄品种',
+      gtin: 'GTIN',
       gtinVariant: 'GTIN 规格 %s',
+      volumeSelectAria: '选择容量',
+      volumeOptionsAria: '可选容量',
     },
   }[lang] || productDetailsCopy('fr');
 }
 
 function productDetailRows(product, copy, lang) {
+  const volumeOptions = productVolumeOptions(product);
+  const hasVolumeSelector = volumeOptions.length > 1;
   const rows = [
-    [copy.category, productDetailCategory(product, lang)],
-    [copy.origin, copy.originValue],
-    [copy.volume, product.volume],
-    [copy.abv, product.abv],
-    [copy.grapes, product.grapes],
+    productDetailRow(copy.category, productDetailCategory(product, lang)),
+    productDetailRow(copy.origin, copy.originValue),
+    productDetailRow(copy.volume, hasVolumeSelector ? productVolumeSelectorHtml(product, copy, volumeOptions) : product.volume, { html: hasVolumeSelector }),
+    productDetailRow(copy.abv, product.abv),
+    productDetailRow(copy.grapes, product.grapes),
   ];
+  const defaultVolume = gtinVolumeGroup(product.volume);
+  const primaryGtin = productPrimaryGtins.get(product.slug);
+  if (primaryGtin) {
+    rows.push(productGtinDetailRow(copy.gtin, primaryGtin.size, primaryGtin.gtin13, defaultVolume, hasVolumeSelector));
+  }
   const variants = productGtinVariants.get(product.slug) || [];
   for (const variant of variants) {
-    rows.push([copy.gtinVariant.replace('%s', variant.size), variant.gtin13]);
+    rows.push(productGtinDetailRow(copy.gtinVariant.replace('%s', variant.size), variant.size, variant.gtin13, defaultVolume, hasVolumeSelector));
   }
   return rows;
+}
+
+function productDetailRow(label, value, options = {}) {
+  return {
+    label,
+    value,
+    html: Boolean(options.html),
+    attrs: options.attrs || '',
+  };
+}
+
+function productGtinDetailRow(label, size, gtin13, defaultVolume, hasVolumeSelector) {
+  const volume = gtinVolumeGroup(size);
+  const attrs = hasVolumeSelector
+    ? `data-gtin-for-volume="${escapeHtml(volume)}"${volume !== defaultVolume ? ' hidden' : ''}`
+    : '';
+  return productDetailRow(label, gtin13, { attrs });
+}
+
+function productVolumeOptions(product) {
+  const configured = productVolumeOrderBySlug.get(product.slug);
+  if (configured) return configured;
+
+  const volumes = [];
+  const add = (value) => {
+    const volume = gtinVolumeGroup(value);
+    if (volume && !volumes.includes(volume)) volumes.push(volume);
+  };
+  add(product.volume);
+  const primary = productPrimaryGtins.get(product.slug);
+  if (primary) add(primary.size);
+  for (const variant of productGtinVariants.get(product.slug) || []) {
+    add(variant.size);
+  }
+  return volumes;
+}
+
+function productVolumeSelectorHtml(product, copy, volumeOptions) {
+  const selectedVolume = gtinVolumeGroup(product.volume);
+  const options = volumeOptions.map((volume) => (
+    `<button type="button" role="option" data-volume-option="${escapeHtml(volume)}" aria-selected="${volume === selectedVolume ? 'true' : 'false'}">${escapeHtml(volume)}</button>`
+  )).join('');
+  return `<div class="lc-product-volume-select" data-volume-selector><button type="button" class="lc-product-volume-select-toggle" data-volume-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="${escapeHtml(copy.volumeSelectAria)}"><span data-selected-volume>${escapeHtml(selectedVolume)}</span></button><div class="lc-product-volume-options" data-volume-options role="listbox" aria-label="${escapeHtml(copy.volumeOptionsAria)}" hidden>${options}</div></div>`;
+}
+
+function gtinVolumeGroup(value) {
+  const raw = String(value || '').trim();
+  const normalized = raw.toLowerCase().replace(/\s+/g, ' ');
+  if (normalized.includes('350') || normalized.includes('35 cl')) return '350 ml';
+  if (normalized.includes('700') || normalized.includes('70 cl')) return '700 ml';
+  if (normalized.includes('750') || normalized.includes('75 cl')) return '750 ml';
+  if (/\b1\s*l\b/.test(normalized)) return '1 L';
+  if (/\b3\s*l\b/.test(normalized)) return '3 L';
+  return raw;
 }
 
 function productDetailCategory(product, lang) {
@@ -4399,14 +4547,19 @@ function productSchema(route, metadata, image) {
     description: metadata.description,
     image: image ? `${PUBLIC_ORIGIN}${image}` : undefined,
     category: productCategory(slug),
-    brand: {
-      '@type': 'Brand',
-      name: 'Cognac Léopold Croizet',
-    },
+    brand: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     manufacturer: { '@id': `${PUBLIC_ORIGIN}/#organization` },
+    url: `${PUBLIC_ORIGIN}${route}`,
+    countryOfOrigin: 'France',
+    additionalProperty: productStructuredProperties(slug),
   };
-  const variants = productGtinVariants.get(slug);
-  if (variants) {
+  const primaryGtin = productPrimaryGtins.get(slug);
+  if (primaryGtin) {
+    schema.size = primaryGtin.size;
+    schema.gtin13 = primaryGtin.gtin13;
+  }
+  const variants = productGtinVariants.get(slug) || [];
+  if (variants.length) {
     schema.hasVariant = variants.map((variant) => ({
       '@type': 'Product',
       name: variant.name,
@@ -4416,6 +4569,46 @@ function productSchema(route, metadata, image) {
     }));
   }
   return schema;
+}
+
+function productStructuredProperties(slug) {
+  const isPineau = slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG;
+  const nutritionProduct = nutritionProductsBySlug.get(slug);
+  const abv = (nutritionProduct?.abv || (isPineau ? '17,5 % vol' : '40 % vol')).replace(/\s*vol$/i, '').trim();
+  return [
+    {
+      '@type': 'PropertyValue',
+      name: 'Appellation',
+      value: productStructuredAppellation(slug),
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'Bottle size',
+      value: productStructuredBottleSize(slug),
+    },
+    {
+      '@type': 'PropertyValue',
+      name: 'ABV',
+      value: abv,
+    },
+  ];
+}
+
+function productStructuredAppellation(slug) {
+  if (slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG) return 'Pineau des Charentes controlée';
+  if (slug === 'valentine') return 'Cognac Fins Bois contrôlée';
+  return 'Appellation cognac Fins Bois controlée';
+}
+
+function productStructuredBottleSize(slug) {
+  const primaryGtin = productPrimaryGtins.get(slug);
+  const nutritionProduct = nutritionProductsBySlug.get(slug);
+  const size = primaryGtin?.size || nutritionProduct?.volume || (slug === 'valentine' ? '350 ml' : '700 ml');
+  const volume = gtinVolumeGroup(size);
+  if (volume === '350 ml') return '35 cl';
+  if (volume === '700 ml') return '70 cl';
+  if (volume === '750 ml') return '75 cl';
+  return volume;
 }
 
 function cocktailRecipesSchema(route) {
