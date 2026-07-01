@@ -18,7 +18,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [FAQ](https://cognac-leopold-croizet.com/faq/): Visitor-ready answers about cognac, cuvée choice, serving, visits and professional requests.
 - [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.
 - [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.
-- [Environment](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA.
+- [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.
 - [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.
 - [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.
 - [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.
@@ -35,6 +35,11 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Valentine XO](https://cognac-leopold-croizet.com/collection/valentine/): Cognac Léopold Croizet Valentine XO.
 - [Pineau des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes/): Pineau des Charentes Léopold Croizet.
 - [Pineau Rouge des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/): Pineau Rouge des Charentes Léopold Croizet.
+
+## Public Proof Documents
+- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.
+- [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.
+- [CEC diploma 2021](https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf): earlier CEC supporting document.
 
 ## Contact
 - Email: cognac@mdpierre.com

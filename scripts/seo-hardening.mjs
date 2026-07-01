@@ -800,17 +800,17 @@ function productSeoTitle(slug, lang) {
         en: `${name} Léopold Croizet | French Pineau`,
         ru: `${name} Léopold Croizet | французский Pineau`,
         da: `${name} Léopold Croizet | fransk Pineau`,
-        sv: `${name} Léopold Croizet | fransk Pineau`,
-        no: `${name} Léopold Croizet | fransk Pineau`,
+        sv: `${name} Léopold Croizet | Pineau från Frankrike`,
+        no: `${name} Léopold Croizet | fransk Pineau des Charentes`,
         zh: `${name} Léopold Croizet | 法国 Pineau 甜酒`,
       }
     : {
         fr: `${name} Cognac Léopold Croizet | Fins Bois`,
-        en: `${name} Cognac Léopold Croizet | Fins Bois`,
+        en: `${name} by Léopold Croizet | Fins Bois Cognac`,
         ru: `${name} коньяк Léopold Croizet | Fins Bois`,
-        da: `${name} cognac Léopold Croizet | Fins Bois`,
-        sv: `${name} cognac Léopold Croizet | Fins Bois`,
-        no: `${name} cognac Léopold Croizet | Fins Bois`,
+        da: `${name} cognac Léopold Croizet | Fins Bois cognac`,
+        sv: `${name} cognac Léopold Croizet | Fins Bois konjak`,
+        no: `${name} cognac Léopold Croizet | Fins Bois konjakk`,
         zh: `${name} 干邑 Léopold Croizet | 法国 Fins Bois`,
       };
   return titles[lang] || titles.fr;
@@ -3050,6 +3050,8 @@ function hardenHtml(html, route, file) {
   next = localizeResidualLocaleFragments(next, route);
   next = repairLocalizedSeoHeading(next, route);
   next = repairNewsletterBlock(next, route);
+  next = repairRememberMeInput(next, route);
+  next = repairDecorativeImageAlts(next);
   next = applyProductMedalProofs(next, route);
   next = injectProductNutritionLink(next, route);
   next = applyRequestedOrderVisibility(next, route);
@@ -3461,6 +3463,21 @@ function repairNewsletterBlock(html, route) {
   );
 }
 
+function repairRememberMeInput(html, route) {
+  if (!html.includes('name="rememberme"')) return html;
+  const label = rememberMeLabel(languageForRoute(route));
+  return html.replace(/<input\b(?=[^>]*\bname=["']rememberme["'])[^>]*>/gi, (tag) => {
+    if (/\baria-label=/i.test(tag) || /\baria-labelledby=/i.test(tag)) return tag;
+    return setAttribute(tag, 'aria-label', label);
+  });
+}
+
+function repairDecorativeImageAlts(html) {
+  return html.replace(/<img\b(?![^>]*\balt=)(?=[^>]*\bclass=["'][^"']*\bjarallax-img\b[^"']*["'])[^>]*>/gi, (tag) => {
+    return setAttribute(tag, 'alt', '');
+  });
+}
+
 function applyProductMedalProofs(html, route) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
   if (!slug || (!productMedalProofs.has(slug) && !productGalleryMedalImages.has(slug))) return html;
@@ -3806,6 +3823,18 @@ function newsletterCopy(lang) {
     },
   };
   return copies[lang] || copies.fr;
+}
+
+function rememberMeLabel(lang) {
+  return {
+    fr: 'Se souvenir de moi',
+    en: 'Remember me',
+    ru: 'Запомнить меня',
+    da: 'Husk mig',
+    sv: 'Kom ihåg mig',
+    no: 'Husk meg',
+    zh: '记住我',
+  }[lang] || 'Remember me';
 }
 
 function keywordsForRoute(route) {
@@ -4316,13 +4345,18 @@ function makeLlmsTxt() {
     '- [FAQ](https://cognac-leopold-croizet.com/faq/): Visitor-ready answers about cognac, cuvée choice, serving, visits and professional requests.',
     '- [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.',
     '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
-    '- [Environment](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA.',
+    '- [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
     '',
     '## Product Pages',
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
+    '',
+    '## Public Proof Documents',
+    '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
+    '- [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.',
+    '- [CEC diploma 2021](https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf): earlier CEC supporting document.',
     '',
     '## Contact',
     '- Email: cognac@mdpierre.com',
@@ -4380,7 +4414,7 @@ function makeLlmsFullTxt() {
     'The Cognac Léopold Croizet environment page presents vineyard commitments in Triac-Lautrait and explains how soil, water, biodiversity and landscape care support eau-de-vie quality.',
     'Most of the eaux-de-vie blended into Cognac Léopold Croizet bottles come from Domaine de la Grande Versenne SCEA in Triac-Lautrait.',
     'HVE means Haute Valeur Environnementale. The public HVE directory lists SCEA Domaine de la Grande Versenne in viticulture at 30 rue d’Angoulême, 16200 Triac-Lautrait, with a certification date of 23 December 2024.',
-    'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, the Cognac sector CEC page, Bureau Veritas CEC information and downloadable HVE and CEC supporting documents.',
+    'CEC means Certification Environnementale Cognac, an environmental framework specific to the Cognac sector. The environment page links to the HVE directory, the French Ministry of Agriculture, Cognac.fr public explanations of CEC and environmental actions, and downloadable HVE and CEC supporting documents.',
     '- French environment page: https://cognac-leopold-croizet.com/environnement/',
     '- English environment page: https://cognac-leopold-croizet.com/en/environnement/',
     '- Russian environment page: https://cognac-leopold-croizet.com/ru/environnement/',
@@ -4388,6 +4422,9 @@ function makeLlmsFullTxt() {
     '- Swedish environment page: https://cognac-leopold-croizet.com/sv/environnement/',
     '- Norwegian environment page: https://cognac-leopold-croizet.com/no/environnement/',
     '- Simplified Chinese environment page: https://cognac-leopold-croizet.com/zh/environnement/',
+    '- CEC attestation 2025-2028: https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf',
+    '- HVE certificate 2024-2027: https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf',
+    '- CEC diploma 2021: https://cognac-leopold-croizet.com/assets/environment/diplome-cec-grande-versenne-2021.pdf',
     '',
     '## Cocktails',
     'The cocktail page presents Charente Spritz, L’Heure Dorée, Ginger d’Or and Golden Melon, using Cognac Léopold Croizet, Pineau des Charentes, melon, ginger beer, lime, basil and honey depending on the recipe.',
@@ -4396,7 +4433,7 @@ function makeLlmsFullTxt() {
     'Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leopold-croizet.com/rencontre/',
     '',
     '## Verified Source Pages',
-    '- Environment page: https://cognac-leopold-croizet.com/environnement/',
+    '- Environment and proof page: https://cognac-leopold-croizet.com/environnement/',
     '- Medal and organic-claim details are not included here unless validated and visible on an indexable source page.',
     '',
     '## Contact',
