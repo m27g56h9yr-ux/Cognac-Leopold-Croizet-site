@@ -987,6 +987,14 @@ const routeMetadata = new Map([
     title: 'Commander Cognac Léopold Croizet | Boutique officielle',
     description: 'Commandez les cognacs Léopold Croizet depuis la boutique officielle : VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence et Héritage.',
   }],
+  ['/mentions-legales/', {
+    title: 'Mentions légales | Cognac Léopold Croizet',
+    description: 'Mentions légales du site officiel Cognac Léopold Croizet : éditeur, hébergement, données personnelles, cookies, propriété intellectuelle et avertissement alcool.',
+  }],
+  ['/cgv/', {
+    title: 'Conditions générales de vente | Cognac Léopold Croizet',
+    description: 'Conditions générales de vente applicables aux commandes Cognac Léopold Croizet : produits, paiement, livraison, rétractation, garanties et litiges.',
+  }],
   ['/categorie-produit/non-classe/', {
     title: 'Collection Cognac Léopold Croizet | Accès aux carafes XO et Extra',
     description: 'Retrouvez les pages officielles des cognacs Léopold Croizet, dont XO, XO Exception, Extra, Excellence et Héritage.',
@@ -1405,9 +1413,13 @@ function isNoindexRoute(route) {
   return noindexRoutes.has(route) || route.startsWith('/_preview/');
 }
 
-await writeSourcePages();
+const targetRoute = normalizeTargetRoute(process.env.LC_SEO_ROUTE || '');
 
-const allHtmlFiles = await walkHtml(ROOT);
+if (!targetRoute) {
+  await writeSourcePages();
+}
+
+const allHtmlFiles = targetRoute ? [fileForRoute(targetRoute)] : await walkHtml(ROOT);
 const existingRoutes = new Set(allHtmlFiles.map((file) => routeForFile(file)));
 const routeToGroup = makeGroupMap(existingRoutes);
 const indexableRoutes = [];
@@ -1429,22 +1441,35 @@ for (const file of allHtmlFiles) {
   if (!isNoindexRoute(route)) indexableRoutes.push(route);
 }
 
-indexableRoutes.sort((a, b) => a.localeCompare(b));
-await writeFile(path.join(ROOT, 'robots.txt'), makeRobots(), 'utf8');
-await writeFile(path.join(ROOT, 'sitemap.xml'), makeSitemap(indexableRoutes), 'utf8');
-await writeFile(path.join(ROOT, 'llms.txt'), makeLlmsTxt(), 'utf8');
-await writeFile(path.join(ROOT, 'llms-full.txt'), makeLlmsFullTxt(), 'utf8');
+if (!targetRoute) {
+  indexableRoutes.sort((a, b) => a.localeCompare(b));
+  await writeFile(path.join(ROOT, 'robots.txt'), makeRobots(), 'utf8');
+  await writeFile(path.join(ROOT, 'sitemap.xml'), makeSitemap(indexableRoutes), 'utf8');
+  await writeFile(path.join(ROOT, 'llms.txt'), makeLlmsTxt(), 'utf8');
+  await writeFile(path.join(ROOT, 'llms-full.txt'), makeLlmsFullTxt(), 'utf8');
 
-const indexNowKey = 'lc-indexnow-20260609-' + createHash('sha256').update(PUBLIC_ORIGIN).digest('hex').slice(0, 32);
-await writeFile(path.join(ROOT, `${indexNowKey}.txt`), `${indexNowKey}\n`, 'utf8');
-await writeFile(path.join(ROOT, 'indexnow.json'), `${JSON.stringify({
-  host: new URL(PUBLIC_ORIGIN).hostname,
-  key: indexNowKey,
-  keyLocation: `${PUBLIC_ORIGIN}/${indexNowKey}.txt`,
-  sitemap: `${PUBLIC_ORIGIN}/sitemap.xml`,
-}, null, 2)}\n`, 'utf8');
+  const indexNowKey = 'lc-indexnow-20260609-' + createHash('sha256').update(PUBLIC_ORIGIN).digest('hex').slice(0, 32);
+  await writeFile(path.join(ROOT, `${indexNowKey}.txt`), `${indexNowKey}\n`, 'utf8');
+  await writeFile(path.join(ROOT, 'indexnow.json'), `${JSON.stringify({
+    host: new URL(PUBLIC_ORIGIN).hostname,
+    key: indexNowKey,
+    keyLocation: `${PUBLIC_ORIGIN}/${indexNowKey}.txt`,
+    sitemap: `${PUBLIC_ORIGIN}/sitemap.xml`,
+  }, null, 2)}\n`, 'utf8');
+}
 
-console.log(`SEO hardening applied to ${allHtmlFiles.length} pages`);
+console.log(`SEO hardening applied to ${allHtmlFiles.length} page${allHtmlFiles.length > 1 ? 's' : ''}`);
+
+function normalizeTargetRoute(value) {
+  if (!value) return '';
+  const withLeadingSlash = value.startsWith('/') ? value : `/${value}`;
+  return withLeadingSlash.endsWith('/') ? withLeadingSlash : `${withLeadingSlash}/`;
+}
+
+function fileForRoute(route) {
+  if (route === '/') return path.join(ROOT, 'index.html');
+  return path.join(ROOT, route.replace(/^\//, ''), 'index.html');
+}
 
 async function walkHtml(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -3420,7 +3445,112 @@ function hardenHtml(html, route, file) {
   next = injectFilmNavigationLink(next, route);
   next = repairLanguageMenuLinks(next, route);
   next = injectFrenchFooterResourceLinks(next, route);
+  next = repairLegalNoticePage(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function repairLegalNoticePage(html, route) {
+  if (route !== '/mentions-legales/') return html;
+
+  const legalNoticeContent = `
+<h1 class="wp-block-heading titre-mentions-legales">Mentions <strong>légales</strong></h1>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Éditeur du site :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Le site internet <a href="/">cognac-leopold-croizet.com</a> est édité par LA MAISON DES PIERRES (MPC), société à responsabilité limitée au capital social de 10&nbsp;000&nbsp;euros, immatriculée au RCS d’Angoulême sous le numéro 508&nbsp;104&nbsp;361.<br>Siège social : Lantin, 30 rue d’Angoulême, 16200 Triac-Lautrait, France.<br>SIREN : 508&nbsp;104&nbsp;361. SIRET du siège : 508&nbsp;104&nbsp;361&nbsp;00029. TVA intracommunautaire : FR96&nbsp;508&nbsp;104&nbsp;361. Code APE : 46.34Z, commerce de gros de boissons.<br>Téléphone : +33&nbsp;5&nbsp;45&nbsp;35&nbsp;88&nbsp;10. E-mail : <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.<br><strong>Directeur de la publication :</strong> Léopold&nbsp;Croizet, gérant de LA MAISON DES PIERRES (MPC).</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Hébergement :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Le site est hébergé par OVH SAS, 2 rue Kellermann, 59100 Roubaix, France. OVH SAS est immatriculée au RCS de Lille Métropole sous le numéro 424&nbsp;761&nbsp;419&nbsp;00045. TVA intracommunautaire : FR22&nbsp;424&nbsp;761&nbsp;419. Site : <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener">www.ovhcloud.com</a>. Téléphone : 1007.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Objet du site et accès :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Le site présente la maison, les cognacs, les pineaux des Charentes, le savoir-faire, les actualités et les moyens de contact de Cognac Léopold&nbsp;Croizet. Les informations publiées sont fournies à titre indicatif et ne constituent pas une offre contractuelle de vente, sauf mention expresse dans un parcours de commande ou dans les <a href="/cgv/">conditions générales de vente</a> applicables.<br>Le site contient des informations relatives à des boissons alcooliques. Son accès est réservé aux personnes ayant l’âge légal requis pour consulter ce type de contenu dans leur pays de résidence. Si la loi applicable à votre pays interdit la consultation de contenus relatifs aux boissons alcooliques, vous devez quitter ce site.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Commandes et conditions générales de vente :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Toute commande réalisée à distance ou en ligne est réservée aux personnes majeures et soumise aux <a href="/cgv/">conditions générales de vente</a> du site, lorsqu’un parcours de commande est proposé. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Données personnelles :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Le responsable du traitement est LA MAISON DES PIERRES (MPC), joignable à l’adresse postale indiquée ci-dessus ou par e-mail à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.<br>Des données personnelles peuvent être collectées lorsque vous utilisez un formulaire, demandez une information, préparez une commande, réservez une visite ou vous inscrivez à la newsletter. Selon le service utilisé, ces données peuvent comprendre vos coordonnées, votre adresse e-mail, votre message, les informations nécessaires au suivi commercial, la langue, la page d’inscription, la version du consentement, l’adresse IP, le navigateur, le référent et la langue du navigateur.<br>Ces données sont utilisées pour répondre aux demandes, gérer la relation commerciale, préparer ou exécuter une commande, envoyer la newsletter après consentement, assurer la sécurité technique du site, conserver la preuve des consentements et respecter les obligations légales. Les bases juridiques applicables sont, selon les cas, le consentement, l’exécution de mesures précontractuelles ou contractuelles, l’obligation légale et l’intérêt légitime de LA MAISON DES PIERRES (MPC).<br>Les données sont destinées à LA MAISON DES PIERRES (MPC) et à ses prestataires techniques strictement nécessaires au fonctionnement du site, à l’hébergement, à l’e-mailing ou à la sécurité. Elles ne sont ni vendues ni louées à des tiers.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Durée de conservation et droits :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Les données sont conservées pendant une durée limitée aux finalités poursuivies. Les données liées à la newsletter sont conservées jusqu’au retrait du consentement ou à la demande de désinscription. Les données commerciales, contractuelles ou comptables peuvent être conservées pendant les durées imposées par la réglementation applicable.<br>Vous disposez, dans les conditions prévues par la réglementation, d’un droit d’accès, de rectification, d’effacement, d’opposition, de limitation, de portabilité lorsque ce droit est applicable, ainsi que du droit de retirer votre consentement à tout moment. Vous pouvez exercer ces droits en écrivant à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a> ou à l’adresse postale de LA MAISON DES PIERRES (MPC). Vous pouvez également introduire une réclamation auprès de la CNIL : <a href="https://www.cnil.fr/" target="_blank" rel="noopener">www.cnil.fr</a>.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Newsletter :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">L’inscription à la newsletter suppose un consentement explicite. Chaque inscription valide est enregistrée avec les informations nécessaires à la preuve du consentement et au fonctionnement du service : date, adresse e-mail, langue, page d’inscription, version du consentement, adresse IP, navigateur, référent et langue du navigateur. Vous pouvez demander votre désinscription à tout moment en écrivant à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>. Chaque envoi de newsletter devra également permettre la désinscription.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Cookies :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Le site peut utiliser des cookies ou traceurs strictement nécessaires à son fonctionnement, par exemple pour l’affichage, la sécurité ou la mémorisation de certains choix techniques. Les cookies non strictement nécessaires, notamment de mesure d’audience, de publicité, de personnalisation ou liés aux réseaux sociaux, ne doivent être déposés qu’après votre consentement lorsqu’ils sont activés. Vous pouvez refuser ou retirer votre consentement aussi simplement que vous l’avez donné, depuis l’interface de consentement lorsqu’elle est proposée, ou modifier les réglages de votre navigateur.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Propriété intellectuelle et crédits :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">L’accès au site confère un droit d’usage privé, personnel et non exclusif. Les textes, photographies, vidéos, illustrations, dessins, logos, marques, noms de domaine et éléments graphiques figurant sur le site sont protégés par le droit de la propriété intellectuelle et appartiennent à LA MAISON DES PIERRES (MPC), à Cognac Léopold&nbsp;Croizet ou à leurs auteurs et partenaires. Toute reproduction, représentation, adaptation, extraction ou réutilisation, totale ou partielle, sans autorisation préalable, est interdite.<br>Crédits photographiques : Fabrice Schack / Aline Aubert.<br>Création graphique : Christophe LÉCRIVAIN.<br>Développement / intégration : Jessy SCHNEIDER.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Responsabilité et liens externes :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">LA MAISON DES PIERRES (MPC) s’efforce de publier des informations exactes et à jour, mais ne peut garantir l’absence totale d’erreur, d’omission ou d’indisponibilité temporaire. Les liens vers des sites tiers sont fournis à titre informatif ; LA MAISON DES PIERRES (MPC) ne contrôle pas ces sites et ne peut être tenue responsable de leur contenu, de leurs pratiques ou de leurs évolutions.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Avertissement alcool :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Dernière mise à jour : 2 juillet 2026.</p>
+`;
+
+  const legalNoticePattern = /<h1\b(?=[^>]*\btitre-mentions-legales\b)[^>]*>[\s\S]*?<\/h1>[\s\S]*?<p class="wp-block-paragraph"><\/p>/i;
+  if (!legalNoticePattern.test(html)) return html;
+  return html.replace(legalNoticePattern, `${legalNoticeContent}\n\n\n\n<p class="wp-block-paragraph"></p>`);
 }
 
 function brandIconTags() {
@@ -4555,6 +4685,8 @@ function fallbackMetadata(route, html) {
 
 function labelFromRoute(route) {
   if (route === '/') return 'Cognac Léopold Croizet';
+  if (/\/mentions-legales\/?$/.test(route)) return 'Mentions légales';
+  if (/\/cgv\/?$/.test(route)) return 'Conditions générales de vente';
   if (/\/(?:preuves|environnement)\/?$/.test(route)) {
     return {
       fr: 'Environnement',
