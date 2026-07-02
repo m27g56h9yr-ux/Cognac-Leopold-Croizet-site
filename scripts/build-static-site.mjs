@@ -270,6 +270,7 @@ const EXTRA_PAGE_ROUTES = [
   '/sv/categorie-produit/non-classe-en/',
   '/no/categorie-produit/non-classe-en/',
   '/zh/categorie-produit/non-classe-en/',
+  '/commander/',
   '/cgv/',
   '/mentions-legales/',
   '/mon-compte/',

@@ -178,7 +178,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     <div class="lc-panel lc-film-panel">
       <section class="lc-section lc-video-section">
 <div class="lc-video-frame">
-<div class="lc-consent-placeholder lc-video-placeholder" data-lc-embed="youtube" data-src="https://www.youtube-nocookie.com/embed/nLBaiPrjVJQ?rel=0&amp;modestbranding=1" data-title="Maison Léopold Croizet 影片 | Fins Bois 家族 Cognac" data-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" data-allowfullscreen="true"><div><p class="lc-consent-title">外部视频</p><p>此 YouTube 视频仅在您点击后加载。</p><div class="lc-consent-actions"><button type="button" data-lc-load-embed>加载视频</button><a href="https://www.youtube.com/watch?v=nLBaiPrjVJQ" target="_blank" rel="noopener">在 YouTube 观看</a></div></div></div>
+<iframe src="https://www.youtube-nocookie.com/embed/nLBaiPrjVJQ?rel=0&modestbranding=1" title="Maison Léopold Croizet 影片 | Fins Bois 家族 Cognac" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 </section>
 
@@ -201,6 +201,5 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
   <div class="lc-footer-compliance"><p>L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p><p>禁止向未成年人销售酒精饮品。可能会要求提供成年证明。</p></div>
   </footer>
 
-<script id="lc-third-party-embed-script">(function(){document.addEventListener("click",function(event){var button=event.target.closest&&event.target.closest("[data-lc-load-embed]");if(!button)return;var box=button.closest("[data-lc-embed]");if(!box)return;var src=box.getAttribute("data-src");if(!src)return;var iframe=document.createElement("iframe");iframe.src=src;iframe.title=box.getAttribute("data-title")||"";iframe.loading="lazy";iframe.referrerPolicy="strict-origin-when-cross-origin";var allow=box.getAttribute("data-allow");if(allow)iframe.setAttribute("allow",allow);if(box.getAttribute("data-allowfullscreen")==="true")iframe.allowFullscreen=true;box.classList.add("is-loaded");box.innerHTML="";box.appendChild(iframe);});})();</script>
 </body>
 </html>

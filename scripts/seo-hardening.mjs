@@ -2035,7 +2035,7 @@ function filmPageHtml(route) {
   const body = [
     '<section class="lc-section lc-video-section">',
     '<div class="lc-video-frame">',
-    youtubeConsentPlaceholder(lang, videoTitle),
+    `<iframe src="https://www.youtube-nocookie.com/embed/${FILM_VIDEO_ID}?rel=0&modestbranding=1" title="${escapeHtml(videoTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
     '</div>',
     '</section>',
   ].join('\n');
@@ -3398,6 +3398,7 @@ function hardenHtml(html, route, file) {
     .replace(/<meta\s+name=["']theme-color["'][^>]*>\s*/gi, '')
     .replace(/<script\b[^>]*id=["']lc-language-router["'][^>]*>[\s\S]*?<\/script>\s*/gi, '')
     .replace(/<style\b[^>]*id=["']lc-price-guard-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '')
+    .replace(/<style\b[^>]*id=["']lc-compliance-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '')
     .replace(/<meta\s+property=["']og:(?:type|title|description|url|image|locale)["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:card["'][^>]*>\s*/gi, '')
     .replace(/<meta\s+name=["']twitter:(?:title|description|image)["'][^>]*>\s*/gi, '');
@@ -3448,7 +3449,7 @@ function hardenHtml(html, route, file) {
   next = repairLanguageMenuLinks(next, route);
   next = injectFrenchFooterResourceLinks(next, route);
   next = injectFooterComplianceNotice(next, route);
-  next = repairThirdPartyEmbeds(next, route);
+  next = loadThirdPartyEmbedsImmediately(next, route);
   next = repairInactiveCommercePage(next, route);
   next = repairLegalNoticePage(next, route);
   next = repairCgvPage(next, route);
@@ -3523,7 +3524,7 @@ function repairLegalNoticePage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Le site peut utiliser des cookies ou traceurs strictement nécessaires à son fonctionnement, par exemple pour l’affichage, la sécurité ou la mémorisation de certains choix techniques. Les cookies non strictement nécessaires, notamment de mesure d’audience, de publicité, de personnalisation ou liés aux réseaux sociaux, ne doivent être déposés qu’après votre consentement lorsqu’ils sont activés. Les contenus tiers intégrés, comme les cartes ou vidéos externes, ne sont chargés qu’après une action volontaire lorsqu’un bouton de chargement est proposé. Vous pouvez refuser ou retirer votre consentement aussi simplement que vous l’avez donné, depuis l’interface de consentement lorsqu’elle est proposée, ou modifier les réglages de votre navigateur.</p>
+<p class="container-mentions-legales wp-block-paragraph">Le site peut utiliser des cookies ou traceurs strictement nécessaires à son fonctionnement, par exemple pour l’affichage, la sécurité ou la mémorisation de certains choix techniques. Les cookies non strictement nécessaires, notamment de mesure d’audience, de publicité, de personnalisation ou liés aux réseaux sociaux, ne doivent être déposés qu’après votre consentement lorsqu’ils sont activés. Le site peut intégrer des contenus tiers, notamment des cartes Google Maps ou vidéos YouTube, susceptibles de se charger directement et d’entraîner des échanges techniques avec les services concernés. Vous pouvez limiter certains traitements depuis les réglages de votre navigateur, ou refuser ou retirer votre consentement aussi simplement que vous l’avez donné depuis l’interface de consentement lorsqu’elle est proposée.</p>
 
 
 
@@ -3806,36 +3807,43 @@ function mapConsentPlaceholder(lang, src, title = '') {
   return `<div class="lc-consent-placeholder lc-map-placeholder" data-lc-embed="map" data-src="${escapeHtml(src)}" data-title="${escapeHtml(safeTitle)}" data-allow="geolocation" data-allowfullscreen="false"><div><p class="lc-consent-title">${escapeHtml(copy.mapTitle)}</p><p>${escapeHtml(copy.mapConsent)}</p><div class="lc-consent-actions"><button type="button" data-lc-load-embed>${escapeHtml(copy.loadMap)}</button></div></div></div>`;
 }
 
-function thirdPartyEmbedScript() {
-  return `<script id="lc-third-party-embed-script">(function(){document.addEventListener("click",function(event){var button=event.target.closest&&event.target.closest("[data-lc-load-embed]");if(!button)return;var box=button.closest("[data-lc-embed]");if(!box)return;var src=box.getAttribute("data-src");if(!src)return;var iframe=document.createElement("iframe");iframe.src=src;iframe.title=box.getAttribute("data-title")||"";iframe.loading="lazy";iframe.referrerPolicy="strict-origin-when-cross-origin";var allow=box.getAttribute("data-allow");if(allow)iframe.setAttribute("allow",allow);if(box.getAttribute("data-allowfullscreen")==="true")iframe.allowFullscreen=true;box.classList.add("is-loaded");box.innerHTML="";box.appendChild(iframe);});})();</script>`;
+function directEmbedAttribute(value) {
+  return String(value || '')
+    .replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]+|#\d+|#x[\da-fA-F]+);)/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
-function injectThirdPartyEmbedScript(html) {
-  if (!/\bdata-lc-embed=/.test(html) || /id=["']lc-third-party-embed-script["']/.test(html)) return html;
-  return html.replace(/<\/body>/i, `${thirdPartyEmbedScript()}\n</body>`);
+function consentPlaceholderAttribute(tag, name) {
+  const openTag = String(tag || '').match(/^<div\b[^>]*>/i)?.[0] || '';
+  const pattern = new RegExp(`\\b${name}=(["'])([^"']*)\\1`, 'i');
+  const match = openTag.match(pattern);
+  return match ? match[2] : '';
 }
 
-function repairThirdPartyEmbeds(html, route) {
-  const lang = languageForRoute(route);
-  let next = html
-    .replace(/<iframe\b(?=[^>]*\bsrc=(["'])https?:\/\/(?:www\.)?youtube(?:-nocookie)?\.com\/embed\/([^"']+)\1)[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
-      const srcMatch = tag.match(/\bsrc=(["'])([^"']+)\1/i);
-      const titleMatch = tag.match(/\btitle=(["'])([^"']+)\1/i);
-      const src = srcMatch ? srcMatch[2] : '';
-      const title = stripTags(titleMatch ? titleMatch[2] : '');
-      if (!src) return tag;
-      return youtubeConsentPlaceholder(lang, title || complianceCopy(lang).videoTitle, src);
-    })
-    .replace(/<iframe\b(?=[^>]*\bsrc=(["'])https?:\/\/(?:www\.)?google\.com\/maps[^"']*\1)[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
-      const srcMatch = tag.match(/\bsrc=(["'])([^"']+)\1/i);
-      const titleMatch = tag.match(/\btitle=(["'])([^"']+)\1/i);
-      const src = srcMatch ? srcMatch[2] : '';
-      const title = stripTags(titleMatch ? titleMatch[2] : '');
-      if (!src) return tag;
-      return mapConsentPlaceholder(lang, src, title);
-    });
-  next = injectThirdPartyEmbedScript(next);
-  return next;
+function directIframeFromConsentPlaceholder(tag) {
+  const embedType = consentPlaceholderAttribute(tag, 'data-lc-embed');
+  const src = consentPlaceholderAttribute(tag, 'data-src');
+  if (!src) return tag;
+  const title = consentPlaceholderAttribute(tag, 'data-title') || (embedType === 'map' ? 'Carte externe' : 'Vidéo externe');
+  const allow = consentPlaceholderAttribute(tag, 'data-allow');
+  const allowFullscreen = consentPlaceholderAttribute(tag, 'data-allowfullscreen') === 'true';
+  const attrs = [
+    `src="${directEmbedAttribute(src)}"`,
+    `title="${directEmbedAttribute(title)}"`,
+    'loading="lazy"',
+    'referrerpolicy="strict-origin-when-cross-origin"',
+  ];
+  if (allow) attrs.push(`allow="${directEmbedAttribute(allow)}"`);
+  if (allowFullscreen) attrs.push('allowfullscreen');
+  return `<iframe ${attrs.join(' ')}></iframe>`;
+}
+
+function loadThirdPartyEmbedsImmediately(html, route) {
+  return html
+    .replace(/<div\b(?=[^>]*\blc-consent-placeholder\b)(?=[^>]*\bdata-lc-embed=["'](?:youtube|map)["'])[^>]*>[\s\S]*?<\/div><\/div><\/div>/gi, directIframeFromConsentPlaceholder)
+    .replace(/\s*<script\b[^>]*id=["']lc-third-party-embed-script["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n');
 }
 
 function inactiveCommerceRoutes() {
