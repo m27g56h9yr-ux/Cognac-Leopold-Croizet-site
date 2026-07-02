@@ -984,16 +984,16 @@ const routeMetadata = new Map([
     description: 'Oppdag Léopold Croizet kolleksjonen: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes og Pineau Rouge.',
   }],
   ['/commander/', {
-    title: 'Commander Cognac Léopold Croizet | Boutique officielle',
-    description: 'Commandez les cognacs Léopold Croizet depuis la boutique officielle : VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence et Héritage.',
+    title: 'Commande Cognac Léopold Croizet | Boutique en ligne inactive',
+    description: 'La boutique en ligne Cognac Léopold Croizet est inactive : les demandes de disponibilité, de prix ou de commande se font uniquement par contact direct.',
   }],
   ['/mentions-legales/', {
     title: 'Mentions légales | Cognac Léopold Croizet',
     description: 'Mentions légales du site officiel Cognac Léopold Croizet : éditeur, hébergement, données personnelles, cookies, propriété intellectuelle et avertissement alcool.',
   }],
   ['/cgv/', {
-    title: 'Conditions générales de vente | Cognac Léopold Croizet',
-    description: 'Conditions générales de vente applicables aux commandes Cognac Léopold Croizet : produits, paiement, livraison, rétractation, garanties et litiges.',
+    title: 'Conditions de commande | Cognac Léopold Croizet',
+    description: 'Conditions de commande Cognac Léopold Croizet : boutique en ligne inactive, demandes par contact direct, majorité légale, paiement, livraison, rétractation et garanties.',
   }],
   ['/categorie-produit/non-classe/', {
     title: 'Collection Cognac Léopold Croizet | Accès aux carafes XO et Extra',
@@ -1383,6 +1383,7 @@ const noindexRoutes = new Set([
   '/sv/categorie-produit/non-classe-en/',
   '/no/categorie-produit/non-classe-en/',
   '/zh/categorie-produit/non-classe-en/',
+  '/commander/',
   '/cgv/',
   '/mentions-legales/',
   '/mon-compte/',
@@ -2034,7 +2035,7 @@ function filmPageHtml(route) {
   const body = [
     '<section class="lc-section lc-video-section">',
     '<div class="lc-video-frame">',
-    `<iframe src="https://www.youtube-nocookie.com/embed/${FILM_VIDEO_ID}?rel=0&modestbranding=1" title="${escapeHtml(videoTitle)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+    youtubeConsentPlaceholder(lang, videoTitle),
     '</div>',
     '</section>',
   ].join('\n');
@@ -3375,7 +3376,7 @@ function hrefLangForRoute(route) {
 }
 
 function hardenHtml(html, route, file) {
-  const metadata = routeMetadata.get(route) || fallbackMetadata(route, html);
+  const metadata = metadataForRoute(route, html);
   const canonical = `${PUBLIC_ORIGIN}${route}`;
   const lang = languageForRoute(route);
   const robots = isNoindexRoute(route) ? 'noindex, follow' : 'index, follow, max-image-preview:large';
@@ -3425,6 +3426,7 @@ function hardenHtml(html, route, file) {
     `<meta name="twitter:description" content="${escapeHtml(metadata.description)}">`,
     image ? `<meta name="twitter:image" content="${PUBLIC_ORIGIN}${image}">` : '',
     priceGuardStyle(),
+    complianceStyle(),
     languageRouterScript(),
   ].filter(Boolean).join('\n');
 
@@ -3445,7 +3447,11 @@ function hardenHtml(html, route, file) {
   next = injectFilmNavigationLink(next, route);
   next = repairLanguageMenuLinks(next, route);
   next = injectFrenchFooterResourceLinks(next, route);
+  next = injectFooterComplianceNotice(next, route);
+  next = repairThirdPartyEmbeds(next, route);
+  next = repairInactiveCommercePage(next, route);
   next = repairLegalNoticePage(next, route);
+  next = repairCgvPage(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
 }
 
@@ -3477,7 +3483,7 @@ function repairLegalNoticePage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Le site présente la maison, les cognacs, les pineaux des Charentes, le savoir-faire, les actualités et les moyens de contact de Cognac Léopold&nbsp;Croizet. Les informations publiées sont fournies à titre indicatif et ne constituent pas une offre contractuelle de vente, sauf mention expresse dans un parcours de commande ou dans les <a href="/cgv/">conditions générales de vente</a> applicables.<br>Le site contient des informations relatives à des boissons alcooliques. Son accès est réservé aux personnes ayant l’âge légal requis pour consulter ce type de contenu dans leur pays de résidence. Si la loi applicable à votre pays interdit la consultation de contenus relatifs aux boissons alcooliques, vous devez quitter ce site.</p>
+<p class="container-mentions-legales wp-block-paragraph">Le site présente la maison, les cognacs, les pineaux des Charentes, le savoir-faire, les actualités et les moyens de contact de Cognac Léopold&nbsp;Croizet. La boutique en ligne du site est actuellement inactive : aucune commande, aucun panier et aucun paiement ne sont conclus directement sur le site. Les informations publiées sont fournies à titre indicatif et ne constituent pas une offre contractuelle de vente ; toute demande commerciale doit être confirmée par échange direct, devis, facture ou accord écrit de LA MAISON DES PIERRES (MPC).<br>Le site contient des informations relatives à des boissons alcooliques. Son accès est réservé aux personnes ayant l’âge légal requis pour consulter ce type de contenu dans leur pays de résidence. Si la loi applicable à votre pays interdit la consultation de contenus relatifs aux boissons alcooliques, vous devez quitter ce site.</p>
 
 
 
@@ -3485,7 +3491,7 @@ function repairLegalNoticePage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Toute commande réalisée à distance ou en ligne est réservée aux personnes majeures et soumise aux <a href="/cgv/">conditions générales de vente</a> du site, lorsqu’un parcours de commande est proposé. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
+<p class="container-mentions-legales wp-block-paragraph">La vente d’alcool est interdite aux mineurs. Une preuve de majorité peut être demandée avant toute vente ou remise de produits alcooliques. Les <a href="/cgv/">conditions de commande</a> du site rappellent que la boutique en ligne est inactive et que toute éventuelle commande doit être traitée par contact direct. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
 
 
 
@@ -3517,7 +3523,7 @@ function repairLegalNoticePage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Le site peut utiliser des cookies ou traceurs strictement nécessaires à son fonctionnement, par exemple pour l’affichage, la sécurité ou la mémorisation de certains choix techniques. Les cookies non strictement nécessaires, notamment de mesure d’audience, de publicité, de personnalisation ou liés aux réseaux sociaux, ne doivent être déposés qu’après votre consentement lorsqu’ils sont activés. Vous pouvez refuser ou retirer votre consentement aussi simplement que vous l’avez donné, depuis l’interface de consentement lorsqu’elle est proposée, ou modifier les réglages de votre navigateur.</p>
+<p class="container-mentions-legales wp-block-paragraph">Le site peut utiliser des cookies ou traceurs strictement nécessaires à son fonctionnement, par exemple pour l’affichage, la sécurité ou la mémorisation de certains choix techniques. Les cookies non strictement nécessaires, notamment de mesure d’audience, de publicité, de personnalisation ou liés aux réseaux sociaux, ne doivent être déposés qu’après votre consentement lorsqu’ils sont activés. Les contenus tiers intégrés, comme les cartes ou vidéos externes, ne sont chargés qu’après une action volontaire lorsqu’un bouton de chargement est proposé. Vous pouvez refuser ou retirer votre consentement aussi simplement que vous l’avez donné, depuis l’interface de consentement lorsqu’elle est proposée, ou modifier les réglages de votre navigateur.</p>
 
 
 
@@ -3553,6 +3559,351 @@ function repairLegalNoticePage(html, route) {
   return html.replace(legalNoticePattern, `${legalNoticeContent}\n\n\n\n<p class="wp-block-paragraph"></p>`);
 }
 
+function repairCgvPage(html, route) {
+  if (route !== '/cgv/') return html;
+
+  const cgvContent = `
+<h1 class="wp-block-heading titre-mentions-legales">Conditions <strong>de commande</strong></h1>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph"><strong>Dernière mise à jour : 2 juillet 2026.</strong></p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Vente en ligne inactive :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">La boutique en ligne du site <a href="/">cognac-leopold-croizet.com</a> est actuellement inactive. Le site ne permet pas de conclure une commande, de valider un panier ou d’effectuer un paiement en ligne. Les fiches produits, pages de collection et contenus éditoriaux sont fournis à titre d’information. Toute demande de disponibilité, de prix, de visite, de commande ou d’expédition doit être adressée directement à LA MAISON DES PIERRES (MPC) et ne devient contractuelle qu’après confirmation écrite, devis, facture ou accord exprès de la société.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Vendeur :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">LA MAISON DES PIERRES (MPC), société à responsabilité limitée au capital social de 10&nbsp;000&nbsp;euros, immatriculée au RCS d’Angoulême sous le numéro 508&nbsp;104&nbsp;361.<br>Siège social : Lantin, 30 rue d’Angoulême, 16200 Triac-Lautrait, France.<br>SIREN : 508&nbsp;104&nbsp;361. SIRET du siège : 508&nbsp;104&nbsp;361&nbsp;00029. TVA intracommunautaire : FR96&nbsp;508&nbsp;104&nbsp;361. Code APE : 46.34Z, commerce de gros de boissons.<br>Téléphone : +33&nbsp;5&nbsp;45&nbsp;35&nbsp;88&nbsp;10. E-mail : <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Produits :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Les produits présentés sont des cognacs, pineaux des Charentes et produits associés à Cognac Léopold&nbsp;Croizet. Les photographies, millésimes, contenances, médailles, descriptions aromatiques, disponibilités et informations techniques sont indicatifs et peuvent évoluer. Les disponibilités, volumes, prix, taxes, frais, conditions d’expédition et délais sont confirmés avant toute vente effective.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Protection des mineurs et alcool :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">La vente d’alcool est interdite aux mineurs. Toute personne demandant l’achat, la remise ou l’expédition de boissons alcooliques déclare avoir l’âge légal requis dans son pays de résidence et de livraison. Une preuve de majorité peut être demandée avant toute vente ou remise de produit.<br>L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Prix, commande et paiement :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Aucun prix affiché sur le site ne vaut offre ferme si la boutique en ligne est inactive. Les prix éventuellement communiqués par LA MAISON DES PIERRES (MPC) sont confirmés avant commande, avec les taxes applicables, les frais éventuels et les conditions de paiement. Le paiement s’effectue selon les modalités indiquées sur le devis, la facture ou la confirmation écrite transmise au client. Aucune commande n’est considérée comme acceptée avant confirmation par LA MAISON DES PIERRES (MPC).</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Livraison, retrait et responsabilités du client :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Les conditions de retrait, d’expédition, de transport, de livraison et d’assurance sont définies au cas par cas avant toute commande confirmée. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Droit de rétractation et garanties :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Si une vente à distance est conclue avec un consommateur, les règles légales applicables au droit de rétractation, aux exceptions éventuelles, aux retours et aux remboursements sont précisées avant ou au moment de la confirmation de commande. Les produits bénéficient des garanties légales applicables, notamment en cas de défaut de conformité ou de vice caché, dans les conditions prévues par le droit français. Toute réclamation doit être adressée avec les justificatifs utiles à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a> ou à l’adresse postale de LA MAISON DES PIERRES (MPC).</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Réclamations, médiation et litiges :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">En cas de difficulté, le client est invité à contacter en priorité LA MAISON DES PIERRES (MPC) par e-mail ou courrier afin de rechercher une solution amiable. Le site ne concluant pas actuellement de vente en ligne, le médiateur de la consommation compétent devra être confirmé et indiqué avant toute reprise d’un parcours actif de vente à distance aux consommateurs. Les présentes conditions sont soumises au droit français, sans priver les consommateurs des protections impératives éventuellement applicables dans leur pays de résidence.</p>
+
+
+
+<h3 class="wp-block-heading container-mentions-legales"><strong>Données personnelles :</strong></h3>
+
+
+
+<p class="container-mentions-legales wp-block-paragraph">Les données transmises dans le cadre d’une demande de contact, de disponibilité, de visite ou de commande sont traitées conformément aux <a href="/mentions-legales/">mentions légales</a> du site. Le responsable du traitement est LA MAISON DES PIERRES (MPC), joignable à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.</p>
+`;
+
+  const cgvPattern = /(<div\b[^>]*class=["'][^"']*\bcontainer-page\b[^"']*["'][^>]*>\s*)<h1\b(?=[^>]*\btitre-mentions-legales\b)[^>]*>[\s\S]*?(?=\s*<\/div>\s*<\/div>\s*<footer\b)/i;
+  if (!cgvPattern.test(html)) return html;
+  return html.replace(cgvPattern, `$1${cgvContent}\n`);
+}
+
+function complianceCopy(lang) {
+  return {
+    fr: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'La vente d’alcool est interdite aux mineurs. Une preuve de majorité peut être demandée.',
+      inactiveShopTitle: 'Boutique en ligne inactive',
+      inactiveShopLead: 'Le site présente les cognacs et pineaux des Charentes Léopold&nbsp;Croizet, mais ne permet pas actuellement de commander, valider un panier ou payer en ligne.',
+      inactiveShopText: 'Pour une disponibilité, un prix, une visite ou une demande commerciale, contactez directement la maison. Toute vente éventuelle devra être confirmée par échange écrit, devis ou facture.',
+      contactCta: 'Nous contacter',
+      collectionCta: 'Voir la collection',
+      videoTitle: 'Vidéo externe',
+      mapTitle: 'Carte externe',
+      videoConsent: 'Cette vidéo YouTube est chargée uniquement après votre clic.',
+      mapConsent: 'Cette carte Google Maps est chargée uniquement après votre clic.',
+      loadVideo: 'Charger la vidéo',
+      loadMap: 'Charger la carte',
+      youtubeLink: 'Voir sur YouTube',
+    },
+    en: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'Alcohol sales are prohibited to minors. Proof of legal age may be requested.',
+      inactiveShopTitle: 'Online shop inactive',
+      inactiveShopLead: 'The website presents Léopold&nbsp;Croizet cognacs and Pineau des Charentes, but it does not currently allow online ordering, cart validation or payment.',
+      inactiveShopText: 'For availability, prices, visits or trade enquiries, please contact the house directly. Any sale must be confirmed by written exchange, quotation or invoice.',
+      contactCta: 'Contact us',
+      collectionCta: 'View collection',
+      videoTitle: 'External video',
+      mapTitle: 'External map',
+      videoConsent: 'This YouTube video is loaded only after your click.',
+      mapConsent: 'This Google Maps map is loaded only after your click.',
+      loadVideo: 'Load video',
+      loadMap: 'Load map',
+      youtubeLink: 'View on YouTube',
+    },
+    ru: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'Продажа алкоголя несовершеннолетним запрещена. Может потребоваться подтверждение возраста.',
+      inactiveShopTitle: 'Интернет-магазин не активен',
+      inactiveShopLead: 'Сайт представляет cognacs и Pineau des Charentes Léopold&nbsp;Croizet, но сейчас не принимает онлайн-заказы, корзину или онлайн-платежи.',
+      inactiveShopText: 'По вопросам наличия, цен, визитов или коммерческих запросов свяжитесь с домом напрямую. Любая продажа подтверждается письменно, сметой или счетом.',
+      contactCta: 'Связаться',
+      collectionCta: 'Смотреть коллекцию',
+      videoTitle: 'Внешнее видео',
+      mapTitle: 'Внешняя карта',
+      videoConsent: 'Это видео YouTube загружается только после вашего клика.',
+      mapConsent: 'Эта карта Google Maps загружается только после вашего клика.',
+      loadVideo: 'Загрузить видео',
+      loadMap: 'Загрузить карту',
+      youtubeLink: 'Смотреть на YouTube',
+    },
+    da: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'Salg af alkohol til mindreårige er forbudt. Dokumentation for lovlig alder kan kræves.',
+      inactiveShopTitle: 'Onlinebutik inaktiv',
+      inactiveShopLead: 'Webstedet præsenterer Léopold&nbsp;Croizet cognacs og Pineau des Charentes, men onlinebestilling, kurv og betaling er ikke aktive.',
+      inactiveShopText: 'Kontakt huset direkte for tilgængelighed, priser, besøg eller kommercielle forespørgsler. Ethvert salg skal bekræftes skriftligt, ved tilbud eller faktura.',
+      contactCta: 'Kontakt',
+      collectionCta: 'Se kollektion',
+      videoTitle: 'Ekstern video',
+      mapTitle: 'Eksternt kort',
+      videoConsent: 'Denne YouTube-video indlæses kun efter dit klik.',
+      mapConsent: 'Dette Google Maps-kort indlæses kun efter dit klik.',
+      loadVideo: 'Indlæs video',
+      loadMap: 'Indlæs kort',
+      youtubeLink: 'Se på YouTube',
+    },
+    sv: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'Försäljning av alkohol till minderåriga är förbjuden. Bevis på laglig ålder kan begäras.',
+      inactiveShopTitle: 'Webbutik inaktiv',
+      inactiveShopLead: 'Webbplatsen presenterar Léopold&nbsp;Croizet cognac och Pineau des Charentes, men onlinebeställning, varukorg och betalning är inte aktiva.',
+      inactiveShopText: 'Kontakta huset direkt för tillgänglighet, priser, besök eller kommersiella frågor. Eventuell försäljning ska bekräftas skriftligen, via offert eller faktura.',
+      contactCta: 'Kontakt',
+      collectionCta: 'Se kollektion',
+      videoTitle: 'Extern video',
+      mapTitle: 'Extern karta',
+      videoConsent: 'Denna YouTube-video laddas endast efter ditt klick.',
+      mapConsent: 'Denna Google Maps-karta laddas endast efter ditt klick.',
+      loadVideo: 'Ladda video',
+      loadMap: 'Ladda karta',
+      youtubeLink: 'Se på YouTube',
+    },
+    no: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: 'Salg av alkohol til mindreårige er forbudt. Dokumentasjon på lovlig alder kan kreves.',
+      inactiveShopTitle: 'Nettbutikk inaktiv',
+      inactiveShopLead: 'Nettstedet presenterer Léopold&nbsp;Croizet cognacs og Pineau des Charentes, men nettbestilling, handlekurv og betaling er ikke aktive.',
+      inactiveShopText: 'Kontakt huset direkte for tilgjengelighet, priser, besøk eller kommersielle forespørsler. Ethvert salg må bekreftes skriftlig, med tilbud eller faktura.',
+      contactCta: 'Kontakt',
+      collectionCta: 'Se kolleksjon',
+      videoTitle: 'Ekstern video',
+      mapTitle: 'Eksternt kart',
+      videoConsent: 'Denne YouTube-videoen lastes bare etter klikk.',
+      mapConsent: 'Dette Google Maps-kartet lastes bare etter klikk.',
+      loadVideo: 'Last video',
+      loadMap: 'Last kart',
+      youtubeLink: 'Se på YouTube',
+    },
+    zh: {
+      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      minor: '禁止向未成年人销售酒精饮品。可能会要求提供成年证明。',
+      inactiveShopTitle: '线上商店未启用',
+      inactiveShopLead: '本网站展示 Léopold&nbsp;Croizet cognacs 与 Pineau des Charentes，但目前不能在线下单、提交购物车或付款。',
+      inactiveShopText: '如需了解库存、价格、参观或商务需求，请直接联系酒庄。任何销售均需通过书面沟通、报价或发票确认。',
+      contactCta: '联系我们',
+      collectionCta: '查看系列',
+      videoTitle: '外部视频',
+      mapTitle: '外部地图',
+      videoConsent: '此 YouTube 视频仅在您点击后加载。',
+      mapConsent: '此 Google Maps 地图仅在您点击后加载。',
+      loadVideo: '加载视频',
+      loadMap: '加载地图',
+      youtubeLink: '在 YouTube 观看',
+    },
+  }[lang] || complianceCopy('fr');
+}
+
+function cgvLabelForLang(lang) {
+  return {
+    fr: 'Conditions',
+    en: 'Terms',
+    ru: 'Условия',
+    da: 'Vilkår',
+    sv: 'Villkor',
+    no: 'Vilkår',
+    zh: '条款',
+  }[lang] || 'Conditions';
+}
+
+function footerComplianceNotice(lang) {
+  const copy = complianceCopy(lang);
+  return `<div class="lc-footer-compliance"><p>${escapeHtml(copy.health)}</p><p>${escapeHtml(copy.minor)}</p></div>`;
+}
+
+function injectFooterComplianceNotice(html, route) {
+  if (/<div\b[^>]*class=["'][^"']*\blc-footer-compliance\b/i.test(html) || !/<footer\b/i.test(html)) return html;
+  return html.replace(/<\/footer>/i, `${footerComplianceNotice(languageForRoute(route))}\n  </footer>`);
+}
+
+function complianceStyle() {
+  return `<style id="lc-compliance-style">.lc-footer-compliance{max-width:980px;margin:22px auto 0;padding:14px 18px;border-top:1px solid rgba(255,255,255,.18);font-family:Arial,sans-serif;color:#d9cbb9;text-align:center;font-size:11px;line-height:1.45;text-transform:uppercase;letter-spacing:0}.lc-footer-compliance p{margin:0}.lc-footer-compliance p+p{margin-top:6px;text-transform:none}.lc-consent-placeholder{position:relative;display:grid;place-items:center;min-height:260px;padding:28px;background:#17120e;color:#f7efe4;border:1px solid rgba(183,138,59,.38);text-align:center;overflow:hidden}.lc-video-frame .lc-consent-placeholder{position:absolute;inset:0;min-height:0}.lc-consent-placeholder.is-loaded{display:block;padding:0;background:#16110d}.lc-consent-placeholder iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.lc-consent-placeholder p{max-width:560px;margin:0 auto 14px}.lc-consent-title{font-family:Arial,sans-serif;text-transform:uppercase;font-size:12px;color:#e6c580;letter-spacing:0}.lc-consent-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.lc-consent-placeholder button,.lc-consent-placeholder a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 16px;border:1px solid #b78a3b;background:transparent;color:#fff;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;text-decoration:none;cursor:pointer}.lc-consent-placeholder a{border-color:rgba(255,255,255,.3)}.lc-map-placeholder{aspect-ratio:1200/350;min-height:220px}.lc-inactive-shop-page{max-width:1080px;margin:0 auto;padding:80px clamp(20px,5vw,58px)}.lc-inactive-shop-panel{max-width:820px;margin:0 auto;padding:clamp(30px,6vw,64px);background:#fff;border:1px solid #e7ded1;color:#15120f;box-shadow:0 24px 70px rgba(24,18,12,.08)}.lc-inactive-shop-panel h1{font-size:clamp(36px,6vw,72px);font-weight:400;line-height:1.05;margin:0 0 20px}.lc-inactive-shop-lead{font-size:clamp(18px,2.3vw,24px);line-height:1.45;color:#4f453c}.lc-inactive-shop-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}.lc-inactive-shop-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid #b78a3b;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;text-decoration:none}.lc-inactive-shop-actions a.secondary{border-color:#e7ded1}</style>`;
+}
+
+function youtubeWatchUrlFromEmbed(src) {
+  const match = String(src || '').match(/\/embed\/([^?&#/]+)/i);
+  return match ? `https://www.youtube.com/watch?v=${match[1]}` : `https://www.youtube.com/watch?v=${FILM_VIDEO_ID}`;
+}
+
+function youtubeConsentPlaceholder(lang, videoTitle, src = `https://www.youtube-nocookie.com/embed/${FILM_VIDEO_ID}?rel=0&modestbranding=1`) {
+  const copy = complianceCopy(lang);
+  return `<div class="lc-consent-placeholder lc-video-placeholder" data-lc-embed="youtube" data-src="${escapeHtml(src)}" data-title="${escapeHtml(videoTitle || copy.videoTitle)}" data-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" data-allowfullscreen="true"><div><p class="lc-consent-title">${escapeHtml(copy.videoTitle)}</p><p>${escapeHtml(copy.videoConsent)}</p><div class="lc-consent-actions"><button type="button" data-lc-load-embed>${escapeHtml(copy.loadVideo)}</button><a href="${escapeHtml(youtubeWatchUrlFromEmbed(src))}" target="_blank" rel="noopener">${escapeHtml(copy.youtubeLink)}</a></div></div></div>`;
+}
+
+function mapConsentPlaceholder(lang, src, title = '') {
+  const copy = complianceCopy(lang);
+  const safeTitle = title || copy.mapTitle;
+  return `<div class="lc-consent-placeholder lc-map-placeholder" data-lc-embed="map" data-src="${escapeHtml(src)}" data-title="${escapeHtml(safeTitle)}" data-allow="geolocation" data-allowfullscreen="false"><div><p class="lc-consent-title">${escapeHtml(copy.mapTitle)}</p><p>${escapeHtml(copy.mapConsent)}</p><div class="lc-consent-actions"><button type="button" data-lc-load-embed>${escapeHtml(copy.loadMap)}</button></div></div></div>`;
+}
+
+function thirdPartyEmbedScript() {
+  return `<script id="lc-third-party-embed-script">(function(){document.addEventListener("click",function(event){var button=event.target.closest&&event.target.closest("[data-lc-load-embed]");if(!button)return;var box=button.closest("[data-lc-embed]");if(!box)return;var src=box.getAttribute("data-src");if(!src)return;var iframe=document.createElement("iframe");iframe.src=src;iframe.title=box.getAttribute("data-title")||"";iframe.loading="lazy";iframe.referrerPolicy="strict-origin-when-cross-origin";var allow=box.getAttribute("data-allow");if(allow)iframe.setAttribute("allow",allow);if(box.getAttribute("data-allowfullscreen")==="true")iframe.allowFullscreen=true;box.classList.add("is-loaded");box.innerHTML="";box.appendChild(iframe);});})();</script>`;
+}
+
+function injectThirdPartyEmbedScript(html) {
+  if (!/\bdata-lc-embed=/.test(html) || /id=["']lc-third-party-embed-script["']/.test(html)) return html;
+  return html.replace(/<\/body>/i, `${thirdPartyEmbedScript()}\n</body>`);
+}
+
+function repairThirdPartyEmbeds(html, route) {
+  const lang = languageForRoute(route);
+  let next = html
+    .replace(/<iframe\b(?=[^>]*\bsrc=(["'])https?:\/\/(?:www\.)?youtube(?:-nocookie)?\.com\/embed\/([^"']+)\1)[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
+      const srcMatch = tag.match(/\bsrc=(["'])([^"']+)\1/i);
+      const titleMatch = tag.match(/\btitle=(["'])([^"']+)\1/i);
+      const src = srcMatch ? srcMatch[2] : '';
+      const title = stripTags(titleMatch ? titleMatch[2] : '');
+      if (!src) return tag;
+      return youtubeConsentPlaceholder(lang, title || complianceCopy(lang).videoTitle, src);
+    })
+    .replace(/<iframe\b(?=[^>]*\bsrc=(["'])https?:\/\/(?:www\.)?google\.com\/maps[^"']*\1)[^>]*>[\s\S]*?<\/iframe>/gi, (tag) => {
+      const srcMatch = tag.match(/\bsrc=(["'])([^"']+)\1/i);
+      const titleMatch = tag.match(/\btitle=(["'])([^"']+)\1/i);
+      const src = srcMatch ? srcMatch[2] : '';
+      const title = stripTags(titleMatch ? titleMatch[2] : '');
+      if (!src) return tag;
+      return mapConsentPlaceholder(lang, src, title);
+    });
+  next = injectThirdPartyEmbedScript(next);
+  return next;
+}
+
+function inactiveCommerceRoutes() {
+  return new Set([
+    '/commander/',
+    '/panier/',
+    '/mon-compte/',
+    '/cart/',
+    '/checkout/',
+    '/my-account/',
+    '/en/cart/',
+    '/en/checkout/',
+    '/en/my-account/',
+    '/ru/panier-2/',
+    '/ru/validation/',
+    '/ru/mon-compte-2/',
+    '/da/cart/',
+    '/da/checkout/',
+    '/da/my-account/',
+    '/sv/cart/',
+    '/sv/checkout/',
+    '/sv/my-account/',
+    '/no/cart/',
+    '/no/checkout/',
+    '/no/my-account/',
+    '/zh/cart/',
+    '/zh/checkout/',
+    '/zh/my-account/',
+  ]);
+}
+
+function isInactiveCommerceRoute(route) {
+  return inactiveCommerceRoutes().has(route);
+}
+
+function inactiveCommerceContent(route) {
+  const lang = languageForRoute(route);
+  const copy = complianceCopy(lang);
+  const nav = sourceNavigationRoutes(lang);
+  return `<main class="lc-inactive-shop-page"><section class="lc-inactive-shop-panel"><h1>${escapeHtml(copy.inactiveShopTitle)}</h1><p class="lc-inactive-shop-lead">${copy.inactiveShopLead}</p><p>${copy.inactiveShopText}</p><p>${escapeHtml(copy.health)}</p><p>${escapeHtml(copy.minor)}</p><div class="lc-inactive-shop-actions"><a href="${nav.visit}">${escapeHtml(copy.contactCta)}</a><a class="secondary" href="${nav.collection}">${escapeHtml(copy.collectionCta)}</a></div></section></main>`;
+}
+
+function repairInactiveCommercePage(html, route) {
+  if (!isInactiveCommerceRoute(route)) return html;
+  const content = inactiveCommerceContent(route);
+  if (/<main\b[\s\S]*?<\/main>/i.test(html)) {
+    return html.replace(/<main\b[\s\S]*?<\/main>/i, content);
+  }
+  if (/<\/header>\s*[\s\S]*?(?=<footer\b)/i.test(html)) {
+    return html.replace(/(<\/header>\s*)[\s\S]*?(?=<footer\b)/i, `$1\n${content}\n`);
+  }
+  if (/<div\b[^>]*id=(["'])main-container[^"']*\1[\s\S]*?(?=<footer\b)/i.test(html)) {
+    return html.replace(/<div\b[^>]*id=(["'])main-container[^"']*\1[\s\S]*?(?=<footer\b)/i, content);
+  }
+  return html.replace(/(<body\b[^>]*>)/i, `$1\n${content}`);
+}
+
+function metadataForRoute(route, html) {
+  if (!isInactiveCommerceRoute(route)) {
+    return routeMetadata.get(route) || fallbackMetadata(route, html);
+  }
+  const copy = complianceCopy(languageForRoute(route));
+  return {
+    title: `${copy.inactiveShopTitle} | Cognac Léopold Croizet`,
+    description: stripTags(copy.inactiveShopLead.replace(/&nbsp;/g, ' ')),
+  };
+}
+
 function brandIconTags() {
   return [
     '<link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48.png">',
@@ -3567,12 +3918,32 @@ function brandIconTags() {
 
 function injectFrenchFooterResourceLinks(html, route) {
   let next = html.replace(/\n?<li class="menu-item lc-source-link"><a href="\/distribution\/">Contact commercial<\/a><\/li>/g, '');
-  if (isNoindexRoute(route)) return next;
-
   const lang = languageForRoute(route);
   const nav = sourceNavigationCopy(lang);
+  const legalHref = sourceHref('/mentions-legales/');
+  const cgvHref = sourceHref('/cgv/');
+  const legalLabel = nav.legal;
+  const cgvLabel = cgvLabelForLang(lang);
   const faqHref = sourceHref(faqRouteForLang(lang));
   const proofHref = sourceHref(proofRouteForLang(lang));
+
+  next = dedupeFooterSourceLink(next, legalHref, legalLabel);
+  next = dedupeFooterSourceLink(next, cgvHref, cgvLabel);
+
+  if (isNoindexRoute(route)) {
+    const hasLegalLink = new RegExp(`href=(["'])${escapeRegExp(legalHref)}\\1`).test(next);
+    const hasCgvLink = new RegExp(`href=(["'])${escapeRegExp(cgvHref)}\\1`).test(next);
+    const legalItems = [
+      hasLegalLink ? '' : `<li class="menu-item lc-source-link"><a href="${legalHref}">${legalLabel}</a></li>`,
+      hasCgvLink ? '' : `<li class="menu-item lc-source-link"><a href="${cgvHref}">${cgvLabel}</a></li>`,
+    ].filter(Boolean).join('');
+    if (!legalItems) return next;
+    return next.replace(
+      /(<div\b[^>]*class=["'][^"']*\bmenu-footer\b[^"']*["'][^>]*>\s*<ul\b[^>]*>)/i,
+      `$1\n${legalItems}`,
+    );
+  }
+
   for (const legacyRoute of LEGACY_PROOF_ROUTES) {
     const legacyHref = sourceHref(legacyRoute);
     const legacyPattern = new RegExp(
@@ -3583,13 +3954,19 @@ function injectFrenchFooterResourceLinks(html, route) {
   }
   next = dedupeFooterSourceLink(next, faqHref, nav.faq);
   next = dedupeFooterSourceLink(next, proofHref, nav.proof);
+  next = dedupeFooterSourceLink(next, legalHref, legalLabel);
+  next = dedupeFooterSourceLink(next, cgvHref, cgvLabel);
   const hasFaqLink = new RegExp(`href=(["'])${escapeRegExp(faqHref)}\\1`).test(next);
   const hasProofLink = new RegExp(`href=(["'])${escapeRegExp(proofHref)}\\1`).test(next);
-  if (hasFaqLink && hasProofLink) return next;
+  const hasLegalLink = new RegExp(`href=(["'])${escapeRegExp(legalHref)}\\1`).test(next);
+  const hasCgvLink = new RegExp(`href=(["'])${escapeRegExp(cgvHref)}\\1`).test(next);
+  if (hasFaqLink && hasProofLink && hasLegalLink && hasCgvLink) return next;
 
   const items = [
     hasFaqLink ? '' : `<li class="menu-item lc-source-link"><a href="${faqHref}">${nav.faq}</a></li>`,
     hasProofLink ? '' : `<li class="menu-item lc-source-link"><a href="${proofHref}">${nav.proof}</a></li>`,
+    hasLegalLink ? '' : `<li class="menu-item lc-source-link"><a href="${legalHref}">${legalLabel}</a></li>`,
+    hasCgvLink ? '' : `<li class="menu-item lc-source-link"><a href="${cgvHref}">${cgvLabel}</a></li>`,
   ].filter(Boolean).join('');
   return next.replace(
     /(<div\b[^>]*class=["'][^"']*\bmenu-footer\b[^"']*["'][^>]*>\s*<ul\b[^>]*>)/i,
@@ -4654,21 +5031,21 @@ function removeInternalOrderButtons(html) {
 }
 
 function removeUnavailableOrderControls(html, route) {
-  const isRussianExternalClient = route.startsWith('/ru/');
-  const isChineseNoPriceMarket = route.startsWith('/zh/');
-  if (!isRussianExternalClient && !isChineseNoPriceMarket) return html;
-
   let next = html
     .replace(/\s*<li\b[^>]*class=["'][^"']*\bpanier-menu\b[^"']*["'][\s\S]*?<\/li>\s*/gi, '\n')
+    .replace(/\s*<div\b[^>]*class=["'][^"']*\bhide-nb-article-panier\b[^"']*["'][\s\S]*?<\/div>\s*/gi, '\n')
     .replace(/\s*<form\b[^>]*class=["'][^"']*\bcart\b[^"']*["'][\s\S]*?<\/form>\s*/gi, '\n')
-    .replace(/\s*<button\b[^>]*class=["'][^"']*\bsingle_add_to_cart_button\b[^"']*["'][\s\S]*?<\/button>\s*/gi, '\n');
+    .replace(/\s*<button\b[^>]*class=["'][^"']*\bsingle_add_to_cart_button\b[^"']*["'][\s\S]*?<\/button>\s*/gi, '\n')
+    .replace(/\s*<script\b[^>]*id=["']btn-commander-produit-js["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n')
+    .replace(/\s*<script\b[^>]*src=["'][^"']*btn-commander-produit\.js[^"']*["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n')
+    .replace(/\s*<div\b[^>]*class=["'][^"']*\bprix-produit-container\b[^"']*["'][\s\S]*?<\/div>\s*/gi, '\n')
+    .replace(/\s*<div\b[^>]*class=["'][^"']*\bprix-produit-collection\b[^"']*["'][\s\S]*?<\/div>\s*/gi, '\n')
+    .replace(/\s*<span\b[^>]*class=["'][^"']*\b(?:price|woocommerce-Price-amount|amount)\b[^"']*["'][\s\S]*?<\/span>\s*/gi, '\n')
+    .replace(/\s*<a\b[^>]*class=["'][^"']*\b(?:btn-commander-produit|commander-produit)\b[^"']*["'][\s\S]*?<\/a>\s*/gi, '\n');
 
-  if (isChineseNoPriceMarket) {
-    next = next
-      .replace(/\s*<div\b[^>]*class=["'][^"']*\bcontainer-btn-commander-produit\b[^"']*["'][\s\S]*?<\/div>\s*/gi, '\n')
-      .replace(/\s*<a\b[^>]*class=["'][^"']*\bcommander-produit\b[^"']*["'][\s\S]*?<\/a>\s*/gi, '\n');
-  }
-
+  next = next
+    .replace(/<div\b([^>]*)class=(["'])([^"']*\bcontainer-btn-commander-produit\b[^"']*)\2([^>]*)>\s*<\/div>/gi, '')
+    .replace(/<div\b([^>]*)class=(["'])([^"']*\bcontainer-btn-commander-produit\b[^"']*)\2([^>]*)>\s*<div\b[^>]*>\s*<\/div>\s*<\/div>/gi, '');
   return next;
 }
 
@@ -4686,7 +5063,7 @@ function fallbackMetadata(route, html) {
 function labelFromRoute(route) {
   if (route === '/') return 'Cognac Léopold Croizet';
   if (/\/mentions-legales\/?$/.test(route)) return 'Mentions légales';
-  if (/\/cgv\/?$/.test(route)) return 'Conditions générales de vente';
+  if (/\/cgv\/?$/.test(route)) return 'Conditions de commande';
   if (/\/(?:preuves|environnement)\/?$/.test(route)) {
     return {
       fr: 'Environnement',
@@ -4766,7 +5143,7 @@ function xDefaultRoute(group) {
 }
 
 function priceGuardStyle() {
-  return `<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart,html.lc-hide-prices li.panier-menu,html.lc-hide-prices .container-btn-commander-produit,html.lc-hide-prices .commander-produit,html.lc-hide-prices .single_add_to_cart_button{display:none!important}</style>`;
+  return `<style id="lc-price-guard-style">html.lc-hide-prices .prix-produit-container,html.lc-hide-prices .prix-produit-collection,html.lc-hide-prices .price,html.lc-hide-prices .woocommerce-Price-amount,html.lc-hide-prices .amount,html.lc-hide-prices form.cart,html.lc-hide-prices li.panier-menu,html.lc-hide-prices .hide-nb-article-panier,html.lc-hide-prices .container-btn-commander-produit,html.lc-hide-prices .commander-produit,html.lc-hide-prices .single_add_to_cart_button{display:none!important}</style>`;
 }
 
 function languageRouterScript() {
@@ -4792,7 +5169,7 @@ function rememberLang(lang){if(!supported[lang])return;try{window.localStorage&&
 function isCrawler(){return crawlerPattern.test(String(navigator.userAgent||""))}
 function hasChinaFlag(){try{return window.localStorage&&localStorage.getItem(chinaStorageKey)==="1"}catch(error){return false}}
 function setChinaFlag(){try{window.localStorage&&localStorage.setItem(chinaStorageKey,"1")}catch(error){}}
-function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart,li.panier-menu,.container-btn-commander-produit,.commander-produit,.single_add_to_cart_button");for(var i=0;i<items.length;i++)items[i].remove()}
+function hidePricesNow(){var items=document.querySelectorAll(".prix-produit-container,.prix-produit-collection,.price,.woocommerce-Price-amount,.amount,form.cart,li.panier-menu,.hide-nb-article-panier,.container-btn-commander-produit,.commander-produit,.single_add_to_cart_button");for(var i=0;i<items.length;i++)items[i].remove()}
 var route=routeFor(window.location.pathname);
 var chinaVisitor=detectsChina();
 if(chinaVisitor)setChinaFlag();

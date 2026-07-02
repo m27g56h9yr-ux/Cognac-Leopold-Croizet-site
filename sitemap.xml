@@ -183,13 +183,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
-    <loc>https://cognac-leopold-croizet.com/commander/</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/commander/" />
-  </url>
-  <url>
     <loc>https://cognac-leopold-croizet.com/da/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
