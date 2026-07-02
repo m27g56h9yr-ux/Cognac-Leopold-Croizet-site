@@ -2835,15 +2835,16 @@ ${proofLink}
     '</section>',
     `<p class="lc-note">${escapeHtml(copy.note)}</p>`,
   ].join('\n');
-  const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-    .lc-medal-card{display:grid;grid-template-columns:116px minmax(0,1fr);gap:20px;align-items:center;border:1px solid var(--lc-line);background:#fffdf9;padding:20px}
-    .lc-medal-proof-image{display:flex;align-items:center;justify-content:center;min-height:126px;text-decoration:none}
-    .lc-medal-proof-image img{display:block;width:auto;max-width:100%;height:auto;max-height:132px}
+  const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:940px;margin:0 auto}
+    .lc-medal-card{display:grid;grid-template-columns:240px minmax(0,1fr);gap:34px;align-items:center;min-height:260px;border:1px solid var(--lc-line);background:#fffdf9;padding:34px 40px}
+    .lc-medal-proof-image{display:flex;align-items:center;justify-content:center;min-height:220px;text-decoration:none}
+    .lc-medal-proof-image img{display:block;width:auto;max-width:240px;height:auto;max-height:220px}
     .lc-medal-copy p{margin:0 0 9px}
     .lc-medal-copy p:last-child{margin-bottom:0}
     .lc-medal-level{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold)}
     .lc-medal-proof-link{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;border-bottom:1px solid var(--lc-line)}
-    @media(max-width:860px){.lc-medal-grid{grid-template-columns:1fr}.lc-medal-card{grid-template-columns:94px minmax(0,1fr);gap:16px}.lc-medal-proof-image img{max-height:116px}}`;
+    @media(max-width:860px){.lc-medal-grid{max-width:100%}.lc-medal-card{grid-template-columns:116px minmax(0,1fr);gap:18px;min-height:0;padding:20px}.lc-medal-proof-image{min-height:132px}.lc-medal-proof-image img{max-width:116px;max-height:132px}}
+    @media(max-width:520px){.lc-medal-card{grid-template-columns:1fr;text-align:center}.lc-medal-proof-image{min-height:150px}.lc-medal-proof-image img{max-width:150px;max-height:150px}}`;
 
   return sourcePageShell({
     route,
