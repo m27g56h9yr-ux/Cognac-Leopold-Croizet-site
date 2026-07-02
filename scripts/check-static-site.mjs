@@ -18,6 +18,21 @@ const imageDimensionViolations = [];
 const formLabelViolations = [];
 const productAltViolations = [];
 const homeMediaViolations = [];
+const WALK_SKIP_DIRS = new Set([
+  '.agents',
+  '.github',
+  '.git',
+  'api',
+  'assets',
+  'newsletter-data',
+  'node_modules',
+  'outputs',
+  'scripts',
+  'static-assets',
+  'tmp',
+  'wp-content',
+  'wp-includes',
+]);
 const productImageAltRules = [
   [/img_prod_xo_exception_home|img_nom_produit_xo-exception/i, /Cognac Léopold Croizet XO Exception/i],
   [/img_produit_vs_base2|VS_2024/i, /Cognac Léopold Croizet VS/i],
@@ -156,6 +171,7 @@ async function walk(dir) {
   if (dir.includes(`${path.sep}_preview${path.sep}`) || dir.endsWith(`${path.sep}_preview`)) return;
   const entries = await readdir(dir);
   for (const entry of entries) {
+    if (WALK_SKIP_DIRS.has(entry)) continue;
     const fullPath = path.join(dir, entry);
     const info = await stat(fullPath);
     if (info.isDirectory()) {

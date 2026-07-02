@@ -11,12 +11,27 @@ const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-06-29';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
-const MEDAL_PAGE_LASTMOD = '2026-07-01';
+const MEDAL_PAGE_LASTMOD = '2026-07-02';
 const NUTRITION_PAGE_LASTMOD = '2026-06-30';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
 const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
+const WALK_SKIP_DIRS = new Set([
+  '.agents',
+  '.github',
+  '.git',
+  'api',
+  'assets',
+  'newsletter-data',
+  'node_modules',
+  'outputs',
+  'scripts',
+  'static-assets',
+  'tmp',
+  'wp-content',
+  'wp-includes',
+]);
 const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((prefix) => (
   prefix === '/' ? `/${FILM_SLUG}/` : `${prefix}${FILM_SLUG}/`
 ));
@@ -835,6 +850,7 @@ const productMedalProofs = new Map([
       level: 'silver',
       award: 'Spirits Selection',
       year: '2024',
+      proofLabel: 'palmarès',
       alt: "Médaille d'argent Spirits Selection 2024 - Cognac Léopold Croizet XO Exception",
     },
   ]],
@@ -1465,7 +1481,7 @@ async function walkHtml(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if (entry.name === '.git' || entry.name === 'node_modules') continue;
+    if (WALK_SKIP_DIRS.has(entry.name)) continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...await walkHtml(full));
@@ -2806,11 +2822,12 @@ function medalPageHtml(route = '/medailles/') {
     const productName = productFullName(slug);
     const level = copy.level[medal.level] || medal.level;
     const title = `${level} - ${medal.award} ${medal.year}`;
+    const proofLabel = medal.proofLabel || copy.proofLabel;
     const medalImage = medal.href
-      ? `<a class="lc-medal-proof-image" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${title} - ${productName} - ${copy.proofLabel}`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>`
+      ? `<a class="lc-medal-proof-image" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${title} - ${productName} - ${proofLabel}`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>`
       : `<span class="lc-medal-proof-image"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></span>`;
     const proofLink = medal.href
-      ? `<p><a class="lc-medal-proof-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener">${escapeHtml(copy.proofLabel)}</a></p>`
+      ? `<p><a class="lc-medal-proof-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener">${escapeHtml(proofLabel)}</a></p>`
       : '';
     return `<article class="lc-medal-card">
 ${medalImage}
@@ -5376,7 +5393,7 @@ function breadcrumbSchema(route) {
     itemListElement.push({
       '@type': 'ListItem',
       position: index + 2,
-      name: productNames.get(part) || labelFromRoute(`/${part}/`),
+      name: productNames.get(part) || labelFromRoute(`${current}/`),
       item: `${PUBLIC_ORIGIN}${current}/`,
     });
   });
