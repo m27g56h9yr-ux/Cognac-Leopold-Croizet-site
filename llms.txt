@@ -19,7 +19,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [English FAQ](https://cognac-leopold-croizet.com/en/faq/): English version of the Cognac Léopold Croizet FAQ.
 - [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.
 - [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.
-- [Medals and awards](https://cognac-leopold-croizet.com/medailles/): product medals cited on the site, with links to external proof and to the relevant product pages.
+- [Medals and awards](https://cognac-leopold-croizet.com/medailles/): product medals cited on the site, with external proof links when available and links to the relevant product pages.
 - [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.
 - [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.
 - [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.
@@ -48,8 +48,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - Cognac Léopold Croizet XO: Gold medal - Concours Général Agricole 2016; product https://cognac-leopold-croizet.com/collection/xo/; proof https://palmares.concours-general-agricole.fr/produits/1632167-2608
 - Cognac Léopold Croizet XO Exception: Gold medal - The Cognac Masters 2015; product https://cognac-leopold-croizet.com/collection/xo-exception/; proof https://www.thespiritsbusiness.com/2015/09/the-global-cognac-masters-2015-results/2/
 - Cognac Léopold Croizet XO Exception: Silver medal - Spirits Selection 2024; product https://cognac-leopold-croizet.com/collection/xo-exception/; proof https://results.spiritsselection.com/fr/resultats/2024/222113-cognac-leopold-croizet-xo-exception
-- Pineau des Charentes Léopold Croizet: Silver medal - Concours Général Agricole 2010; product https://cognac-leopold-croizet.com/collection/pineau-des-charentes/; proof https://palmares.concours-general-agricole.fr/produits/1268378-2608
-- Pineau des Charentes Léopold Croizet: Silver medal - Concours Mondial de Bruxelles 2025; product https://cognac-leopold-croizet.com/collection/pineau-des-charentes/; proof https://resultats.concoursmondial.com/fr/resultats/2025/240534-pineau-des-charentes-esprit-organic-2011
+- Pineau des Charentes Léopold Croizet: Silver medal - Concours Général Agricole 2010; product https://cognac-leopold-croizet.com/collection/pineau-des-charentes/
 
 ## Contact
 - Email: cognac@mdpierre.com
