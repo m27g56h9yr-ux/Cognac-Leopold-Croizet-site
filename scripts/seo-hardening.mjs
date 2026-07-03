@@ -2726,7 +2726,6 @@ function medalPageCopy(lang) {
       description: 'Liste des médailles citées sur les fiches produit Cognac Léopold Croizet, avec produits concernés et liens vers les preuves externes disponibles.',
       eyebrow: 'Preuves',
       heading: 'Médailles et distinctions<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'Les distinctions ci-dessous reprennent uniquement les médailles déjà citées sur les fiches produit du site, avec un lien vers la preuve externe lorsqu’elle est disponible.',
       introTitle: 'Distinctions citées sur les fiches produit',
       productLabel: 'Produit concerné',
       proofLabel: 'palmarès',
@@ -2737,7 +2736,6 @@ function medalPageCopy(lang) {
       description: 'Medals listed on Cognac Léopold Croizet product pages, with the relevant products and links to available external proof.',
       eyebrow: 'Proof',
       heading: 'Medals and awards<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'The awards below only gather medals already cited on product pages, with links to external proof when available.',
       introTitle: 'Awards cited on product pages',
       productLabel: 'Relevant product',
       proofLabel: 'palmarès',
@@ -2748,7 +2746,6 @@ function medalPageCopy(lang) {
       description: 'Медали, указанные на страницах продуктов Cognac Léopold Croizet, с продуктами и ссылками на доступные внешние подтверждения.',
       eyebrow: 'Подтверждения',
       heading: 'Медали и награды<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'Ниже собраны только медали, уже указанные на страницах продуктов, со ссылками на внешние подтверждения, когда они доступны.',
       introTitle: 'Награды, указанные на страницах продуктов',
       productLabel: 'Продукт',
       proofLabel: 'palmarès',
@@ -2759,7 +2756,6 @@ function medalPageCopy(lang) {
       description: 'Medaljer nævnt på Cognac Léopold Croizet produktsider, med relevante produkter og links til tilgængelig ekstern dokumentation.',
       eyebrow: 'Dokumentation',
       heading: 'Medaljer og udmærkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'Nedenfor samles kun de medaljer, der allerede nævnes på produktsiderne, med links til ekstern dokumentation, når den er tilgængelig.',
       introTitle: 'Udmærkelser nævnt på produktsider',
       productLabel: 'Relevant produkt',
       proofLabel: 'palmarès',
@@ -2770,7 +2766,6 @@ function medalPageCopy(lang) {
       description: 'Medaljer som nämns på Cognac Léopold Croizet produktsidor, med berörda produkter och länkar till tillgängliga externa bevis.',
       eyebrow: 'Bevis',
       heading: 'Medaljer och utmärkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'Nedan samlas endast medaljer som redan nämns på produktsidorna, med länkar till externa bevis när de är tillgängliga.',
       introTitle: 'Utmärkelser som nämns på produktsidor',
       productLabel: 'Berörd produkt',
       proofLabel: 'palmarès',
@@ -2781,7 +2776,6 @@ function medalPageCopy(lang) {
       description: 'Medaljer nevnt på Cognac Léopold Croizet produktsider, med berørte produkter og lenker til tilgjengelig ekstern dokumentasjon.',
       eyebrow: 'Dokumentasjon',
       heading: 'Medaljer og utmerkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: 'Nedenfor samles bare medaljene som allerede er nevnt på produktsidene, med lenker til ekstern dokumentasjon når den er tilgjengelig.',
       introTitle: 'Utmerkelser nevnt på produktsider',
       productLabel: 'Berørt produkt',
       proofLabel: 'palmarès',
@@ -2792,7 +2786,6 @@ function medalPageCopy(lang) {
       description: 'Cognac Léopold Croizet 产品页所列奖牌，包含相关产品以及可用外部证明链接。',
       eyebrow: '证明',
       heading: '奖牌与荣誉<br><span class="lc-nowrap">Léopold Croizet</span>',
-      lead: '以下内容仅汇总产品页已经列出的奖牌；如有可用外部证明，会提供链接。',
       introTitle: '产品页中列出的荣誉',
       productLabel: '相关产品',
       proofLabel: 'palmarès',
@@ -2838,6 +2831,7 @@ ${proofLink}
     '</section>',
   ].join('\n');
   const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:940px;margin:0 auto}
+    .lc-medal-page .lc-lead:empty{display:none}
     .lc-medal-card{display:grid;grid-template-columns:240px minmax(0,1fr);gap:34px;align-items:center;min-height:260px;border:1px solid var(--lc-line);background:#fffdf9;padding:34px 40px}
     .lc-medal-proof-image{display:flex;align-items:center;justify-content:center;min-height:220px;text-decoration:none}
     .lc-medal-proof-image img{display:block;width:auto;max-width:240px;height:auto;max-height:220px}
@@ -2854,7 +2848,7 @@ ${proofLink}
     description: copy.description,
     eyebrow: copy.eyebrow,
     heading: copy.heading,
-    lead: copy.lead,
+    lead: '',
     body,
     pageClass: 'lc-faq-page lc-medal-page',
     extraCss: medalCss,
