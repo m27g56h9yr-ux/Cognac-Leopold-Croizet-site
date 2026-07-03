@@ -2724,7 +2724,6 @@ function medalPageCopy(lang) {
     fr: {
       metaTitle: 'Médailles et distinctions | Cognac Léopold Croizet',
       description: 'Liste des médailles citées sur les fiches produit Cognac Léopold Croizet, avec produits concernés et liens vers les preuves externes disponibles.',
-      eyebrow: 'Preuves',
       heading: 'Médailles et distinctions<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Distinctions citées sur les fiches produit',
       productLabel: 'Produit concerné',
@@ -2734,7 +2733,6 @@ function medalPageCopy(lang) {
     en: {
       metaTitle: 'Medals and Awards | Cognac Léopold Croizet',
       description: 'Medals listed on Cognac Léopold Croizet product pages, with the relevant products and links to available external proof.',
-      eyebrow: 'Proof',
       heading: 'Medals and awards<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Awards cited on product pages',
       productLabel: 'Relevant product',
@@ -2744,7 +2742,6 @@ function medalPageCopy(lang) {
     ru: {
       metaTitle: 'Медали и награды | Cognac Léopold Croizet',
       description: 'Медали, указанные на страницах продуктов Cognac Léopold Croizet, с продуктами и ссылками на доступные внешние подтверждения.',
-      eyebrow: 'Подтверждения',
       heading: 'Медали и награды<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Награды, указанные на страницах продуктов',
       productLabel: 'Продукт',
@@ -2754,7 +2751,6 @@ function medalPageCopy(lang) {
     da: {
       metaTitle: 'Medaljer og udmærkelser | Cognac Léopold Croizet',
       description: 'Medaljer nævnt på Cognac Léopold Croizet produktsider, med relevante produkter og links til tilgængelig ekstern dokumentation.',
-      eyebrow: 'Dokumentation',
       heading: 'Medaljer og udmærkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Udmærkelser nævnt på produktsider',
       productLabel: 'Relevant produkt',
@@ -2764,7 +2760,6 @@ function medalPageCopy(lang) {
     sv: {
       metaTitle: 'Medaljer och utmärkelser | Cognac Léopold Croizet',
       description: 'Medaljer som nämns på Cognac Léopold Croizet produktsidor, med berörda produkter och länkar till tillgängliga externa bevis.',
-      eyebrow: 'Bevis',
       heading: 'Medaljer och utmärkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Utmärkelser som nämns på produktsidor',
       productLabel: 'Berörd produkt',
@@ -2774,7 +2769,6 @@ function medalPageCopy(lang) {
     no: {
       metaTitle: 'Medaljer og utmerkelser | Cognac Léopold Croizet',
       description: 'Medaljer nevnt på Cognac Léopold Croizet produktsider, med berørte produkter og lenker til tilgjengelig ekstern dokumentasjon.',
-      eyebrow: 'Dokumentasjon',
       heading: 'Medaljer og utmerkelser<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: 'Utmerkelser nevnt på produktsider',
       productLabel: 'Berørt produkt',
@@ -2784,7 +2778,6 @@ function medalPageCopy(lang) {
     zh: {
       metaTitle: '奖牌与荣誉 | Cognac Léopold Croizet',
       description: 'Cognac Léopold Croizet 产品页所列奖牌，包含相关产品以及可用外部证明链接。',
-      eyebrow: '证明',
       heading: '奖牌与荣誉<br><span class="lc-nowrap">Léopold Croizet</span>',
       introTitle: '产品页中列出的荣誉',
       productLabel: '相关产品',
@@ -2831,6 +2824,7 @@ ${proofLink}
     '</section>',
   ].join('\n');
   const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:940px;margin:0 auto}
+    .lc-medal-page .lc-eyebrow:empty{display:none}
     .lc-medal-page .lc-lead:empty{display:none}
     .lc-medal-card{display:grid;grid-template-columns:240px minmax(0,1fr);gap:34px;align-items:center;min-height:260px;border:1px solid var(--lc-line);background:#fffdf9;padding:34px 40px}
     .lc-medal-proof-image{display:flex;align-items:center;justify-content:center;min-height:220px;text-decoration:none}
@@ -2846,7 +2840,7 @@ ${proofLink}
     route,
     title: copy.metaTitle,
     description: copy.description,
-    eyebrow: copy.eyebrow,
+    eyebrow: '',
     heading: copy.heading,
     lead: '',
     body,
