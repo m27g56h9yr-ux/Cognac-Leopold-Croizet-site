@@ -5,6 +5,7 @@
 Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs, plus Pineau des Charentes. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.
 
 ## Key Pages
+- [Full AI reference](https://cognac-leopold-croizet.com/llms-full.txt): Expanded product, proof, medal, language and contact reference for AI systems and browser agents.
 - [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.
 - [English homepage](https://cognac-leopold-croizet.com/en/): Official English homepage.
 - [Russian homepage](https://cognac-leopold-croizet.com/ru/): Official Russian homepage.

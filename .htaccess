@@ -6,8 +6,14 @@ Options -Indexes
 
   # Prevent HTTP/2 connection reuse from serving the static site on the legacy
   # WordPress host. Browsers should retry the request on the correct vhost.
-  RewriteCond %{HTTP_HOST} ^ancien\.cognac-leopold-croizet\.com$ [NC]
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?ancien\.cognac-leopold-croizet\.com$ [NC]
   RewriteRule ^ - [R=421,L]
+
+  # Keep one indexable host and protocol for search engines and AI agents.
+  RewriteCond %{HTTP_HOST} !^cognac-leopold-croizet\.com$ [NC,OR]
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} !^(?:www\.)?ancien\.cognac-leopold-croizet\.com$ [NC]
+  RewriteRule ^ https://cognac-leopold-croizet.com%{REQUEST_URI} [R=301,L]
 
   # OVH sometimes misses the directory index for this newly created locale page.
   RewriteRule ^zh/faq/?$ zh/faq/index.html [L]

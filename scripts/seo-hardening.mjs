@@ -3421,6 +3421,7 @@ function hardenHtml(html, route, file) {
   next = replaceStructuredData(next, route, metadata, image);
   next = repairGeneratedContent(next);
   next = localizeResidualLocaleFragments(next, route);
+  next = repairPlaceholderLinks(next, route);
   next = repairLocalizedSeoHeading(next, route);
   next = repairNewsletterBlock(next, route);
   next = repairRememberMeInput(next, route);
@@ -4158,52 +4159,92 @@ function ageGateCopy(lang) {
       access: 'To access our site, you must be of legal age to purchase and consume alcohol under the laws in force in your country or region of residence.',
       fallback: 'If no such law exists in your country or region, you must be at least 21 years old.',
       confirm: 'By clicking “Enter”, you confirm that you are of legal age in your country to visit this site.',
-      terms: 'You accept our <a href="#">terms of use</a> and confirm that you have read our',
-      privacy: '<a href="#">personal data and cookies policy</a>',
+      terms: 'You accept our <a href="/cgv/">terms of use</a> and confirm that you have read our',
+      privacy: '<a href="/mentions-legales/">personal data and cookies policy</a>',
       enter: 'Enter',
     },
     ru: {
       access: 'Для доступа к сайту вы должны достичь возраста, с которого в вашей стране или регионе разрешены покупка и употребление алкоголя.',
       fallback: 'Если в вашей стране или регионе такого закона нет, вам должно быть не менее 21 года.',
       confirm: 'Нажимая «Войти», вы подтверждаете, что достигли возраста, необходимого в вашей стране для посещения этого сайта.',
-      terms: 'Вы принимаете наши <a href="#">условия использования</a> и подтверждаете, что прочитали нашу',
-      privacy: '<a href="#">политику персональных данных и cookies</a>',
+      terms: 'Вы принимаете наши <a href="/cgv/">условия использования</a> и подтверждаете, что прочитали нашу',
+      privacy: '<a href="/mentions-legales/">политику персональных данных и cookies</a>',
       enter: 'Войти',
     },
     da: {
       access: 'For at få adgang til vores site skal du have lovlig alder til at købe og nyde alkohol i henhold til lovgivningen i dit bopælsland eller din region.',
       fallback: 'Hvis der ikke findes en sådan lovgivning i dit land eller din region, skal du være mindst 21 år.',
       confirm: 'Ved at klikke på “Enter” bekræfter du, at du har den krævede alder i dit land for at besøge dette site.',
-      terms: 'Du accepterer vores <a href="#">generelle brugsbetingelser</a> og erklærer at have læst vores',
-      privacy: '<a href="#">politik for personoplysninger og cookies</a>',
+      terms: 'Du accepterer vores <a href="/cgv/">generelle brugsbetingelser</a> og erklærer at have læst vores',
+      privacy: '<a href="/mentions-legales/">politik for personoplysninger og cookies</a>',
       enter: 'Enter',
     },
     sv: {
       access: 'För att få tillgång till vår webbplats måste du ha laglig ålder för att köpa och konsumera alkohol enligt lagstiftningen i ditt land eller din region.',
       fallback: 'Om sådan lagstiftning saknas i ditt land eller din region måste du vara minst 21 år.',
       confirm: 'Genom att klicka på “Enter” bekräftar du att du har den ålder som krävs i ditt land för att besöka denna webbplats.',
-      terms: 'Du accepterar våra <a href="#">allmänna användarvillkor</a> och bekräftar att du har läst vår',
-      privacy: '<a href="#">policy för personuppgifter och cookies</a>',
+      terms: 'Du accepterar våra <a href="/cgv/">allmänna användarvillkor</a> och bekräftar att du har läst vår',
+      privacy: '<a href="/mentions-legales/">policy för personuppgifter och cookies</a>',
       enter: 'Enter',
     },
     no: {
       access: 'For å få tilgang til nettstedet vårt må du ha lovlig alder til å kjøpe og nyte alkohol i henhold til lovgivningen i landet eller regionen der du bor.',
       fallback: 'Hvis slik lovgivning ikke finnes i landet eller regionen din, må du være minst 21 år.',
       confirm: 'Ved å klikke på “Enter” bekrefter du at du har alderen som kreves i landet ditt for å besøke dette nettstedet.',
-      terms: 'Du godtar våre <a href="#">generelle bruksvilkår</a> og bekrefter at du har lest vår',
-      privacy: '<a href="#">policy for personopplysninger og cookies</a>',
+      terms: 'Du godtar våre <a href="/cgv/">generelle bruksvilkår</a> og bekrefter at du har lest vår',
+      privacy: '<a href="/mentions-legales/">policy for personopplysninger og cookies</a>',
       enter: 'Enter',
     },
     zh: {
       access: '访问本网站前，您必须达到所在国家或地区法律规定的购买和饮用酒精饮品的法定年龄。',
       fallback: '如果您所在国家或地区没有相关规定，您必须年满 21 岁。',
       confirm: '点击“进入”即表示您确认已达到所在国家或地区访问本网站所需的法定年龄。',
-      terms: '您接受我们的 <a href="#">使用条款</a>，并确认已阅读我们的',
-      privacy: '<a href="#">个人数据与 Cookie 政策</a>',
+      terms: '您接受我们的 <a href="/cgv/">使用条款</a>，并确认已阅读我们的',
+      privacy: '<a href="/mentions-legales/">个人数据与 Cookie 政策</a>',
       enter: '进入',
     },
   };
   return copies[lang];
+}
+
+function repairPlaceholderLinks(html, route) {
+  const lang = languageForRoute(route);
+  const craftRoute = craftRouteForLang(lang);
+  const termsHref = `${DEPLOY_BASE_PATH}/cgv/`;
+  const privacyHref = `${DEPLOY_BASE_PATH}/mentions-legales/`;
+  let next = html.replace(
+    /(<li\b[^>]*\bclass=["'][^"']*\bexperience\b[^"']*["'][^>]*>\s*<a\b[^>]*\bhref=)(["'])#\2/gi,
+    (full, prefix, quote) => `${prefix}${quote}${DEPLOY_BASE_PATH}${craftRoute}${quote}`,
+  );
+
+  const legalTargets = [
+    ['Conditions générales d’utilisation', termsHref],
+    ["Conditions générales d'utilisation", termsHref],
+    ['terms of use', termsHref],
+    ['условия использования', termsHref],
+    ['общие условия использования', termsHref],
+    ['generelle brugsbetingelser', termsHref],
+    ['allmänna användarvillkor', termsHref],
+    ['generelle bruksvilkår', termsHref],
+    ['使用条款', termsHref],
+    ['Charte de données personnelles & Cookies', privacyHref],
+    ['personal data and cookies policy', privacyHref],
+    ['политику персональных данных и cookies', privacyHref],
+    ['politik for personoplysninger og cookies', privacyHref],
+    ['policy för personuppgifter och cookies', privacyHref],
+    ['policy for personopplysninger og cookies', privacyHref],
+    ['个人数据与 Cookie 政策', privacyHref],
+  ];
+
+  for (const [label, href] of legalTargets) {
+    next = next.replaceAll(`<a href="#">${label}</a>`, `<a href="${href}">${label}</a>`);
+  }
+  return next;
+}
+
+function craftRouteForLang(lang) {
+  if (lang === 'fr') return '/la-matiere/';
+  return `/${lang}/la-matiere/`;
 }
 
 function replaceResidualPremiumCopy(html, lang, route) {
@@ -5181,7 +5222,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
 }
 
 function replaceStructuredData(html, route, metadata, image) {
-  const schemas = [organizationSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
+  const schemas = [organizationSchema(), webSiteSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
   const faq = faqPageSchema(route);
   if (faq) schemas.push(faq);
   const medalList = medalItemListSchema(route);
@@ -5190,7 +5231,6 @@ function replaceStructuredData(html, route, metadata, image) {
   if (product) schemas.push(product);
   const recipes = cocktailRecipesSchema(route);
   if (recipes) schemas.push(...recipes);
-  if (route === '/') schemas.push(webSiteSchema());
 
   const block = `<script type="application/ld+json">${JSON.stringify(schemas.length === 1 ? schemas[0] : schemas)}</script>`;
   let cleaned = html.replace(/<script[^>]+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi, '');
@@ -5579,6 +5619,7 @@ function makeLlmsTxt() {
     'Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage and Valentine XO cognacs, plus Pineau des Charentes. The site is available in French, English, Russian, Danish, Swedish, Norwegian and Simplified Chinese.',
     '',
     '## Key Pages',
+    '- [Full AI reference](https://cognac-leopold-croizet.com/llms-full.txt): Expanded product, proof, medal, language and contact reference for AI systems and browser agents.',
     '- [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.',
     '- [English homepage](https://cognac-leopold-croizet.com/en/): Official English homepage.',
     '- [Russian homepage](https://cognac-leopold-croizet.com/ru/): Official Russian homepage.',
