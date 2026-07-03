@@ -856,6 +856,7 @@ const productMedalProofs = new Map([
   ]],
   ['pineau-des-charentes', [
     {
+      href: 'https://palmares.concours-general-agricole.fr/produits/1268378-2608',
       src: '/wp-content/uploads/2021/05/img_diaporama_argent_2010-180x274.png',
       width: 180,
       height: 274,
@@ -2729,9 +2730,8 @@ function medalPageCopy(lang) {
       introTitle: 'Distinctions citées sur les fiches produit',
       introText: 'Les médailles restent reliées à leur source externe lorsqu’elle est disponible. Chaque produit concerné renvoie vers sa fiche officielle afin de garder le lien entre preuve, cuvée et contexte de dégustation.',
       productLabel: 'Produit concerné',
-      proofLabel: 'Voir la preuve externe',
+      proofLabel: 'palmarès',
       level: { gold: "Médaille d'or", silver: "Médaille d'argent" },
-      note: 'Cette page ne crée pas de nouvelles revendications : elle rassemble les distinctions déjà visibles sur les pages produit et les relie aux sources publiques disponibles.',
     },
     en: {
       metaTitle: 'Medals and Awards | Cognac Léopold Croizet',
@@ -2742,9 +2742,8 @@ function medalPageCopy(lang) {
       introTitle: 'Awards cited on product pages',
       introText: 'Medals remain linked to their external source when available. Each relevant product links to its official product page, keeping proof, cuvée and tasting context connected.',
       productLabel: 'Relevant product',
-      proofLabel: 'View external proof',
+      proofLabel: 'palmarès',
       level: { gold: 'Gold medal', silver: 'Silver medal' },
-      note: 'This page does not create new claims: it gathers distinctions already visible on product pages and links them to available public sources.',
     },
     ru: {
       metaTitle: 'Медали и награды | Cognac Léopold Croizet',
@@ -2755,9 +2754,8 @@ function medalPageCopy(lang) {
       introTitle: 'Награды, указанные на страницах продуктов',
       introText: 'Медали связаны с внешним источником, когда он доступен. Каждый продукт ведет к своей официальной странице, чтобы сохранять связь между подтверждением, cuvée и контекстом дегустации.',
       productLabel: 'Продукт',
-      proofLabel: 'Открыть внешнее подтверждение',
+      proofLabel: 'palmarès',
       level: { gold: 'Золотая медаль', silver: 'Серебряная медаль' },
-      note: 'Эта страница не создает новых заявлений: она объединяет награды, уже видимые на страницах продуктов, и связывает их с доступными публичными источниками.',
     },
     da: {
       metaTitle: 'Medaljer og udmærkelser | Cognac Léopold Croizet',
@@ -2768,9 +2766,8 @@ function medalPageCopy(lang) {
       introTitle: 'Udmærkelser nævnt på produktsider',
       introText: 'Medaljer linkes til deres eksterne kilde, når den er tilgængelig. Hvert relevant produkt linker til sin officielle produktside, så dokumentation, cuvée og smagskontekst hænger sammen.',
       productLabel: 'Relevant produkt',
-      proofLabel: 'Se ekstern dokumentation',
+      proofLabel: 'palmarès',
       level: { gold: 'Guldmedalje', silver: 'Sølvmedalje' },
-      note: 'Denne side skaber ikke nye påstande: den samler udmærkelser, der allerede vises på produktsiderne, og linker dem til tilgængelige offentlige kilder.',
     },
     sv: {
       metaTitle: 'Medaljer och utmärkelser | Cognac Léopold Croizet',
@@ -2781,9 +2778,8 @@ function medalPageCopy(lang) {
       introTitle: 'Utmärkelser som nämns på produktsidor',
       introText: 'Medaljer länkas till sin externa källa när den är tillgänglig. Varje berörd produkt länkar till sin officiella produktsida, så att bevis, cuvée och provningssammanhang hålls samman.',
       productLabel: 'Berörd produkt',
-      proofLabel: 'Visa externt bevis',
+      proofLabel: 'palmarès',
       level: { gold: 'Guldmedalj', silver: 'Silvermedalj' },
-      note: 'Denna sida skapar inga nya påståenden: den samlar utmärkelser som redan visas på produktsidorna och länkar dem till tillgängliga offentliga källor.',
     },
     no: {
       metaTitle: 'Medaljer og utmerkelser | Cognac Léopold Croizet',
@@ -2794,9 +2790,8 @@ function medalPageCopy(lang) {
       introTitle: 'Utmerkelser nevnt på produktsider',
       introText: 'Medaljer lenkes til sin eksterne kilde når den er tilgjengelig. Hvert berørt produkt lenker til sin offisielle produktside, slik at dokumentasjon, cuvée og smakssammenheng henger sammen.',
       productLabel: 'Berørt produkt',
-      proofLabel: 'Se ekstern dokumentasjon',
+      proofLabel: 'palmarès',
       level: { gold: 'Gullmedalje', silver: 'Sølvmedalje' },
-      note: 'Denne siden skaper ikke nye påstander: den samler utmerkelser som allerede vises på produktsidene, og lenker dem til tilgjengelige offentlige kilder.',
     },
     zh: {
       metaTitle: '奖牌与荣誉 | Cognac Léopold Croizet',
@@ -2807,9 +2802,8 @@ function medalPageCopy(lang) {
       introTitle: '产品页中列出的荣誉',
       introText: '如有外部来源，奖牌会链接至该来源。每一款相关产品也链接至其官方产品页，以保留证明、酒款与品鉴语境之间的联系。',
       productLabel: '相关产品',
-      proofLabel: '查看外部证明',
+      proofLabel: 'palmarès',
       level: { gold: '金奖', silver: '银奖' },
-      note: '本页面不新增任何奖项声明：它只汇总产品页已经可见的荣誉，并链接到可用公开来源。',
     },
   }[lang] || medalPageCopy('fr');
 }
@@ -2850,7 +2844,6 @@ ${proofLink}
     medalCards,
     '</div>',
     '</section>',
-    `<p class="lc-note">${escapeHtml(copy.note)}</p>`,
   ].join('\n');
   const medalCss = `    .lc-medal-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:940px;margin:0 auto}
     .lc-medal-card{display:grid;grid-template-columns:240px minmax(0,1fr);gap:34px;align-items:center;min-height:260px;border:1px solid var(--lc-line);background:#fffdf9;padding:34px 40px}
@@ -4443,7 +4436,7 @@ function ensurePrimaryGalleryImage(html, slug) {
 function productMedalProofBlock(medals) {
   const links = medals.map((medal) => (
     medal.href
-      ? `      <a class="lc-product-medal-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${medal.alt} - preuve officielle`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>`
+      ? `      <a class="lc-product-medal-link" href="${escapeHtml(medal.href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(`${medal.alt} - palmarès`)}"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></a>`
       : `      <span class="lc-product-medal-link"><img src="${escapeHtml(medal.src)}" alt="${escapeHtml(medal.alt)}" width="${medal.width}" height="${medal.height}" decoding="async" loading="lazy"></span>`
   ));
   return [
