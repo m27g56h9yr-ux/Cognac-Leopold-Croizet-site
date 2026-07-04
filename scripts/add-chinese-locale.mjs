@@ -11,14 +11,23 @@ const PINEAU_SLUG = 'pineau-des-charentes';
 const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
 
 const locales = [
-  { code: 'fr', label: 'Fr', hreflang: 'fr' },
-  { code: 'en', label: 'En', hreflang: 'en' },
-  { code: 'ru', label: 'Ру', hreflang: 'ru' },
-  { code: 'da', label: 'Da', hreflang: 'da' },
-  { code: 'sv', label: 'Sv', hreflang: 'sv' },
-  { code: 'no', label: 'No', hreflang: 'no' },
-  { code: 'zh', label: '中文', hreflang: 'zh-CN' },
+  { code: 'fr', label: 'Fr', menuLabel: 'Français', hreflang: 'fr' },
+  { code: 'en', label: 'En', menuLabel: 'English', hreflang: 'en' },
+  { code: 'ru', label: 'Ру', menuLabel: 'Русский', hreflang: 'ru' },
+  { code: 'da', label: 'Da', menuLabel: 'Dansk', hreflang: 'da' },
+  { code: 'sv', label: 'Sv', menuLabel: 'Svenska', hreflang: 'sv' },
+  { code: 'no', label: 'No', menuLabel: 'Norsk', hreflang: 'no' },
+  { code: 'zh', label: '中文', menuLabel: '中文', hreflang: 'zh-CN' },
 ];
+const languageMenuAriaLabels = {
+  fr: 'Changer de langue',
+  en: 'Change language',
+  ru: 'Изменить язык',
+  da: 'Skift sprog',
+  sv: 'Byt språk',
+  no: 'Bytt språk',
+  zh: '切换语言',
+};
 
 const productCopy = {
   vs: {
@@ -769,22 +778,25 @@ function replaceLanguageSwitcher(html, route, existingRoutes) {
   const key = normalizedRouteKey(route);
   const currentLocale = languageForRoute(route);
   const currentLabel = locales.find((locale) => locale.code === currentLocale)?.label || 'Lang';
+  const ariaLabel = languageMenuAriaLabels[currentLocale] || languageMenuAriaLabels.en;
   const items = locales.map((locale, index) => {
     const localized = routeForLocale(locale.code, key);
     const href = existingRoutes.has(localized) ? localized : routeForLocale(locale.code, '/');
+    const current = locale.code === currentLocale;
     const classes = [
       'wpml-ls-slot-shortcode_actions',
       'wpml-ls-item',
       `wpml-ls-item-${locale.hreflang}`,
       index === 0 ? 'wpml-ls-first-item' : '',
       index === locales.length - 1 ? 'wpml-ls-last-item' : '',
-      locale.code === currentLocale ? 'wpml-ls-current-language' : '',
+      current ? 'wpml-ls-current-language' : '',
       'wpml-ls-item-legacy-list-horizontal',
     ].filter(Boolean).join(' ');
-    return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"><span class="wpml-ls-display">${locale.label}</span></a></li>`;
+    const menuLabel = locale.menuLabel || locale.label;
+    return `<li class="${classes}"><a href="${DEPLOY_BASE}${href}" class="wpml-ls-link" hreflang="${locale.hreflang}"${current ? ' aria-current="page"' : ''}><span class="wpml-ls-display" lang="${locale.hreflang}">${menuLabel}</span></a></li>`;
   }).join('');
 
-  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list" hidden>${items}</ul>\n</div>`;
+  const block = `<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal lc-language-menu">\n\t<a href="#language-menu" class="wpml-ls-link lc-language-menu-toggle" role="button" aria-haspopup="true" aria-expanded="false" aria-label="${ariaLabel}"><span class="wpml-ls-display lc-language-menu-current">${currentLabel}</span></a>\n\t<ul class="lc-language-menu-list" hidden>${items}</ul>\n</div>`;
   const regex = /<div class="wpml-ls-statics-shortcode_actions wpml-ls wpml-ls-legacy-list-horizontal(?: [^"]*)?">[\s\S]*?<\/ul>\s*<\/div>/;
   return regex.test(html) ? html.replace(regex, block) : html;
 }

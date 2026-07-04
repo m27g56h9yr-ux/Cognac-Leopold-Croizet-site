@@ -92,10 +92,10 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
     .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
     .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
-    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:106px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:132px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
     .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
     .lc-faq-language-menu .lc-language-menu-list li{margin:0}
-    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 12px;color:#f5eadb;text-decoration:none}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 18px;color:#f5eadb;text-align:left;text-decoration:none;text-transform:none;white-space:nowrap}
     .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
     body.lc-faq-page .lc-page-header{min-height:56vh;background:linear-gradient(rgba(12,10,8,.42),rgba(12,10,8,.66)),url("/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg") center/cover;color:#fff}
     body.lc-faq-page .lc-hero{margin-top:104px;text-shadow:0 2px 20px rgba(0,0,0,.28)}
@@ -147,6 +147,21 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .lc-button.secondary{border-color:var(--lc-line)}
     .lc-note{margin-top:32px;padding:18px 20px;background:var(--lc-cream);border-left:3px solid var(--lc-gold);font-size:15px;color:var(--lc-muted)}
     .lc-proof-image{margin:18px 0 0;max-width:100%;height:auto}
+    .lc-nowrap{white-space:nowrap}
+    .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
+    .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
+    .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:132px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
+    .lc-faq-language-menu .lc-language-menu-list li{margin:0}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 18px;color:#f5eadb;text-align:left;text-decoration:none;text-transform:none;white-space:nowrap}
+    .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
+    .lc-site-header .lc-faq-language-menu{flex:0 0 auto;margin-left:auto}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-toggle{border-color:rgba(0,0,0,.18);background:transparent;color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list{background:#fff;border-color:rgba(0,0,0,.10);box-shadow:0 16px 34px rgba(0,0,0,.16)}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a{color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-site-header .lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(137,80,6,.08);color:#895006}
+    @media (max-width:760px){.lc-site-header .lc-faq-language-menu{grid-column:2;justify-self:start;margin:8px 0 0}.lc-page-header .lc-faq-language-menu{margin-top:2px}}
     .lc-proof-image{display:block;margin:24px 0 0;max-width:100%;height:auto;border:1px solid var(--lc-line);box-shadow:0 18px 48px rgba(22,17,13,.12)}
     .lc-cert-card{position:relative;overflow:hidden;padding:24px}
     .lc-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin:0 0 10px}
@@ -186,7 +201,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
         <a href="/sv/film-maison-leopold-croizet/">Filmen</a>
         <a href="/sv/rencontre/">Möt oss</a>
       </nav>
-      <div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false">Sv</button><ul class="lc-language-menu-list" hidden><li class="wpml-ls-item"><a href="/environnement/" hreflang="fr" lang="fr">Fr</a></li><li class="wpml-ls-item"><a href="/en/environnement/" hreflang="en" lang="en">En</a></li><li class="wpml-ls-item"><a href="/ru/environnement/" hreflang="ru" lang="ru">Ру</a></li><li class="wpml-ls-item"><a href="/da/environnement/" hreflang="da" lang="da">Da</a></li><li class="wpml-ls-current-language wpml-ls-item"><a href="/sv/environnement/" hreflang="sv" lang="sv" aria-current="page">Sv</a></li><li class="wpml-ls-item"><a href="/no/environnement/" hreflang="no" lang="no">No</a></li><li class="wpml-ls-item"><a href="/zh/environnement/" hreflang="zh-CN" lang="zh-CN">中文</a></li></ul></div>
+      <div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false" aria-label="Byt språk">Sv</button><ul class="lc-language-menu-list" hidden><li class="wpml-ls-item"><a href="/environnement/" hreflang="fr" lang="fr"><span class="wpml-ls-display" lang="fr">Français</span></a></li><li class="wpml-ls-item"><a href="/en/environnement/" hreflang="en" lang="en"><span class="wpml-ls-display" lang="en">English</span></a></li><li class="wpml-ls-item"><a href="/ru/environnement/" hreflang="ru" lang="ru"><span class="wpml-ls-display" lang="ru">Русский</span></a></li><li class="wpml-ls-item"><a href="/da/environnement/" hreflang="da" lang="da"><span class="wpml-ls-display" lang="da">Dansk</span></a></li><li class="wpml-ls-current-language wpml-ls-item"><a href="/sv/environnement/" hreflang="sv" lang="sv" aria-current="page"><span class="wpml-ls-display" lang="sv">Svenska</span></a></li><li class="wpml-ls-item"><a href="/no/environnement/" hreflang="no" lang="no"><span class="wpml-ls-display" lang="no">Norsk</span></a></li><li class="wpml-ls-item"><a href="/zh/environnement/" hreflang="zh-CN" lang="zh-CN"><span class="wpml-ls-display" lang="zh-CN">中文</span></a></li></ul></div>
     </div>
     <div class="lc-hero">
       <p class="lc-eyebrow">Miljö</p>

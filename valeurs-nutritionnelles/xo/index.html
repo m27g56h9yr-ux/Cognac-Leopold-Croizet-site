@@ -143,6 +143,21 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     .lc-note{margin-top:32px;padding:18px 20px;background:var(--lc-cream);border-left:3px solid var(--lc-gold);font-size:15px;color:var(--lc-muted)}
     .lc-proof-image{margin:18px 0 0;max-width:100%;height:auto}
     .lc-nowrap{white-space:nowrap}
+    .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
+    .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
+    .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:132px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
+    .lc-faq-language-menu .lc-language-menu-list li{margin:0}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 18px;color:#f5eadb;text-align:left;text-decoration:none;text-transform:none;white-space:nowrap}
+    .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
+    .lc-site-header .lc-faq-language-menu{flex:0 0 auto;margin-left:auto}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-toggle{border-color:rgba(0,0,0,.18);background:transparent;color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list{background:#fff;border-color:rgba(0,0,0,.10);box-shadow:0 16px 34px rgba(0,0,0,.16)}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a{color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-site-header .lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(137,80,6,.08);color:#895006}
+    @media (max-width:760px){.lc-site-header .lc-faq-language-menu{grid-column:2;justify-self:start;margin:8px 0 0}.lc-page-header .lc-faq-language-menu{margin-top:2px}}
+    .lc-nowrap{white-space:nowrap}
     .lc-nutrition-page .lc-panel{max-width:980px;margin:0 auto}
     .lc-nutrition-intro{color:var(--lc-muted)}
     .lc-nutrition-intro p{font-size:18px}
@@ -186,7 +201,7 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
         <a href="/film-maison-leopold-croizet/">Le film</a>
         <a href="/rencontre/">Visite</a>
       </nav>
-
+      <div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false" aria-label="Changer de langue">Fr</button><ul class="lc-language-menu-list" hidden><li class="wpml-ls-current-language wpml-ls-item"><a href="/valeurs-nutritionnelles/xo/" hreflang="fr" lang="fr" aria-current="page"><span class="wpml-ls-display" lang="fr">Français</span></a></li><li class="wpml-ls-item"><a href="/en/nutrition/xo/" hreflang="en" lang="en"><span class="wpml-ls-display" lang="en">English</span></a></li><li class="wpml-ls-item"><a href="/ru/nutrition/xo/" hreflang="ru" lang="ru"><span class="wpml-ls-display" lang="ru">Русский</span></a></li><li class="wpml-ls-item"><a href="/da/nutrition/xo/" hreflang="da" lang="da"><span class="wpml-ls-display" lang="da">Dansk</span></a></li><li class="wpml-ls-item"><a href="/sv/nutrition/xo/" hreflang="sv" lang="sv"><span class="wpml-ls-display" lang="sv">Svenska</span></a></li><li class="wpml-ls-item"><a href="/no/nutrition/xo/" hreflang="no" lang="no"><span class="wpml-ls-display" lang="no">Norsk</span></a></li><li class="wpml-ls-item"><a href="/zh/nutrition/xo/" hreflang="zh-CN" lang="zh-CN"><span class="wpml-ls-display" lang="zh-CN">中文</span></a></li></ul></div>
     </div>
   </header>
   <main class="lc-main-plain">
@@ -236,6 +251,28 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
     <div class="copyright">© Léopold Croizet 2026</div>
   <div class="lc-footer-compliance"><p>L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p><p>La vente d’alcool est interdite aux mineurs. Une preuve de majorité peut être demandée.</p></div>
   </footer>
-
+<script id="lc-faq-language-menu">
+document.addEventListener('click', function(event) {
+  var menu = event.target.closest('[data-lc-language-menu]');
+  document.querySelectorAll('[data-lc-language-menu]').forEach(function(candidate) {
+    if (candidate !== menu) {
+      candidate.classList.remove('is-open');
+      var candidateButton = candidate.querySelector('.lc-language-menu-toggle');
+      var candidateList = candidate.querySelector('.lc-language-menu-list');
+      if (candidateButton) candidateButton.setAttribute('aria-expanded', 'false');
+      if (candidateList) candidateList.hidden = true;
+    }
+  });
+  if (!menu) return;
+  var button = event.target.closest('.lc-language-menu-toggle');
+  if (!button) return;
+  var list = menu.querySelector('.lc-language-menu-list');
+  if (!list) return;
+  var open = !menu.classList.contains('is-open');
+  menu.classList.toggle('is-open', open);
+  button.setAttribute('aria-expanded', open ? 'true' : 'false');
+  list.hidden = !open;
+});
+</script>
 </body>
 </html>

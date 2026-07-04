@@ -1958,7 +1958,7 @@ nav.navbar .lc-language-menu > ul.lc-language-menu-list,
   top: 100%;
   right: 0;
   display: none !important;
-  min-width: 96px;
+  min-width: 132px;
   margin: 8px 0 0 !important;
   padding: 7px 0 !important;
   list-style: none;
@@ -1990,10 +1990,11 @@ nav.navbar .lc-language-menu.is-open > ul.lc-language-menu-list,
 .lc-language-menu > ul.lc-language-menu-list li a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li a {
   display: block;
-  padding: 6px 16px;
+  padding: 7px 18px;
   color: black;
   line-height: 1.2;
-  text-align: center;
+  text-align: left;
+  text-transform: none;
   white-space: nowrap;
 }
 .lc-language-menu > ul.lc-language-menu-list li a::after,
@@ -2003,6 +2004,7 @@ nav.navbar .lc-language-menu.is-open > ul.lc-language-menu-list,
 }
 .lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a,
 .wpml-ls-legacy-list-horizontal.lc-language-menu > ul.lc-language-menu-list li.wpml-ls-current-language a {
+  background: rgba(137, 80, 6, 0.08);
   color: #895006;
 }
 `;

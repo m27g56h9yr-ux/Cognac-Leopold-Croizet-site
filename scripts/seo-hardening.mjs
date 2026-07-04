@@ -1540,7 +1540,7 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
   const routes = sourceNavigationRoutes(lang);
   const isPlainHeader = headerVariant === 'plain';
   const isFaqPage = pageClass.split(/\s+/).includes('lc-faq-page');
-  const languageMenu = isFaqPage ? faqLanguageMenuHtml(route) : '';
+  const languageMenu = faqLanguageMenuHtml(route);
   const headerHtml = isPlainHeader ? `  <header class="lc-site-header">
     <div class="lc-site-nav">
       <a class="lc-logo-header" href="${routes.home}" aria-label="${nav.home}">
@@ -1601,14 +1601,29 @@ function sourcePageShell({ route = '/', title, description, eyebrow, heading, le
     .lc-film-panel{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:clamp(18px,4vw,44px)}` : '';
   const plainHeaderMobileCss = isPlainHeader ? `
     @media (max-width:760px){.lc-site-nav{padding:8px 20px 12px;display:grid;grid-template-columns:110px minmax(0,1fr);column-gap:18px;align-items:start}.lc-logo-header{width:110px;flex-basis:auto}.lc-site-header .lc-nav{width:100%;padding-left:0;gap:0;flex-direction:column}.lc-site-header .lc-nav a{width:100%;padding:6px 0;margin:0;border-bottom:1px solid #AC8C5E;font-size:11px;line-height:1.25}.lc-main-plain{padding:88px 18px 90px;margin-top:0;background:linear-gradient(#dacdbc 0%,#f6f3ef 220px)}.lc-paper-tear{height:82px}.lc-page-title{text-align:left;margin-bottom:34px}.lc-film-title{font-size:clamp(26px,8vw,36px);line-height:1.22}.lc-film-panel{padding:18px}}` : '';
+  const languageMenuCss = `    .lc-nowrap{white-space:nowrap}
+    .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
+    .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
+    .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:132px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
+    .lc-faq-language-menu .lc-language-menu-list li{margin:0}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 18px;color:#f5eadb;text-align:left;text-decoration:none;text-transform:none;white-space:nowrap}
+    .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
+    .lc-site-header .lc-faq-language-menu{flex:0 0 auto;margin-left:auto}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-toggle{border-color:rgba(0,0,0,.18);background:transparent;color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list{background:#fff;border-color:rgba(0,0,0,.10);box-shadow:0 16px 34px rgba(0,0,0,.16)}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a{color:#232323}
+    .lc-site-header .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-site-header .lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(137,80,6,.08);color:#895006}
+    @media (max-width:760px){.lc-site-header .lc-faq-language-menu{grid-column:2;justify-self:start;margin:8px 0 0}.lc-page-header .lc-faq-language-menu{margin-top:2px}}`;
   const faqShellCss = isFaqPage ? `    .lc-nowrap{white-space:nowrap}
     .lc-faq-language-menu{position:relative;font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0}
     .lc-faq-language-menu .lc-language-menu-toggle{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.42);background:rgba(15,11,8,.34);color:#fff;cursor:pointer;text-transform:uppercase}
     .lc-faq-language-menu .lc-language-menu-toggle::after{content:"";width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin-top:-3px}
-    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:106px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
+    .lc-faq-language-menu .lc-language-menu-list{position:absolute;right:0;top:calc(100% + 8px);z-index:20;min-width:132px;margin:0;padding:7px 0;list-style:none;background:#17120e;border:1px solid rgba(255,255,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.24)}
     .lc-faq-language-menu .lc-language-menu-list[hidden]{display:none}
     .lc-faq-language-menu .lc-language-menu-list li{margin:0}
-    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 12px;color:#f5eadb;text-decoration:none}
+    .lc-faq-language-menu .lc-language-menu-list a{display:block;padding:7px 18px;color:#f5eadb;text-align:left;text-decoration:none;text-transform:none;white-space:nowrap}
     .lc-faq-language-menu .lc-language-menu-list a:hover,.lc-faq-language-menu .lc-language-menu-list .wpml-ls-current-language a{background:rgba(183,138,59,.18);color:#fff}
     body.lc-faq-page .lc-page-header{min-height:56vh;background:linear-gradient(rgba(12,10,8,.42),rgba(12,10,8,.66)),url("/wp-content/uploads/2021/05/img_home_large_savoirfaire-1280x540.jpg") center/cover;color:#fff}
     body.lc-faq-page .lc-hero{margin-top:104px;text-shadow:0 2px 20px rgba(0,0,0,.28)}
@@ -1710,6 +1725,7 @@ ${faqShellCss}
     .lc-button.secondary{border-color:var(--lc-line)}
     .lc-note{margin-top:32px;padding:18px 20px;background:var(--lc-cream);border-left:3px solid var(--lc-gold);font-size:15px;color:var(--lc-muted)}
     .lc-proof-image{margin:18px 0 0;max-width:100%;height:auto}
+${languageMenuCss}
 ${extraCss ? `${extraCss}\n` : ''}    footer{padding:42px 20px;text-align:center;background:#17120e;color:#f2eadf}
     footer img{width:154px;height:auto}
     .menu-footer ul{list-style:none;margin:22px 0 0;padding:0;display:flex;justify-content:center;gap:18px;flex-wrap:wrap;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0;text-transform:uppercase}
@@ -1740,7 +1756,7 @@ ${headerHtml}
     </div>
     <div class="copyright">© Léopold Croizet 2026</div>
   </footer>
-${isFaqPage ? faqLanguageMenuScript() : ''}
+${faqLanguageMenuScript()}
 </body>
 </html>`;
 }
@@ -1902,21 +1918,41 @@ function legacyProofRouteForLang(lang) {
   return lang === 'fr' ? '/preuves/' : `/${lang}/preuves/`;
 }
 
+function languageMenuRouteResolver(route) {
+  if (PROOF_ROUTES.includes(route)) return proofRouteForLang;
+  if (MEDAL_ROUTES.includes(route)) return medalRouteForLang;
+  if (FILM_ROUTES.includes(route)) return filmRouteForLang;
+  if (NUTRITION_INDEX_ROUTES.includes(route)) return nutritionRouteForLang;
+
+  const nutritionSlug = NUTRITION_PRODUCT_SLUGS.find((slug) => (
+    SITE_LANGUAGES.some((lang) => nutritionProductRouteForLang(lang, slug) === route)
+  ));
+  if (nutritionSlug) return (lang) => nutritionProductRouteForLang(lang, nutritionSlug);
+
+  return faqRouteForLang;
+}
+
 function faqLanguageMenuHtml(route) {
   const currentLang = languageForRoute(route);
   const labels = { fr: 'Fr', en: 'En', ru: 'Ру', da: 'Da', sv: 'Sv', no: 'No', zh: '中文' };
-  const routeForLang = PROOF_ROUTES.includes(route)
-    ? proofRouteForLang
-    : MEDAL_ROUTES.includes(route)
-      ? medalRouteForLang
-      : faqRouteForLang;
+  const menuLabels = { fr: 'Français', en: 'English', ru: 'Русский', da: 'Dansk', sv: 'Svenska', no: 'Norsk', zh: '中文' };
+  const ariaLabels = {
+    fr: 'Changer de langue',
+    en: 'Change language',
+    ru: 'Изменить язык',
+    da: 'Skift sprog',
+    sv: 'Byt språk',
+    no: 'Bytt språk',
+    zh: '切换语言',
+  };
+  const routeForLang = languageMenuRouteResolver(route);
   const items = SITE_LANGUAGES.map((lang) => {
     const hrefLang = lang === 'zh' ? 'zh-CN' : lang;
     const current = lang === currentLang;
-    return `<li class="${current ? 'wpml-ls-current-language ' : ''}wpml-ls-item"><a href="${sourceHref(routeForLang(lang))}" hreflang="${hrefLang}" lang="${htmlLangForRoute(routeForLang(lang))}"${current ? ' aria-current="page"' : ''}>${labels[lang]}</a></li>`;
+    return `<li class="${current ? 'wpml-ls-current-language ' : ''}wpml-ls-item"><a href="${sourceHref(routeForLang(lang))}" hreflang="${hrefLang}" lang="${htmlLangForRoute(routeForLang(lang))}"${current ? ' aria-current="page"' : ''}><span class="wpml-ls-display" lang="${hrefLang}">${menuLabels[lang]}</span></a></li>`;
   }).join('');
 
-  return `<div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false">${labels[currentLang]}</button><ul class="lc-language-menu-list" hidden>${items}</ul></div>`;
+  return `<div class="lc-language-menu lc-faq-language-menu" data-lc-language-menu><button type="button" class="lc-language-menu-toggle" aria-expanded="false" aria-label="${escapeHtml(ariaLabels[currentLang] || ariaLabels.en)}">${labels[currentLang]}</button><ul class="lc-language-menu-list" hidden>${items}</ul></div>`;
 }
 
 function faqLanguageMenuScript() {
@@ -4146,10 +4182,10 @@ function replaceResidualAgeGate(html, lang) {
     .replace(/If no such law exists in your country or region, you must be at least 21 years old\.?/g, copy.fallback)
     .replace(/En cliquant sur «\s*Entrer\s*» vous confirmez avoir l[’']âge requis dans votre pays pour visiter ce site\.?/g, copy.confirm)
     .replace(/By clicking [“"](?:Enter|进入)[”"], you confirm that you are of legal age in your country to visit this site\.?/g, copy.confirm)
-    .replace(/Vous acceptez nos <a href="#">Conditions générales d['’]utilisation<\/a> et déclarez avoir lu notre/g, copy.terms)
-    .replace(/You accept our <a href="#">terms of use<\/a> and confirm that you have read our/g, copy.terms)
-    .replace(/<a href="#">Charte de données personnelles & Cookies<\/a>/g, copy.privacy)
-    .replace(/<a href="#">personal data and cookies policy<\/a>/g, copy.privacy)
+    .replace(/Vous acceptez nos <a href=["'](?:#|\/cgv\/)["']>Conditions générales d['’]utilisation<\/a> et déclarez avoir lu notre/g, copy.terms)
+    .replace(/You accept our <a href=["'](?:#|\/cgv\/)["']>terms of use<\/a> and confirm that you have read our/g, copy.terms)
+    .replace(/<a href=["'](?:#|\/mentions-legales\/)["']>Charte de données personnelles & Cookies<\/a>/g, copy.privacy)
+    .replace(/<a href=["'](?:#|\/mentions-legales\/)["']>personal data and cookies policy<\/a>/g, copy.privacy)
     .replace(/<button type="submit">Entrer<\/button>/g, `<button type="submit">${copy.enter}</button>`);
 }
 

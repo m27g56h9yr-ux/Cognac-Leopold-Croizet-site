@@ -2,7 +2,7 @@ import { existsSync } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DEPLOY_BASE_PATH, GITHUB_PAGES_BASE_PATH } from './deploy-config.mjs';
+import { DEPLOY_BASE_PATH, GITHUB_PAGES_BASE_PATH, PUBLIC_ORIGIN } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -18,6 +18,10 @@ const imageDimensionViolations = [];
 const formLabelViolations = [];
 const productAltViolations = [];
 const homeMediaViolations = [];
+const languageMenuViolations = [];
+const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
+const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
+const languageMenuExpectedHreflangs = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'];
 const WALK_SKIP_DIRS = new Set([
   '.agents',
   '.github',
@@ -86,6 +90,7 @@ for (const file of checkedFiles) {
     formLabelViolations.push(...findFormLabelViolations(text, relativeFile));
     productAltViolations.push(...findProductAltViolations(text, relativeFile));
     homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
+    languageMenuViolations.push(...findLanguageMenuViolations(text, relativeFile));
     pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
     pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
     collectionEndPageLayoutViolations.push(...findCollectionEndPageLayoutViolations(text, relativeFile));
@@ -104,6 +109,7 @@ if (
   || formLabelViolations.length
   || productAltViolations.length
   || homeMediaViolations.length
+  || languageMenuViolations.length
 ) {
   if (missing.length) {
     console.error('Missing local targets:');
@@ -158,6 +164,11 @@ if (
   if (homeMediaViolations.length) {
     console.error('Homepage media loading regressions:');
     for (const item of homeMediaViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (languageMenuViolations.length) {
+    console.error('Language menu regressions:');
+    for (const item of languageMenuViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   process.exit(1);
@@ -296,6 +307,61 @@ function findHomeMediaViolations(html, relativeFile) {
   return violations;
 }
 
+function findLanguageMenuViolations(html, relativeFile) {
+  const menu = html.match(/<div\b[^>]*\blc-language-menu\b[\s\S]*?<ul\b[^>]*\blc-language-menu-list\b[^>]*>([\s\S]*?)<\/ul>[\s\S]*?<\/div>/i);
+  if (!menu) {
+    return hasCompleteLanguageAlternates(html) ? [`${relativeFile}: missing language menu`] : [];
+  }
+
+  const violations = [];
+  const menuHtml = menu[0];
+  const listHtml = menu[1];
+  const toggle = menuHtml.match(/<(?:a|button)\b[^>]*\blc-language-menu-toggle\b[^>]*>/i)?.[0] || '';
+  if (!toggle) {
+    violations.push(`${relativeFile}: missing language menu toggle`);
+  } else {
+    if (!hasAttribute(toggle, 'aria-label')) violations.push(`${relativeFile}: language menu toggle missing aria-label`);
+    if (getAttribute(toggle, 'aria-expanded') !== 'false') violations.push(`${relativeFile}: language menu toggle must default to aria-expanded="false"`);
+  }
+
+  const labels = [...listHtml.matchAll(/<span\b[^>]*\bwpml-ls-display\b[^>]*>([\s\S]*?)<\/span>/gi)]
+    .map((match) => stripTags(decodeHtml(match[1])).trim());
+  if (labels.join('|') !== languageMenuExpectedLabels.join('|')) {
+    violations.push(`${relativeFile}: expected language labels "${languageMenuExpectedLabels.join(' | ')}", found "${labels.join(' | ')}"`);
+  }
+
+  const anchors = [...listHtml.matchAll(/<a\b[^>]*>/gi)].map((match) => match[0]);
+  const hrefLangs = anchors.map((anchor) => getAttribute(anchor, 'hreflang'));
+  if (hrefLangs.join('|') !== languageMenuExpectedHreflangs.join('|')) {
+    violations.push(`${relativeFile}: expected hreflang order "${languageMenuExpectedHreflangs.join(' | ')}", found "${hrefLangs.join(' | ')}"`);
+  }
+
+  const currentItem = listHtml.match(/<li\b[^>]*\bwpml-ls-current-language\b[^>]*>[\s\S]*?<\/li>/i)?.[0] || '';
+  if (!currentItem) {
+    violations.push(`${relativeFile}: missing current language marker`);
+  } else if (!/aria-current=(["'])page\1/i.test(currentItem)) {
+    violations.push(`${relativeFile}: current language link missing aria-current="page"`);
+  }
+
+  const productSlug = productSlugForRelativeFile(relativeFile);
+  if (productSlug && allProductLocaleRoutesExist(productSlug)) {
+    const hrefs = new Set(anchors.map((anchor) => normalizeLocalHref(getAttribute(anchor, 'href'))).filter(Boolean));
+    for (const lang of siteLanguages) {
+      const expected = productRouteForLanguage(lang, productSlug);
+      if (!hrefs.has(expected)) violations.push(`${relativeFile}: language menu missing product alternate ${expected}`);
+    }
+  }
+
+  return violations;
+}
+
+function hasCompleteLanguageAlternates(html) {
+  return languageMenuExpectedHreflangs.every((hrefLang) => (
+    new RegExp(`<link\\b[^>]*\\brel=(["'])alternate\\1[^>]*\\bhreflang=(["'])${escapeRegExp(hrefLang)}\\2`, 'i').test(html)
+    || new RegExp(`<link\\b[^>]*\\bhreflang=(["'])${escapeRegExp(hrefLang)}\\1[^>]*\\brel=(["'])alternate\\2`, 'i').test(html)
+  ));
+}
+
 function isWrappedByLabel(html, index) {
   const open = html.lastIndexOf('<label', index);
   const close = html.lastIndexOf('</label>', index);
@@ -309,6 +375,39 @@ function hasAttribute(tag, name) {
 function getAttribute(tag, name) {
   const pattern = new RegExp("\\b" + escapeRegExp(name) + "=([\'\\\"])(.*?)\\1", "i");
   return tag.match(pattern)?.[2] || '';
+}
+
+function stripTags(value) {
+  return String(value).replace(/<[^>]*>/g, ' ');
+}
+
+function normalizeLocalHref(href) {
+  if (!href) return '';
+  let value = decodeHtml(href).split('#')[0].split('?')[0].trim();
+  if (!value) return '';
+  try {
+    const url = new URL(value, PUBLIC_ORIGIN);
+    if (url.origin !== PUBLIC_ORIGIN) return '';
+    value = url.pathname;
+  } catch {
+    return '';
+  }
+  if (DEPLOY_BASE_PATH && value.startsWith(`${DEPLOY_BASE_PATH}/`)) {
+    value = value.slice(DEPLOY_BASE_PATH.length);
+  }
+  return value.endsWith('/') ? value : `${value}/`;
+}
+
+function productSlugForRelativeFile(relativeFile) {
+  return relativeFile.match(/^(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\/index\.html$/)?.[1] || '';
+}
+
+function productRouteForLanguage(lang, slug) {
+  return lang === 'fr' ? `/collection/${slug}/` : `/${lang}/collection/${slug}/`;
+}
+
+function allProductLocaleRoutesExist(slug) {
+  return siteLanguages.every((lang) => localTargetExists(productRouteForLanguage(lang, slug)));
 }
 
 function escapeRegExp(value) {
