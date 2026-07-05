@@ -5759,7 +5759,10 @@ function restorePartnerOrderButton(html, route) {
 
 
 </div>`;
-    if (/<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b/i.test(next)) {
+    const galleryHtml = appendInsideProductGallery(next, buttonHtml);
+    if (galleryHtml) {
+      next = galleryHtml;
+    } else if (/<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b/i.test(next)) {
       next = next.replace(/(\n<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b)/i, `${buttonHtml}$1`);
     } else if (/<\/main><\/div>/i.test(next)) {
       next = next.replace(/<\/main><\/div>/i, `${buttonHtml}\n</main></div>`);
@@ -5769,6 +5772,27 @@ function restorePartnerOrderButton(html, route) {
   }
 
   return ensurePartnerOrderButtonScript(next);
+}
+
+function appendInsideProductGallery(html, buttonHtml) {
+  const galleryOpen = /<div\b[^>]*class=(["'])(?=[^"']*\bwoocommerce-product-gallery\b)[^"']*\1[^>]*>/i.exec(html);
+  if (!galleryOpen) return '';
+
+  const divPattern = /<\/?div\b[^>]*>/gi;
+  divPattern.lastIndex = galleryOpen.index;
+  let depth = 0;
+  let match;
+  while ((match = divPattern.exec(html))) {
+    if (match[0].startsWith('</')) {
+      depth -= 1;
+    } else {
+      depth += 1;
+    }
+    if (depth === 0) {
+      return `${html.slice(0, match.index)}${buttonHtml}\n${html.slice(match.index)}`;
+    }
+  }
+  return '';
 }
 
 function ensurePartnerOrderButtonScript(html) {
