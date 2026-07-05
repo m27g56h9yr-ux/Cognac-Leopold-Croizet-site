@@ -1428,6 +1428,41 @@ const partnerOrderLinks = new Map([
   ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
 ]);
 
+const SELLER_TRACKING_FILE = 'suivi-vendeurs.html';
+const SELLER_TRACKING_ENDPOINT = 'suivi-vendeurs-data.php';
+const SELLER_TRACKING_UPDATED_LABEL = '5 juillet 2026';
+const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine'].map((slug) => ({
+  product_slug: slug,
+  market_key: 'ru',
+  market: 'Russie',
+  seller: 'AV.ru',
+  product: sellerTrackingProductName(slug),
+  source_url: partnerOrderLinks.get(`/ru/collection/${slug}/`),
+  schema_status: 'Contrôle HTTP 450 côté relevé intégré',
+  offers: null,
+  review: null,
+  aggregateRating: null,
+  notes: 'Lien partenaire publié sur la version russe du site. Le relevé intégré n’a pas pu confirmer les données Product, Offer, Review ou AggregateRating ; l’endpoint de rafraîchissement retente le contrôle au chargement.',
+  source_http_code: 450,
+  refresh_status: 'blocked',
+}));
+
+const sellerTrackingColumns = [
+  { key: 'market', title: 'Marché', definition: 'Zone consommateur concernée par le vendeur externe : ici la Russie pour les liens AV.ru actuellement publiés.' },
+  { key: 'seller', title: 'Vendeur', definition: 'Nom du distributeur partenaire chez qui la page source est contrôlée.' },
+  { key: 'product', title: 'Produit', definition: 'Référence Léopold Croizet suivie sur la page du distributeur.' },
+  { key: 'source', title: 'Source', definition: 'Lien vers la page partenaire utilisée pour relever les données structurées.' },
+  { key: 'schema_status', title: 'Statut schema', definition: 'Présence, absence ou impossibilité de confirmer un bloc Product exploitable dans les données structurées de la page source.' },
+  { key: 'offers', title: 'offers', definition: 'Objet Schema.org Offer : prix, devise, disponibilité, état, vendeur et URL quand ces champs sont publiés.' },
+  { key: 'review', title: 'review', definition: 'Objet Schema.org Review : avis individuel publié dans les données structurées. S’il n’existe pas, la cellule indique Non exposé.' },
+  { key: 'aggregateRating', title: 'aggregateRating', definition: 'Objet Schema.org AggregateRating : note moyenne et compteurs d’avis ou de notes quand le distributeur les publie.' },
+  { key: 'notes', title: 'Note', definition: 'Lecture humaine du résultat, notamment les limites ou absences détectées dans les données partenaires.' },
+];
+
+function sellerTrackingProductName(slug) {
+  return `Cognac Léopold\u00a0Croizet ${productNames.get(slug) || slug}`;
+}
+
 function isNoindexRoute(route) {
   return noindexRoutes.has(route) || route.startsWith('/_preview/');
 }
@@ -1507,6 +1542,8 @@ async function walkHtml(dir) {
 
 async function writeSourcePages() {
   const pages = new Map();
+
+  pages.set(SELLER_TRACKING_FILE, sellerTrackingPageHtml());
 
   for (const route of FAQ_ROUTES) {
     pages.set(`${route.replace(/^\//, '')}index.html`, faqPageHtml(route));
@@ -3306,6 +3343,580 @@ function nutritionPageCss() {
     .lc-nutrition-meta dt{font-family:Arial,sans-serif;font-size:12px;text-transform:uppercase;color:var(--lc-gold);margin:0 0 4px}
     .lc-nutrition-meta dd{margin:0;color:var(--lc-ink)}
     @media (max-width:760px){.lc-nutrition-product-grid,.lc-nutrition-meta{grid-template-columns:1fr}.lc-nutrition-table{min-width:560px}.lc-nutrition-card h2{font-size:25px}}`;
+}
+
+function sellerTrackingPayload() {
+  return {
+    updatedAt: '2026-07-05',
+    updatedAtLabel: SELLER_TRACKING_UPDATED_LABEL,
+    rows: sellerTrackingRows,
+  };
+}
+
+function sellerTrackingPageHtml() {
+  const payload = sellerTrackingPayload();
+  const json = JSON.stringify(payload, null, 2);
+  const scriptJson = json.replace(/</g, '\\u003c');
+  const headerCells = sellerTrackingColumns.map((column) => (
+    `<th scope="col"><a class="column-link" href="#definition-${sellerDefinitionId(column.key)}"><span>${escapeHtml(column.title)}</span><span class="column-marker" aria-hidden="true">?</span></a></th>`
+  )).join('\n            ');
+  const definitions = sellerTrackingColumns.map((column) => (
+    `<article id="definition-${sellerDefinitionId(column.key)}" class="definition-card">
+          <h2>${escapeHtml(column.title)}</h2>
+          <p>${escapeHtml(column.definition)}</p>
+          <a href="#seller-tracking-table">Retour au tableau</a>
+        </article>`
+  )).join('\n\n        ');
+
+  return `<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi vendeurs | Cognac Léopold Croizet</title>
+  <meta name="description" content="Page technique de suivi des données structurées publiées par les vendeurs externes Cognac Léopold Croizet.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <link rel="canonical" href="${PUBLIC_ORIGIN}/${SELLER_TRACKING_FILE}">
+  <link rel="icon" href="/assets/brand/favicon-512.png">
+  <style>
+${sellerTrackingCss()}
+  </style>
+  <script type="application/json" id="seller-tracking-data">${scriptJson}</script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Suivi vendeurs</h1>
+      <p>Page technique interne. Elle reprend les valeurs structurées actuellement visibles dans les pages vendeurs externes pour <code>offers</code>, <code>review</code> et <code>aggregateRating</code>. Elle n'est pas reliée au reste du site et reste en <code>noindex,nofollow,noarchive</code>.</p>
+      <div class="seller-meta">
+        <span id="seller-last-updated">Dernière extraction : ${escapeHtml(SELLER_TRACKING_UPDATED_LABEL)}</span>
+        <span>Portée : AV.ru</span>
+        <span>Usage : suivi technique uniquement</span>
+        <span id="seller-refresh-status" class="seller-live-status" data-state="loading">Actualisation en cours...</span>
+      </div>
+    </header>
+    <section class="seller-panel" aria-label="Données structurées des vendeurs externes">
+      <div class="seller-panel-title">
+        <h2>Relevé distributeurs</h2>
+        <span id="seller-tracking-count">${sellerTrackingRows.length} liens partenaires suivis</span>
+      </div>
+      <div class="table-scroll">
+      <table id="seller-tracking-table">
+        <colgroup>
+          <col class="market-col">
+          <col class="seller-col">
+          <col class="product-col">
+          <col class="source-col">
+          <col class="status-col">
+          <col class="offers-col">
+          <col class="review-col">
+          <col class="rating-col">
+          <col class="note-col">
+        </colgroup>
+        <thead>
+          <tr>
+            ${headerCells}
+          </tr>
+        </thead>
+        <tbody id="seller-tracking-body">
+${sellerTrackingRowsHtml(sellerTrackingRows)}
+        </tbody>
+      </table>
+      </div>
+    </section>
+    <section class="definitions" aria-labelledby="definitions-title">
+      <h2 id="definitions-title">Définitions des colonnes</h2>
+      <div class="definition-grid">
+        ${definitions}
+      </div>
+    </section>
+    <details>
+      <summary>Exporter les données de suivi en JSON</summary>
+      <pre><code id="seller-json-export">${escapeHtml(json)}</code></pre>
+    </details>
+  </main>
+  <script>
+${sellerTrackingRuntimeScript()}
+  </script>
+</body>
+</html>`;
+}
+
+function sellerTrackingCss() {
+  return `    :root {
+      --ink: #15120f;
+      --muted: #665b50;
+      --paper: #f6f3ef;
+      --panel: #ffffff;
+      --panel-soft: #fbf8f2;
+      --line: rgba(78, 53, 32, .18);
+      --brand: #70451d;
+      --brand-strong: #352217;
+      --accent: #b78a3b;
+      --soft: #efe5d6;
+      --warning: #fff7e8;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+    }
+    main { width: min(1480px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 56px; }
+    header { display: grid; gap: 10px; margin-bottom: 24px; }
+    h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 500; letter-spacing: 0; }
+    p { max-width: 920px; margin: 0; color: var(--muted); }
+    .seller-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .seller-meta span { padding: 7px 10px; border: 1px solid var(--line); background: var(--soft); font-size: .82rem; font-weight: 700; border-radius: 6px; }
+    .seller-panel { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; box-shadow: 0 18px 40px rgba(42, 31, 21, .08); overflow: hidden; }
+    .seller-panel-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(90deg, #ffffff 0%, #f7f0e7 100%); }
+    .seller-panel-title h2 { margin: 0; font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; color: var(--brand-strong); }
+    .seller-panel-title span { color: var(--muted); font-size: .85rem; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; min-width: 1380px; border-collapse: collapse; table-layout: fixed; font-size: .88rem; }
+    col.market-col { width: 82px; }
+    col.seller-col { width: 90px; }
+    col.product-col { width: 118px; }
+    col.source-col { width: 130px; }
+    col.status-col { width: 180px; }
+    col.offers-col { width: 250px; }
+    col.review-col { width: 130px; }
+    col.rating-col { width: 190px; }
+    col.note-col { width: 210px; }
+    th, td { vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-align: left; }
+    th { position: sticky; top: 0; z-index: 1; background: var(--brand-strong); color: #fff; font-size: .72rem; text-transform: uppercase; }
+    tbody tr:nth-child(even) td { background: var(--panel-soft); }
+    tbody tr:hover td { background: #f2eadf; }
+    tbody tr:last-child td { border-bottom: 0; }
+    a { color: var(--brand); font-weight: 700; }
+    a:focus-visible { outline: 3px solid rgba(183, 138, 59, .42); outline-offset: 3px; border-radius: 4px; }
+    .column-link { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 34px; color: #fff; text-decoration: none; }
+    .column-link:hover span:first-child { text-decoration: underline; }
+    .column-marker { display: inline-grid; place-items: center; width: 18px; height: 18px; border: 1px solid rgba(255, 255, 255, .45); border-radius: 50%; font-size: .72rem; line-height: 1; }
+    .strong-value { font-weight: 800; color: var(--ink); }
+    .source-link { display: grid; gap: 2px; text-decoration: none; }
+    .source-link span { overflow-wrap: anywhere; }
+    .source-link small { color: var(--accent); font-size: .72rem; text-transform: uppercase; }
+    .status-pill { display: inline-flex; padding: 6px 8px; border-radius: 6px; background: #f1e7d9; color: var(--brand-strong); font-weight: 800; line-height: 1.25; }
+    .schema-cell--offers { background: #fffdf9; box-shadow: inset 4px 0 0 rgba(183, 138, 59, .62); }
+    .schema-card { display: grid; gap: 7px; margin: 0; }
+    .schema-list-item { display: grid; gap: 6px; padding: 8px 0; border-bottom: 1px solid rgba(78, 53, 32, .14); }
+    .schema-list-item:last-child { border-bottom: 0; }
+    .schema-list-label { width: fit-content; padding: 2px 6px; border-radius: 4px; background: var(--soft); color: var(--brand-strong); font-size: .72rem; font-weight: 900; }
+    .schema-field { display: grid; grid-template-columns: 108px minmax(0, 1fr); gap: 8px; align-items: start; padding: 0 0 7px; border-bottom: 1px solid rgba(78, 53, 32, .11); }
+    .schema-field:last-child { padding-bottom: 0; border-bottom: 0; }
+    dt { margin: 0; color: var(--muted); font-size: .72rem; font-weight: 800; text-transform: uppercase; }
+    dd { margin: 0; min-width: 0; color: var(--ink); overflow-wrap: anywhere; }
+    .schema-mini { display: block; margin-top: 2px; color: var(--muted); font-size: .72rem; font-weight: 600; }
+    .schema-ref, .inline-url { overflow-wrap: anywhere; }
+    pre { max-width: none; margin: 0; white-space: pre-wrap; word-break: break-word; font-size: .78rem; line-height: 1.35; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .seller-empty { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 8px; color: #6c6257; background: var(--warning); border: 1px solid rgba(183, 138, 59, .24); border-radius: 6px; font-style: italic; }
+    .seller-live-status { background: #fff; }
+    .seller-live-status[data-state="loading"] { background: #fff7e8; color: #7a4b1c; }
+    .seller-live-status[data-state="ok"] { background: #e8f3ea; color: #244c37; }
+    .seller-live-status[data-state="error"] { background: #fdecea; color: #8a2f24; }
+    .note-text { color: var(--ink); font-size: .84rem; }
+    .definitions { margin-top: 28px; }
+    .definitions h2 { margin: 0 0 12px; font-size: 1.35rem; font-family: Georgia, "Times New Roman", serif; font-weight: 500; color: var(--brand-strong); }
+    .definition-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .definition-card { scroll-margin-top: 18px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 14px; }
+    .definition-card:target { border-color: rgba(183, 138, 59, .65); box-shadow: 0 0 0 4px rgba(183, 138, 59, .14); }
+    .definition-card h2 { margin: 0 0 8px; font-family: Arial, sans-serif; font-size: .9rem; font-weight: 900; text-transform: uppercase; color: var(--brand-strong); }
+    .definition-card p { font-size: .88rem; }
+    .definition-card a { display: inline-block; margin-top: 10px; font-size: .8rem; }
+    details { margin-top: 22px; border: 1px solid var(--line); background: var(--panel); border-radius: 8px; overflow: hidden; }
+    summary { cursor: pointer; padding: 14px 16px; font-weight: 800; }
+    details pre { max-width: none; padding: 0 16px 18px; }
+    @media (max-width: 760px) {
+      main { width: min(100% - 20px, 1480px); padding-top: 22px; }
+      .seller-panel-title { align-items: flex-start; flex-direction: column; }
+      table { min-width: 0; }
+      colgroup, thead { display: none; }
+      tr { display: block; border-bottom: 1px solid var(--line); }
+      td { display: grid; grid-template-columns: minmax(92px, 34%) minmax(0, 1fr); gap: 10px; border-right: 0; padding: 10px 12px; }
+      td::before { content: attr(data-label); color: var(--muted); font-size: .72rem; font-weight: 900; text-transform: uppercase; }
+      .schema-field { grid-template-columns: minmax(80px, 42%) minmax(0, 1fr); }
+      .schema-cell--offers { box-shadow: inset 3px 0 0 rgba(183, 138, 59, .62); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }`;
+}
+
+function sellerTrackingRuntimeScript() {
+  return `    (function () {
+      const endpoint = "${SELLER_TRACKING_ENDPOINT}";
+      const columns = ${JSON.stringify(sellerTrackingColumns.map(({ key, title }) => ({ key, title })))};
+      const schemaFields = ${JSON.stringify(sellerSchemaFields())};
+      const labels = columns.reduce((acc, column) => {
+        acc[column.key] = column.title;
+        return acc;
+      }, {});
+      const rawScript = document.getElementById("seller-tracking-data");
+      const tbody = document.getElementById("seller-tracking-body");
+      const countEl = document.getElementById("seller-tracking-count");
+      const updatedEl = document.getElementById("seller-last-updated");
+      const statusEl = document.getElementById("seller-refresh-status");
+      const exportEl = document.getElementById("seller-json-export");
+      const detectedChinaVisitor = detectsChinaVisitor();
+      if (detectedChinaVisitor) setChinaFlag();
+      const hidePricesForVisitor = detectedChinaVisitor || hasChinaFlag();
+      if (hidePricesForVisitor) document.documentElement.classList.add("lc-hide-prices");
+
+      function normalizeLang(value) {
+        return String(value || "").toLowerCase().replace(/_/g, "-");
+      }
+
+      function browserTags() {
+        const tags = [];
+        if (Array.isArray(navigator.languages)) tags.push(...navigator.languages);
+        if (navigator.language) tags.push(navigator.language);
+        return tags;
+      }
+
+      function detectsChinaVisitor() {
+        const chinaRegions = { cn: true, hk: true, mo: true, tw: true };
+        const chinaTimeZones = {
+          "Asia/Shanghai": true,
+          "Asia/Chongqing": true,
+          "Asia/Harbin": true,
+          "Asia/Urumqi": true,
+          "Asia/Hong_Kong": true,
+          "Asia/Macau": true,
+          "Asia/Taipei": true
+        };
+        for (const tag of browserTags()) {
+          const normalized = normalizeLang(tag);
+          if (normalized === "zh" || normalized.startsWith("zh-")) return true;
+          const region = normalized.split("-")[1];
+          if (chinaRegions[region]) return true;
+        }
+        try {
+          const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (chinaTimeZones[zone]) return true;
+        } catch (error) {}
+        return false;
+      }
+
+      function hasChinaFlag() {
+        try {
+          return window.localStorage && localStorage.getItem("lcChinaVisitor") === "1";
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function setChinaFlag() {
+        try {
+          if (window.localStorage) localStorage.setItem("lcChinaVisitor", "1");
+        } catch (error) {}
+      }
+
+      function sanitizePrices(value) {
+        if (!hidePricesForVisitor) return value;
+        if (Array.isArray(value)) return value.map(sanitizePrices);
+        if (!value || typeof value !== "object") return value;
+        const next = {};
+        Object.keys(value).forEach((key) => {
+          if (key === "price" || key === "priceCurrency") return;
+          next[key] = sanitizePrices(value[key]);
+        });
+        return next;
+      }
+
+      function sanitizePayload(payload) {
+        if (!hidePricesForVisitor || !payload || !Array.isArray(payload.rows)) return payload;
+        return {
+          ...payload,
+          rows: payload.rows.map((row) => ({
+            ...row,
+            offers: sanitizePrices(row.offers),
+            notes: row.notes ? \`\${row.notes} Prix masqué pour ce contexte visiteur.\` : "Prix masqué pour ce contexte visiteur."
+          }))
+        };
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        }[char]));
+      }
+
+      function schemaTerm(value) {
+        if (typeof value === "string" && value.startsWith("https://schema.org/")) {
+          return value.split("/").filter(Boolean).pop() || value;
+        }
+        return value;
+      }
+
+      function empty(label = "Non exposé") {
+        return \`<span class="seller-empty">\${escapeHtml(label)}</span>\`;
+      }
+
+      function sourceLabel(url) {
+        try {
+          return new URL(url).hostname.replace(/^www\\./, "");
+        } catch (error) {
+          return String(url || "").replace(/^https?:\\/\\//, "").split("/")[0] || "Page source";
+        }
+      }
+
+      function scalar(value) {
+        if (value === null || value === undefined) return empty("Non renseigné");
+        if (Array.isArray(value)) {
+          return value.length ? \`<code>\${escapeHtml(JSON.stringify(value))}</code>\` : empty("Liste vide");
+        }
+        if (typeof value === "object") {
+          const name = value.name;
+          const typeValue = schemaTerm(value["@type"]);
+          if (name) {
+            const typeHtml = typeValue ? \`<span class="schema-mini">\${escapeHtml(typeValue)}</span>\` : "";
+            return \`\${escapeHtml(name)}\${typeHtml}\`;
+          }
+          return \`<code>\${escapeHtml(JSON.stringify(value))}</code>\`;
+        }
+        if (typeof value === "string") {
+          if (value.startsWith("https://schema.org/")) {
+            const term = schemaTerm(value);
+            return \`<a class="schema-ref" href="\${escapeHtml(value)}" target="_blank" rel="noopener noreferrer">\${escapeHtml(term)}</a>\`;
+          }
+          if (value.startsWith("http://") || value.startsWith("https://")) {
+            let label = value.replace(/^https?:\\/\\//, "").replace(/\\/$/, "");
+            if (label.length > 54) label = \`\${label.slice(0, 51)}...\`;
+            return \`<a class="inline-url" href="\${escapeHtml(value)}" target="_blank" rel="noopener noreferrer">\${escapeHtml(label)}</a>\`;
+          }
+        }
+        return \`<code>\${escapeHtml(value)}</code>\`;
+      }
+
+      function fieldBlock(value, kind) {
+        if (value === null || value === undefined) return empty();
+        if (Array.isArray(value)) {
+          if (!value.length) return empty("Liste vide");
+          return value.map((item, index) => (
+            \`<div class="schema-list-item"><span class="schema-list-label">#\${index + 1}</span>\${fieldBlock(item, kind)}</div>\`
+          )).join("");
+        }
+        if (typeof value !== "object") {
+          return \`<div class="schema-card schema-card--simple">\${scalar(value)}</div>\`;
+        }
+        const configured = schemaFields[kind] || [];
+        const keys = [];
+        configured.forEach((field) => {
+          if (Object.prototype.hasOwnProperty.call(value, field.key)) keys.push(field.key);
+        });
+        Object.keys(value).forEach((key) => {
+          if (!keys.includes(key)) keys.push(key);
+        });
+        const labelFor = configured.reduce((acc, field) => {
+          acc[field.key] = field.label;
+          return acc;
+        }, {});
+        const fields = keys.map((key) => (
+          \`<div class="schema-field"><dt>\${escapeHtml(labelFor[key] || key)}</dt><dd>\${scalar(value[key])}</dd></div>\`
+        )).join("");
+        return \`<dl class="schema-card schema-card--\${escapeHtml(kind)}">\${fields}</dl>\`;
+      }
+
+      function cell(key, content, className = "") {
+        const classAttr = className ? \` class="\${escapeHtml(className)}"\` : "";
+        return \`<td data-label="\${escapeHtml(labels[key] || key)}"\${classAttr}>\${content}</td>\`;
+      }
+
+      function rowHtml(row) {
+        const sourceUrl = row.source_url || "";
+        return \`<tr>
+          \${cell("market", \`<span class="strong-value">\${escapeHtml(row.market)}</span>\`)}
+          \${cell("seller", \`<span class="strong-value">\${escapeHtml(row.seller)}</span>\`)}
+          \${cell("product", \`<span class="strong-value">\${escapeHtml(row.product)}</span>\`)}
+          \${cell("source", \`<a class="source-link" href="\${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer"><span>\${escapeHtml(sourceLabel(sourceUrl))}</span><small>Ouvrir</small></a>\`)}
+          \${cell("schema_status", \`<span class="status-pill">\${escapeHtml(row.schema_status || "")}</span>\`, "schema-status-cell")}
+          \${cell("offers", fieldBlock(row.offers, "offers"), "schema-cell schema-cell--offers")}
+          \${cell("review", fieldBlock(row.review, "review"), "schema-cell")}
+          \${cell("aggregateRating", fieldBlock(row.aggregateRating, "aggregateRating"), "schema-cell")}
+          \${cell("notes", \`<p class="note-text">\${escapeHtml(row.notes || "")}</p>\`, "note-cell")}
+        </tr>\`;
+      }
+
+      function formatUpdatedAt(payload) {
+        return payload.updatedAtLabel || payload.updatedAt || "";
+      }
+
+      function setStatus(text, state) {
+        if (!statusEl) return;
+        statusEl.textContent = text;
+        statusEl.dataset.state = state || "";
+      }
+
+      function render(payload) {
+        payload = sanitizePayload(payload);
+        const rows = Array.isArray(payload.rows) ? payload.rows : [];
+        if (tbody) tbody.innerHTML = rows.map(rowHtml).join("");
+        if (countEl) countEl.textContent = \`\${rows.length} liens partenaires suivis\`;
+        if (updatedEl) updatedEl.textContent = \`Dernière extraction : \${formatUpdatedAt(payload)}\`;
+        const exportPayload = {
+          updatedAt: payload.updatedAt || payload.updatedAtLabel || "",
+          updatedAtLabel: payload.updatedAtLabel || "",
+          rows
+        };
+        const jsonText = JSON.stringify(exportPayload, null, 2);
+        if (exportEl) exportEl.textContent = jsonText;
+        if (rawScript) rawScript.textContent = jsonText;
+      }
+
+      async function refresh() {
+        setStatus("Actualisation en cours...", "loading");
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 25000);
+        try {
+          const response = await fetch(\`\${endpoint}?ts=\${Date.now()}\`, {
+            cache: "no-store",
+            credentials: "same-origin",
+            signal: controller.signal
+          });
+          if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
+          const payload = await response.json();
+          if (!payload || !Array.isArray(payload.rows)) throw new Error("Réponse incomplète");
+          render(payload);
+          setStatus("Données actualisées au chargement", "ok");
+        } catch (error) {
+          setStatus("Actualisation impossible : dernier relevé intégré affiché", "error");
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      }
+
+      refresh();
+    }());`;
+}
+
+function sellerTrackingRowsHtml(rows) {
+  return rows.map((row) => `        <tr>
+          ${sellerTrackingCellHtml('market', `<span class="strong-value">${escapeHtml(row.market)}</span>`)}
+          ${sellerTrackingCellHtml('seller', `<span class="strong-value">${escapeHtml(row.seller)}</span>`)}
+          ${sellerTrackingCellHtml('product', `<span class="strong-value">${escapeHtml(row.product)}</span>`)}
+          ${sellerTrackingCellHtml('source', `<a class="source-link" href="${escapeHtml(row.source_url)}" target="_blank" rel="noopener noreferrer"><span>${escapeHtml(sellerSourceLabel(row.source_url))}</span><small>Ouvrir</small></a>`)}
+          ${sellerTrackingCellHtml('schema_status', `<span class="status-pill">${escapeHtml(row.schema_status)}</span>`, 'schema-status-cell')}
+          ${sellerTrackingCellHtml('offers', sellerSchemaValueHtml(row.offers, 'offers'), 'schema-cell schema-cell--offers')}
+          ${sellerTrackingCellHtml('review', sellerSchemaValueHtml(row.review, 'review'), 'schema-cell')}
+          ${sellerTrackingCellHtml('aggregateRating', sellerSchemaValueHtml(row.aggregateRating, 'aggregateRating'), 'schema-cell')}
+          ${sellerTrackingCellHtml('notes', `<p class="note-text">${escapeHtml(row.notes || '')}</p>`, 'note-cell')}
+        </tr>`).join('\n\n');
+}
+
+function sellerTrackingCellHtml(key, content, className = '') {
+  const column = sellerTrackingColumns.find((item) => item.key === key);
+  const classAttr = className ? ` class="${escapeHtml(className)}"` : '';
+  return `<td data-label="${escapeHtml(column?.title || key)}"${classAttr}>${content}</td>`;
+}
+
+function sellerSchemaFields() {
+  return {
+    offers: [
+      { key: '@type', label: 'Type' },
+      { key: 'price', label: 'Prix' },
+      { key: 'priceCurrency', label: 'Devise' },
+      { key: 'availability', label: 'Disponibilité' },
+      { key: 'itemCondition', label: 'État' },
+      { key: 'seller', label: 'Vendeur' },
+      { key: 'url', label: 'URL' },
+    ],
+    review: [
+      { key: '@type', label: 'Type' },
+      { key: 'author', label: 'Auteur' },
+      { key: 'reviewRating', label: 'Note' },
+      { key: 'datePublished', label: 'Date' },
+      { key: 'reviewBody', label: 'Avis' },
+    ],
+    aggregateRating: [
+      { key: '@type', label: 'Type' },
+      { key: 'ratingValue', label: 'Note' },
+      { key: 'ratingCount', label: 'Nombre de notes' },
+      { key: 'reviewCount', label: 'Nombre d’avis' },
+    ],
+  };
+}
+
+function sellerSchemaValueHtml(value, kind) {
+  if (value === null || value === undefined) return sellerEmptyHtml();
+  if (Array.isArray(value)) {
+    if (!value.length) return sellerEmptyHtml('Liste vide');
+    return value.map((item, index) => (
+      `<div class="schema-list-item"><span class="schema-list-label">#${index + 1}</span>${sellerSchemaValueHtml(item, kind)}</div>`
+    )).join('');
+  }
+  if (typeof value !== 'object') {
+    return `<div class="schema-card schema-card--simple">${sellerScalarHtml(value)}</div>`;
+  }
+
+  const configured = sellerSchemaFields()[kind] || [];
+  const keys = [];
+  for (const field of configured) {
+    if (Object.prototype.hasOwnProperty.call(value, field.key)) keys.push(field.key);
+  }
+  for (const key of Object.keys(value)) {
+    if (!keys.includes(key)) keys.push(key);
+  }
+  const labels = new Map(configured.map((field) => [field.key, field.label]));
+  const fields = keys.map((key) => (
+    `<div class="schema-field"><dt>${escapeHtml(labels.get(key) || key)}</dt><dd>${sellerScalarHtml(value[key])}</dd></div>`
+  )).join('');
+  return `<dl class="schema-card schema-card--${escapeHtml(kind)}">${fields}</dl>`;
+}
+
+function sellerScalarHtml(value) {
+  if (value === null || value === undefined) return sellerEmptyHtml('Non renseigné');
+  if (Array.isArray(value)) return value.length ? `<code>${escapeHtml(JSON.stringify(value))}</code>` : sellerEmptyHtml('Liste vide');
+  if (typeof value === 'object') {
+    const type = sellerSchemaTerm(value['@type']);
+    if (value.name) {
+      return `${escapeHtml(value.name)}${type ? `<span class="schema-mini">${escapeHtml(type)}</span>` : ''}`;
+    }
+    return `<code>${escapeHtml(JSON.stringify(value))}</code>`;
+  }
+  if (typeof value === 'string') {
+    if (value.startsWith('https://schema.org/')) {
+      const term = sellerSchemaTerm(value);
+      return `<a class="schema-ref" href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer">${escapeHtml(term)}</a>`;
+    }
+    if (value.startsWith('http://') || value.startsWith('https://')) {
+      const label = value.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      const shortLabel = label.length > 54 ? `${label.slice(0, 51)}...` : label;
+      return `<a class="inline-url" href="${escapeHtml(value)}" target="_blank" rel="noopener noreferrer">${escapeHtml(shortLabel)}</a>`;
+    }
+  }
+  return `<code>${escapeHtml(value)}</code>`;
+}
+
+function sellerSchemaTerm(value) {
+  if (typeof value === 'string' && value.startsWith('https://schema.org/')) {
+    return value.split('/').filter(Boolean).pop() || value;
+  }
+  return value;
+}
+
+function sellerEmptyHtml(label = 'Non exposé') {
+  return `<span class="seller-empty">${escapeHtml(label)}</span>`;
+}
+
+function sellerSourceLabel(url) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return String(url || '').replace(/^https?:\/\//, '').split('/')[0] || 'Page source';
+  }
+}
+
+function sellerDefinitionId(key) {
+  return key.toLowerCase().replace(/[^a-z0-9]+/g, '');
 }
 
 function nutritionProductPlainName(product) {
