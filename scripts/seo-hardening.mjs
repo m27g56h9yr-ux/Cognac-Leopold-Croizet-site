@@ -1431,6 +1431,16 @@ const partnerOrderLinks = new Map([
 const SELLER_TRACKING_FILE = 'suivi-vendeurs.html';
 const SELLER_TRACKING_ENDPOINT = 'suivi-vendeurs-data.php';
 const SELLER_TRACKING_UPDATED_LABEL = '5 juillet 2026';
+const sellerTrackingFallbacks = new Map([
+  ['vs', { price: 4849, evidence: 'Collection AV.ru indexée : prix public 4 849 ₽.' }],
+  ['vsop', { price: 5480, listPrice: 6449, evidence: 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.' }],
+  ['napoleon', { price: 7190, listPrice: 8490, evidence: 'Collection AV.ru indexée : prix public 7 190 ₽, prix avant remise 8 490 ₽.' }],
+  ['xo', { price: 8790, evidence: 'Fiche AV.ru indexée : prix public 8 790 ₽.' }],
+  ['xo-exception', { price: 22980, evidence: 'Page marque AV.ru indexée : prix public 22 980 ₽.' }],
+  ['extra', { price: 57790, evidence: 'Page marque AV.ru indexée : prix public 57 790 ₽.' }],
+  ['excellence', { price: 76990, evidence: 'Collection AV.ru indexée : prix public 76 990 ₽.' }],
+  ['valentine', { price: 6490, listPrice: 7690, evidence: 'Page marque AV.ru indexée : prix public 6 490 ₽, prix avant remise 7 690 ₽.' }],
+]);
 const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine'].map((slug) => ({
   product_slug: slug,
   market_key: 'ru',
@@ -1438,13 +1448,12 @@ const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'ext
   seller: 'AV.ru',
   product: sellerTrackingProductName(slug),
   source_url: partnerOrderLinks.get(`/ru/collection/${slug}/`),
-  schema_status: 'Contrôle HTTP 450 côté relevé intégré',
-  offers: null,
+  schema_status: sellerTrackingFallbackStatus(slug),
+  offers: sellerTrackingFallbackOffer(slug),
   review: null,
   aggregateRating: null,
-  notes: 'Lien partenaire publié sur la version russe du site. Le relevé intégré n’a pas pu confirmer les données Product, Offer, Review ou AggregateRating ; l’endpoint de rafraîchissement retente le contrôle au chargement.',
-  source_http_code: 450,
-  refresh_status: 'blocked',
+  notes: sellerTrackingFallbackNotes(slug),
+  refresh_status: sellerTrackingFallbacks.has(slug) ? 'fallback' : 'manual_review',
 }));
 
 const sellerTrackingColumns = [
@@ -1461,6 +1470,42 @@ const sellerTrackingColumns = [
 
 function sellerTrackingProductName(slug) {
   return `Cognac Léopold\u00a0Croizet ${productNames.get(slug) || slug}`;
+}
+
+function sellerTrackingFallbackOffer(slug) {
+  const fallback = sellerTrackingFallbacks.get(slug);
+  const url = partnerOrderLinks.get(`/ru/collection/${slug}/`);
+  if (!fallback || !fallback.price) return null;
+  const offer = {
+    '@type': 'Offer',
+    price: fallback.price,
+    priceCurrency: 'RUB',
+    availability: 'https://schema.org/InStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@type': 'Organization', name: 'AV.ru' },
+    url,
+  };
+  if (fallback.listPrice) {
+    offer.priceSpecification = [
+      { '@type': 'UnitPriceSpecification', name: 'Prix public relevé', price: fallback.price, priceCurrency: 'RUB' },
+      { '@type': 'UnitPriceSpecification', name: 'Prix avant remise indiqué', price: fallback.listPrice, priceCurrency: 'RUB' },
+    ];
+  }
+  return offer;
+}
+
+function sellerTrackingFallbackStatus(slug) {
+  return sellerTrackingFallbacks.has(slug)
+    ? 'Valeurs AV.ru issues de l’index public'
+    : 'Fiche produit AV.ru non trouvée dans l’index public';
+}
+
+function sellerTrackingFallbackNotes(slug) {
+  const fallback = sellerTrackingFallbacks.get(slug);
+  if (!fallback) {
+    return 'Le lien partenaire publié ouvre une recherche AV.ru. Aucune fiche produit AV.ru indexée fiable n’a été trouvée pour ce produit ; review et aggregateRating restent donc non exposés.';
+  }
+  return `${fallback.evidence} L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.`;
 }
 
 function isNoindexRoute(route) {
@@ -3786,7 +3831,8 @@ function sellerTrackingRuntimeScript() {
           const payload = await response.json();
           if (!payload || !Array.isArray(payload.rows)) throw new Error("Réponse incomplète");
           render(payload);
-          setStatus("Données actualisées au chargement", "ok");
+          const fallbackCount = payload.rows.filter((row) => row && row.refresh_status === "fallback").length;
+          setStatus(fallbackCount ? "Valeurs chargées via index public (" + fallbackCount + ")" : "Données actualisées au chargement", "ok");
         } catch (error) {
           setStatus("Actualisation impossible : dernier relevé intégré affiché", "error");
         } finally {

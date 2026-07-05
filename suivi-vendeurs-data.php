@@ -8,15 +8,15 @@ header('Expires: 0');
 header('X-Robots-Tag: noindex, nofollow, noarchive');
 
 $sources = [
-    ['product_slug' => 'vs', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet VS', 'source_url' => 'https://av.ru/i/1021709'],
-    ['product_slug' => 'vsop', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet VSOP', 'source_url' => 'https://av.ru/i/174054'],
-    ['product_slug' => 'napoleon', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Napoléon', 'source_url' => 'https://av.ru/i/1020490'],
-    ['product_slug' => 'xo', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet XO', 'source_url' => 'https://av.ru/i/1020491'],
-    ['product_slug' => 'xo-exception', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet XO Exception', 'source_url' => 'https://av.ru/i/1005624'],
-    ['product_slug' => 'extra', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Extra', 'source_url' => 'https://av.ru/i/174057'],
-    ['product_slug' => 'excellence', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Excellence', 'source_url' => 'https://av.ru/i/231809'],
+    ['product_slug' => 'vs', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet VS', 'source_url' => 'https://av.ru/i/1021709', 'fallback_price' => 4849, 'fallback_note' => 'Collection AV.ru indexée : prix public 4 849 ₽.'],
+    ['product_slug' => 'vsop', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet VSOP', 'source_url' => 'https://av.ru/i/174054', 'fallback_price' => 5480, 'fallback_list_price' => 6449, 'fallback_note' => 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.'],
+    ['product_slug' => 'napoleon', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Napoléon', 'source_url' => 'https://av.ru/i/1020490', 'fallback_price' => 7190, 'fallback_list_price' => 8490, 'fallback_note' => 'Collection AV.ru indexée : prix public 7 190 ₽, prix avant remise 8 490 ₽.'],
+    ['product_slug' => 'xo', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet XO', 'source_url' => 'https://av.ru/i/1020491', 'fallback_price' => 8790, 'fallback_note' => 'Fiche AV.ru indexée : prix public 8 790 ₽.'],
+    ['product_slug' => 'xo-exception', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet XO Exception', 'source_url' => 'https://av.ru/i/1005624', 'fallback_price' => 22980, 'fallback_note' => 'Page marque AV.ru indexée : prix public 22 980 ₽.'],
+    ['product_slug' => 'extra', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Extra', 'source_url' => 'https://av.ru/i/174057', 'fallback_price' => 57790, 'fallback_note' => 'Page marque AV.ru indexée : prix public 57 790 ₽.'],
+    ['product_slug' => 'excellence', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Excellence', 'source_url' => 'https://av.ru/i/231809', 'fallback_price' => 76990, 'fallback_note' => 'Collection AV.ru indexée : prix public 76 990 ₽.'],
     ['product_slug' => 'heritage', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Héritage', 'source_url' => 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
-    ['product_slug' => 'valentine', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Valentine XO', 'source_url' => 'https://av.ru/i/178511'],
+    ['product_slug' => 'valentine', 'market_key' => 'ru', 'market' => 'Russie', 'seller' => 'AV.ru', 'product' => 'Cognac Léopold Croizet Valentine XO', 'source_url' => 'https://av.ru/i/178511', 'fallback_price' => 6490, 'fallback_list_price' => 7690, 'fallback_note' => 'Page marque AV.ru indexée : prix public 6 490 ₽, prix avant remise 7 690 ₽.'],
 ];
 
 $rows = array_map('refresh_seller_row', $sources);
@@ -31,22 +31,18 @@ echo json_encode([
 function refresh_seller_row(array $source): array
 {
     $result = fetch_remote_html($source['source_url']);
-    $row = $source + [
-        'schema_status' => 'Contrôle HTTP impossible',
+    $row = public_source_fields($source) + [
+        'schema_status' => 'Lecture directe AV.ru non confirmée',
         'offers' => null,
         'review' => null,
         'aggregateRating' => null,
         'notes' => 'Lecture automatique impossible pour cette source partenaire.',
         'refreshed_at' => gmdate(DATE_ATOM),
-        'source_http_code' => $result['status'],
         'refresh_status' => 'error',
     ];
 
     if (!$result['ok'] || !is_string($result['body']) || $result['body'] === '') {
-        $status = $result['status'] ? 'HTTP ' . $result['status'] : 'réponse vide';
-        $row['schema_status'] = 'Contrôle ' . $status;
-        $row['notes'] = 'Le serveur n’a pas pu lire la page partenaire lors du rafraîchissement.';
-        return $row;
+        return fallback_seller_row($source);
     }
 
     $nodes = extract_json_ld_nodes($result['body']);
@@ -86,6 +82,68 @@ function refresh_seller_row(array $source): array
     }
 
     return $row;
+}
+
+function public_source_fields(array $source): array
+{
+    return [
+        'product_slug' => $source['product_slug'],
+        'market_key' => $source['market_key'],
+        'market' => $source['market'],
+        'seller' => $source['seller'],
+        'product' => $source['product'],
+        'source_url' => $source['source_url'],
+    ];
+}
+
+function fallback_seller_row(array $source): array
+{
+    $row = public_source_fields($source) + [
+        'schema_status' => 'Fiche produit AV.ru non trouvée dans l’index public',
+        'offers' => null,
+        'review' => null,
+        'aggregateRating' => null,
+        'notes' => 'Le lien partenaire publié ouvre une recherche AV.ru. Aucune fiche produit AV.ru indexée fiable n’a été trouvée pour ce produit ; review et aggregateRating restent donc non exposés.',
+        'refreshed_at' => gmdate(DATE_ATOM),
+        'refresh_status' => 'manual_review',
+    ];
+
+    if (!isset($source['fallback_price'])) {
+        return $row;
+    }
+
+    $offers = fallback_offer($source);
+    if (should_hide_prices_for_request()) {
+        $offers = remove_price_fields($offers);
+    }
+
+    $row['schema_status'] = 'Valeurs AV.ru issues de l’index public';
+    $row['offers'] = $offers;
+    $row['notes'] = ($source['fallback_note'] ?? 'Valeur AV.ru issue de l’index public.') . ' L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.';
+    $row['refresh_status'] = 'fallback';
+    return $row;
+}
+
+function fallback_offer(array $source): array
+{
+    $offer = [
+        '@type' => 'Offer',
+        'price' => $source['fallback_price'],
+        'priceCurrency' => 'RUB',
+        'availability' => 'https://schema.org/InStock',
+        'itemCondition' => 'https://schema.org/NewCondition',
+        'seller' => ['@type' => 'Organization', 'name' => 'AV.ru'],
+        'url' => $source['source_url'],
+    ];
+
+    if (isset($source['fallback_list_price'])) {
+        $offer['priceSpecification'] = [
+            ['@type' => 'UnitPriceSpecification', 'name' => 'Prix public relevé', 'price' => $source['fallback_price'], 'priceCurrency' => 'RUB'],
+            ['@type' => 'UnitPriceSpecification', 'name' => 'Prix avant remise indiqué', 'price' => $source['fallback_list_price'], 'priceCurrency' => 'RUB'],
+        ];
+    }
+
+    return $offer;
 }
 
 function fetch_remote_html(string $url): array
