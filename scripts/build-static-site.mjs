@@ -2112,6 +2112,9 @@ async function writeGlobalFiles() {
     '',
     `Sitemap: ${PUBLIC_ORIGIN}/sitemap.xml`,
     '',
+    '# Yandex: group legacy tracking and language parameters under the canonical URL.',
+    'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&fbclid&gclid&yclid&v&lang /',
+    '',
   ].join('\n');
 
   const manifest = {

@@ -15,6 +15,36 @@ Options -Indexes
   RewriteCond %{HTTP_HOST} !^(?:www\.)?ancien\.cognac-leopold-croizet\.com$ [NC]
   RewriteRule ^ https://cognac-leopold-croizet.com%{REQUEST_URI} [R=301,L]
 
+  # Retire legacy WPML query-language URLs from search-engine indexes.
+  RewriteCond %{QUERY_STRING} (^|&)lang=fr(&|$) [NC]
+  RewriteRule ^$ / [R=301,L,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)lang=fr(&|$) [NC]
+  RewriteRule ^(.+)$ /$1 [R=301,L,QSD]
+
+  RewriteCond %{QUERY_STRING} (^|&)lang=(en|ru|da|sv|no)(&|$) [NC]
+  RewriteRule ^$ /%2/ [R=301,L,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)lang=(zh|zh-cn)(&|$) [NC]
+  RewriteRule ^$ /zh/ [R=301,L,QSD]
+
+  RewriteCond %{QUERY_STRING} (^|&)lang=(en|ru|da|sv|no)(&|$) [NC]
+  RewriteRule ^(le-temps|la-matiere|lalchimie|le-feu|leopold-croizet|rencontre|pierre-croizet-cocktails|film-maison-leopold-croizet)/?$ /%2/$1/ [R=301,L,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)lang=(zh|zh-cn)(&|$) [NC]
+  RewriteRule ^(le-temps|la-matiere|lalchimie|le-feu|leopold-croizet|rencontre|pierre-croizet-cocktails|film-maison-leopold-croizet)/?$ /zh/$1/ [R=301,L,QSD]
+
+  RewriteCond %{QUERY_STRING} (^|&)lang=(en|ru|da|sv|no)(&|$) [NC]
+  RewriteRule ^collection/([^/]+)/?$ /%2/collection/$1/ [R=301,L,QSD]
+  RewriteCond %{QUERY_STRING} (^|&)lang=(zh|zh-cn)(&|$) [NC]
+  RewriteRule ^collection/([^/]+)/?$ /zh/collection/$1/ [R=301,L,QSD]
+
+  # Preserve legacy product shortcuts discovered by Yandex as clean canonical URLs.
+  RewriteRule ^heritage/?$ /collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^en/heritage/?$ /en/collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^ru/heritage/?$ /ru/collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^da/heritage/?$ /da/collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^sv/heritage/?$ /sv/collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^no/heritage/?$ /no/collection/heritage/ [R=301,L,QSD]
+  RewriteRule ^zh/heritage/?$ /zh/collection/heritage/ [R=301,L,QSD]
+
   # OVH sometimes misses the directory index for this newly created locale page.
   RewriteRule ^zh/faq/?$ zh/faq/index.html [L]
 </IfModule>

@@ -15,6 +15,7 @@ const pineauRedProductNavigationViolations = [];
 const collectionEndPageLayoutViolations = [];
 const legacyDeployBaseViolations = [];
 const imageDimensionViolations = [];
+const missingImageAltViolations = [];
 const formLabelViolations = [];
 const productAltViolations = [];
 const homeMediaViolations = [];
@@ -87,6 +88,7 @@ for (const file of checkedFiles) {
     }
     brandViolations.push(...findBrandViolations(text, relativeFile));
     imageDimensionViolations.push(...findImageDimensionViolations(text, relativeFile));
+    missingImageAltViolations.push(...findMissingImageAltViolations(text, relativeFile));
     formLabelViolations.push(...findFormLabelViolations(text, relativeFile));
     productAltViolations.push(...findProductAltViolations(text, relativeFile));
     homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
@@ -106,6 +108,7 @@ if (
   || collectionEndPageLayoutViolations.length
   || legacyDeployBaseViolations.length
   || imageDimensionViolations.length
+  || missingImageAltViolations.length
   || formLabelViolations.length
   || productAltViolations.length
   || homeMediaViolations.length
@@ -149,6 +152,11 @@ if (
   if (imageDimensionViolations.length) {
     console.error('Images without stable dimensions:');
     for (const item of imageDimensionViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (missingImageAltViolations.length) {
+    console.error('Images without alt attributes:');
+    for (const item of missingImageAltViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   if (formLabelViolations.length) {
@@ -259,6 +267,18 @@ function findImageDimensionViolations(html, relativeFile) {
     if (!/\.(?:png|jpe?g|gif|svg|webp|avif)(?:[?#]|$)/i.test(src)) continue;
     if (!hasAttribute(tag, 'width') || !hasAttribute(tag, 'height')) {
       violations.push(`${relativeFile}: ${src}`);
+    }
+  }
+  return violations;
+}
+
+function findMissingImageAltViolations(html, relativeFile) {
+  const violations = [];
+  for (const tag of html.match(/<img\b[^>]*>/gi) || []) {
+    const src = getAttribute(tag, 'src') || getAttribute(tag, 'data-src') || '';
+    if (src.startsWith('data:')) continue;
+    if (!hasAttribute(tag, 'alt')) {
+      violations.push(`${relativeFile}: ${src || tag.slice(0, 120)}`);
     }
   }
   return violations;

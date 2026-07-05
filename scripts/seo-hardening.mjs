@@ -5597,7 +5597,7 @@ function makeRobots() {
     'Sitemap: https://cognac-leopold-croizet.com/sitemap.xml',
     '',
     '# Yandex: group common tracking parameters under the canonical URL.',
-    'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&fbclid&gclid&yclid&v /',
+    'Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&fbclid&gclid&yclid&v&lang /',
     '',
   ].join('\n');
 }
