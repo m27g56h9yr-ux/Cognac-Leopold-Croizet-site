@@ -4248,9 +4248,9 @@ function repairLegalNoticePage(html, route) {
 <p class="container-mentions-legales wp-block-paragraph">Dernière mise à jour : 2 juillet 2026.</p>
 `;
 
-  const legalNoticePattern = /<h1\b(?=[^>]*\btitre-mentions-legales\b)[^>]*>[\s\S]*?<\/h1>[\s\S]*?<p class="wp-block-paragraph"><\/p>/i;
+  const legalNoticePattern = /\s*<h1\b(?=[^>]*\btitre-mentions-legales\b)[^>]*>[\s\S]*?<\/h1>[\s\S]*?<p class="wp-block-paragraph"><\/p>\s*/i;
   if (!legalNoticePattern.test(html)) return html;
-  return html.replace(legalNoticePattern, `${legalNoticeContent}\n\n\n\n<p class="wp-block-paragraph"></p>`);
+  return html.replace(legalNoticePattern, `\n\n${legalNoticeContent.trim()}\n\n<p class="wp-block-paragraph"></p>\n`);
 }
 
 function repairCgvPage(html, route) {
@@ -4336,9 +4336,9 @@ function repairCgvPage(html, route) {
 <p class="container-mentions-legales wp-block-paragraph">Les données transmises dans le cadre d’une demande de contact, de disponibilité, de visite ou de commande sont traitées conformément aux <a href="/mentions-legales/">mentions légales</a> du site. Le responsable du traitement est LA MAISON DES PIERRES (MPC), joignable à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.</p>
 `;
 
-  const cgvPattern = /(<div\b[^>]*class=["'][^"']*\bcontainer-page\b[^"']*["'][^>]*>\s*)<h1\b(?=[^>]*\btitre-mentions-legales\b)[^>]*>[\s\S]*?(?=\s*<\/div>\s*<\/div>\s*<footer\b)/i;
+  const cgvPattern = /(<div\b[^>]*class=["'][^"']*\bcontainer-page\b[^"']*["'][^>]*>)[\s\S]*?(?=\s*<\/div>\s*<\/div>\s*<footer\b)/i;
   if (!cgvPattern.test(html)) return html;
-  return html.replace(cgvPattern, `$1${cgvContent}\n`);
+  return html.replace(cgvPattern, `$1\n\n${cgvContent.trim()}\n`);
 }
 
 function complianceCopy(lang) {
@@ -6187,6 +6187,7 @@ function productSchema(route, metadata, image) {
   const name = productNames.get(slug);
   if (!name) return null;
   const id = `${PUBLIC_ORIGIN}${route}#product`;
+  const partnerOffer = productPartnerOffer(route, slug);
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -6201,6 +6202,9 @@ function productSchema(route, metadata, image) {
     countryOfOrigin: 'France',
     additionalProperty: productStructuredProperties(slug),
   };
+  if (partnerOffer) {
+    schema.offers = partnerOffer;
+  }
   const primaryGtin = productPrimaryGtins.get(slug);
   if (primaryGtin) {
     schema.size = primaryGtin.size;
@@ -6217,6 +6221,12 @@ function productSchema(route, metadata, image) {
     }));
   }
   return schema;
+}
+
+function productPartnerOffer(route, slug) {
+  if (languageForRoute(route) !== 'ru') return null;
+  if (productRouteForLang('ru', slug) !== route) return null;
+  return sellerTrackingFallbackOffer(slug);
 }
 
 function productStructuredProperties(slug) {
