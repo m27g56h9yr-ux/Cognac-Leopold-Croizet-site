@@ -1416,6 +1416,18 @@ const noindexRoutes = new Set([
   ...LEGACY_PROOF_ROUTES,
 ]);
 
+const partnerOrderLinks = new Map([
+  ['/ru/collection/vs/', 'https://av.ru/i/1021709'],
+  ['/ru/collection/vsop/', 'https://av.ru/i/174054'],
+  ['/ru/collection/napoleon/', 'https://av.ru/i/1020490'],
+  ['/ru/collection/xo/', 'https://av.ru/i/1020491'],
+  ['/ru/collection/xo-exception/', 'https://av.ru/i/1005624'],
+  ['/ru/collection/extra/', 'https://av.ru/i/174057'],
+  ['/ru/collection/excellence/', 'https://av.ru/i/231809'],
+  ['/ru/collection/heritage/', 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
+  ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
+]);
+
 function isNoindexRoute(route) {
   return noindexRoutes.has(route) || route.startsWith('/_preview/');
 }
@@ -3467,6 +3479,7 @@ function hardenHtml(html, route, file) {
   next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
+  next = restorePartnerOrderButton(next, route);
   next = normalizeGithubPagesLinks(next, route);
   next = injectFilmNavigationLink(next, route);
   next = repairLanguageMenuLinks(next, route);
@@ -5120,6 +5133,41 @@ function removeUnavailableOrderControls(html, route) {
     .replace(/<div\b([^>]*)class=(["'])([^"']*\bcontainer-btn-commander-produit\b[^"']*)\2([^>]*)>\s*<\/div>/gi, '')
     .replace(/<div\b([^>]*)class=(["'])([^"']*\bcontainer-btn-commander-produit\b[^"']*)\2([^>]*)>\s*<div\b[^>]*>\s*<\/div>\s*<\/div>/gi, '');
   return next;
+}
+
+function restorePartnerOrderButton(html, route) {
+  const href = partnerOrderLinks.get(route);
+  if (!href) return html;
+
+  let next = html;
+  const escapedHref = escapeRegExp(href);
+  if (!new RegExp(`<a\\b(?=[^>]*\\bclass=["'][^"']*\\bbtn-commander-produit\\b)(?=[^>]*\\bhref=["']${escapedHref}["'])`, 'i').test(next)) {
+    const buttonHtml = `
+    <div class="container-btn-commander-produit">
+        <a href="${href}" class=" btn-commander-produit">Заказать</a>
+
+
+</div>`;
+    if (/<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b/i.test(next)) {
+      next = next.replace(/(\n<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b)/i, `${buttonHtml}$1`);
+    } else if (/<\/main><\/div>/i.test(next)) {
+      next = next.replace(/<\/main><\/div>/i, `${buttonHtml}\n</main></div>`);
+    } else {
+      return html;
+    }
+  }
+
+  return ensurePartnerOrderButtonScript(next);
+}
+
+function ensurePartnerOrderButtonScript(html) {
+  if (/btn-commander-produit\.js/i.test(html)) return html;
+
+  const script = '<script id="btn-commander-produit-js" src="/wp-content/themes/theme-site-pc/js/btn-commander-produit.js?v=av-order-20260609"></script>';
+  if (/<script\b[^>]*id=["']mobile-js["'][^>]*><\/script>/i.test(html)) {
+    return html.replace(/(<script\b[^>]*id=["']mobile-js["'][^>]*><\/script>)/i, `${script}\n$1`);
+  }
+  return html.replace(/<\/head>/i, `${script}\n</head>`);
 }
 
 function fallbackMetadata(route, html) {
