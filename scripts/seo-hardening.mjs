@@ -92,6 +92,12 @@ const externalAuthoritySources = [
     note: 'Editorial article about the house, terroir and production approach.',
   },
   {
+    name: 'Sommeliers International n°188 - Wine Tour Cognac',
+    url: 'https://www.sommeliers-international.com/fr/anciens-numeros',
+    kind: 'WebPage',
+    note: 'Archive entry for issue n°188 dated 15 September 2025, listing Cognac Léopold Croizet in the Wine Tour Cognac section.',
+  },
+  {
     name: 'Business France Marketplace - LA MAISON DES PIERRES',
     url: 'https://www.marketplace.businessfrance.fr/seller/view/index/id/3942/',
     kind: 'ProfilePage',
