@@ -351,6 +351,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/da/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/da/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -377,6 +391,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/da/film-maison-leopold-croizet/</loc>
@@ -617,6 +799,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/shop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/en/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -785,6 +981,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/en/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/en/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -811,6 +1021,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/film-maison-leopold-croizet/</loc>
@@ -1079,6 +1457,174 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/film-maison-leopold-croizet/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -1345,6 +1891,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/no/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/no/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -1371,6 +1931,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/no/film-maison-leopold-croizet/</loc>
@@ -1821,6 +2549,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/ru/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/ru/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -1847,6 +2589,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/ru/film-maison-leopold-croizet/</loc>
@@ -2241,6 +3151,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/sv/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/sv/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -2267,6 +3191,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/film-maison-leopold-croizet/</loc>
@@ -2773,6 +3865,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/collection/xo/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/zh/dossier-de-presse/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/dossier-de-presse/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/dossier-de-presse/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/zh/environnement/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
@@ -2799,6 +3905,174 @@
     <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/faq/" />
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/faq/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/faq/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/heritage/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/napoleon/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/napoleon/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes-rouge/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes-rouge/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/pineau-des-charentes/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/pineau-des-charentes/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/valentine/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vs/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vs/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/vsop/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/vsop/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo-exception/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/fiches-techniques/xo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/fiches-techniques/xo/" />
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/film-maison-leopold-croizet/</loc>
