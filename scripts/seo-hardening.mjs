@@ -1003,6 +1003,7 @@ const productPrimaryGalleryImages = new Map([
 ]);
 
 const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
+const productVsQuestionsStyle = '<style id="lc-product-vs-questions-style">.lc-product-vs-questions{width:70%;margin:14px auto 18px;font-family:"Montserrat",Arial,sans-serif;color:#493111}.lc-product-vs-question{border-top:1px solid rgba(137,80,6,.26);padding:8px 0}.lc-product-vs-question:last-child{border-bottom:1px solid rgba(137,80,6,.26)}.lc-product-vs-question summary{display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;color:#895006;font-family:"Playfair Display",serif;font-size:.95rem;font-style:italic;line-height:1.35}.lc-product-vs-question summary::-webkit-details-marker{display:none}.lc-product-vs-question summary::after{content:"+";flex:0 0 auto;font-family:"Montserrat",Arial,sans-serif;font-size:.86rem;font-style:normal;color:#895006}.lc-product-vs-question[open] summary::after{content:"-"}.lc-product-vs-question p{margin:8px 0 2px;font-size:.72rem;line-height:1.35rem;color:#493111}@media screen and (max-width:1199px){.lc-product-vs-questions{width:100%;padding:0 20px}.lc-product-vs-question p{font-size:.78rem}}</style>';
 const productDetailsAccordionStyle = '<style id="lc-product-details-accordion-style">.lc-product-details-accordion{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;color:#726858}.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}.lc-product-details-accordion summary span{border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-details-accordion summary:hover{color:#2f261d}.lc-product-details-accordion summary:hover span{border-bottom-color:#2f261d}.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}.lc-product-details-list{display:grid;gap:8px;margin:0}.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}.lc-product-details-list dt,.lc-product-details-list dd{margin:0}.lc-product-details-list dt{font-weight:700;color:#8a806f}.lc-product-details-list dd{color:#2f261d}.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}@media(max-width:767px){.lc-product-details-accordion{margin:16px auto 4px}.lc-product-details-accordion summary{text-align:center}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}</style>';
 const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
 const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
@@ -4509,6 +4510,7 @@ function hardenHtml(html, route, file) {
   next = linkFooterMedalImage(next, route);
   next = applyProductMedalProofs(next, route);
   next = removeProductAuthorityLinks(next);
+  next = injectProductVsQuestions(next, route);
   next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
@@ -5517,6 +5519,165 @@ function applyProductMedalProofs(html, route) {
   }
 
   return next;
+}
+
+function injectProductVsQuestions(html, route) {
+  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
+  if (slug !== 'vs') return html;
+
+  let next = html
+    .replace(/\s*<style\b[^>]*id=["']lc-product-vs-questions-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<section\b[^>]*class=["'][^"']*\blc-product-vs-questions\b[^"']*["'][^>]*>[\s\S]*?<\/section>\s*/gi, '\n');
+
+  const block = productVsQuestionsHtml(languageForRoute(route));
+  if (/<div\b[^>]*class=["'][^"']*\bcontainer-notes-sensorielles\b/i.test(next)) {
+    next = next.replace(
+      /(\s*<div\b[^>]*class=["'][^"']*\bcontainer-notes-sensorielles\b[^"']*["'][^>]*>)/i,
+      `\n${block}$1`,
+    );
+  }
+
+  if (!next.includes('id="lc-product-vs-questions-style"')) {
+    next = next.replace(/<\/head>/i, `${productVsQuestionsStyle}\n</head>`);
+  }
+
+  return next;
+}
+
+function productVsQuestionsHtml(lang) {
+  const copy = productVsQuestionsCopy(lang);
+  const items = copy.items.map((item) => `
+        <details class="lc-product-vs-question">
+          <summary>${escapeHtml(item.question)}</summary>
+          <p>${escapeHtml(item.answer)}</p>
+        </details>`).join('');
+  return `    <section class="lc-product-vs-questions" aria-label="${escapeHtml(copy.label)}">${items}
+    </section>
+`;
+}
+
+function productVsQuestionsCopy(lang) {
+  return {
+    fr: {
+      label: 'Questions fréquentes sur ce cognac VS',
+      items: [
+        {
+          question: 'Que signifie VS pour un cognac ?',
+          answer: 'VS signifie Very Special : la plus jeune eau-de-vie de l’assemblage a vieilli au moins deux ans sous bois de chêne. Le style reste jeune, franc et fruité.',
+        },
+        {
+          question: 'Pourquoi choisir un VS Fins Bois ?',
+          answer: 'Les Fins Bois apportent naturellement rondeur, souplesse et fruit. Dans ce VS Léopold Croizet, cette origine soutient les notes de poire, de pêche et de fleur de vigne.',
+        },
+        {
+          question: 'Comment servir ce VS ?',
+          answer: 'Il se prête aux cocktails et long drinks, avec tonic ou ginger beer, comme à une dégustation sur glace. Pur, servez une petite dose dans un verre tulipe.',
+        },
+      ],
+    },
+    en: {
+      label: 'Frequently asked questions about this VS Cognac',
+      items: [
+        {
+          question: 'What does VS mean in Cognac?',
+          answer: 'VS means Very Special: the youngest eau-de-vie in the blend has aged for at least two years in oak. The style remains young, direct and fruit-driven.',
+        },
+        {
+          question: 'Why choose a Fins Bois VS?',
+          answer: 'Fins Bois eaux-de-vie naturally bring roundness, suppleness and fruit. In this Léopold Croizet VS, the origin supports pear, peach and vine-flower notes.',
+        },
+        {
+          question: 'How should this VS be served?',
+          answer: 'It works well in cocktails and long drinks with tonic or ginger beer, as well as over ice. Neat, serve a small measure in a tulip glass.',
+        },
+      ],
+    },
+    ru: {
+      label: 'Частые вопросы об этом Cognac VS',
+      items: [
+        {
+          question: 'Что означает VS в коньяке?',
+          answer: 'VS означает Very Special: самая молодая eau-de-vie в ассамбляже выдерживается не менее двух лет в дубе. Стиль остается молодым, прямым и фруктовым.',
+        },
+        {
+          question: 'Почему выбрать VS из Fins Bois?',
+          answer: 'Eaux-de-vie из Fins Bois естественно дают округлость, мягкость и фруктовость. В этом VS Léopold Croizet они поддерживают ноты груши, персика и цветка лозы.',
+        },
+        {
+          question: 'Как подавать этот VS?',
+          answer: 'Он подходит для коктейлей и long drinks с tonic или ginger beer, а также для подачи со льдом. В чистом виде подавайте небольшую порцию в бокале tulip.',
+        },
+      ],
+    },
+    da: {
+      label: 'Ofte stillede spørgsmål om denne VS Cognac',
+      items: [
+        {
+          question: 'Hvad betyder VS i Cognac?',
+          answer: 'VS betyder Very Special: den yngste eau-de-vie i blandingen har lagret mindst to år på eg. Stilen forbliver ung, direkte og frugtig.',
+        },
+        {
+          question: 'Hvorfor vælge en Fins Bois VS?',
+          answer: 'Eaux-de-vie fra Fins Bois giver naturligt rundhed, smidighed og frugt. I denne Léopold Croizet VS understøtter oprindelsen noter af pære, fersken og vinblomst.',
+        },
+        {
+          question: 'Hvordan serveres denne VS?',
+          answer: 'Den egner sig til cocktails og long drinks med tonic eller ginger beer, men også over is. Ren kan den serveres i en lille mængde i et tulipanformet glas.',
+        },
+      ],
+    },
+    sv: {
+      label: 'Vanliga frågor om denna VS Cognac',
+      items: [
+        {
+          question: 'Vad betyder VS i Cognac?',
+          answer: 'VS betyder Very Special: den yngsta eau-de-vie i blandningen har lagrats minst två år på ek. Stilen är ung, direkt och fruktig.',
+        },
+        {
+          question: 'Varför välja en Fins Bois VS?',
+          answer: 'Eaux-de-vie från Fins Bois ger naturligt rundhet, mjukhet och frukt. I denna Léopold Croizet VS bär ursprunget upp toner av päron, persika och vinblomma.',
+        },
+        {
+          question: 'Hur serveras denna VS?',
+          answer: 'Den passar i cocktails och long drinks med tonic eller ginger beer, liksom över is. Ren kan den serveras i liten mängd i ett tulpanformat glas.',
+        },
+      ],
+    },
+    no: {
+      label: 'Vanlige spørsmål om denne VS Cognac',
+      items: [
+        {
+          question: 'Hva betyr VS i Cognac?',
+          answer: 'VS betyr Very Special: den yngste eau-de-vie i blandingen har ligget minst to år på eik. Stilen er ung, direkte og fruktig.',
+        },
+        {
+          question: 'Hvorfor velge en Fins Bois VS?',
+          answer: 'Eaux-de-vie fra Fins Bois gir naturlig rundhet, mykhet og frukt. I denne Léopold Croizet VS løfter opprinnelsen toner av pære, fersken og vinblomst.',
+        },
+        {
+          question: 'Hvordan serveres denne VS?',
+          answer: 'Den passer i cocktails og long drinks med tonic eller ginger beer, og også over is. Ren kan den serveres i en liten mengde i et tulipanformet glass.',
+        },
+      ],
+    },
+    zh: {
+      label: '这款 VS 干邑常见问题',
+      items: [
+        {
+          question: 'VS 在干邑中代表什么？',
+          answer: 'VS 指 Very Special：调配中最年轻的 eau-de-vie 至少在橡木中陈酿两年。风格年轻、直接，并以果香为主。',
+        },
+        {
+          question: '为什么选择 Fins Bois VS？',
+          answer: 'Fins Bois 的 eaux-de-vie 通常带来圆润、柔和和果香。这款 Léopold Croizet VS 因此呈现梨、桃和葡萄花的细腻气息。',
+        },
+        {
+          question: '这款 VS 如何饮用？',
+          answer: '它适合调制鸡尾酒或以 tonic、ginger beer 做 long drink，也可加冰品饮。纯饮时，可用 tulip 杯少量品尝。',
+        },
+      ],
+    },
+  }[lang] || productVsQuestionsCopy('fr');
 }
 
 function removeGalleryMedalImages(html, imageNames) {
