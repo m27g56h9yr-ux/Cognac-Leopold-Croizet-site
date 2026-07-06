@@ -378,6 +378,88 @@ const editorialCopy = [
   ['Could you describe the particularity and the style of your cognacs ?', '您如何描述你们干邑的独特性与风格？'],
 ];
 
+const chineseComplianceHealth = '过量饮酒有害健康，请适量饮用。';
+const chineseComplianceMinor = '禁止向未成年人销售酒精饮品。可能会要求提供成年证明。';
+
+const chineseCleanupReplacements = [
+  ['The film', '影片'],
+  ['Savoir faire', '工艺与传承'],
+  ['Nos vignes, nos terres, le fruit de notre travail', '我们的葡萄藤、土地与辛勤成果'],
+  ['Chaque étape de notre travail distille le caractère de nos produits', '每一个步骤都凝练出产品的性格'],
+  ['Un savoir faire centenaire transmis de génération en génération.', '代代相传的百年工艺。'],
+  ['Prendre le temps de sceller ce qui fait notre différence', '以时间封存我们的独特之处'],
+  ['of a passion.', '热情之源。'],
+  ['Le travail de la vigne', '葡萄园工作'],
+  ['LE RAISIN', '葡萄'],
+  ['LES VENDANGES', '采收'],
+  ['A DOUBLE<br />\nDISTILLATION', '双重<br />\n蒸馏'],
+  ['A DOUBLE<br>\nDISTILLATION', '双重<br>\n蒸馏'],
+  ['Double distillation mobile', '双重蒸馏移动版'],
+  ['previous arrow', '上一张'],
+  ['next arrow', '下一张'],
+  ['Léopold Croizet cognacs', 'Léopold Croizet 干邑'],
+  ['Léopold&nbsp;Croizet cognacs', 'Léopold&nbsp;Croizet 干邑'],
+  ['Léopold Croizet Cognacs', 'Léopold Croizet 干邑'],
+  ['Appelation Cognac Contrôlée', 'Cognac 受控原产地名称'],
+  ['Appellation Cognac Contrôlée', 'Cognac 受控原产地名称'],
+  ['Pineau des Charentes controlée', 'Pineau des Charentes 受控原产地名称'],
+  ['Bottle size', '容量'],
+  ['ABV', '酒精度'],
+  ['International Cognac retailer and brand reference page.', '国际干邑零售商与品牌参考页面。'],
+  ['Editorial article about the house, terroir and production approach.', '关于酒庄、风土与生产方式的编辑文章。'],
+  ['Archive entry for issue n°188 dated 15 September 2025, listing Cognac Léopold Croizet in the Wine Tour Cognac section.', '2025 年 9 月 15 日第 188 期档案条目，在 Wine Tour Cognac 部分列出 Cognac Léopold Croizet。'],
+  ['Supplier profile listing the official website.', '供应商资料页面，列出官方网站。'],
+  ['Official video channel for Maison Léopold Croizet.', 'Maison Léopold Croizet 官方视频频道。'],
+  ['Official house film also embedded on the site.', '酒庄官方影片，也已嵌入网站。'],
+  ['Léopold Croizet Interview', 'Léopold Croizet 访谈'],
+  ['We let ourselves be uplifted by the emotion and the pride of taking our product so far.', '这份产品所承载的情感与自豪，始终推动我们不断追求更远。'],
+  ['In the Léopold Croizet family, the art of distilling combines years of practice and consistently striving for excellence. The end result respects the tradition of our ancestors, a combination of powerful fruity spirits, typical of the fins bois appellation.', '在 Léopold Croizet 家族中，蒸馏艺术来自多年实践与对卓越的持续追求。最终呈现既尊重祖辈传统，也融合了 Fins Bois 产区典型而有力的果香生命之水。'],
+  ['The major grape variety of the appellation ; it produces an acidic wine which favours the aromatic concentration of Cognac spirits. « Eaux de vie ».', '这是本产区的主要葡萄品种，可酿成酸度鲜明的葡萄酒，有利于干邑生命之水的芳香集中。'],
+  ['The <b>COLOMBARD</b> and the <b>FOLLE BLANCHE</b>,', '<b>COLOMBARD</b> 与 <b>FOLLE BLANCHE</b>，'],
+  ['These grape varieties represent only 1% of the vineyards in the appellation, and are renowned for their very aromatic and very intense « eaux-de-vie ».', '这两个葡萄品种在本产区葡萄园中仅占约 1%，却以非常芳香、浓郁的生命之水而闻名。'],
+  ['This is an exciting time on the property. Our harvesting machine is equipped with an automated sorting table to remove all the unwanted plant debris: leaves, stalks, wood.', '这是酒庄一年中令人振奋的时刻。我们的采收设备配有自动分选台，可去除叶片、枝梗、木屑等不需要的植物残留。'],
+  ['We find in this photo the marriage certificate of Pierre GANAN and Jeanne MASSON on February 3, 1750: 1st generation to live in the home of LANTIN.', '这张照片中可见 Pierre GANAN 与 Jeanne MASSON 于 1750 年 2 月 3 日的结婚证书；他们是居住在 LANTIN 宅邸的第一代。'],
+  ['Cognac sale<br />\nof François FOUCHÉ.', 'François FOUCHÉ 的<br />\n干邑销售记录。'],
+  ['Cognac sale<br>\nof François FOUCHÉ.', 'François FOUCHÉ 的<br>\n干邑销售记录。'],
+  ['from François HUBERT<br />\nto his daughter Rose HUBERT', 'François HUBERT<br />\n转让给其女儿 Rose HUBERT'],
+  ['from François HUBERT<br>\nto his daughter Rose HUBERT', 'François HUBERT<br>\n转让给其女儿 Rose HUBERT'],
+  ['Marriage certificate<br />\nFrançois HUBERT<br />\nand Jeanne GANAN', 'François HUBERT<br />\n与 Jeanne GANAN 的<br />\n结婚证书'],
+  ['Marriage certificate<br>\nFrançois HUBERT<br>\nand Jeanne GANAN', 'François HUBERT<br>\n与 Jeanne GANAN 的<br>\n结婚证书'],
+  ['«Bois de LANTIN» to François HUBERT<br />\nin November 1850. Parcel still owned<br />\nto the Léopold Croizet family.', '“Bois de LANTIN” 于 1850 年 11 月转让给 François HUBERT。<br />\n该地块至今仍由 Léopold Croizet 家族持有。'],
+  ['«Bois de LANTIN» to François HUBERT<br>\nin November 1850. Parcel still owned<br>\nto the Léopold Croizet family.', '“Bois de LANTIN” 于 1850 年 11 月转让给 François HUBERT。<br>\n该地块至今仍由 Léopold Croizet 家族持有。'],
+  ['According to the Republican calendar<br />\nwhich corresponds to April 28, 1799).', '按共和历记载，<br />\n对应 1799 年 4 月 28 日。'],
+  ['According to the Republican calendar<br>\nwhich corresponds to April 28, 1799).', '按共和历记载，<br>\n对应 1799 年 4 月 28 日。'],
+  ['LÉOPOLD CROIZET Frères cognac label,<br />\nfound in departmental archives<br />\nCognac trademark filings from 1945.<br />\nTrademark registered by Marc Léopold Croizet<br />\n(grandfather of Léopold Croizet)<br />\nand his brother Roger Léopold Croizet.', 'LÉOPOLD CROIZET Frères 干邑酒标，<br />\n发现于省级档案中的<br />\n1945 年 Cognac 商标申请文件。<br />\n该商标由 Marc Léopold Croizet<br />\n（Léopold Croizet 的祖父）<br />\n与其兄弟 Roger Léopold Croizet 注册。'],
+  ['LÉOPOLD CROIZET Frères cognac label,<br>\nfound in departmental archives<br>\nCognac trademark filings from 1945.<br>\nTrademark registered by Marc Léopold Croizet<br>\n(grandfather of Léopold Croizet)<br>\nand his brother Roger Léopold Croizet.', 'LÉOPOLD CROIZET Frères 干邑酒标，<br>\n发现于省级档案中的<br>\n1945 年 Cognac 商标申请文件。<br>\n该商标由 Marc Léopold Croizet<br>\n（Léopold Croizet 的祖父）<br>\n与其兄弟 Roger Léopold Croizet 注册。'],
+  ['Lantin 家族宅邸航拍<br />\nin the 1950s with the house<br />\nfamily and farm body<br />\nalways present.', 'Lantin 家族宅邸航拍，<br />\n摄于 20 世纪 50 年代；家宅<br />\n与农庄建筑至今仍在。'],
+  ['Lantin 家族宅邸航拍<br>\nin the 1950s with the house<br>\nfamily and farm body<br>\nalways present.', 'Lantin 家族宅邸航拍，<br>\n摄于 20 世纪 50 年代；家宅<br>\n与农庄建筑至今仍在。'],
+  ['Marc FOUCHÉ，第七代<br />\nmaternal great grandfather<br />\nof Léopold Croizet.', 'Marc FOUCHÉ，第七代，<br />\nLéopold Croizet 的<br />\n外曾祖父。'],
+  ['Marc FOUCHÉ，第七代<br>\nmaternal great grandfather<br>\nof Léopold Croizet.', 'Marc FOUCHÉ，第七代，<br>\nLéopold Croizet 的<br>\n外曾祖父。'],
+  ['Léopold Croizet  (left) 8th generation and Léopold and his son Paul (9th and 10th generation of family winemakers).<br />\nLéopold Croizet relaunched the production of bottled cognac in the 1970s.<br />\nIt is establishing itself in Asian markets, which today remain our number one market. We perpetuate his name through his brand and honor his memory.', 'Léopold Croizet（左）为第八代，身旁是 Léopold 与其子 Paul，分别为家族葡萄种植者第九代与第十代。<br />\nLéopold Croizet 于 20 世纪 70 年代重新启动瓶装干邑生产。<br />\n品牌随后进入亚洲市场，而亚洲至今仍是我们的第一大市场。我们以品牌延续他的名字，并纪念他的传承。'],
+  ['Léopold Croizet  (left) 8th generation and Léopold and his son Paul (9th and 10th generation of family winemakers). Léopold Croizet relaunched the production of bottled cognac in the 1970s.<br />\nIt is establishing itself in Asian markets, which today remain our number one market. We perpetuate his name through his brand and honor his memory.', 'Léopold Croizet（左）为第八代，身旁是 Léopold 与其子 Paul，分别为家族葡萄种植者第九代与第十代。Léopold Croizet 于 20 世纪 70 年代重新启动瓶装干邑生产。<br />\n品牌随后进入亚洲市场，而亚洲至今仍是我们的第一大市场。我们以品牌延续他的名字，并纪念他的传承。'],
+  ['Alcohol sales are prohibited to minors. Proof of legal age may be requested.', chineseComplianceMinor],
+  ['Alcohol sales are prohibited to minors. Proof of majority may be requested.', chineseComplianceMinor],
+  ['La vente d’alcool est interdite aux mineurs. Une preuve de majorité peut être demandée.', chineseComplianceMinor],
+  ['La vente d&rsquo;alcool est interdite aux mineurs. Une preuve de majorité peut être demandée.', chineseComplianceMinor],
+  ['L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.', chineseComplianceHealth],
+  ['L&rsquo;ABUS D&rsquo;ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.', chineseComplianceHealth],
+];
+
+const chineseCleanupPatterns = [
+  [
+    /An 非凡之作 and unique creation which is the pride<br\s*\/?>\s*of the LÉOPOLD CROIZET house and reveals<br\s*\/?>\s*the excellence of our know-how\./g,
+    '一款非凡而独特的创作，<br />\n凝聚 Maison LÉOPOLD CROIZET 的骄傲，<br />\n展现酒庄精湛工艺。',
+  ],
+  [
+    /and unique,<br\s*\/?>\s*the pride of the house<br\s*\/?>\s*LÉOPOLD CROIZET\.<br\s*\/?>\s*This Cognac reveals to you<br\s*\/?>\s*all the excellence<br\s*\/?>\s*of our know-how\./g,
+    '独特而非凡，<br />\n凝聚 Maison LÉOPOLD CROIZET 的骄傲。<br />\n这款干邑展现<br />\n酒庄工艺的卓越与细腻。',
+  ],
+  [
+    /To develop this XO Exception many long years of aging were \(are\) indispensable\.[\s\S]*?with notes of cinnamon and tobacco\./g,
+    productCopy['xo-exception'].note,
+  ],
+];
+
 try {
   await access(path.join(ROOT, 'en'));
 } catch {
@@ -464,6 +546,7 @@ function localizeCopiedEnglishPage(html, route) {
   next = localizeNewsletter(next);
   next = localizeOrderControls(next);
   next = repairTechnicalStrings(next);
+  next = finalizeChineseLocalization(next);
 
   return next.replace(
     /<div class="texte-medaille">\s*[\s\S]*?\s*<\/div>/,
@@ -727,6 +810,7 @@ function localizeFrenchCocktailPage(html) {
   next = localizeNewsletter(next);
   next = localizeOrderControls(next);
   next = repairTechnicalStrings(next);
+  next = finalizeChineseLocalization(next);
 
   return next.replace(
     /<div class="texte-medaille">\s*[\s\S]*?\s*<\/div>/,
@@ -772,6 +856,13 @@ function repairTechnicalStrings(html) {
     .split('china时间Zones').join('chinaTimeZones')
     .replace(/"address国家\/地区"/g, '"addressCountry"')
     .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET');
+}
+
+function finalizeChineseLocalization(html) {
+  let next = html;
+  for (const [from, to] of chineseCleanupReplacements) next = next.split(from).join(to);
+  for (const [pattern, to] of chineseCleanupPatterns) next = next.replace(pattern, to);
+  return next;
 }
 
 function replaceLanguageSwitcher(html, route, existingRoutes) {

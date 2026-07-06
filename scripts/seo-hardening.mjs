@@ -84,36 +84,42 @@ const externalAuthoritySources = [
     url: 'https://www.cognac-expert.com/brands/leopold-croizet-cognac',
     kind: 'ProfilePage',
     note: 'International Cognac retailer and brand reference page.',
+    noteZh: '国际干邑零售商与品牌参考页面。',
   },
   {
     name: 'Cognac.com - Léopold Croizet Cognac',
     url: 'https://cognac.com/leopold-croizet-cognac-a-legacy-of-time-terroir-and-tradition/',
     kind: 'Article',
     note: 'Editorial article about the house, terroir and production approach.',
+    noteZh: '关于酒庄、风土与生产方式的编辑文章。',
   },
   {
     name: 'Sommeliers International n°188 - Wine Tour Cognac',
     url: 'https://www.sommeliers-international.com/fr/anciens-numeros',
     kind: 'WebPage',
     note: 'Archive entry for issue n°188 dated 15 September 2025, listing Cognac Léopold Croizet in the Wine Tour Cognac section.',
+    noteZh: '2025 年 9 月 15 日第 188 期档案条目，在 Wine Tour Cognac 部分列出 Cognac Léopold Croizet。',
   },
   {
     name: 'Business France Marketplace - LA MAISON DES PIERRES',
     url: 'https://www.marketplace.businessfrance.fr/seller/view/index/id/3942/',
     kind: 'ProfilePage',
     note: 'Supplier profile listing the official website.',
+    noteZh: '供应商资料页面，列出官方网站。',
   },
   {
     name: 'Maison Léopold Croizet - YouTube channel',
     url: 'https://www.youtube.com/@maisonleopoldcroizet',
     kind: 'ProfilePage',
     note: 'Official video channel for Maison Léopold Croizet.',
+    noteZh: 'Maison Léopold Croizet 官方视频频道。',
   },
   {
     name: 'Cognac Léopold Croizet - house film',
     url: 'https://www.youtube.com/watch?v=nLBaiPrjVJQ',
     kind: 'VideoObject',
     note: 'Official house film also embedded on the site.',
+    noteZh: '酒庄官方影片，也已嵌入网站。',
   },
 ];
 
@@ -3256,7 +3262,7 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
     ['llms-full.txt', '/llms-full.txt'],
   ].map(([label, href]) => `<li><a href="${sourceHref(href)}">${escapeHtml(stripTags(label))}</a></li>`).join('');
   const externalLinks = externalAuthoritySources.map((source) => (
-    `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(source.note)}</span></li>`
+    `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
   )).join('');
   const documentLinks = [
     ['CEC 2025-2028', proofDocumentUrls.cecAttestation],
@@ -3300,8 +3306,14 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
   });
 }
 
-function productAwardText(medal) {
-  return `${englishMedalLevel(medal.level)} - ${medal.award} ${medal.year}`;
+function externalAuthorityNote(source, lang) {
+  if (lang === 'zh') return source.noteZh || source.note;
+  return source.note;
+}
+
+function productAwardText(medal, lang = 'en') {
+  const level = lang === 'zh' ? ({ gold: '金奖', silver: '银奖', bronze: '铜奖' }[medal.level] || englishMedalLevel(medal.level)) : englishMedalLevel(medal.level);
+  return `${level} - ${medal.award} ${medal.year}`;
 }
 
 function authorityPageCss() {
@@ -4789,10 +4801,10 @@ function complianceCopy(lang) {
       youtubeLink: 'Se på YouTube',
     },
     zh: {
-      health: 'L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.',
+      health: '过量饮酒有害健康，请适量饮用。',
       minor: '禁止向未成年人销售酒精饮品。可能会要求提供成年证明。',
       inactiveShopTitle: '线上商店未启用',
-      inactiveShopLead: '本网站展示 Léopold&nbsp;Croizet cognacs 与 Pineau des Charentes，但目前不能在线下单、提交购物车或付款。',
+      inactiveShopLead: '本网站展示 Léopold&nbsp;Croizet 干邑与 Pineau des Charentes，但目前不能在线下单、提交购物车或付款。',
       inactiveShopText: '如需了解库存、价格、参观或商务需求，请直接联系酒庄。任何销售均需通过书面沟通、报价或发票确认。',
       contactCta: '联系我们',
       collectionCta: '查看系列',
@@ -6540,7 +6552,7 @@ function productSubjectOfItems(slug, lang) {
   return [
     ...(productMedalProofs.get(slug) || []).map((medal) => ({
       '@type': 'CreativeWork',
-      name: productAwardText(medal),
+      name: productAwardText(medal, lang),
       ...(medal.href ? { url: medal.href } : {}),
     })),
   ];
@@ -6608,6 +6620,7 @@ function productSchema(route, metadata, image) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
   const name = productNames.get(slug);
   if (!name) return null;
+  const lang = languageForRoute(route);
   const id = `${PUBLIC_ORIGIN}${route}#product`;
   const partnerOffer = productPartnerOffer(route, slug);
   const schema = {
@@ -6622,7 +6635,7 @@ function productSchema(route, metadata, image) {
     manufacturer: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     url: `${PUBLIC_ORIGIN}${route}`,
     countryOfOrigin: 'France',
-    additionalProperty: productStructuredProperties(slug),
+    additionalProperty: productStructuredProperties(slug, lang),
   };
   if (partnerOffer) {
     schema.offers = partnerOffer;
@@ -6642,9 +6655,9 @@ function productSchema(route, metadata, image) {
       isVariantOf: { '@id': id },
     }));
   }
-  const awards = productMedalProofs.get(slug)?.map(productAwardText) || [];
+  const awards = productMedalProofs.get(slug)?.map((medal) => productAwardText(medal, lang)) || [];
   if (awards.length) schema.award = awards;
-  const subjectOf = productSubjectOfItems(slug, languageForRoute(route));
+  const subjectOf = productSubjectOfItems(slug, lang);
   if (subjectOf.length) schema.subjectOf = subjectOf;
   return schema;
 }
@@ -6655,30 +6668,38 @@ function productPartnerOffer(route, slug) {
   return sellerTrackingFallbackOffer(slug);
 }
 
-function productStructuredProperties(slug) {
+function productStructuredProperties(slug, lang = 'fr') {
   const isPineau = slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG;
   const nutritionProduct = nutritionProductsBySlug.get(slug);
   const abv = (nutritionProduct?.abv || (isPineau ? '17,5 % vol' : '40 % vol')).replace(/\s*vol$/i, '').trim();
+  const labels = lang === 'zh'
+    ? { appellation: '产区名称', bottleSize: '容量', abv: '酒精度' }
+    : { appellation: 'Appellation', bottleSize: 'Bottle size', abv: 'ABV' };
   return [
     {
       '@type': 'PropertyValue',
-      name: 'Appellation',
-      value: productStructuredAppellation(slug),
+      name: labels.appellation,
+      value: productStructuredAppellation(slug, lang),
     },
     {
       '@type': 'PropertyValue',
-      name: 'Bottle size',
+      name: labels.bottleSize,
       value: productStructuredBottleSize(slug),
     },
     {
       '@type': 'PropertyValue',
-      name: 'ABV',
+      name: labels.abv,
       value: abv,
     },
   ];
 }
 
-function productStructuredAppellation(slug) {
+function productStructuredAppellation(slug, lang = 'fr') {
+  if (lang === 'zh') {
+    if (slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG) return 'Pineau des Charentes 受控原产地名称';
+    if (slug === 'valentine') return 'Cognac Fins Bois 受控原产地名称';
+    return 'Cognac Fins Bois 受控原产地名称';
+  }
   if (slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG) return 'Pineau des Charentes controlée';
   if (slug === 'valentine') return 'Cognac Fins Bois contrôlée';
   return 'Appellation cognac Fins Bois controlée';
