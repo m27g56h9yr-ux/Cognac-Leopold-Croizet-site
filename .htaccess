@@ -61,6 +61,15 @@ Options -Indexes
   RewriteRule ^no/heritage/?$ /no/collection/heritage/ [R=301,L,QSD]
   RewriteRule ^zh/heritage/?$ /zh/collection/heritage/ [R=301,L,QSD]
 
+  # Retire temporary authority-kit technical-sheet URLs without creating 404s.
+  RewriteRule ^assets/authority/dossier-de-presse-cognac-leopold-croizet\.pdf$ /dossier-de-presse/ [R=301,L,QSD]
+  RewriteRule ^assets/authority/fiches-techniques/([^/.]+)\.pdf$ /collection/$1/ [R=301,L,QSD]
+  RewriteRule ^fiches-techniques/?$ /collection/ [R=301,L,QSD]
+  RewriteRule ^(en|da|sv|no|zh)/fiches-techniques/?$ /$1/shop/ [R=301,L,QSD]
+  RewriteRule ^ru/fiches-techniques/?$ /ru/a-faire/ [R=301,L,QSD]
+  RewriteRule ^fiches-techniques/([^/]+)/?$ /collection/$1/ [R=301,L,QSD]
+  RewriteRule ^(en|ru|da|sv|no|zh)/fiches-techniques/([^/]+)/?$ /$1/collection/$2/ [R=301,L,QSD]
+
   # OVH sometimes misses the directory index for this newly created locale page.
   RewriteRule ^zh/faq/?$ zh/faq/index.html [L]
 </IfModule>
