@@ -806,6 +806,45 @@ const productImageAltRules = [
   [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, 'Pineau des Charentes Léopold Croizet'],
 ];
 
+const contextualImageAltRules = [
+  [/img_home_carre_cocktail/i, {
+    fr: 'Cocktail au Cognac Léopold Croizet et Pineau des Charentes',
+    en: 'Cocktail with Cognac Léopold Croizet and Pineau des Charentes',
+    ru: 'Коктейль с Cognac Léopold Croizet и Pineau des Charentes',
+    da: 'Cocktail med Cognac Léopold Croizet og Pineau des Charentes',
+    sv: 'Cocktail med Cognac Léopold Croizet och Pineau des Charentes',
+    no: 'Cocktail med Cognac Léopold Croizet og Pineau des Charentes',
+    zh: '以 Cognac Léopold Croizet 与 Pineau des Charentes 调制的鸡尾酒',
+  }],
+  [/img_home_carre_archive/i, {
+    fr: 'Archives familiales de la maison Cognac Léopold Croizet',
+    en: 'Family archives of Maison Cognac Léopold Croizet',
+    ru: 'Семейные архивы Maison Cognac Léopold Croizet',
+    da: 'Familiearkiver fra Maison Cognac Léopold Croizet',
+    sv: 'Familjearkiv från Maison Cognac Léopold Croizet',
+    no: 'Familiearkiver fra Maison Cognac Léopold Croizet',
+    zh: 'Maison Cognac Léopold Croizet 的家族档案',
+  }],
+  [/img_home_large_savoirfaire/i, {
+    fr: 'Savoir-faire familial Cognac Léopold Croizet en Fins Bois',
+    en: 'Cognac Léopold Croizet family know-how in Fins Bois',
+    ru: 'Семейное мастерство Cognac Léopold Croizet в Fins Bois',
+    da: 'Cognac Léopold Croizet familiehåndværk i Fins Bois',
+    sv: 'Cognac Léopold Croizet familjekunnande i Fins Bois',
+    no: 'Cognac Léopold Croizet familiehåndverk i Fins Bois',
+    zh: 'Fins Bois 的 Cognac Léopold Croizet 家族工艺',
+  }],
+  [/contact_mobile/i, {
+    fr: 'Visite du domaine Cognac Léopold Croizet à Triac-Lautrait',
+    en: 'Visit to the Cognac Léopold Croizet estate in Triac-Lautrait',
+    ru: 'Визит в поместье Cognac Léopold Croizet в Triac-Lautrait',
+    da: 'Besøg hos Cognac Léopold Croizet i Triac-Lautrait',
+    sv: 'Besök hos Cognac Léopold Croizet i Triac-Lautrait',
+    no: 'Besøk hos Cognac Léopold Croizet i Triac-Lautrait',
+    zh: '参观 Triac-Lautrait 的 Cognac Léopold Croizet 酒庄',
+  }],
+];
+
 const productMedalProofs = new Map([
   ['napoleon', [
     {
@@ -906,7 +945,7 @@ function productSeoTitle(slug, lang) {
         ru: `${name} Léopold Croizet | французский Pineau`,
         da: `${name} Léopold Croizet | fransk Pineau`,
         sv: `${name} Léopold Croizet | Pineau från Frankrike`,
-        no: `${name} Léopold Croizet | fransk Pineau des Charentes`,
+        no: `${name} Léopold Croizet | Pineau fra Frankrike`,
         zh: `${name} Léopold Croizet | 法国 Pineau 甜酒`,
       }
     : {
@@ -967,7 +1006,7 @@ const routeMetadata = new Map([
   }],
   ['/collection/', {
     title: 'Collection Cognac et Pineau Léopold Croizet | VS, VSOP, XO et Extra',
-    description: 'Découvrez la collection Léopold Croizet : Cognacs VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes et Pineau Rouge.',
+    description: 'Découvrez la collection Léopold Croizet : VS, VSOP, Napoléon, XO, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes et Pineau Rouge.',
   }],
   ['/en/shop/', {
     title: 'Cognac and Pineau Léopold Croizet Collection | VS, VSOP, XO and Extra',
@@ -1098,7 +1137,7 @@ const routeMetadata = new Map([
     description: 'Alkemi hos Cognac Léopold Croizet: assemblage, mognad, buteljering och familjekunnande som förs vidare genom generationer.',
   }],
   ['/no/lalchimie/', {
-    title: 'Alkymi | Assemblage Cognac Léopold Croizet',
+    title: 'Alkymi | Blanding Cognac Léopold Croizet',
     description: 'Alkymi hos Cognac Léopold Croizet: assemblage, modning, tapping og familiehåndverk videreført gjennom generasjoner.',
   }],
   ['/le-temps/', {
@@ -1114,15 +1153,15 @@ const routeMetadata = new Map([
     description: 'Время Cognac Léopold Croizet: архивы, семейная история, выдержка и передача мастерства из поколения в поколение.',
   }],
   ['/da/le-temps/', {
-    title: 'Tiden | Arv Cognac Léopold Croizet',
+    title: 'Tiden | Arv og modning Cognac Léopold Croizet',
     description: 'Tiden hos Cognac Léopold Croizet: arkiver, familiehistorie, lagring og overlevering af savoir-faire fra generation til generation.',
   }],
   ['/sv/le-temps/', {
-    title: 'Tiden | Arv Cognac Léopold Croizet',
+    title: 'Tiden | Arv och lagring Cognac Léopold Croizet',
     description: 'Tiden hos Cognac Léopold Croizet: arkiv, familjehistoria, lagring och överföring av kunnande från generation till generation.',
   }],
   ['/no/le-temps/', {
-    title: 'Tiden | Arv Cognac Léopold Croizet',
+    title: 'Tiden | Arv og lagring Cognac Léopold Croizet',
     description: 'Tiden hos Cognac Léopold Croizet: arkiver, familiehistorie, lagring og videreføring av håndverk fra generasjon til generasjon.',
   }],
   ['/leopold-croizet/', {
@@ -1510,6 +1549,12 @@ function sellerTrackingFallbackNotes(slug) {
 
 function isNoindexRoute(route) {
   return noindexRoutes.has(route) || route.startsWith('/_preview/');
+}
+
+function canonicalRouteForRoute(route) {
+  if (LEGACY_PROOF_ROUTES.includes(route)) return proofRouteForLang(languageForRoute(route));
+  if (route === '/collection/pineau-des-charentes-blanc/') return `/collection/${PINEAU_SLUG}/`;
+  return route;
 }
 
 const targetRoute = normalizeTargetRoute(process.env.LC_SEO_ROUTE || '');
@@ -2138,7 +2183,7 @@ function filmPageCopy(lang) {
       youtubeCta: 'Se på YouTube',
     },
     no: {
-      metaTitle: 'Filmen om Maison Léopold Croizet | Familiecognac fra Fins Bois',
+      metaTitle: 'Filmen om Maison Léopold Croizet | Fins Bois familiecognac',
       description: 'Se filmen om Maison Léopold Croizet: familieeiendom, arv, håndverk og Fins Bois-cognacs i Triac-Lautrait.',
       eyebrow: 'Husets film',
       heading: 'Filmen om Maison<br>Léopold&nbsp;Croizet',
@@ -2274,7 +2319,7 @@ function faqMedalEntry(lang) {
 function faqPageCopy(lang) {
   return {
     fr: {
-      metaTitle: 'FAQ Cognac | Cognac Léopold Croizet',
+      metaTitle: 'FAQ Cognac Léopold Croizet | Service, visite et achat',
       description: 'Questions fréquentes Cognac Léopold Croizet : origine, choix des cuvées, service, cocktails, visite à Triac-Lautrait, achat, retrait et demandes professionnelles.',
       eyebrow: 'Questions fréquentes',
       heading: 'Questions fréquentes<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2296,7 +2341,7 @@ function faqPageCopy(lang) {
       proofCta: 'Voir la page environnement',
     },
     en: {
-      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      metaTitle: 'Cognac Léopold Croizet FAQ | Serving, Visit and Buying',
       description: 'Cognac Léopold Croizet FAQ: origin, cuvée choice, serving, cocktails, visit in Triac-Lautrait, purchase, collection and professional requests.',
       eyebrow: 'Frequently Asked Questions',
       heading: 'Frequently asked questions<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2318,7 +2363,7 @@ function faqPageCopy(lang) {
       proofCta: 'View environment',
     },
     ru: {
-      metaTitle: 'FAQ Cognac | Cognac Léopold Croizet',
+      metaTitle: 'FAQ Cognac Léopold Croizet | Визит и подача',
       description: 'FAQ Cognac Léopold Croizet: происхождение, выбор кюве, подача, коктейли, визит в Triac-Lautrait, покупка, самовывоз и профессиональные запросы.',
       eyebrow: 'FAQ',
       heading: 'Вопросы и ответы<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2340,7 +2385,7 @@ function faqPageCopy(lang) {
       proofCta: 'Открыть страницу экологии',
     },
     da: {
-      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      metaTitle: 'Cognac Léopold Croizet FAQ | Servering og besøg',
       description: 'Cognac Léopold Croizet FAQ: oprindelse, valg af cuvée, servering, cocktails, besøg i Triac-Lautrait, køb, afhentning og professionelle forespørgsler.',
       eyebrow: 'Ofte stillede spørgsmål',
       heading: 'Ofte stillede spørgsmål<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2362,7 +2407,7 @@ function faqPageCopy(lang) {
       proofCta: 'Se miljøsiden',
     },
     sv: {
-      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      metaTitle: 'Cognac Léopold Croizet FAQ | Servering och besök',
       description: 'Cognac Léopold Croizet FAQ: ursprung, val av cuvée, servering, cocktails, besök i Triac-Lautrait, köp, upphämtning och professionella frågor.',
       eyebrow: 'Vanliga frågor',
       heading: 'Vanliga frågor<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2384,7 +2429,7 @@ function faqPageCopy(lang) {
       proofCta: 'Se miljösidan',
     },
     no: {
-      metaTitle: 'Cognac FAQ | Cognac Léopold Croizet',
+      metaTitle: 'Cognac Léopold Croizet FAQ | Servering og besøk',
       description: 'Cognac Léopold Croizet FAQ: opprinnelse, valg av cuvée, servering, cocktails, besøk i Triac-Lautrait, kjøp, henting og profesjonelle forespørsler.',
       eyebrow: 'Ofte stilte spørsmål',
       heading: 'Ofte stilte spørsmål<br><span class="lc-nowrap">Léopold Croizet</span>',
@@ -2990,7 +3035,7 @@ function nutritionPageCopy(lang) {
     fr: {
       indexMetaTitle: 'Valeurs nutritionnelles par produit | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Accès aux pages d’ingrédients et valeurs nutritionnelles par produit pour les cognacs et Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Valeurs nutritionnelles et ingrédients',
+      productMetaTitle: '%s | Nutrition et ingrédients',
       productDescription: 'Ingrédients et valeurs nutritionnelles de %s, pour 30 ml et 100 ml.',
       eyebrow: 'Information produit',
       indexHeading: 'Valeurs nutritionnelles par produit',
@@ -3031,7 +3076,7 @@ function nutritionPageCopy(lang) {
     en: {
       indexMetaTitle: 'Nutritional Values by Product | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Product-by-product access to ingredients and nutritional values for Cognac and Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Nutritional Values and Ingredients',
+      productMetaTitle: '%s | Nutrition and Ingredients',
       productDescription: 'Ingredients and nutritional values for %s, per 30 ml and 100 ml.',
       eyebrow: 'Product information',
       indexHeading: 'Nutritional values by product',
@@ -3072,7 +3117,7 @@ function nutritionPageCopy(lang) {
     ru: {
       indexMetaTitle: 'Пищевая ценность по продуктам | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Отдельные страницы ингредиентов и пищевой ценности для Cognac и Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Пищевая ценность и ингредиенты',
+      productMetaTitle: '%s | Пищевая ценность',
       productDescription: 'Ингредиенты и пищевая ценность %s на 30 мл и 100 мл.',
       eyebrow: 'Информация о продукте',
       indexHeading: 'Пищевая ценность по продуктам',
@@ -3113,7 +3158,7 @@ function nutritionPageCopy(lang) {
     da: {
       indexMetaTitle: 'Næringsværdier efter produkt | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Produktspecifik adgang til ingredienser og næringsværdier for Cognac og Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Næringsværdier og ingredienser',
+      productMetaTitle: '%s | Næring og ingredienser',
       productDescription: 'Ingredienser og næringsværdier for %s pr. 30 ml og 100 ml.',
       eyebrow: 'Produktinformation',
       indexHeading: 'Næringsværdier efter produkt',
@@ -3154,7 +3199,7 @@ function nutritionPageCopy(lang) {
     sv: {
       indexMetaTitle: 'Näringsvärden per produkt | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Produktspecifika sidor med ingredienser och näringsvärden för Cognac och Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Näringsvärden och ingredienser',
+      productMetaTitle: '%s | Näring och ingredienser',
       productDescription: 'Ingredienser och näringsvärden för %s per 30 ml och 100 ml.',
       eyebrow: 'Produktinformation',
       indexHeading: 'Näringsvärden per produkt',
@@ -3195,7 +3240,7 @@ function nutritionPageCopy(lang) {
     no: {
       indexMetaTitle: 'Næringsverdier per produkt | Cognac Léopold\u00a0Croizet',
       indexDescription: 'Produktsider med ingredienser og næringsverdier for Cognac og Pineau Léopold\u00a0Croizet.',
-      productMetaTitle: '%s | Næringsverdier og ingredienser',
+      productMetaTitle: '%s | Næring og innhold',
       productDescription: 'Ingredienser og næringsverdier for %s per 30 ml og 100 ml.',
       eyebrow: 'Produktinformasjon',
       indexHeading: 'Næringsverdier per produkt',
@@ -3980,6 +4025,7 @@ function nutritionProductTitleHtml(product) {
 function legacyProofRedirectHtml(route = '/preuves/') {
   const lang = languageForRoute(route);
   const target = sourceHref(proofRouteForLang(lang));
+  const proofCopy = proofPageCopy(lang);
   const copy = {
     fr: {
       title: 'Environnement | Cognac Léopold Croizet',
@@ -4017,18 +4063,24 @@ function legacyProofRedirectHtml(route = '/preuves/') {
       cta: '前往环境页面',
     },
   }[lang] || {};
+  const title = proofCopy.metaTitle || copy.title || 'Environnement | Cognac Léopold Croizet';
+  const description = proofCopy.description || copy.message || 'Cette page a changé d’adresse.';
+  const canonical = `${PUBLIC_ORIGIN}${proofRouteForLang(lang)}`;
 
   return `<!doctype html>
 <html lang="${htmlLangForRoute(route)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="${escapeHtml(description)}">
+<meta name="robots" content="noindex, follow">
 <meta http-equiv="refresh" content="0; url=${target}">
-<title>${escapeHtml(copy.title || 'Environnement | Cognac Léopold Croizet')}</title>
+<link rel="canonical" href="${canonical}">
+<title>${escapeHtml(title)}</title>
 </head>
 <body>
 <main>
-<h1>${escapeHtml(copy.title || 'Environnement | Cognac Léopold Croizet')}</h1>
+<h1>${escapeHtml(copy.title || title)}</h1>
 <p>${escapeHtml(copy.message || 'Cette page a changé d’adresse.')}</p>
 <p><a href="${target}">${escapeHtml(copy.cta || 'Aller à la page Environnement')}</a></p>
 </main>
@@ -4068,11 +4120,12 @@ function hrefLangForRoute(route) {
 
 function hardenHtml(html, route, file) {
   const metadata = metadataForRoute(route, html);
-  const canonical = `${PUBLIC_ORIGIN}${route}`;
+  const canonicalRoute = canonicalRouteForRoute(route);
+  const canonical = `${PUBLIC_ORIGIN}${canonicalRoute}`;
   const lang = languageForRoute(route);
   const robots = isNoindexRoute(route) ? 'noindex, follow' : 'index, follow, max-image-preview:large';
   const image = bestImageForPage(html, route);
-  const alternates = makeAlternateTags(route);
+  const alternates = canonicalRoute === route ? makeAlternateTags(route) : [];
 
   let next = html
     .replace(/<title>[\s\S]*?<\/title>\s*/i, '')
@@ -4107,7 +4160,7 @@ function hardenHtml(html, route, file) {
     `<link rel="canonical" href="${canonical}">`,
     ...alternates,
     ...brandIconTags(),
-    `<meta property="og:type" content="${route.includes('/collection/') ? 'product' : 'website'}">`,
+    `<meta property="og:type" content="${canonicalRoute.includes('/collection/') ? 'product' : 'website'}">`,
     `<meta property="og:locale" content="${localeForRoute(route)}">`,
     `<meta property="og:title" content="${escapeHtml(metadata.title)}">`,
     `<meta property="og:description" content="${escapeHtml(metadata.description)}">`,
@@ -5504,6 +5557,7 @@ async function improveImageMarkup(html, route) {
 async function improveImageTag(tag, route, imageIndex) {
   const src = getAttribute(tag, 'src') || getAttribute(tag, 'data-src') || '';
   let next = repairProductAlt(tag, src);
+  next = repairContextualImageAlt(next, src, route);
 
   const dimensions = await imageDimensionsForSrc(src);
   if (dimensions) {
@@ -5527,6 +5581,18 @@ function repairProductAlt(tag, src) {
   const rule = productImageAltRules.find(([pattern]) => pattern.test(normalizedSrc));
   if (!rule) return tag;
   return setAttribute(tag, 'alt', rule[1]);
+}
+
+function repairContextualImageAlt(tag, src, route) {
+  if (/\baria-hidden=(["'])true\1/i.test(tag)) return tag;
+  const currentAlt = getAttribute(tag, 'alt');
+  if (currentAlt && currentAlt.trim()) return tag;
+  const normalizedSrc = normalizePublicPath(src);
+  const rule = contextualImageAltRules.find(([pattern]) => pattern.test(normalizedSrc));
+  if (!rule) return tag;
+  const lang = languageForRoute(route);
+  const alt = rule[1][lang] || rule[1].fr;
+  return setAttribute(tag, 'alt', alt);
 }
 
 function shouldLazyLoadImage(tag, route, imageIndex) {
