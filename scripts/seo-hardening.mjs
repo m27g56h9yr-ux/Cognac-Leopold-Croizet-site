@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs';
@@ -18,7 +18,6 @@ const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
 const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
-const AUTHORITY_ASSET_DIR = '/assets/authority';
 const WALK_SKIP_DIRS = new Set([
   '.agents',
   '.github',
@@ -40,15 +39,15 @@ const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((p
 const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
 const NUTRITION_PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
+const DEPRECATED_AUTHORITY_ARTIFACTS = [
+  'assets/authority',
+  ...SITE_LANGUAGES.map((lang) => (lang === 'fr' ? 'fiches-techniques' : `${lang}/fiches-techniques`)),
+];
 const FAQ_ROUTES = SITE_LANGUAGES.map((lang) => faqRouteForLang(lang));
 const PROOF_ROUTES = SITE_LANGUAGES.map((lang) => proofRouteForLang(lang));
 const MEDAL_ROUTES = SITE_LANGUAGES.map((lang) => medalRouteForLang(lang));
 const PRESS_KIT_ROUTES = SITE_LANGUAGES.map((lang) => pressKitRouteForLang(lang));
-const TECHNICAL_SHEET_INDEX_ROUTES = SITE_LANGUAGES.map((lang) => technicalSheetIndexRouteForLang(lang));
-const TECHNICAL_SHEET_PRODUCT_ROUTES = SITE_LANGUAGES.flatMap((lang) => (
-  PRODUCT_SLUGS.map((slug) => technicalSheetProductRouteForLang(lang, slug))
-));
-const AUTHORITY_ROUTES = [...PRESS_KIT_ROUTES, ...TECHNICAL_SHEET_INDEX_ROUTES, ...TECHNICAL_SHEET_PRODUCT_ROUTES];
+const AUTHORITY_ROUTES = [...PRESS_KIT_ROUTES];
 const NUTRITION_INDEX_ROUTES = SITE_LANGUAGES.map((lang) => nutritionRouteForLang(lang));
 const NUTRITION_PRODUCT_ROUTES = SITE_LANGUAGES.flatMap((lang) => (
   NUTRITION_PRODUCT_SLUGS.map((slug) => nutritionProductRouteForLang(lang, slug))
@@ -71,10 +70,6 @@ const proofDocumentUrls = {
 const proofLogoUrls = {
   cec: '/assets/environment/logo-cec-cuivre-rvb.png',
   hve: '/assets/environment/logo-hve-noir.png',
-};
-
-const authorityDocumentUrls = {
-  pressKit: `${AUTHORITY_ASSET_DIR}/dossier-de-presse-cognac-leopold-croizet.pdf`,
 };
 
 const authoritySameAsUrls = [
@@ -981,7 +976,6 @@ const productPrimaryGalleryImages = new Map([
 ]);
 
 const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
-const productAuthorityLinkStyle = '<style id="lc-product-authority-link-style">.lc-product-authority-links{clear:both;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px auto 28px;padding:0 18px;font-family:Arial,sans-serif}.lc-product-authority-links a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 13px;border:1px solid rgba(114,104,88,.32);background:#fffdf9;color:#2f261d;font-size:11px;text-transform:uppercase;text-decoration:none}.lc-product-authority-links a:hover{border-color:#9b7a35;text-decoration:none}@media(max-width:767px){.lc-product-authority-links{margin:16px auto 24px}}</style>';
 const productDetailsAccordionStyle = '<style id="lc-product-details-accordion-style">.lc-product-details-accordion{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;color:#726858}.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}.lc-product-details-accordion summary span{border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-details-accordion summary:hover{color:#2f261d}.lc-product-details-accordion summary:hover span{border-bottom-color:#2f261d}.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}.lc-product-details-list{display:grid;gap:8px;margin:0}.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}.lc-product-details-list dt,.lc-product-details-list dd{margin:0}.lc-product-details-list dt{font-weight:700;color:#8a806f}.lc-product-details-list dd{color:#2f261d}.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}@media(max-width:767px){.lc-product-details-accordion{margin:16px auto 4px}.lc-product-details-accordion summary{text-align:center}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}</style>';
 const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
 const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
@@ -1026,8 +1020,6 @@ const contentGroups = [
   PROOF_ROUTES,
   MEDAL_ROUTES,
   PRESS_KIT_ROUTES,
-  TECHNICAL_SHEET_INDEX_ROUTES,
-  ...PRODUCT_SLUGS.map((slug) => SITE_LANGUAGES.map((lang) => technicalSheetProductRouteForLang(lang, slug))),
   NUTRITION_INDEX_ROUTES,
   ...NUTRITION_PRODUCT_SLUGS.map((slug) => SITE_LANGUAGES.map((lang) => nutritionProductRouteForLang(lang, slug))),
   ['/rencontre/', '/en/rencontre/', '/ru/rencontre/', '/da/rencontre/', '/sv/rencontre/', '/no/rencontre/', '/zh/rencontre/'],
@@ -1471,13 +1463,6 @@ for (const lang of SITE_LANGUAGES) {
     title: copy.pressMetaTitle,
     description: copy.pressDescription,
   });
-  routeMetadata.set(technicalSheetIndexRouteForLang(lang), {
-    title: copy.sheetIndexMetaTitle,
-    description: copy.sheetIndexDescription,
-  });
-  for (const slug of PRODUCT_SLUGS) {
-    routeMetadata.set(technicalSheetProductRouteForLang(lang, slug), technicalSheetMetadata(slug, copy, lang));
-  }
 }
 
 for (const lang of SITE_LANGUAGES) {
@@ -1632,6 +1617,7 @@ const targetRoute = normalizeTargetRoute(process.env.LC_SEO_ROUTE || '');
 
 if (!targetRoute) {
   await writeSourcePages();
+  await removeDeprecatedAuthorityArtifacts();
 }
 
 const allHtmlFiles = targetRoute ? [fileForRoute(targetRoute)] : await walkHtml(ROOT);
@@ -1722,17 +1708,6 @@ async function writeSourcePages() {
     pages.set(`${route.replace(/^\//, '')}index.html`, pressKitPageHtml(route));
   }
 
-  for (const route of TECHNICAL_SHEET_INDEX_ROUTES) {
-    pages.set(`${route.replace(/^\//, '')}index.html`, technicalSheetIndexPageHtml(route));
-  }
-
-  for (const slug of PRODUCT_SLUGS) {
-    for (const lang of SITE_LANGUAGES) {
-      const route = technicalSheetProductRouteForLang(lang, slug);
-      pages.set(`${route.replace(/^\//, '')}index.html`, technicalSheetProductPageHtml(route, slug));
-    }
-  }
-
   for (const route of NUTRITION_INDEX_ROUTES) {
     pages.set(`${route.replace(/^\//, '')}index.html`, nutritionIndexPageHtml(route));
   }
@@ -1757,8 +1732,12 @@ async function writeSourcePages() {
     await mkdir(path.dirname(fullPath), { recursive: true });
     await writeFile(fullPath, normalizeLegacyDeployBase(normalizeGeneratedWhitespace(html)), 'utf8');
   }
+}
 
-  await writeAuthorityPdfDocuments();
+async function removeDeprecatedAuthorityArtifacts() {
+  for (const relativePath of DEPRECATED_AUTHORITY_ARTIFACTS) {
+    await rm(path.join(ROOT, relativePath), { recursive: true, force: true });
+  }
 }
 
 function sourcePageShell({ route = '/', title, description, eyebrow, heading, lead, body, note = '', pageClass = '', headerVariant = 'hero', extraCss = '' }) {
@@ -2137,14 +2116,6 @@ function pressKitRouteForLang(lang) {
   return lang === 'fr' ? '/dossier-de-presse/' : `/${lang}/dossier-de-presse/`;
 }
 
-function technicalSheetIndexRouteForLang(lang) {
-  return lang === 'fr' ? '/fiches-techniques/' : `/${lang}/fiches-techniques/`;
-}
-
-function technicalSheetProductRouteForLang(lang, slug) {
-  return `${technicalSheetIndexRouteForLang(lang)}${slug}/`;
-}
-
 function nutritionRouteForLang(lang) {
   return lang === 'fr' ? '/valeurs-nutritionnelles/' : `/${lang}/nutrition/`;
 }
@@ -2162,13 +2133,7 @@ function languageMenuRouteResolver(route) {
   if (MEDAL_ROUTES.includes(route)) return medalRouteForLang;
   if (FILM_ROUTES.includes(route)) return filmRouteForLang;
   if (PRESS_KIT_ROUTES.includes(route)) return pressKitRouteForLang;
-  if (TECHNICAL_SHEET_INDEX_ROUTES.includes(route)) return technicalSheetIndexRouteForLang;
   if (NUTRITION_INDEX_ROUTES.includes(route)) return nutritionRouteForLang;
-
-  const technicalSheetSlug = PRODUCT_SLUGS.find((slug) => (
-    SITE_LANGUAGES.some((lang) => technicalSheetProductRouteForLang(lang, slug) === route)
-  ));
-  if (technicalSheetSlug) return (lang) => technicalSheetProductRouteForLang(lang, technicalSheetSlug);
 
   const nutritionSlug = NUTRITION_PRODUCT_SLUGS.find((slug) => (
     SITE_LANGUAGES.some((lang) => nutritionProductRouteForLang(lang, slug) === route)
@@ -3141,7 +3106,7 @@ function authorityPageCopy(lang) {
   const copies = {
     fr: {
       pressMetaTitle: 'Dossier de presse et sources | Cognac Léopold Croizet',
-      pressDescription: 'Dossier de presse Cognac Léopold Croizet : identité officielle, sources publiques, documents, fiches techniques et contacts.',
+      pressDescription: 'Dossier de presse Cognac Léopold Croizet : identité officielle, sources publiques, certificats, médailles et contacts.',
       pressEyebrow: 'Dossier de presse',
       pressHeading: 'Sources officielles<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'Un point de référence pour journalistes, importateurs, partenaires, moteurs de recherche et agents IA.',
@@ -3151,24 +3116,6 @@ function authorityPageCopy(lang) {
       documentTitle: 'Documents téléchargeables',
       correctNameTitle: 'Nom à citer',
       correctNameText: 'La marque doit être citée sous sa forme complète : Cognac Léopold Croizet ou Maison Léopold Croizet selon le contexte.',
-      sheetCta: 'Fiches techniques produits',
-      pressPdf: 'Dossier de presse PDF',
-      sheetIndexMetaTitle: 'Fiches techniques produits | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Fiches techniques officielles Cognac Léopold Croizet avec catégorie, origine, contenance, GTIN, preuves et PDF produit.',
-      sheetEyebrow: 'Fiches techniques',
-      sheetIndexHeading: 'Fiches techniques produits',
-      sheetIndexLead: 'Accès aux fiches officielles HTML et PDF des cuvées Cognac Léopold Croizet et Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Fiche technique officielle',
-      sheetProductDescription: 'Fiche technique officielle %s : catégorie, origine, contenance, GTIN, médailles et documents de référence.',
-      sheetProductHeading: 'Fiche technique officielle',
-      officialPage: 'Page produit officielle',
-      pdf: 'PDF',
-      nutrition: 'Nutrition',
-      factsTitle: 'Données produit',
-      proofsTitle: 'Preuves et documents liés',
-      medalsTitle: 'Médailles citées',
-      noMedal: 'Aucune médaille publique n’est actuellement citée pour cette fiche.',
-      noPrice: 'Cette fiche ne publie pas de prix.',
       labels: {
         brand: 'Marque',
         publisher: 'Éditeur',
@@ -3187,7 +3134,7 @@ function authorityPageCopy(lang) {
     },
     en: {
       pressMetaTitle: 'Press Kit and Sources | Cognac Léopold Croizet',
-      pressDescription: 'Cognac Léopold Croizet press kit: official identity, public sources, documents, product technical sheets and contact details.',
+      pressDescription: 'Cognac Léopold Croizet press kit: official identity, public sources, environmental documents, awards and contact details.',
       pressEyebrow: 'Press kit',
       pressHeading: 'Official sources<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'A reference point for journalists, importers, partners, search engines and AI agents.',
@@ -3197,24 +3144,6 @@ function authorityPageCopy(lang) {
       documentTitle: 'Downloadable documents',
       correctNameTitle: 'Name to cite',
       correctNameText: 'The brand should be cited in full: Cognac Léopold Croizet or Maison Léopold Croizet depending on context.',
-      sheetCta: 'Product technical sheets',
-      pressPdf: 'Press kit PDF',
-      sheetIndexMetaTitle: 'Product Technical Sheets | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Official Cognac Léopold Croizet technical sheets with category, origin, bottle size, GTIN, proofs and product PDF.',
-      sheetEyebrow: 'Technical sheets',
-      sheetIndexHeading: 'Product technical sheets',
-      sheetIndexLead: 'Official HTML and PDF sheets for Cognac Léopold Croizet cuvées and Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Official Technical Sheet',
-      sheetProductDescription: 'Official technical sheet for %s: category, origin, bottle size, GTIN, awards and reference documents.',
-      sheetProductHeading: 'Official technical sheet',
-      officialPage: 'Official product page',
-      pdf: 'PDF',
-      nutrition: 'Nutrition',
-      factsTitle: 'Product data',
-      proofsTitle: 'Linked proofs and documents',
-      medalsTitle: 'Listed awards',
-      noMedal: 'No public award is currently listed for this sheet.',
-      noPrice: 'This sheet does not publish prices.',
       labels: {
         brand: 'Brand',
         publisher: 'Publisher',
@@ -3233,7 +3162,7 @@ function authorityPageCopy(lang) {
     },
     ru: {
       pressMetaTitle: 'Пресс-кит и источники | Cognac Léopold Croizet',
-      pressDescription: 'Пресс-кит Cognac Léopold Croizet: официальная идентичность, публичные источники, документы, технические карточки и контакты.',
+      pressDescription: 'Пресс-кит Cognac Léopold Croizet: официальная идентичность, публичные источники, экологические документы, награды и контакты.',
       pressEyebrow: 'Пресс-кит',
       pressHeading: 'Официальные источники<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'Опорная страница для журналистов, импортеров, партнеров, поисковых систем и ИИ-агентов.',
@@ -3243,29 +3172,11 @@ function authorityPageCopy(lang) {
       documentTitle: 'Документы для скачивания',
       correctNameTitle: 'Как цитировать название',
       correctNameText: 'Название бренда следует указывать полностью: Cognac Léopold Croizet или Maison Léopold Croizet в зависимости от контекста.',
-      sheetCta: 'Технические карточки продуктов',
-      pressPdf: 'PDF пресс-кита',
-      sheetIndexMetaTitle: 'Технические карточки продуктов | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Официальные технические карточки Cognac Léopold Croizet: категория, происхождение, объем, GTIN, доказательства и PDF.',
-      sheetEyebrow: 'Технические карточки',
-      sheetIndexHeading: 'Технические карточки продуктов',
-      sheetIndexLead: 'Официальные HTML и PDF карточки для cuvées Cognac Léopold Croizet и Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Официальная техническая карточка',
-      sheetProductDescription: 'Официальная техническая карточка %s: категория, происхождение, объем, GTIN, медали и справочные документы.',
-      sheetProductHeading: 'Официальная техническая карточка',
-      officialPage: 'Официальная страница продукта',
-      pdf: 'PDF',
-      nutrition: 'Пищевая ценность',
-      factsTitle: 'Данные продукта',
-      proofsTitle: 'Связанные доказательства и документы',
-      medalsTitle: 'Указанные награды',
-      noMedal: 'Для этой карточки пока не указана публичная награда.',
-      noPrice: 'В этой карточке цены не публикуются.',
       labels: { brand: 'Бренд', publisher: 'Издатель', address: 'Адрес', contact: 'Контакт', product: 'Продукт', category: 'Категория', origin: 'Происхождение', terroir: 'Cru', volume: 'Основной объем', abv: 'Крепость', gtin: 'Основной GTIN', variants: 'GTIN вариантов', grapes: 'Указанные сорта винограда' },
     },
     da: {
       pressMetaTitle: 'Pressekit og kilder | Cognac Léopold Croizet',
-      pressDescription: 'Cognac Léopold Croizet pressekit: officiel identitet, offentlige kilder, dokumenter, produktdatablade og kontakt.',
+      pressDescription: 'Cognac Léopold Croizet pressekit: officiel identitet, offentlige kilder, miljødokumenter, medaljer og kontakt.',
       pressEyebrow: 'Pressekit',
       pressHeading: 'Officielle kilder<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'Et referencepunkt for journalister, importører, partnere, søgemaskiner og AI-agenter.',
@@ -3275,29 +3186,11 @@ function authorityPageCopy(lang) {
       documentTitle: 'Dokumenter til download',
       correctNameTitle: 'Navn at citere',
       correctNameText: 'Brandet bør citeres fuldt ud: Cognac Léopold Croizet eller Maison Léopold Croizet afhængigt af konteksten.',
-      sheetCta: 'Produktdatablade',
-      pressPdf: 'Pressekit PDF',
-      sheetIndexMetaTitle: 'Produktdatablade | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Officielle Cognac Léopold Croizet datablade med kategori, oprindelse, flaskestørrelse, GTIN, beviser og produkt-PDF.',
-      sheetEyebrow: 'Datablade',
-      sheetIndexHeading: 'Produktdatablade',
-      sheetIndexLead: 'Officielle HTML- og PDF-datablade for Cognac Léopold Croizet cuvéer og Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Officielt datablad',
-      sheetProductDescription: 'Officielt datablad for %s: kategori, oprindelse, flaskestørrelse, GTIN, medaljer og referencedokumenter.',
-      sheetProductHeading: 'Officielt datablad',
-      officialPage: 'Officiel produktside',
-      pdf: 'PDF',
-      nutrition: 'Næring',
-      factsTitle: 'Produktdata',
-      proofsTitle: 'Tilknyttede beviser og dokumenter',
-      medalsTitle: 'Angivne medaljer',
-      noMedal: 'Ingen offentlig medalje er i øjeblikket angivet for dette datablad.',
-      noPrice: 'Dette datablad offentliggør ikke priser.',
       labels: { brand: 'Brand', publisher: 'Udgiver', address: 'Adresse', contact: 'Kontakt', product: 'Produkt', category: 'Kategori', origin: 'Oprindelse', terroir: 'Cru', volume: 'Primær flaskestørrelse', abv: 'Alkoholprocent', gtin: 'Primær GTIN', variants: 'Variant-GTIN', grapes: 'Angivne druesorter' },
     },
     sv: {
       pressMetaTitle: 'Presskit och källor | Cognac Léopold Croizet',
-      pressDescription: 'Cognac Léopold Croizet presskit: officiell identitet, offentliga källor, dokument, produktdatablad och kontakt.',
+      pressDescription: 'Cognac Léopold Croizet presskit: officiell identitet, offentliga källor, miljödokument, medaljer och kontakt.',
       pressEyebrow: 'Presskit',
       pressHeading: 'Officiella källor<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'En referenspunkt för journalister, importörer, partners, sökmotorer och AI-agenter.',
@@ -3307,29 +3200,11 @@ function authorityPageCopy(lang) {
       documentTitle: 'Dokument för nedladdning',
       correctNameTitle: 'Namn att citera',
       correctNameText: 'Varumärket bör citeras i sin fulla form: Cognac Léopold Croizet eller Maison Léopold Croizet beroende på sammanhang.',
-      sheetCta: 'Produktdatablad',
-      pressPdf: 'Presskit PDF',
-      sheetIndexMetaTitle: 'Produktdatablad | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Officiella Cognac Léopold Croizet datablad med kategori, ursprung, flaskstorlek, GTIN, bevis och produkt-PDF.',
-      sheetEyebrow: 'Datablad',
-      sheetIndexHeading: 'Produktdatablad',
-      sheetIndexLead: 'Officiella HTML- och PDF-datablad för Cognac Léopold Croizet cuvéer och Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Officiellt datablad',
-      sheetProductDescription: 'Officiellt datablad för %s: kategori, ursprung, flaskstorlek, GTIN, medaljer och referensdokument.',
-      sheetProductHeading: 'Officiellt datablad',
-      officialPage: 'Officiell produktsida',
-      pdf: 'PDF',
-      nutrition: 'Näring',
-      factsTitle: 'Produktdata',
-      proofsTitle: 'Länkade bevis och dokument',
-      medalsTitle: 'Angivna medaljer',
-      noMedal: 'Ingen offentlig medalj anges för närvarande för detta datablad.',
-      noPrice: 'Detta datablad publicerar inte priser.',
       labels: { brand: 'Varumärke', publisher: 'Utgivare', address: 'Adress', contact: 'Kontakt', product: 'Produkt', category: 'Kategori', origin: 'Ursprung', terroir: 'Cru', volume: 'Primär flaskstorlek', abv: 'Alkoholhalt', gtin: 'Primär GTIN', variants: 'Variant-GTIN', grapes: 'Angivna druvsorter' },
     },
     no: {
       pressMetaTitle: 'Pressekit og kilder | Cognac Léopold Croizet',
-      pressDescription: 'Cognac Léopold Croizet pressekit: offisiell identitet, offentlige kilder, dokumenter, produktdatablader og kontakt.',
+      pressDescription: 'Cognac Léopold Croizet pressekit: offisiell identitet, offentlige kilder, miljødokumenter, medaljer og kontakt.',
       pressEyebrow: 'Pressekit',
       pressHeading: 'Offisielle kilder<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: 'Et referansepunkt for journalister, importører, partnere, søkemotorer og AI-agenter.',
@@ -3339,29 +3214,11 @@ function authorityPageCopy(lang) {
       documentTitle: 'Dokumenter for nedlasting',
       correctNameTitle: 'Navn å sitere',
       correctNameText: 'Merket bør siteres i full form: Cognac Léopold Croizet eller Maison Léopold Croizet avhengig av kontekst.',
-      sheetCta: 'Produktdatablader',
-      pressPdf: 'Pressekit PDF',
-      sheetIndexMetaTitle: 'Produktdatablader | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Offisielle Cognac Léopold Croizet datablader med kategori, opprinnelse, flaskestørrelse, GTIN, bevis og produkt-PDF.',
-      sheetEyebrow: 'Datablader',
-      sheetIndexHeading: 'Produktdatablader',
-      sheetIndexLead: 'Offisielle HTML- og PDF-datablader for Cognac Léopold Croizet cuvéer og Pineau des Charentes.',
-      sheetProductMetaTitle: '%s | Offisielt datablad',
-      sheetProductDescription: 'Offisielt datablad for %s: kategori, opprinnelse, flaskestørrelse, GTIN, medaljer og referansedokumenter.',
-      sheetProductHeading: 'Offisielt datablad',
-      officialPage: 'Offisiell produktside',
-      pdf: 'PDF',
-      nutrition: 'Næring',
-      factsTitle: 'Produktdata',
-      proofsTitle: 'Tilknyttede bevis og dokumenter',
-      medalsTitle: 'Oppførte medaljer',
-      noMedal: 'Ingen offentlig medalje er for øyeblikket oppført for dette databladet.',
-      noPrice: 'Dette databladet publiserer ikke priser.',
       labels: { brand: 'Merke', publisher: 'Utgiver', address: 'Adresse', contact: 'Kontakt', product: 'Produkt', category: 'Kategori', origin: 'Opprinnelse', terroir: 'Cru', volume: 'Primær flaskestørrelse', abv: 'Alkoholstyrke', gtin: 'Primær GTIN', variants: 'Variant-GTIN', grapes: 'Oppførte druesorter' },
     },
     zh: {
       pressMetaTitle: '媒体资料与来源 | Cognac Léopold Croizet',
-      pressDescription: 'Cognac Léopold Croizet 媒体资料：官方身份、公开来源、文件、产品技术资料和联系方式。',
+      pressDescription: 'Cognac Léopold Croizet 媒体资料：官方身份、公开来源、环保文件、奖项和联系方式。',
       pressEyebrow: '媒体资料',
       pressHeading: '官方来源<br><span class="lc-nowrap">Léopold Croizet</span>',
       pressLead: '面向媒体、进口商、合作伙伴、搜索引擎与 AI 代理的参考页面。',
@@ -3371,24 +3228,6 @@ function authorityPageCopy(lang) {
       documentTitle: '可下载文件',
       correctNameTitle: '引用名称',
       correctNameText: '品牌应完整引用为 Cognac Léopold Croizet，或根据语境使用 Maison Léopold Croizet。',
-      sheetCta: '产品技术资料',
-      pressPdf: '媒体资料 PDF',
-      sheetIndexMetaTitle: '产品技术资料 | Cognac Léopold Croizet',
-      sheetIndexDescription: 'Cognac Léopold Croizet 官方产品技术资料，包含类别、产地、容量、GTIN、证明和产品 PDF。',
-      sheetEyebrow: '技术资料',
-      sheetIndexHeading: '产品技术资料',
-      sheetIndexLead: 'Cognac Léopold Croizet 干邑与 Pineau des Charentes 产品的官方 HTML 与 PDF 技术资料。',
-      sheetProductMetaTitle: '%s | 官方技术资料',
-      sheetProductDescription: '%s 官方技术资料：类别、产地、容量、GTIN、奖项和参考文件。',
-      sheetProductHeading: '官方技术资料',
-      officialPage: '官方产品页面',
-      pdf: 'PDF',
-      nutrition: '营养信息',
-      factsTitle: '产品数据',
-      proofsTitle: '相关证明与文件',
-      medalsTitle: '已列奖项',
-      noMedal: '此资料目前未列出公开奖项。',
-      noPrice: '此资料不发布价格。',
       labels: { brand: '品牌', publisher: '发布者', address: '地址', contact: '联系', product: '产品', category: '类别', origin: '产地', terroir: '产区', volume: '主要容量', abv: '酒精度', gtin: '主要 GTIN', variants: '规格 GTIN', grapes: '标示葡萄品种' },
     },
   };
@@ -3396,20 +3235,8 @@ function authorityPageCopy(lang) {
   const copy = { ...copies.en, ...(copies[lang] || {}) };
   if (!copy.pressMetaTitle) copy.pressMetaTitle = copies.en.pressMetaTitle;
   if (!copy.pressDescription) copy.pressDescription = copies.en.pressDescription;
-  if (!copy.sheetIndexMetaTitle) copy.sheetIndexMetaTitle = copies.en.sheetIndexMetaTitle;
-  if (!copy.sheetIndexDescription) copy.sheetIndexDescription = copies.en.sheetIndexDescription;
-  if (!copy.sheetProductMetaTitle) copy.sheetProductMetaTitle = copies.en.sheetProductMetaTitle;
-  if (!copy.sheetProductDescription) copy.sheetProductDescription = copies.en.sheetProductDescription;
   copy.labels = { ...copies.en.labels, ...(copy.labels || {}) };
   return copy;
-}
-
-function technicalSheetMetadata(slug, copy, lang) {
-  const productName = productFullName(slug);
-  return {
-    title: copy.sheetProductMetaTitle.replace('%s', productName),
-    description: copy.sheetProductDescription.replace('%s', productName),
-  };
 }
 
 function pressKitPageHtml(route = '/dossier-de-presse/') {
@@ -3417,7 +3244,6 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
   const copy = authorityPageCopy(lang);
   const referenceLinks = [
     [copy.referenceTitle, pressKitRouteForLang(lang)],
-    [copy.sheetCta, technicalSheetIndexRouteForLang(lang)],
     [medalPageCopy(lang).metaTitle, medalRouteForLang(lang)],
     [proofPageCopy(lang).metaTitle, proofRouteForLang(lang)],
     [nutritionPageCopy(lang).indexMetaTitle, nutritionRouteForLang(lang)],
@@ -3427,7 +3253,6 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
     `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(source.note)}</span></li>`
   )).join('');
   const documentLinks = [
-    [copy.pressPdf, authorityDocumentUrls.pressKit],
     ['CEC 2025-2028', proofDocumentUrls.cecAttestation],
     ['HVE 2024-2027', proofDocumentUrls.hveCertificate],
     ['HVE 2021-2024', proofDocumentUrls.hveCertificate2021],
@@ -3469,123 +3294,8 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
   });
 }
 
-function technicalSheetIndexPageHtml(route = '/fiches-techniques/') {
-  const lang = languageForRoute(route);
-  const copy = authorityPageCopy(lang);
-  const links = PRODUCT_SLUGS.map((slug) => (
-    `<a href="${sourceHref(technicalSheetProductRouteForLang(lang, slug))}"><span>${escapeHtml(productFullName(slug))}</span><small>${escapeHtml(localizedProductCategory(slug, lang))}</small></a>`
-  )).join('');
-  const body = `
-<section class="lc-section">
-  <p>${escapeHtml(copy.sheetIndexLead)}</p>
-  <nav class="lc-technical-grid" aria-label="${escapeHtml(copy.sheetIndexHeading)}">${links}</nav>
-</section>`;
-
-  return sourcePageShell({
-    route,
-    title: copy.sheetIndexMetaTitle,
-    description: copy.sheetIndexDescription,
-    eyebrow: copy.sheetEyebrow,
-    heading: escapeHtml(copy.sheetIndexHeading),
-    lead: '',
-    body,
-    pageClass: 'lc-authority-page lc-technical-sheet-page',
-    headerVariant: 'plain',
-    extraCss: authorityPageCss(),
-  });
-}
-
-function technicalSheetProductPageHtml(route, slug) {
-  const lang = languageForRoute(route);
-  const copy = authorityPageCopy(lang);
-  const metadata = technicalSheetMetadata(slug, copy, lang);
-  const rows = technicalSheetRows(slug, copy, lang).map(([label, value]) => (
-    `<div><dt>${escapeHtml(label)}</dt><dd>${value.includes('<') ? value : escapeHtml(value)}</dd></div>`
-  )).join('');
-  const medals = productMedalProofs.get(slug) || [];
-  const medalHtml = medals.length
-    ? medals.map((medal) => `<li>${escapeHtml(productAwardText(medal))}${medal.href ? ` · <a href="${escapeHtml(medal.href)}" target="_blank" rel="noopener">${escapeHtml(medal.proofLabel || 'palmarès')}</a>` : ''}</li>`).join('')
-    : `<li>${escapeHtml(copy.noMedal)}</li>`;
-  const relatedLinks = technicalSheetRelatedLinks(slug, lang, copy).map(([label, href, external = false]) => (
-    `<a class="lc-button${external ? ' secondary' : ''}" href="${escapeHtml(sourceAwareHref(href))}"${external ? ' target="_blank" rel="noopener"' : ''}>${escapeHtml(label)}</a>`
-  )).join('');
-  const body = `
-<section class="lc-section">
-  <p>${escapeHtml(metadata.description)}</p>
-  <p class="lc-authority-small">${escapeHtml(copy.noPrice)}</p>
-</section>
-<section class="lc-section">
-  <h2>${escapeHtml(copy.factsTitle)}</h2>
-  <dl class="lc-authority-list">${rows}</dl>
-  <div class="lc-cta-row">${relatedLinks}</div>
-</section>
-<section class="lc-section">
-  <h2>${escapeHtml(copy.medalsTitle)}</h2>
-  <ul class="lc-authority-links">${medalHtml}</ul>
-</section>`;
-
-  return sourcePageShell({
-    route,
-    title: metadata.title,
-    description: metadata.description,
-    eyebrow: copy.sheetEyebrow,
-    heading: `${escapeHtml(copy.sheetProductHeading)}<br><span class="lc-nowrap">${escapeHtml(productFullName(slug))}</span>`,
-    lead: '',
-    body,
-    pageClass: 'lc-authority-page lc-technical-sheet-page',
-    headerVariant: 'plain',
-    extraCss: authorityPageCss(),
-  });
-}
-
-function technicalSheetRows(slug, copy, lang) {
-  const primaryGtin = productPrimaryGtins.get(slug);
-  const nutritionProduct = nutritionProductsBySlug.get(slug);
-  const variants = productGtinVariants.get(slug) || [];
-  const abv = nutritionProduct?.abv || (slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? '17,5 % vol' : '40 % vol');
-  const rows = [
-    [copy.labels.product, productFullName(slug)],
-    [copy.labels.category, localizedProductCategory(slug, lang)],
-    [copy.labels.origin, 'France'],
-    [copy.labels.terroir, slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? 'Pineau des Charentes' : 'Fins Bois'],
-    [copy.labels.volume, productStructuredBottleSize(slug)],
-    [copy.labels.abv, abv],
-  ];
-  if (primaryGtin) rows.push([copy.labels.gtin, primaryGtin.gtin13]);
-  if (variants.length) {
-    rows.push([copy.labels.variants, variants.map((variant) => `${variant.size}: ${variant.gtin13}`).join('<br>')]);
-  }
-  if (nutritionProduct?.grapes) rows.push([copy.labels.grapes, nutritionProduct.grapes]);
-  return rows;
-}
-
-function technicalSheetRelatedLinks(slug, lang, copy) {
-  const links = [
-    [copy.officialPage, productRouteForLang(lang, slug)],
-    [copy.pdf, productTechnicalSheetPdfPath(slug), true],
-  ];
-  if (nutritionProductSlugs.has(slug)) links.push([copy.nutrition, nutritionProductRouteForLang(lang, slug)]);
-  return links;
-}
-
-function localizedProductCategory(slug, lang) {
-  if (slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG) {
-    const product = nutritionProductsBySlug.get(slug);
-    return product ? productDetailCategory(product, lang) : productCategory(slug);
-  }
-  return productCategory(slug);
-}
-
 function productAwardText(medal) {
   return `${englishMedalLevel(medal.level)} - ${medal.award} ${medal.year}`;
-}
-
-function productTechnicalSheetPdfPath(slug) {
-  return `${AUTHORITY_ASSET_DIR}/fiches-techniques/${slug}.pdf`;
-}
-
-function sourceAwareHref(href) {
-  return /^https?:\/\//i.test(href) ? href : sourceHref(href);
 }
 
 function authorityPageCss() {
@@ -3607,166 +3317,6 @@ function authorityPageCss() {
     .lc-technical-grid span{display:block;color:var(--lc-ink)}
     .lc-technical-grid small{display:block;margin-top:4px;font-family:Arial,sans-serif;font-size:11px;text-transform:uppercase;color:var(--lc-gold)}
     @media(max-width:760px){.lc-authority-columns,.lc-technical-grid,.lc-authority-list div{grid-template-columns:1fr}.lc-authority-list div{gap:4px}}`;
-}
-
-async function writeAuthorityPdfDocuments() {
-  const authorityDir = path.join(ROOT, AUTHORITY_ASSET_DIR.replace(/^\//, ''));
-  const sheetDir = path.join(ROOT, productTechnicalSheetPdfPath('vs').replace(/^\//, '').split('/').slice(0, -1).join('/'));
-  await mkdir(authorityDir, { recursive: true });
-  await mkdir(sheetDir, { recursive: true });
-  await writeFile(path.join(ROOT, authorityDocumentUrls.pressKit.replace(/^\//, '')), makePressKitPdf());
-  for (const slug of PRODUCT_SLUGS) {
-    await writeFile(path.join(ROOT, productTechnicalSheetPdfPath(slug).replace(/^\//, '')), makeProductTechnicalSheetPdf(slug));
-  }
-}
-
-function makePressKitPdf() {
-  const lines = [
-    { text: 'Cognac Léopold Croizet', size: 22, gapAfter: 10 },
-    { text: 'Dossier de presse officiel', size: 15, gapAfter: 18 },
-    { text: 'Identité', size: 14, gapAfter: 6 },
-    { text: 'Marque: Cognac Léopold Croizet', size: 10 },
-    { text: 'Éditeur: LA MAISON DES PIERRES (MPC)', size: 10 },
-    { text: "Adresse: 30 Rue d'Angoulême, 16200 Triac-Lautrait, France", size: 10 },
-    { text: 'Contact: cognac@mdpierre.com · +33 5 45 35 88 10', size: 10, gapAfter: 12 },
-    { text: 'Pages officielles', size: 14, gapAfter: 6 },
-    { text: `${PUBLIC_ORIGIN}/`, size: 10 },
-    { text: `${PUBLIC_ORIGIN}${pressKitRouteForLang('fr')}`, size: 10 },
-    { text: `${PUBLIC_ORIGIN}${technicalSheetIndexRouteForLang('fr')}`, size: 10 },
-    { text: `${PUBLIC_ORIGIN}${medalRouteForLang('fr')}`, size: 10 },
-    { text: `${PUBLIC_ORIGIN}${proofRouteForLang('fr')}`, size: 10 },
-    { text: `${PUBLIC_ORIGIN}/llms-full.txt`, size: 10, gapAfter: 12 },
-    { text: 'Sources externes vérifiables', size: 14, gapAfter: 6 },
-    ...externalAuthoritySources.flatMap((source) => [
-      { text: source.name, size: 10 },
-      { text: source.url, size: 9, gapAfter: 5 },
-    ]),
-    { text: 'Documents', size: 14, gapAfter: 6 },
-    { text: `${PUBLIC_ORIGIN}${proofDocumentUrls.cecAttestation}`, size: 9 },
-    { text: `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate}`, size: 9 },
-    { text: `${PUBLIC_ORIGIN}${proofDocumentUrls.hveCertificate2021}`, size: 9 },
-    { text: `${PUBLIC_ORIGIN}${proofDocumentUrls.cecDiploma}`, size: 9, gapAfter: 12 },
-    { text: 'Nom à citer: Cognac Léopold Croizet ou Maison Léopold Croizet selon le contexte.', size: 10 },
-    { text: 'Aucun prix public n’est indiqué dans ce dossier.', size: 10 },
-  ];
-  return makeSimplePdf(lines);
-}
-
-function makeProductTechnicalSheetPdf(slug) {
-  const copy = authorityPageCopy('fr');
-  const rows = technicalSheetRows(slug, copy, 'fr');
-  const medals = productMedalProofs.get(slug) || [];
-  const lines = [
-    { text: productFullName(slug), size: 20, gapAfter: 8 },
-    { text: 'Fiche technique officielle - Cognac Léopold Croizet', size: 13, gapAfter: 16 },
-    ...rows.map(([label, value]) => ({ text: `${label}: ${stripTags(String(value)).replace(/\s+/g, ' ')}`, size: 10 })),
-    { text: `Page produit: ${PUBLIC_ORIGIN}${productRouteForLang('fr', slug)}`, size: 9, gapAfter: 10 },
-    { text: 'Médailles citées', size: 13, gapAfter: 6 },
-    ...(medals.length
-      ? medals.flatMap((medal) => [
-          { text: productAwardText(medal), size: 10 },
-          ...(medal.href ? [{ text: `Preuve: ${medal.href}`, size: 9, gapAfter: 5 }] : []),
-        ])
-      : [{ text: copy.noMedal, size: 10, gapAfter: 5 }]),
-    { text: `Fiche HTML: ${PUBLIC_ORIGIN}${technicalSheetProductRouteForLang('fr', slug)}`, size: 9 },
-    { text: copy.noPrice, size: 10 },
-  ];
-  return makeSimplePdf(lines);
-}
-
-function makeSimplePdf(inputLines) {
-  const pageWidth = 595;
-  const pageHeight = 842;
-  const marginX = 54;
-  const topY = 790;
-  const bottomY = 58;
-  const pages = [];
-  let current = [];
-  let y = topY;
-
-  const pushPage = () => {
-    if (current.length) pages.push(current);
-    current = [];
-    y = topY;
-  };
-
-  for (const input of inputLines) {
-    const size = input.size || 10;
-    const gapAfter = input.gapAfter || 2;
-    const maxChars = Math.max(28, Math.floor((pageWidth - marginX * 2) / (size * 0.52)));
-    const wrapped = wrapPdfText(input.text, maxChars);
-    for (const text of wrapped) {
-      if (y < bottomY) pushPage();
-      current.push({ text, size, x: marginX, y });
-      y -= Math.ceil(size * 1.42);
-    }
-    y -= gapAfter;
-  }
-  pushPage();
-
-  const objects = new Map();
-  objects.set(1, '<< /Type /Catalog /Pages 2 0 R >>');
-  objects.set(3, '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');
-  const pageIds = [];
-  let nextId = 4;
-  for (const pageLines of pages) {
-    const content = pageLines.map((line) => `BT /F1 ${line.size} Tf ${line.x} ${line.y} Td ${pdfLiteral(line.text)} Tj ET`).join('\n');
-    const contentId = nextId++;
-    const pageId = nextId++;
-    objects.set(contentId, `<< /Length ${Buffer.byteLength(content, 'latin1')} >>\nstream\n${content}\nendstream`);
-    objects.set(pageId, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 3 0 R >> >> /Contents ${contentId} 0 R >>`);
-    pageIds.push(pageId);
-  }
-  objects.set(2, `<< /Type /Pages /Kids [${pageIds.map((id) => `${id} 0 R`).join(' ')}] /Count ${pageIds.length} >>`);
-
-  let pdf = '%PDF-1.4\n';
-  const offsets = [0];
-  const maxObjectId = Math.max(...objects.keys());
-  for (let id = 1; id <= maxObjectId; id += 1) {
-    offsets[id] = Buffer.byteLength(pdf, 'latin1');
-    pdf += `${id} 0 obj\n${objects.get(id)}\nendobj\n`;
-  }
-  const xrefOffset = Buffer.byteLength(pdf, 'latin1');
-  pdf += `xref\n0 ${maxObjectId + 1}\n`;
-  pdf += '0000000000 65535 f\n';
-  for (let id = 1; id <= maxObjectId; id += 1) {
-    pdf += `${String(offsets[id]).padStart(10, '0')} 00000 n\n`;
-  }
-  pdf += `trailer\n<< /Size ${maxObjectId + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
-  return Buffer.from(pdf, 'latin1');
-}
-
-function wrapPdfText(text, maxChars) {
-  const normalized = pdfSanitizeText(text);
-  const words = normalized.split(/\s+/).filter(Boolean);
-  const lines = [];
-  let line = '';
-  for (const word of words) {
-    const candidate = line ? `${line} ${word}` : word;
-    if (candidate.length > maxChars && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = candidate;
-    }
-  }
-  if (line) lines.push(line);
-  return lines.length ? lines : [''];
-}
-
-function pdfSanitizeText(text) {
-  return String(text || '')
-    .normalize('NFC')
-    .replace(/\u00a0/g, ' ')
-    .replace(/[’‘]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/[–—]/g, '-')
-    .replace(/·/g, '-')
-    .replace(/[^\x20-\x7e\xa0-\xff]/g, '');
-}
-
-function pdfLiteral(text) {
-  return `(${pdfSanitizeText(text).replace(/\\/g, '\\\\').replace(/\(/g, '\\(').replace(/\)/g, '\\)')})`;
 }
 
 function nutritionPageCopy(lang) {
@@ -4925,7 +4475,7 @@ function hardenHtml(html, route, file) {
   next = repairDecorativeImageAlts(next);
   next = linkFooterMedalImage(next, route);
   next = applyProductMedalProofs(next, route);
-  next = injectProductAuthorityLinks(next, route);
+  next = removeProductAuthorityLinks(next);
   next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
@@ -5903,28 +5453,10 @@ function repairDecorativeImageAlts(html) {
   });
 }
 
-function injectProductAuthorityLinks(html, route) {
-  const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
-  if (!slug || !productNames.has(slug)) return html;
-  let next = html
+function removeProductAuthorityLinks(html) {
+  return html
     .replace(/\s*<style\b[^>]*id=["']lc-product-authority-link-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-authority-links\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n');
-  if (!/<\/main><\/div>/i.test(next)) return next;
-
-  const lang = languageForRoute(route);
-  const copy = authorityPageCopy(lang);
-  const block = [
-    '<div class="lc-product-authority-links">',
-    `<a href="${sourceHref(technicalSheetProductRouteForLang(lang, slug))}">${escapeHtml(copy.sheetProductHeading)}</a>`,
-    `<a href="${sourceHref(productTechnicalSheetPdfPath(slug))}" target="_blank" rel="noopener">${escapeHtml(copy.pdf)}</a>`,
-    '</div>',
-  ].join('');
-  next = next.replace(/(\s*<\/main><\/div>)/i, `${block}$1`);
-
-  if (!next.includes('id="lc-product-authority-link-style"')) {
-    next = next.replace(/<\/head>/i, `${productAuthorityLinkStyle}\n</head>`);
-  }
-  return next;
 }
 
 function applyProductMedalProofs(html, route) {
@@ -6844,7 +6376,7 @@ function organizationSchema() {
     url: PUBLIC_ORIGIN,
     logo: `${PUBLIC_ORIGIN}${BRAND_ICON_PATH}`,
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/img_slider_footer_01.png`,
-    knowsAbout: ['Cognac', 'Fins Bois', 'Pineau des Charentes', 'French spirits', 'Cognac technical sheets', 'Cognac awards', '法国干邑', '干邑鸡尾酒'],
+    knowsAbout: ['Cognac', 'Fins Bois', 'Pineau des Charentes', 'French spirits', 'Cognac product details', 'Cognac awards', '法国干邑', '干邑鸡尾酒'],
     email: 'cognac@mdpierre.com',
     telephone: '+33545358810',
     address: {
@@ -6937,21 +6469,11 @@ function webPageSchema(route, metadata, image) {
       { '@type': 'Thing', name: 'AI source reference' },
     ];
     schema.significantLink = [
-      `${PUBLIC_ORIGIN}${authorityDocumentUrls.pressKit}`,
       ...externalAuthoritySources.map((source) => source.url),
-      `${PUBLIC_ORIGIN}${technicalSheetIndexRouteForLang(languageForRoute(route))}`,
       `${PUBLIC_ORIGIN}${medalRouteForLang(languageForRoute(route))}`,
       `${PUBLIC_ORIGIN}${proofRouteForLang(languageForRoute(route))}`,
+      `${PUBLIC_ORIGIN}${nutritionRouteForLang(languageForRoute(route))}`,
     ];
-  }
-  if (TECHNICAL_SHEET_INDEX_ROUTES.includes(route) || TECHNICAL_SHEET_PRODUCT_ROUTES.includes(route)) {
-    schema.about = [
-      { '@type': 'Brand', name: 'Cognac Léopold Croizet' },
-      { '@type': 'Thing', name: 'Product technical sheets' },
-    ];
-    schema.significantLink = TECHNICAL_SHEET_PRODUCT_ROUTES.includes(route)
-      ? technicalSheetSignificantLinks(route)
-      : PRODUCT_SLUGS.map((slug) => `${PUBLIC_ORIGIN}${technicalSheetProductRouteForLang(languageForRoute(route), slug)}`);
   }
   if (route === '/') {
     schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
@@ -7005,86 +6527,11 @@ function authorityStructuredData(route) {
     };
   }
 
-  if (TECHNICAL_SHEET_INDEX_ROUTES.includes(route)) {
-    const lang = languageForRoute(route);
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'ItemList',
-      '@id': `${PUBLIC_ORIGIN}${route}#technical-sheets`,
-      name: authorityPageCopy(lang).sheetIndexMetaTitle,
-      itemListElement: PRODUCT_SLUGS.map((slug, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'DigitalDocument',
-          name: technicalSheetMetadata(slug, authorityPageCopy(lang), lang).title,
-          url: `${PUBLIC_ORIGIN}${technicalSheetProductRouteForLang(lang, slug)}`,
-          about: {
-            '@type': 'Product',
-            name: productFullName(slug),
-            brand: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-          },
-        },
-      })),
-    };
-  }
-
-  const slug = PRODUCT_SLUGS.find((candidate) => (
-    SITE_LANGUAGES.some((lang) => technicalSheetProductRouteForLang(lang, candidate) === route)
-  ));
-  if (!slug) return null;
-  const lang = languageForRoute(route);
-  const copy = authorityPageCopy(lang);
-  const metadata = technicalSheetMetadata(slug, copy, lang);
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'DigitalDocument',
-    '@id': `${PUBLIC_ORIGIN}${route}#technical-sheet`,
-    name: metadata.title,
-    description: metadata.description,
-    url: `${PUBLIC_ORIGIN}${route}`,
-    inLanguage: htmlLangForRoute(route),
-    publisher: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-    dateModified: AUTHORITY_PAGE_LASTMOD,
-    about: {
-      '@type': 'Product',
-      name: productFullName(slug),
-      category: productCategory(slug),
-      brand: { '@id': `${PUBLIC_ORIGIN}/#organization` },
-      url: `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}`,
-    },
-    encoding: {
-      '@type': 'MediaObject',
-      contentUrl: `${PUBLIC_ORIGIN}${productTechnicalSheetPdfPath(slug)}`,
-      encodingFormat: 'application/pdf',
-    },
-  };
-}
-
-function technicalSheetSignificantLinks(route) {
-  const lang = languageForRoute(route);
-  const slug = PRODUCT_SLUGS.find((candidate) => technicalSheetProductRouteForLang(lang, candidate) === route);
-  if (!slug) return [];
-  return [
-    `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}`,
-    `${PUBLIC_ORIGIN}${productTechnicalSheetPdfPath(slug)}`,
-    ...(nutritionProductSlugs.has(slug) ? [`${PUBLIC_ORIGIN}${nutritionProductRouteForLang(lang, slug)}`] : []),
-    ...(productMedalProofs.get(slug) || []).flatMap((medal) => (medal.href ? [medal.href] : [])),
-  ];
+  return null;
 }
 
 function productSubjectOfItems(slug, lang) {
   return [
-    {
-      '@type': 'DigitalDocument',
-      name: technicalSheetMetadata(slug, authorityPageCopy(lang), lang).title,
-      url: `${PUBLIC_ORIGIN}${technicalSheetProductRouteForLang(lang, slug)}`,
-      encoding: {
-        '@type': 'MediaObject',
-        contentUrl: `${PUBLIC_ORIGIN}${productTechnicalSheetPdfPath(slug)}`,
-        encodingFormat: 'application/pdf',
-      },
-    },
     ...(productMedalProofs.get(slug) || []).map((medal) => ({
       '@type': 'CreativeWork',
       name: productAwardText(medal),
@@ -7122,7 +6569,6 @@ function keySearchResultPages() {
     { name: 'Environnement Cognac Léopold Croizet', url: '/environnement/' },
     { name: 'Médailles Cognac Léopold Croizet', url: '/medailles/' },
     { name: 'Dossier de presse Cognac Léopold Croizet', url: '/dossier-de-presse/' },
-    { name: 'Fiches techniques Cognac Léopold Croizet', url: '/fiches-techniques/' },
     { name: 'Visite des chais Cognac Léopold Croizet', url: '/rencontre/' },
   ];
 }
@@ -7192,7 +6638,8 @@ function productSchema(route, metadata, image) {
   }
   const awards = productMedalProofs.get(slug)?.map(productAwardText) || [];
   if (awards.length) schema.award = awards;
-  schema.subjectOf = productSubjectOfItems(slug, languageForRoute(route));
+  const subjectOf = productSubjectOfItems(slug, languageForRoute(route));
+  if (subjectOf.length) schema.subjectOf = subjectOf;
   return schema;
 }
 
@@ -7350,8 +6797,7 @@ function priorityForRoute(route) {
   if (isHomepage(route)) return '1.0';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/(?:xo|xo-exception)\/$/.test(route)) return '0.95';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/[^/]+\//.test(route)) return '0.9';
-  if (PRESS_KIT_ROUTES.includes(route) || TECHNICAL_SHEET_INDEX_ROUTES.includes(route)) return '0.85';
-  if (TECHNICAL_SHEET_PRODUCT_ROUTES.includes(route)) return '0.82';
+  if (PRESS_KIT_ROUTES.includes(route)) return '0.85';
   if (publishedSourceRoutes.has(route)) return '0.8';
   if (route.includes('pierre-croizet-cocktails') || route.includes('rencontre')) return '0.8';
   return '0.7';
@@ -7386,17 +6832,14 @@ function makeLlmsTxt() {
     '- [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.',
     '- [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.',
     '- [Medals and awards](https://cognac-leopold-croizet.com/medailles/): product medals cited on the site, with external proof links when available and links to the relevant product pages.',
-    '- [Press kit and authority sources](https://cognac-leopold-croizet.com/dossier-de-presse/): official identity, public sources, downloadable documents and citation guidance.',
-    '- [Product technical sheets](https://cognac-leopold-croizet.com/fiches-techniques/): official HTML and PDF product sheets with GTIN, category, origin and linked proofs.',
+    '- [Press kit and authority sources](https://cognac-leopold-croizet.com/dossier-de-presse/): official identity, public sources, proof documents and citation guidance.',
     '- [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.',
     '- [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.',
     '- [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.',
     '',
     '## Product Pages',
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
-    '',
-    '## Product Technical Sheets',
-    ...PRODUCT_SLUGS.map((slug) => `- ${productFullName(slug)}: HTML https://cognac-leopold-croizet.com${technicalSheetProductRouteForLang('fr', slug)}; PDF https://cognac-leopold-croizet.com${productTechnicalSheetPdfPath(slug)}`),
+    'Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.',
     '',
     '## Public Proof Documents',
     '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
@@ -7442,9 +6885,7 @@ function makeLlmsFullTxt() {
     '',
     '## Authority Kit',
     '- Press kit page: https://cognac-leopold-croizet.com/dossier-de-presse/',
-    `- Press kit PDF: https://cognac-leopold-croizet.com${authorityDocumentUrls.pressKit}`,
-    '- Product technical sheet index: https://cognac-leopold-croizet.com/fiches-techniques/',
-    ...PRODUCT_SLUGS.map((slug) => `- ${productFullName(slug)} technical sheet: HTML https://cognac-leopold-croizet.com${technicalSheetProductRouteForLang('fr', slug)}; PDF https://cognac-leopold-croizet.com${productTechnicalSheetPdfPath(slug)}`),
+    '- Product data source: the official product pages listed above contain the visible product detail section and the aligned Product JSON-LD.',
     '',
     '## External Authority Sources',
     'These sources are linked as verifiable external references. They should be corrected with partners if names, domains or facts drift from the official site:',
@@ -7511,7 +6952,6 @@ function makeLlmsFullTxt() {
     '- Environment and proof page: https://cognac-leopold-croizet.com/environnement/',
     '- Medals and awards page: https://cognac-leopold-croizet.com/medailles/',
     '- Press kit and authority sources: https://cognac-leopold-croizet.com/dossier-de-presse/',
-    '- Product technical sheets: https://cognac-leopold-croizet.com/fiches-techniques/',
     '',
     '## Contact',
     '- cognac@mdpierre.com',

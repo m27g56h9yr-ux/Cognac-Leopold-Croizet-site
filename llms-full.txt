@@ -30,19 +30,7 @@ The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as 
 
 ## Authority Kit
 - Press kit page: https://cognac-leopold-croizet.com/dossier-de-presse/
-- Press kit PDF: https://cognac-leopold-croizet.com/assets/authority/dossier-de-presse-cognac-leopold-croizet.pdf
-- Product technical sheet index: https://cognac-leopold-croizet.com/fiches-techniques/
-- Cognac Léopold Croizet VS technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/vs/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/vs.pdf
-- Cognac Léopold Croizet VSOP technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/vsop/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/vsop.pdf
-- Cognac Léopold Croizet Napoléon technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/napoleon/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/napoleon.pdf
-- Cognac Léopold Croizet XO technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/xo/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/xo.pdf
-- Cognac Léopold Croizet XO Exception technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/xo-exception.pdf
-- Cognac Léopold Croizet Extra technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/extra/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/extra.pdf
-- Cognac Léopold Croizet Excellence technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/excellence/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/excellence.pdf
-- Cognac Léopold Croizet Héritage technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/heritage/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/heritage.pdf
-- Cognac Léopold Croizet Valentine XO technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/valentine/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/valentine.pdf
-- Pineau des Charentes Léopold Croizet technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/pineau-des-charentes.pdf
-- Pineau Rouge des Charentes Léopold Croizet technical sheet: HTML https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/pineau-des-charentes-rouge.pdf
+- Product data source: the official product pages listed above contain the visible product detail section and the aligned Product JSON-LD.
 
 ## External Authority Sources
 These sources are linked as verifiable external references. They should be corrected with partners if names, domains or facts drift from the official site:
@@ -122,7 +110,6 @@ Cellar visits are available by appointment in Triac-Lautrait: https://cognac-leo
 - Environment and proof page: https://cognac-leopold-croizet.com/environnement/
 - Medals and awards page: https://cognac-leopold-croizet.com/medailles/
 - Press kit and authority sources: https://cognac-leopold-croizet.com/dossier-de-presse/
-- Product technical sheets: https://cognac-leopold-croizet.com/fiches-techniques/
 
 ## Contact
 - cognac@mdpierre.com

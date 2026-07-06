@@ -21,8 +21,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Chinese FAQ](https://cognac-leopold-croizet.com/zh/faq/): Simplified Chinese Cognac Léopold Croizet FAQ.
 - [Environment and proof](https://cognac-leopold-croizet.com/environnement/): vineyard commitments, HVE and Certification Environnementale Cognac public references for Domaine de la Grande Versenne SCEA, plus downloadable supporting documents.
 - [Medals and awards](https://cognac-leopold-croizet.com/medailles/): product medals cited on the site, with external proof links when available and links to the relevant product pages.
-- [Press kit and authority sources](https://cognac-leopold-croizet.com/dossier-de-presse/): official identity, public sources, downloadable documents and citation guidance.
-- [Product technical sheets](https://cognac-leopold-croizet.com/fiches-techniques/): official HTML and PDF product sheets with GTIN, category, origin and linked proofs.
+- [Press kit and authority sources](https://cognac-leopold-croizet.com/dossier-de-presse/): official identity, public sources, proof documents and citation guidance.
 - [House film](https://cognac-leopold-croizet.com/film-maison-leopold-croizet/): Official Maison Léopold Croizet video presentation.
 - [Visit the cellars](https://cognac-leopold-croizet.com/rencontre/): Visit information in Triac-Lautrait.
 - [Cocktails](https://cognac-leopold-croizet.com/pierre-croizet-cocktails/): Cocktail recipes with Cognac and Pineau des Charentes.
@@ -39,19 +38,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Valentine XO](https://cognac-leopold-croizet.com/collection/valentine/): Cognac Léopold Croizet Valentine XO.
 - [Pineau des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes/): Pineau des Charentes Léopold Croizet.
 - [Pineau Rouge des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/): Pineau Rouge des Charentes Léopold Croizet.
-
-## Product Technical Sheets
-- Cognac Léopold Croizet VS: HTML https://cognac-leopold-croizet.com/fiches-techniques/vs/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/vs.pdf
-- Cognac Léopold Croizet VSOP: HTML https://cognac-leopold-croizet.com/fiches-techniques/vsop/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/vsop.pdf
-- Cognac Léopold Croizet Napoléon: HTML https://cognac-leopold-croizet.com/fiches-techniques/napoleon/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/napoleon.pdf
-- Cognac Léopold Croizet XO: HTML https://cognac-leopold-croizet.com/fiches-techniques/xo/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/xo.pdf
-- Cognac Léopold Croizet XO Exception: HTML https://cognac-leopold-croizet.com/fiches-techniques/xo-exception/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/xo-exception.pdf
-- Cognac Léopold Croizet Extra: HTML https://cognac-leopold-croizet.com/fiches-techniques/extra/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/extra.pdf
-- Cognac Léopold Croizet Excellence: HTML https://cognac-leopold-croizet.com/fiches-techniques/excellence/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/excellence.pdf
-- Cognac Léopold Croizet Héritage: HTML https://cognac-leopold-croizet.com/fiches-techniques/heritage/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/heritage.pdf
-- Cognac Léopold Croizet Valentine XO: HTML https://cognac-leopold-croizet.com/fiches-techniques/valentine/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/valentine.pdf
-- Pineau des Charentes Léopold Croizet: HTML https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/pineau-des-charentes.pdf
-- Pineau Rouge des Charentes Léopold Croizet: HTML https://cognac-leopold-croizet.com/fiches-techniques/pineau-des-charentes-rouge/; PDF https://cognac-leopold-croizet.com/assets/authority/fiches-techniques/pineau-des-charentes-rouge.pdf
+Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.
 
 ## Public Proof Documents
 - [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.
