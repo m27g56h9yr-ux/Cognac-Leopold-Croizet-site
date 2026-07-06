@@ -9,6 +9,22 @@ Options -Indexes
   RewriteCond %{HTTP_HOST} ^(?:www\.)?ancien\.cognac-leopold-croizet\.com$ [NC]
   RewriteRule ^ - [R=421,L]
 
+  # Retire legacy WPML language subdomains without losing language intent.
+  # These hosts must consolidate into the canonical path-based locales.
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?en\.cognac-leopold-croizet\.com$ [NC]
+  RewriteCond %{REQUEST_URI} ^/en(?:/|$) [NC]
+  RewriteRule ^ https://cognac-leopold-croizet.com%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?en\.cognac-leopold-croizet\.com$ [NC]
+  RewriteRule ^ https://cognac-leopold-croizet.com/en%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?ru\.cognac-leopold-croizet\.com$ [NC]
+  RewriteCond %{REQUEST_URI} ^/ru(?:/|$) [NC]
+  RewriteRule ^ https://cognac-leopold-croizet.com%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^(?:www\.)?ru\.cognac-leopold-croizet\.com$ [NC]
+  RewriteRule ^ https://cognac-leopold-croizet.com/ru%{REQUEST_URI} [R=301,L]
+
   # Keep one indexable host and protocol for search engines and AI agents.
   RewriteCond %{HTTP_HOST} !^cognac-leopold-croizet\.com$ [NC,OR]
   RewriteCond %{HTTPS} !=on
