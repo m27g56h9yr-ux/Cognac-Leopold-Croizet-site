@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { spawn } from 'node:child_process';
+import { access, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs';
@@ -18,6 +19,8 @@ const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
 const FILM_VIDEO_ID = 'nLBaiPrjVJQ';
+const IMAGE_WEBP_MIN_BYTES = 320 * 1024;
+const IMAGE_WEBP_QUALITY = 86;
 const WALK_SKIP_DIRS = new Set([
   '.agents',
   '.github',
@@ -124,6 +127,9 @@ const externalAuthoritySources = [
 ];
 
 const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES, ...MEDAL_ROUTES, ...NUTRITION_ROUTES, ...AUTHORITY_ROUTES]);
+const optimizedImageVariantCache = new Map();
+const processAvailabilityCache = new Map();
+let cwebpCommandCache;
 
 const faqEntries = [
   {
@@ -866,6 +872,15 @@ const productImageAltRules = [
 ];
 
 const contextualImageAltRules = [
+  [/propriete_02-scaled/i, {
+    fr: 'Propriété familiale Cognac Léopold Croizet à Triac-Lautrait',
+    en: 'Cognac Léopold Croizet family estate in Triac-Lautrait',
+    ru: 'Семейное поместье Cognac Léopold Croizet в Triac-Lautrait',
+    da: 'Cognac Léopold Croizet familieejendom i Triac-Lautrait',
+    sv: 'Cognac Léopold Croizet familjeegendom i Triac-Lautrait',
+    no: 'Cognac Léopold Croizet familieeiendom i Triac-Lautrait',
+    zh: 'Triac-Lautrait 的 Cognac Léopold Croizet 家族酒庄',
+  }],
   [/img_home_carre_cocktail/i, {
     fr: 'Cocktail au Cognac Léopold Croizet et Pineau des Charentes',
     en: 'Cocktail with Cognac Léopold Croizet and Pineau des Charentes',
@@ -5887,7 +5902,7 @@ async function improveImageTag(tag, route, imageIndex) {
     next = setAttribute(next, 'loading', 'lazy');
   }
 
-  return next;
+  return optimizeImageDelivery(next, route);
 }
 
 function repairProductAlt(tag, src) {
@@ -5900,7 +5915,7 @@ function repairProductAlt(tag, src) {
 function repairContextualImageAlt(tag, src, route) {
   if (/\baria-hidden=(["'])true\1/i.test(tag)) return tag;
   const currentAlt = getAttribute(tag, 'alt');
-  if (currentAlt && currentAlt.trim()) return tag;
+  if (currentAlt && currentAlt.trim() && !/^pierre-croizet$/i.test(currentAlt.trim())) return tag;
   const normalizedSrc = normalizePublicPath(src);
   const rule = contextualImageAltRules.find(([pattern]) => pattern.test(normalizedSrc));
   if (!rule) return tag;
@@ -5936,6 +5951,148 @@ async function imageDimensionsForSrc(src) {
 
   imageDimensionCache.set(localPath, dimensions);
   return dimensions;
+}
+
+async function optimizeImageDelivery(tag, route) {
+  let next = tag;
+  for (const attr of ['src', 'data-src', 'data-thumb']) {
+    next = await replaceOptimizedImageAttribute(next, attr, route);
+  }
+  for (const attr of ['srcset', 'data-srcset']) {
+    next = await replaceOptimizedSrcsetAttribute(next, attr, route);
+  }
+  return next;
+}
+
+async function replaceOptimizedImageAttribute(tag, attr, route) {
+  const value = getAttribute(tag, attr);
+  if (!value) return tag;
+  const optimized = await optimizedImageUrl(value, route, tag);
+  if (!optimized || optimized === value) return tag;
+  return setAttribute(tag, attr, optimized);
+}
+
+async function replaceOptimizedSrcsetAttribute(tag, attr, route) {
+  const value = getAttribute(tag, attr);
+  if (!value) return tag;
+  const optimized = await optimizedSrcset(value, route, tag);
+  if (!optimized || optimized === value) return tag;
+  return setAttribute(tag, attr, optimized);
+}
+
+async function optimizedSrcset(value, route, tag) {
+  const candidates = value.split(',');
+  const optimizedCandidates = [];
+  let changed = false;
+
+  for (const candidate of candidates) {
+    const trimmed = candidate.trim();
+    if (!trimmed) continue;
+    const [url, ...descriptorParts] = trimmed.split(/\s+/);
+    const optimized = await optimizedImageUrl(url, route, tag);
+    if (optimized && optimized !== url) changed = true;
+    optimizedCandidates.push([optimized || url, ...descriptorParts].join(' '));
+  }
+
+  return changed ? optimizedCandidates.join(', ') : value;
+}
+
+async function optimizedImageUrl(value, route, tag) {
+  const { cleanUrl, suffix } = splitUrlSuffix(value);
+  const publicPath = normalizePublicPath(cleanUrl).split('#')[0].split('?')[0];
+  if (!publicPath || shouldSkipOptimizedImage(publicPath, route, tag)) return value;
+
+  const optimizedPath = await optimizedImagePublicPath(publicPath);
+  if (!optimizedPath || optimizedPath === publicPath) return value;
+  return replaceImagePathInUrl(cleanUrl, publicPath, optimizedPath) + suffix;
+}
+
+function splitUrlSuffix(value) {
+  const match = String(value || '').match(/([?#].*)$/);
+  if (!match) return { cleanUrl: value, suffix: '' };
+  return { cleanUrl: value.slice(0, -match[1].length), suffix: match[1] };
+}
+
+function shouldSkipOptimizedImage(publicPath, route, tag) {
+  if (!/\.(?:png|jpe?g)$/i.test(publicPath)) return true;
+  if (/^data:/i.test(publicPath)) return true;
+  if (/logo_leopold_croizet|logo_croizet_blason|favicon|apple-touch-icon/i.test(publicPath)) return true;
+  if (/\/wp-content\/uploads\/2026\/06\/pineau-des-charentes-rouge\.png$/i.test(publicPath) && isCollectionIndexRoute(route)) return true;
+  if (/\bdata-no-webp\b/i.test(tag)) return true;
+  return false;
+}
+
+function isCollectionIndexRoute(route) {
+  return route === '/collection/' || route === '/en/shop/' || route === '/ru/a-faire/' || /^\/(?:da|sv|no|zh)\/shop\/$/.test(route);
+}
+
+async function optimizedImagePublicPath(publicPath) {
+  if (optimizedImageVariantCache.has(publicPath)) return optimizedImageVariantCache.get(publicPath);
+  const promise = createOptimizedImagePublicPath(publicPath);
+  optimizedImageVariantCache.set(publicPath, promise);
+  return promise;
+}
+
+async function createOptimizedImagePublicPath(publicPath) {
+  const decodedPath = safeDecodePath(publicPath);
+  const localPath = path.join(ROOT, decodedPath.replace(/^\/+/, ''));
+  const sourceStat = await stat(localPath).catch(() => null);
+  if (!sourceStat || !sourceStat.isFile() || sourceStat.size < IMAGE_WEBP_MIN_BYTES) return '';
+
+  const webpPublicPath = publicPath.replace(/\.(?:png|jpe?g)$/i, '.webp');
+  const webpLocalPath = path.join(ROOT, safeDecodePath(webpPublicPath).replace(/^\/+/, ''));
+  const existingStat = await stat(webpLocalPath).catch(() => null);
+  if (!existingStat || existingStat.mtimeMs < sourceStat.mtimeMs) {
+    const cwebp = await cwebpCommand();
+    if (!cwebp) return '';
+    await mkdir(path.dirname(webpLocalPath), { recursive: true });
+    const result = await runProcess(cwebp, ['-quiet', '-mt', '-m', '4', '-q', String(IMAGE_WEBP_QUALITY), localPath, '-o', webpLocalPath]);
+    if (!result) return '';
+  }
+
+  const webpStat = await stat(webpLocalPath).catch(() => null);
+  if (!webpStat || !webpStat.isFile()) return '';
+  return webpStat.size < sourceStat.size ? webpPublicPath : '';
+}
+
+function replaceImagePathInUrl(value, publicPath, optimizedPath) {
+  if (value.includes(publicPath)) return value.replace(publicPath, optimizedPath);
+  if (DEPLOY_BASE_PATH && value.includes(`${DEPLOY_BASE_PATH}${publicPath}`)) {
+    return value.replace(`${DEPLOY_BASE_PATH}${publicPath}`, `${DEPLOY_BASE_PATH}${optimizedPath}`);
+  }
+  return optimizedPath;
+}
+
+async function cwebpCommand() {
+  if (cwebpCommandCache !== undefined) return cwebpCommandCache;
+  for (const candidate of ['cwebp', '/opt/homebrew/bin/cwebp', '/usr/local/bin/cwebp']) {
+    if (candidate.startsWith('/')) {
+      const exists = await access(candidate).then(() => true).catch(() => false);
+      if (!exists) continue;
+    }
+    if (await processAvailable(candidate, ['-version'])) {
+      cwebpCommandCache = candidate;
+      return cwebpCommandCache;
+    }
+  }
+  cwebpCommandCache = '';
+  return cwebpCommandCache;
+}
+
+async function processAvailable(command, args = []) {
+  const key = `${command}\u0000${args.join('\u0000')}`;
+  if (processAvailabilityCache.has(key)) return processAvailabilityCache.get(key);
+  const available = await runProcess(command, args);
+  processAvailabilityCache.set(key, available);
+  return available;
+}
+
+function runProcess(command, args = []) {
+  return new Promise((resolve) => {
+    const child = spawn(command, args, { stdio: 'ignore' });
+    child.on('error', () => resolve(false));
+    child.on('close', (code) => resolve(code === 0));
+  });
 }
 
 function parseImageDimensions(file, buffer) {
