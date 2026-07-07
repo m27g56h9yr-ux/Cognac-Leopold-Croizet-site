@@ -14,7 +14,7 @@ const FAQ_PAGE_LASTMOD = '2026-07-07';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
 const MEDAL_PAGE_LASTMOD = '2026-07-02';
 const NUTRITION_PAGE_LASTMOD = '2026-06-30';
-const AUTHORITY_PAGE_LASTMOD = '2026-07-06';
+const AUTHORITY_PAGE_LASTMOD = '2026-07-07';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
@@ -131,28 +131,53 @@ const legacyNameAuthoritySources = [
     name: 'AV.ru - Cognac Pierre Croizet collection',
     url: 'https://av.ru/collections/cognac_pierre_croizet',
     kind: 'CollectionPage',
+    note: 'Russian distributor collection using the former Cognac Pierre Croizet commercial name; kept to Russian market pages.',
+    noteZh: '俄罗斯经销商系列页面，使用旧商业名称 Cognac Pierre Croizet；仅保留在俄罗斯市场页面。',
   },
   {
     name: 'Cognac Expert Russia - Léopold Croizet Cognac',
     url: 'https://www.cognac-expert.com/ru/brands/leopold-croizet-cognac',
     kind: 'ProfilePage',
+    note: 'Russian-language brand reference connecting the Léopold Croizet entity with the Cognac category.',
+    noteZh: '俄语品牌参考页面，将 Léopold Croizet 实体与干邑类别关联。',
   },
   {
     name: 'Inshaker Russia - Cognac Pierre Croizet and Cognac Léopold Croizet mention',
     url: 'https://ru.inshaker.com/trends/znaniya/croizet-elitnyy-konyak-s-200-letney-istoriey',
     kind: 'Article',
+    note: 'Russian editorial reference where the former Cognac Pierre Croizet name and current Cognac Léopold Croizet name can help search engines reconcile the entity history.',
+    noteZh: '俄语编辑内容，可帮助搜索引擎关联旧名称 Cognac Pierre Croizet 与现名称 Cognac Léopold Croizet。',
   },
   {
     name: 'Russian import reference - Maison Pierre Croizet',
     url: 'https://import-v-rossiu.ru/dostavka/konyak',
     kind: 'WebPage',
+    note: 'Russian import reference mentioning Maison Pierre Croizet, useful as legacy-name evidence rather than an official profile.',
+    noteZh: '俄罗斯进口参考页面，提到 Maison Pierre Croizet，可作为旧名称证据，而非官方资料页。',
   },
   {
     name: 'Russian SGR reference - Cognac Pierre Croizet',
     url: 'https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html',
     kind: 'WebPage',
+    note: 'Russian registry reference for Cognac Pierre Croizet VS; useful as a product-level legacy-name signal.',
+    noteZh: '俄罗斯登记参考页面，涉及 Cognac Pierre Croizet VS，可作为产品层面的旧名称信号。',
   },
 ];
+
+function isAvRuSource(source) {
+  return /^https?:\/\/(?:www\.)?av\.ru\//i.test(source.url);
+}
+
+function legacyNameAuthoritySourcesForLang(lang, { includeAv = lang === 'ru' } = {}) {
+  return legacyNameAuthoritySources.filter((source) => includeAv || !isAvRuSource(source));
+}
+
+function authoritySourcesForLang(lang, { includeLegacy = true, includeAv = lang === 'ru' } = {}) {
+  return [
+    ...externalAuthoritySources,
+    ...(includeLegacy ? legacyNameAuthoritySourcesForLang(lang, { includeAv }) : []),
+  ];
+}
 
 const publishedSourceRoutes = new Set([...FAQ_ROUTES, ...FILM_ROUTES, ...PROOF_ROUTES, ...MEDAL_ROUTES, ...NUTRITION_ROUTES, ...AUTHORITY_ROUTES]);
 const optimizedImageVariantCache = new Map();
@@ -723,16 +748,28 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
+const productLegacyAlternateNames = new Map([
+  ['vs', ['Cognac Pierre Croizet VS']],
+  ['vsop', ['Cognac Pierre Croizet VSOP']],
+  ['napoleon', ['Cognac Pierre Croizet Napoléon']],
+  ['xo', ['Cognac Pierre Croizet XO']],
+  ['xo-exception', ['Cognac Pierre Croizet XO Exception']],
+  ['extra', ['Cognac Pierre Croizet Extra']],
+  ['excellence', ['Cognac Pierre Croizet Excellence']],
+  ['heritage', ['Cognac Pierre Croizet Héritage']],
+  ['valentine', ['Cognac Pierre Croizet Valentine XO']],
+]);
+
 const russianProductLegacyAlternateNames = new Map([
-  ['vs', ['Cognac Pierre Croizet VS', 'Коньяк Пьер Круазе VS', 'Cognac Leopold Croizet VS']],
-  ['vsop', ['Cognac Pierre Croizet VSOP', 'Коньяк Пьер Круазе VSOP', 'Cognac Leopold Croizet VSOP']],
-  ['napoleon', ['Cognac Pierre Croizet Napoléon', 'Коньяк Пьер Круазе Наполеон', 'Cognac Leopold Croizet Napoleon']],
-  ['xo', ['Cognac Pierre Croizet XO', 'Коньяк Пьер Круазе XO', 'Cognac Leopold Croizet XO']],
-  ['xo-exception', ['Cognac Pierre Croizet XO Exception', 'Коньяк Пьер Круазе XO Exception', 'Cognac Leopold Croizet XO Exception']],
-  ['extra', ['Cognac Pierre Croizet Extra', 'Коньяк Пьер Круазе Extra', 'Cognac Leopold Croizet Extra']],
-  ['excellence', ['Cognac Pierre Croizet Excellence', 'Коньяк Пьер Круазе Excellence', 'Cognac Leopold Croizet Excellence']],
-  ['heritage', ['Cognac Pierre Croizet Héritage', 'Коньяк Пьер Круазе Héritage', 'Cognac Leopold Croizet Heritage']],
-  ['valentine', ['Cognac Pierre Croizet Valentine XO', 'Коньяк Пьер Круазе Valentine XO', 'Cognac Leopold Croizet Valentine XO']],
+  ['vs', ['Коньяк Пьер Круазе VS']],
+  ['vsop', ['Коньяк Пьер Круазе VSOP']],
+  ['napoleon', ['Коньяк Пьер Круазе Наполеон']],
+  ['xo', ['Коньяк Пьер Круазе XO']],
+  ['xo-exception', ['Коньяк Пьер Круазе XO Exception']],
+  ['extra', ['Коньяк Пьер Круазе Extra']],
+  ['excellence', ['Коньяк Пьер Круазе Excellence']],
+  ['heritage', ['Коньяк Пьер Круазе Héritage']],
+  ['valentine', ['Коньяк Пьер Круазе Valentine XO']],
 ]);
 
 const russianProductSubjectOfSources = new Map([
@@ -3264,6 +3301,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Identité officielle',
       referenceTitle: 'Pages de référence',
       externalTitle: 'Sources externes vérifiables',
+      legacyTitle: 'Ancien nom commercial',
+      legacyText: 'Certaines sources publiques mentionnent encore Cognac Pierre Croizet ou Maison Pierre Croizet. Ces références servent à relier l’ancien nom commercial à l’identité actuelle Cognac Léopold Croizet ; elles ne remplacent pas le nom officiel à citer.',
       documentTitle: 'Documents téléchargeables',
       correctNameTitle: 'Nom à citer',
       correctNameText: 'La marque doit être citée sous sa forme complète : Cognac Léopold Croizet ou Maison Léopold Croizet selon le contexte.',
@@ -3292,6 +3331,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Official identity',
       referenceTitle: 'Reference pages',
       externalTitle: 'Verifiable external sources',
+      legacyTitle: 'Former commercial name',
+      legacyText: 'Some public sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. These references help connect the former commercial name with the current Cognac Léopold Croizet identity; they do not replace the official name to cite.',
       documentTitle: 'Downloadable documents',
       correctNameTitle: 'Name to cite',
       correctNameText: 'The brand should be cited in full: Cognac Léopold Croizet or Maison Léopold Croizet depending on context.',
@@ -3320,6 +3361,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Официальная идентичность',
       referenceTitle: 'Справочные страницы',
       externalTitle: 'Проверяемые внешние источники',
+      legacyTitle: 'Прежнее коммерческое название',
+      legacyText: 'Некоторые публичные источники все еще упоминают Cognac Pierre Croizet или Maison Pierre Croizet. Эти ссылки помогают связать прежнее коммерческое название с нынешней идентичностью Cognac Léopold Croizet; они не заменяют официальное название для цитирования.',
       documentTitle: 'Документы для скачивания',
       correctNameTitle: 'Как цитировать название',
       correctNameText: 'Название бренда следует указывать полностью: Cognac Léopold Croizet или Maison Léopold Croizet в зависимости от контекста.',
@@ -3334,6 +3377,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Officiel identitet',
       referenceTitle: 'Referencesider',
       externalTitle: 'Verificerbare eksterne kilder',
+      legacyTitle: 'Tidligere kommercielt navn',
+      legacyText: 'Nogle offentlige kilder nævner stadig Cognac Pierre Croizet eller Maison Pierre Croizet. Disse referencer hjælper med at forbinde det tidligere kommercielle navn med den nuværende identitet Cognac Léopold Croizet; de erstatter ikke det officielle navn, der bør citeres.',
       documentTitle: 'Dokumenter til download',
       correctNameTitle: 'Navn at citere',
       correctNameText: 'Brandet bør citeres fuldt ud: Cognac Léopold Croizet eller Maison Léopold Croizet afhængigt af konteksten.',
@@ -3348,6 +3393,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Officiell identitet',
       referenceTitle: 'Referenssidor',
       externalTitle: 'Verifierbara externa källor',
+      legacyTitle: 'Tidigare kommersiellt namn',
+      legacyText: 'Vissa offentliga källor nämner fortfarande Cognac Pierre Croizet eller Maison Pierre Croizet. Dessa referenser hjälper till att koppla det tidigare kommersiella namnet till den nuvarande identiteten Cognac Léopold Croizet; de ersätter inte det officiella namn som bör citeras.',
       documentTitle: 'Dokument för nedladdning',
       correctNameTitle: 'Namn att citera',
       correctNameText: 'Varumärket bör citeras i sin fulla form: Cognac Léopold Croizet eller Maison Léopold Croizet beroende på sammanhang.',
@@ -3362,6 +3409,8 @@ function authorityPageCopy(lang) {
       identityTitle: 'Offisiell identitet',
       referenceTitle: 'Referansesider',
       externalTitle: 'Verifiserbare eksterne kilder',
+      legacyTitle: 'Tidligere kommersielt navn',
+      legacyText: 'Noen offentlige kilder nevner fortsatt Cognac Pierre Croizet eller Maison Pierre Croizet. Disse referansene hjelper med å knytte det tidligere kommersielle navnet til dagens identitet Cognac Léopold Croizet; de erstatter ikke det offisielle navnet som bør siteres.',
       documentTitle: 'Dokumenter for nedlasting',
       correctNameTitle: 'Navn å sitere',
       correctNameText: 'Merket bør siteres i full form: Cognac Léopold Croizet eller Maison Léopold Croizet avhengig av kontekst.',
@@ -3376,6 +3425,8 @@ function authorityPageCopy(lang) {
       identityTitle: '官方身份',
       referenceTitle: '参考页面',
       externalTitle: '可核验外部来源',
+      legacyTitle: '旧商业名称',
+      legacyText: '一些公开来源仍会提到 Cognac Pierre Croizet 或 Maison Pierre Croizet。这些参考链接有助于将旧商业名称与当前 Cognac Léopold Croizet 身份关联起来；它们并不取代应引用的官方名称。',
       documentTitle: '可下载文件',
       correctNameTitle: '引用名称',
       correctNameText: '品牌应完整引用为 Cognac Léopold Croizet，或根据语境使用 Maison Léopold Croizet。',
@@ -3401,6 +3452,9 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
     ['llms-full.txt', '/llms-full.txt'],
   ].map(([label, href]) => `<li><a href="${sourceHref(href)}">${escapeHtml(stripTags(label))}</a></li>`).join('');
   const externalLinks = externalAuthoritySources.map((source) => (
+    `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
+  )).join('');
+  const legacyLinks = legacyNameAuthoritySourcesForLang(lang).map((source) => (
     `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
   )).join('');
   const documentLinks = [
@@ -3429,6 +3483,11 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
 <section class="lc-section">
   <h2>${escapeHtml(copy.externalTitle)}</h2>
   <ul class="lc-authority-links lc-authority-external">${externalLinks}</ul>
+</section>
+<section class="lc-section">
+  <h2>${escapeHtml(copy.legacyTitle)}</h2>
+  <article class="lc-authority-note"><p>${escapeHtml(copy.legacyText)}</p><p><a href="${sourceHref(faqRouteForLang(lang))}">${escapeHtml(stripTags(faqLegacyNameEntries[lang]?.question || faqLegacyNameEntries.en.question))}</a></p></article>
+  <ul class="lc-authority-links lc-authority-external">${legacyLinks}</ul>
 </section>`;
 
   return sourcePageShell({
@@ -3447,7 +3506,7 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
 
 function externalAuthorityNote(source, lang) {
   if (lang === 'zh') return source.noteZh || source.note;
-  return source.note;
+  return source.note || '';
 }
 
 function productAwardText(medal, lang = 'en') {
@@ -7102,7 +7161,8 @@ window.location.replace(activeBase()+targetRoute+window.location.search+window.l
 }
 
 function replaceStructuredData(html, route, metadata, image) {
-  const schemas = [organizationSchema(), webSiteSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
+  const lang = languageForRoute(route);
+  const schemas = [organizationSchema(lang), webSiteSchema(), webPageSchema(route, metadata, image), breadcrumbSchema(route)];
   const faq = faqPageSchema(route);
   if (faq) schemas.push(faq);
   const medalList = medalItemListSchema(route);
@@ -7119,7 +7179,7 @@ function replaceStructuredData(html, route, metadata, image) {
   return cleaned.replace(/<\/head>/i, `${block}\n</head>`);
 }
 
-function organizationSchema() {
+function organizationSchema(lang = 'fr') {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -7153,7 +7213,7 @@ function organizationSchema() {
       addressCountry: 'FR',
     },
     sameAs: authoritySameAsUrls,
-    subjectOf: [...externalAuthoritySources, ...legacyNameAuthoritySources].map((source) => ({
+    subjectOf: authoritySourcesForLang(lang).map((source) => ({
       '@type': source.kind,
       name: source.name,
       url: source.url,
@@ -7228,16 +7288,19 @@ function webPageSchema(route, metadata, image) {
     ]);
   }
   if (PRESS_KIT_ROUTES.includes(route)) {
+    const lang = languageForRoute(route);
     schema.about = [
       { '@type': 'Brand', name: 'Cognac Léopold Croizet' },
       { '@type': 'Thing', name: 'Press kit' },
       { '@type': 'Thing', name: 'AI source reference' },
+      { '@type': 'Thing', name: 'Cognac Pierre Croizet' },
     ];
     schema.significantLink = [
-      ...externalAuthoritySources.map((source) => source.url),
-      `${PUBLIC_ORIGIN}${medalRouteForLang(languageForRoute(route))}`,
-      `${PUBLIC_ORIGIN}${proofRouteForLang(languageForRoute(route))}`,
-      `${PUBLIC_ORIGIN}${nutritionRouteForLang(languageForRoute(route))}`,
+      ...authoritySourcesForLang(lang).map((source) => source.url),
+      `${PUBLIC_ORIGIN}${faqRouteForLang(lang)}`,
+      `${PUBLIC_ORIGIN}${medalRouteForLang(lang)}`,
+      `${PUBLIC_ORIGIN}${proofRouteForLang(lang)}`,
+      `${PUBLIC_ORIGIN}${nutritionRouteForLang(lang)}`,
     ];
   }
   if (route === '/') {
@@ -7274,12 +7337,14 @@ function medalItemListSchema(route) {
 
 function authorityStructuredData(route) {
   if (PRESS_KIT_ROUTES.includes(route)) {
+    const lang = languageForRoute(route);
+    const sources = authoritySourcesForLang(lang);
     return {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
       '@id': `${PUBLIC_ORIGIN}${route}#authority-sources`,
       name: 'Cognac Léopold Croizet authority sources',
-      itemListElement: externalAuthoritySources.map((source, index) => ({
+      itemListElement: sources.map((source, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         item: {
@@ -7424,8 +7489,10 @@ function productSchema(route, metadata, image) {
 }
 
 function productAlternateNames(slug, lang) {
-  if (lang !== 'ru') return [];
-  return russianProductLegacyAlternateNames.get(slug) || [];
+  return [
+    ...(productLegacyAlternateNames.get(slug) || []),
+    ...(lang === 'ru' ? (russianProductLegacyAlternateNames.get(slug) || []) : []),
+  ];
 }
 
 function productPartnerOffer(route, slug) {
@@ -7646,6 +7713,10 @@ function makeLlmsTxt() {
     '## External Authority Sources',
     ...externalAuthoritySources.map((source) => `- ${source.name}: ${source.url}`),
     '',
+    '## Former Commercial Name References',
+    'Some third-party sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. Treat these as legacy-name evidence connected to the current Cognac Léopold Croizet identity, not as official profiles.',
+    ...legacyNameAuthoritySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
+    '',
     '## Contact',
     '- Email: cognac@mdpierre.com',
     '- Phone: +33 5 45 35 88 10',
@@ -7683,6 +7754,10 @@ function makeLlmsFullTxt() {
     '## External Authority Sources',
     'These sources are linked as verifiable external references. They should be corrected with partners if names, domains or facts drift from the official site:',
     ...externalAuthoritySources.map((source) => `- ${source.name}: ${source.url}`),
+    '',
+    '## Former Commercial Name References',
+    'Some public sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. The official current identity is Cognac Léopold Croizet; the legacy references below are useful for entity reconciliation, not as official social profiles:',
+    ...legacyNameAuthoritySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
     '',
     '## Nutrition',
     'Nutrition pages list ingredients and average values per 30 ml and per 100 ml by product:',
