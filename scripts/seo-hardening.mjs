@@ -4512,7 +4512,7 @@ function hardenHtml(html, route, file) {
   next = linkFooterMedalImage(next, route);
   next = applyProductMedalProofs(next, route);
   next = removeProductAuthorityLinks(next);
-  next = injectProductVsQuestions(next, route);
+  next = injectProductQuestions(next, route);
   next = injectProductDetailsAccordion(next, route);
   next = applyRequestedOrderVisibility(next, route);
   next = removeUnavailableOrderControls(next, route);
@@ -5524,15 +5524,16 @@ function applyProductMedalProofs(html, route) {
   return next;
 }
 
-function injectProductVsQuestions(html, route) {
+function injectProductQuestions(html, route) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
-  if (slug !== 'vs') return html;
+  const copy = productQuestionsCopy(slug, languageForRoute(route));
+  if (!copy) return html;
 
   let next = html
     .replace(/\s*<style\b[^>]*id=["']lc-product-vs-questions-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<section\b[^>]*class=["'][^"']*\blc-product-vs-questions\b[^"']*["'][^>]*>[\s\S]*?<\/section>\s*/gi, '\n');
 
-  const block = productVsQuestionsHtml(languageForRoute(route));
+  const block = productQuestionsHtml(copy);
   if (/<div\b[^>]*class=["'][^"']*\bcontainer-notes-sensorielles\b/i.test(next)) {
     next = next.replace(
       /(\s*<div\b[^>]*class=["'][^"']*\bcontainer-notes-sensorielles\b[^"']*["'][^>]*>)/i,
@@ -5547,141 +5548,371 @@ function injectProductVsQuestions(html, route) {
   return next;
 }
 
-function productVsQuestionsHtml(lang) {
-  const copy = productVsQuestionsCopy(lang);
-  const items = copy.items.map((item) => `
+function productQuestionsHtml(copy) {
+  const items = copy.items.map(([question, answer]) => `
         <details class="lc-product-vs-question">
-          <summary>${escapeHtml(item.question)}</summary>
-          <p>${escapeHtml(item.answer)}</p>
+          <summary>${escapeHtml(question)}</summary>
+          <p>${escapeHtml(answer)}</p>
         </details>`).join('');
   return `    <section class="lc-product-vs-questions" aria-label="${escapeHtml(copy.label)}">${items}
     </section>
 `;
 }
 
-function productVsQuestionsCopy(lang) {
+function productQuestionsCopy(slug, lang) {
+  const localized = productQuestionCopies[lang] || productQuestionCopies.fr;
+  const items = localized[slug] || productQuestionCopies.fr[slug];
+  if (!items) return null;
+  const productName = productNames.get(slug) || slug;
   return {
-    fr: {
-      label: 'Questions fréquentes sur ce cognac VS',
-      items: [
-        {
-          question: 'Que signifie VS pour un cognac ?',
-          answer: 'VS signifie Very Special : la plus jeune eau-de-vie de l’assemblage a vieilli au moins deux ans sous bois de chêne. Le style reste jeune, franc et fruité.',
-        },
-        {
-          question: 'Pourquoi choisir un VS Fins Bois ?',
-          answer: 'Les Fins Bois apportent naturellement rondeur, souplesse et fruit. Dans ce VS Léopold Croizet, cette origine soutient les notes de poire, de pêche et de fleur de vigne.',
-        },
-        {
-          question: 'Comment servir ce VS ?',
-          answer: 'Il se prête aux cocktails et long drinks, avec tonic ou ginger beer, comme à une dégustation sur glace. Pur, servez une petite dose dans un verre tulipe.',
-        },
-      ],
-    },
-    en: {
-      label: 'Frequently asked questions about this VS Cognac',
-      items: [
-        {
-          question: 'What does VS mean in Cognac?',
-          answer: 'VS means Very Special: the youngest eau-de-vie in the blend has aged for at least two years in oak. The style remains young, direct and fruit-driven.',
-        },
-        {
-          question: 'Why choose a Fins Bois VS?',
-          answer: 'Fins Bois eaux-de-vie naturally bring roundness, suppleness and fruit. In this Léopold Croizet VS, the origin supports pear, peach and vine-flower notes.',
-        },
-        {
-          question: 'How should this VS be served?',
-          answer: 'It works well in cocktails and long drinks with tonic or ginger beer, as well as over ice. Neat, serve a small measure in a tulip glass.',
-        },
-      ],
-    },
-    ru: {
-      label: 'Частые вопросы об этом Cognac VS',
-      items: [
-        {
-          question: 'Что означает VS в коньяке?',
-          answer: 'VS означает Very Special: самая молодая eau-de-vie в ассамбляже выдерживается не менее двух лет в дубе. Стиль остается молодым, прямым и фруктовым.',
-        },
-        {
-          question: 'Почему выбрать VS из Fins Bois?',
-          answer: 'Eaux-de-vie из Fins Bois естественно дают округлость, мягкость и фруктовость. В этом VS Léopold Croizet они поддерживают ноты груши, персика и цветка лозы.',
-        },
-        {
-          question: 'Как подавать этот VS?',
-          answer: 'Он подходит для коктейлей и long drinks с tonic или ginger beer, а также для подачи со льдом. В чистом виде подавайте небольшую порцию в бокале tulip.',
-        },
-      ],
-    },
-    da: {
-      label: 'Ofte stillede spørgsmål om denne VS Cognac',
-      items: [
-        {
-          question: 'Hvad betyder VS i Cognac?',
-          answer: 'VS betyder Very Special: den yngste eau-de-vie i blandingen har lagret mindst to år på eg. Stilen forbliver ung, direkte og frugtig.',
-        },
-        {
-          question: 'Hvorfor vælge en Fins Bois VS?',
-          answer: 'Eaux-de-vie fra Fins Bois giver naturligt rundhed, smidighed og frugt. I denne Léopold Croizet VS understøtter oprindelsen noter af pære, fersken og vinblomst.',
-        },
-        {
-          question: 'Hvordan serveres denne VS?',
-          answer: 'Den egner sig til cocktails og long drinks med tonic eller ginger beer, men også over is. Ren kan den serveres i en lille mængde i et tulipanformet glas.',
-        },
-      ],
-    },
-    sv: {
-      label: 'Vanliga frågor om denna VS Cognac',
-      items: [
-        {
-          question: 'Vad betyder VS i Cognac?',
-          answer: 'VS betyder Very Special: den yngsta eau-de-vie i blandningen har lagrats minst två år på ek. Stilen är ung, direkt och fruktig.',
-        },
-        {
-          question: 'Varför välja en Fins Bois VS?',
-          answer: 'Eaux-de-vie från Fins Bois ger naturligt rundhet, mjukhet och frukt. I denna Léopold Croizet VS bär ursprunget upp toner av päron, persika och vinblomma.',
-        },
-        {
-          question: 'Hur serveras denna VS?',
-          answer: 'Den passar i cocktails och long drinks med tonic eller ginger beer, liksom över is. Ren kan den serveras i liten mängd i ett tulpanformat glas.',
-        },
-      ],
-    },
-    no: {
-      label: 'Vanlige spørsmål om denne VS Cognac',
-      items: [
-        {
-          question: 'Hva betyr VS i Cognac?',
-          answer: 'VS betyr Very Special: den yngste eau-de-vie i blandingen har ligget minst to år på eik. Stilen er ung, direkte og fruktig.',
-        },
-        {
-          question: 'Hvorfor velge en Fins Bois VS?',
-          answer: 'Eaux-de-vie fra Fins Bois gir naturlig rundhet, mykhet og frukt. I denne Léopold Croizet VS løfter opprinnelsen toner av pære, fersken og vinblomst.',
-        },
-        {
-          question: 'Hvordan serveres denne VS?',
-          answer: 'Den passer i cocktails og long drinks med tonic eller ginger beer, og også over is. Ren kan den serveres i en liten mengde i et tulipanformet glass.',
-        },
-      ],
-    },
-    zh: {
-      label: '这款 VS 干邑常见问题',
-      items: [
-        {
-          question: 'VS 在干邑中代表什么？',
-          answer: 'VS 指 Very Special：调配中最年轻的 eau-de-vie 至少在橡木中陈酿两年。风格年轻、直接，并以果香为主。',
-        },
-        {
-          question: '为什么选择 Fins Bois VS？',
-          answer: 'Fins Bois 的 eaux-de-vie 通常带来圆润、柔和和果香。这款 Léopold Croizet VS 因此呈现梨、桃和葡萄花的细腻气息。',
-        },
-        {
-          question: '这款 VS 如何饮用？',
-          answer: '它适合调制鸡尾酒或以 tonic、ginger beer 做 long drink，也可加冰品饮。纯饮时，可用 tulip 杯少量品尝。',
-        },
-      ],
-    },
-  }[lang] || productVsQuestionsCopy('fr');
+    label: productQuestionsLabel(lang, productName),
+    items,
+  };
 }
+
+function productQuestionsLabel(lang, productName) {
+  return {
+    fr: `Questions fréquentes sur ce cognac ${productName}`,
+    en: `Frequently asked questions about this ${productName} Cognac`,
+    ru: `Частые вопросы об этом Cognac ${productName}`,
+    da: `Ofte stillede spørgsmål om denne ${productName} Cognac`,
+    sv: `Vanliga frågor om denna ${productName} Cognac`,
+    no: `Vanlige spørsmål om denne ${productName} Cognac`,
+    zh: `这款 ${productName} 干邑常见问题`,
+  }[lang] || `Questions fréquentes sur ce cognac ${productName}`;
+}
+
+const productQuestionCopies = {
+  fr: {
+    vs: [
+      ['Que signifie VS pour un cognac ?', 'VS signifie Very Special : la plus jeune eau-de-vie de l’assemblage a vieilli au moins deux ans sous bois de chêne. Le style reste jeune, franc et fruité.'],
+      ['Pourquoi choisir un VS Fins Bois ?', 'Les Fins Bois apportent naturellement rondeur, souplesse et fruit. Dans ce VS Léopold Croizet, cette origine soutient les notes de poire, de pêche et de fleur de vigne.'],
+      ['Comment servir ce VS ?', 'Il se prête aux cocktails et long drinks, avec tonic ou ginger beer, comme à une dégustation sur glace. Pur, servez une petite dose dans un verre tulipe.'],
+    ],
+    vsop: [
+      ['Que signifie VSOP pour un cognac ?', 'VSOP signifie Very Superior Old Pale : la plus jeune eau-de-vie de l’assemblage a vieilli au moins quatre ans sous bois. Ici, le style gagne en rondeur, prune, abricot et épices douces.'],
+      ['Pourquoi le Fins Bois est-il intéressant en VSOP ?', 'Les Fins Bois donnent naturellement rondeur, onctuosité et fruit. Sur ce VSOP Léopold Croizet, ils soutiennent les notes compotées et la finale fraîche de clou de girofle.'],
+      ['Comment servir ce VSOP ?', 'Il se déguste pur dans un verre tulipe, sur glace à l’apéritif ou en cocktail élégant. Il accompagne aussi bien les desserts aux fruits jaunes ou aux amandes.'],
+    ],
+    napoleon: [
+      ['Que signifie Napoléon pour un cognac ?', 'Napoléon fait partie des mentions associées aux cognacs d’au moins six ans de vieillissement. Ce temps explique le passage vers les fruits secs, le bois chaud et les épices.'],
+      ['Que goûte-t-on dans ce Napoléon ?', 'La dégustation met en avant cacahuète, amande, noisette, vanille/toffee et une finale poivrée. C’est un profil ample, boisé sans perdre la gourmandise du Fins Bois.'],
+      ['Comment le servir ?', 'Servez-le pur, en petite dose, dans un verre tulipe. Il convient bien à une fin de repas, avec fruits secs, café ou chocolat peu sucré.'],
+    ],
+    xo: [
+      ['Que signifie XO pour un cognac ?', 'XO signifie Extra Old : la plus jeune eau-de-vie de l’assemblage a vieilli au moins dix ans. Cette maturité apporte structure, rondeur et longueur.'],
+      ['Qu’est-ce que le rancio du XO ?', 'Le rancio naît du long dialogue entre eau-de-vie, chêne et temps. Ici, il apparaît en longueur sur des notes de cuir, tabac et fleurs séchées.'],
+      ['Avec quoi l’apprécier ?', 'Pur dans un verre tulipe, il accompagne naturellement le chocolat noir, les amandes, les desserts à l’orange ou un espresso.'],
+    ],
+    'xo-exception': [
+      ['Pourquoi l’appeler XO Exception ?', 'Il reste dans l’univers XO, mais pousse plus loin la profondeur aromatique : fruits secs, fruits confits, vieux bois et couleur ambrée.'],
+      ['Quel est le rôle du bois fondu ?', 'Le bois fondu ne domine pas : il arrondit la bouche et porte la cannelle, le tabac et les fruits confits. L’ensemble paraît intense, mais intégré.'],
+      ['Comment le déguster ?', 'Ouvrez-le lentement dans un verre tulipe, sans trop le réchauffer. Il se suffit à lui-même, ou peut répondre à un chocolat noir très pur.'],
+    ],
+    extra: [
+      ['Que signifie Extra pour un cognac ?', 'Extra appartient aux mentions de vieillissement les plus élevées, au même niveau réglementaire que XO : au moins dix ans pour la plus jeune eau-de-vie.'],
+      ['Pourquoi parler de rancio ?', 'Le rancio signe les longs élevages : fruits confits, chocolat, épices et profondeur boisée. Dans cet Extra Léopold Croizet, il reste frais grâce aux fleurs blanches.'],
+      ['Quand le servir ?', 'Gardez-le pour une dégustation pure, après le repas ou avec un dessert épicé. La noix de muscade, la cannelle et le chocolat lui répondent bien.'],
+    ],
+    excellence: [
+      ['Que désigne Excellence ?', 'Excellence fait partie des mentions d’âge encadrées du Cognac. Ici, la page présente un très vieux Fins Bois, pensé pour la complexité et la longueur.'],
+      ['Qu’apportent les Fins Bois très vieux ?', 'Ils conservent le fruit et la fleur, puis gagnent cèdre, santal et rancio. Les notes de coco, fruit de la passion et eucalyptus lui donnent une signature à part.'],
+      ['Comment l’aborder ?', 'Servez une petite dose dans un verre tulipe et laissez le nez s’ouvrir. C’est un cognac de dégustation lente, plus contemplatif que démonstratif.'],
+    ],
+    heritage: [
+      ['Pourquoi Héritage ?', 'Héritage renvoie ici à une cuvée familiale, présentée comme l’âme de la maison et portée par quatre générations. Le flacon en cristal souligne cette dimension patrimoniale.'],
+      ['Quel est son profil ?', 'Il est puissant, presque animal, avec cuir, tabac, vieux bois et rancio profond. La finale reste florale et fraîche, avec une longueur très intense.'],
+      ['Comment le servir ?', 'Pur, en très petite quantité, dans un verre tulipe. Laissez-le respirer quelques minutes : ce cognac demande du silence et du temps.'],
+    ],
+    valentine: [
+      ['Pourquoi Valentine XO ?', 'Valentine XO reprend la profondeur d’un XO dans un format 35 cl, plus intime. C’est une lecture volontairement gourmande du temps.'],
+      ['Quelles notes dominent ?', 'Noix, cerise, chocolat, cannelle et gingembre parfument le nez et le palais. Le profil est chaleureux, épicé et facile à mémoriser.'],
+      ['Avec quoi l’accorder ?', 'Essayez-le pur avec un dessert chocolaté, des amandes ou un espresso. Une petite dose suffit pour prolonger la gourmandise sans l’alourdir.'],
+    ],
+  },
+  en: {
+    vs: [
+      ['What does VS mean in Cognac?', 'VS means Very Special: the youngest eau-de-vie in the blend has aged for at least two years in oak. The style remains young, direct and fruit-driven.'],
+      ['Why choose a Fins Bois VS?', 'Fins Bois eaux-de-vie naturally bring roundness, suppleness and fruit. In this Léopold Croizet VS, the origin supports pear, peach and vine-flower notes.'],
+      ['How should this VS be served?', 'It works well in cocktails and long drinks with tonic or ginger beer, as well as over ice. Neat, serve a small measure in a tulip glass.'],
+    ],
+    vsop: [
+      ['What does VSOP mean in Cognac?', 'VSOP means Very Superior Old Pale: the youngest eau-de-vie in the blend has aged at least four years in oak. Here, the style gains roundness, plum, apricot and soft spice.'],
+      ['Why does Fins Bois matter in a VSOP?', 'Fins Bois brings natural roundness, smoothness and fruit. In this Léopold Croizet VSOP, it supports stewed-fruit notes and a fresh clove finish.'],
+      ['How should this VSOP be served?', 'Enjoy it neat in a tulip glass, over ice as an aperitif, or in an elegant cocktail. It also suits yellow-fruit or almond desserts.'],
+    ],
+    napoleon: [
+      ['What does Napoleon mean in Cognac?', 'Napoleon belongs to ageing mentions associated with cognacs aged at least six years. That time leads toward dried fruit, warm oak and spice.'],
+      ['What stands out in this Napoleon?', 'The tasting profile highlights peanut, almond, hazelnut, vanilla/toffee and a peppery finish. It is ample and woody while keeping Fins Bois generosity.'],
+      ['How should it be served?', 'Serve it neat, in a small measure, in a tulip glass. It fits the end of a meal, with dried fruit, coffee or lightly sweet dark chocolate.'],
+    ],
+    xo: [
+      ['What does XO mean in Cognac?', 'XO means Extra Old: the youngest eau-de-vie in the blend has aged at least ten years. This maturity brings structure, roundness and length.'],
+      ['What is rancio in this XO?', 'Rancio comes from the long conversation between eau-de-vie, oak and time. Here, it appears on the finish with leather, tobacco and dried-flower notes.'],
+      ['What should it be paired with?', 'Neat in a tulip glass, it naturally works with dark chocolate, almonds, orange desserts or an espresso.'],
+    ],
+    'xo-exception': [
+      ['Why call it XO Exception?', 'It remains in the XO world, but pushes aromatic depth further: dried fruit, candied fruit, old wood and an amber robe.'],
+      ['What does melted oak bring?', 'Melted oak does not dominate: it rounds the palate and carries cinnamon, tobacco and candied fruit. The whole feels intense yet integrated.'],
+      ['How should it be tasted?', 'Open it slowly in a tulip glass, without warming it too much. It stands alone, or can answer a very pure dark chocolate.'],
+    ],
+    extra: [
+      ['What does Extra mean in Cognac?', 'Extra belongs among the highest ageing mentions, on the same regulatory level as XO: at least ten years for the youngest eau-de-vie.'],
+      ['Why mention rancio?', 'Rancio marks long ageing: candied fruit, chocolate, spice and woody depth. In this Léopold Croizet Extra, white flowers keep it fresh.'],
+      ['When should it be served?', 'Keep it for neat tasting after a meal, or with a spiced dessert. Nutmeg, cinnamon and chocolate echo it well.'],
+    ],
+    excellence: [
+      ['What does Excellence indicate?', 'Excellence is one of the regulated Cognac ageing mentions. Here, the page presents a very old Fins Bois, built for complexity and length.'],
+      ['What do very old Fins Bois bring?', 'They keep fruit and flowers, then gain cedar, sandalwood and rancio. Coconut, passion fruit and eucalyptus give this cognac its own signature.'],
+      ['How should it be approached?', 'Pour a small measure into a tulip glass and let the nose open. This is a slow tasting cognac, more contemplative than demonstrative.'],
+    ],
+    heritage: [
+      ['Why Heritage?', 'Heritage refers here to a family cuvee, presented as the soul of the house and carried by four generations. The crystal bottle reinforces that patrimonial dimension.'],
+      ['What is its profile?', 'It is powerful, almost animal, with leather, tobacco, old wood and deep rancio. The finish remains floral and fresh, with striking length.'],
+      ['How should it be served?', 'Neat, in a very small measure, in a tulip glass. Let it breathe for a few minutes: this cognac asks for quiet and time.'],
+    ],
+    valentine: [
+      ['Why Valentine XO?', 'Valentine XO takes XO depth into a more intimate 35 cl format. It is a deliberately gourmand reading of time.'],
+      ['Which notes dominate?', 'Walnut, cherry, chocolate, cinnamon and ginger perfume both nose and palate. The profile is warm, spicy and easy to remember.'],
+      ['What should it be paired with?', 'Try it neat with a chocolate dessert, almonds or an espresso. A small measure is enough to prolong its gourmand character without weighing it down.'],
+    ],
+  },
+  ru: {
+    vs: [
+      ['Что означает VS в коньяке?', 'VS означает Very Special: самая молодая eau-de-vie в ассамбляже выдерживается не менее двух лет в дубе. Стиль остается молодым, прямым и фруктовым.'],
+      ['Почему выбрать VS из Fins Bois?', 'Eaux-de-vie из Fins Bois естественно дают округлость, мягкость и фруктовость. В этом VS Léopold Croizet они поддерживают ноты груши, персика и цветка лозы.'],
+      ['Как подавать этот VS?', 'Он подходит для коктейлей и long drinks с tonic или ginger beer, а также для подачи со льдом. В чистом виде подавайте небольшую порцию в бокале tulip.'],
+    ],
+    vsop: [
+      ['Что означает VSOP в коньяке?', 'VSOP означает Very Superior Old Pale: самая молодая eau-de-vie в ассамбляже выдерживается в дубе не менее четырех лет. Стиль становится круглее, с нотами сливы, абрикоса и мягких специй.'],
+      ['Почему Fins Bois важен для VSOP?', 'Fins Bois дает естественную округлость, мягкость и фруктовость. В этом VSOP Léopold Croizet он поддерживает ноты компота и свежий финал с гвоздикой.'],
+      ['Как подавать этот VSOP?', 'Пейте его чистым из бокала tulip, со льдом на аперитив или в элегантном коктейле. Он также подходит к десертам с желтыми фруктами или миндалем.'],
+    ],
+    napoleon: [
+      ['Что означает Napoléon в коньяке?', 'Napoléon относится к возрастным обозначениям для коньяков с выдержкой не менее шести лет. Это время ведет к сухофруктам, теплому дереву и специям.'],
+      ['Что чувствуется в этом Napoléon?', 'Профиль выделяет арахис, миндаль, фундук, ваниль/toffee и перечный финал. Он широкий и древесный, но сохраняет щедрость Fins Bois.'],
+      ['Как его подавать?', 'Подавайте чистым, небольшими порциями, в бокале tulip. Он хорош в конце ужина, с сухофруктами, кофе или темным шоколадом без лишней сладости.'],
+    ],
+    xo: [
+      ['Что означает XO в коньяке?', 'XO означает Extra Old: самая молодая eau-de-vie в ассамбляже выдерживается не менее десяти лет. Такая зрелость дает структуру, округлость и длину.'],
+      ['Что такое rancio в этом XO?', 'Rancio рождается из долгого диалога eau-de-vie, дуба и времени. Здесь он проявляется в финале нотами кожи, табака и сухих цветов.'],
+      ['С чем его сочетать?', 'В чистом виде из бокала tulip он естественно сочетается с темным шоколадом, миндалем, апельсиновыми десертами или espresso.'],
+    ],
+    'xo-exception': [
+      ['Почему XO Exception?', 'Он остается в мире XO, но идет дальше по ароматической глубине: сухофрукты, цукаты, старое дерево и янтарный цвет.'],
+      ['Что дает мягко интегрированный дуб?', 'Дуб не доминирует: он округляет вкус и несет корицу, табак и цукаты. Впечатление интенсивное, но цельное.'],
+      ['Как его дегустировать?', 'Раскрывайте его медленно в бокале tulip, не согревая слишком сильно. Он самодостаточен, но может сопровождать очень чистый темный шоколад.'],
+    ],
+    extra: [
+      ['Что означает Extra в коньяке?', 'Extra относится к высоким возрастным обозначениям, на том же регламентном уровне, что и XO: не менее десяти лет для самой молодой eau-de-vie.'],
+      ['Почему важно rancio?', 'Rancio отмечает долгую выдержку: цукаты, шоколад, специи и древесная глубина. В этом Extra Léopold Croizet свежесть сохраняют белые цветы.'],
+      ['Когда его подавать?', 'Оставьте его для чистой дегустации после ужина или к пряному десерту. Мускатный орех, корица и шоколад хорошо ему отвечают.'],
+    ],
+    excellence: [
+      ['Что означает Excellence?', 'Excellence входит в регулируемые возрастные обозначения Cognac. Здесь страница представляет очень старый Fins Bois, созданный для сложности и длины.'],
+      ['Что дают очень старые Fins Bois?', 'Они сохраняют фрукт и цветы, затем обретают кедр, сандал и rancio. Кокос, маракуйя и эвкалипт создают особую подпись.'],
+      ['Как к нему подойти?', 'Налейте небольшую порцию в бокал tulip и дайте аромату раскрыться. Это коньяк для медленной дегустации, скорее созерцательный, чем демонстративный.'],
+    ],
+    heritage: [
+      ['Почему Héritage?', 'Héritage здесь означает семейную кюве, представленную как душа дома и результат четырех поколений. Хрустальный флакон подчеркивает эту наследственную сторону.'],
+      ['Каков его профиль?', 'Он мощный, почти животный, с кожей, табаком, старым деревом и глубоким rancio. Финал остается цветочным и свежим, с очень сильной длиной.'],
+      ['Как его подавать?', 'Чистым, в очень малой порции, в бокале tulip. Дайте ему подышать несколько минут: этому коньяку нужны тишина и время.'],
+    ],
+    valentine: [
+      ['Почему Valentine XO?', 'Valentine XO переносит глубину XO в более интимный формат 35 cl. Это намеренно гурманское прочтение времени.'],
+      ['Какие ноты доминируют?', 'Грецкий орех, вишня, шоколад, корица и имбирь звучат в аромате и во вкусе. Профиль теплый, пряный и легко запоминается.'],
+      ['С чем его сочетать?', 'Попробуйте чистым с шоколадным десертом, миндалем или espresso. Малой порции достаточно, чтобы продлить гурманский характер без тяжести.'],
+    ],
+  },
+  da: {
+    vs: [
+      ['Hvad betyder VS i Cognac?', 'VS betyder Very Special: den yngste eau-de-vie i blandingen har lagret mindst to år på eg. Stilen forbliver ung, direkte og frugtig.'],
+      ['Hvorfor vælge en Fins Bois VS?', 'Eaux-de-vie fra Fins Bois giver naturligt rundhed, smidighed og frugt. I denne Léopold Croizet VS understøtter oprindelsen noter af pære, fersken og vinblomst.'],
+      ['Hvordan serveres denne VS?', 'Den egner sig til cocktails og long drinks med tonic eller ginger beer, men også over is. Ren kan den serveres i en lille mængde i et tulipanformet glas.'],
+    ],
+    vsop: [
+      ['Hvad betyder VSOP i Cognac?', 'VSOP betyder Very Superior Old Pale: den yngste eau-de-vie i blandingen har lagret mindst fire år på eg. Her får stilen mere rundhed, blomme, abrikos og blide krydderier.'],
+      ['Hvorfor er Fins Bois interessant i VSOP?', 'Fins Bois giver naturligt rundhed, blødhed og frugt. I denne Léopold Croizet VSOP bærer det de kompotagtige noter og en frisk finale af nellike.'],
+      ['Hvordan serveres denne VSOP?', 'Den kan nydes ren i et tulipanformet glas, over is som aperitif eller i en elegant cocktail. Den passer også til desserter med gule frugter eller mandler.'],
+    ],
+    napoleon: [
+      ['Hvad betyder Napoléon i Cognac?', 'Napoléon hører til aldersbetegnelser for cognac med mindst seks års lagring. Den tid fører mod tørret frugt, varmt træ og krydderier.'],
+      ['Hvad smager man i denne Napoléon?', 'Smagsprofilen fremhæver jordnød, mandel, hasselnød, vanilje/toffee og en peberpræget finale. Den er fyldig og træpræget uden at miste Fins Bois-gavmildheden.'],
+      ['Hvordan serveres den?', 'Server den ren, i en lille mængde, i et tulipanformet glas. Den passer godt sidst i måltidet med tørret frugt, kaffe eller mørk chokolade uden for meget sødme.'],
+    ],
+    xo: [
+      ['Hvad betyder XO i Cognac?', 'XO betyder Extra Old: den yngste eau-de-vie i blandingen har lagret mindst ti år. Den modenhed giver struktur, rundhed og længde.'],
+      ['Hvad er rancio i denne XO?', 'Rancio opstår i den lange dialog mellem eau-de-vie, eg og tid. Her viser den sig i finalen med læder, tobak og tørrede blomster.'],
+      ['Hvad passer den til?', 'Ren i et tulipanformet glas passer den naturligt til mørk chokolade, mandler, appelsindesserter eller en espresso.'],
+    ],
+    'xo-exception': [
+      ['Hvorfor kalde den XO Exception?', 'Den bliver i XO-universet, men går længere i aromatisk dybde: tørret frugt, kandiseret frugt, gammelt træ og en ravfarvet tone.'],
+      ['Hvad giver det smeltede træ?', 'Det integrerede træ dominerer ikke: det runder munden af og bærer kanel, tobak og kandiseret frugt. Helheden virker intens, men samlet.'],
+      ['Hvordan smager man den?', 'Lad den åbne sig langsomt i et tulipanformet glas uden at varme den for meget. Den står alene eller sammen med meget ren mørk chokolade.'],
+    ],
+    extra: [
+      ['Hvad betyder Extra i Cognac?', 'Extra hører til de højeste aldersbetegnelser, på samme regulerede niveau som XO: mindst ti år for den yngste eau-de-vie.'],
+      ['Hvorfor tale om rancio?', 'Rancio markerer lang lagring: kandiseret frugt, chokolade, krydderi og trædybde. I denne Léopold Croizet Extra holder hvide blomster udtrykket friskt.'],
+      ['Hvornår serveres den?', 'Gem den til ren smagning efter måltidet eller med en krydret dessert. Muskatnød, kanel og chokolade svarer den godt.'],
+    ],
+    excellence: [
+      ['Hvad betegner Excellence?', 'Excellence er en af de regulerede Cognac-aldersbetegnelser. Her præsenterer siden en meget gammel Fins Bois, skabt til kompleksitet og længde.'],
+      ['Hvad giver meget gamle Fins Bois?', 'De bevarer frugt og blomster og får derefter cedertræ, sandeltræ og rancio. Kokos, passionsfrugt og eukalyptus giver den en særlig signatur.'],
+      ['Hvordan går man til den?', 'Server en lille mængde i et tulipanformet glas og lad næsen åbne sig. Det er en langsom smagecognac, mere eftertænksom end demonstrativ.'],
+    ],
+    heritage: [
+      ['Hvorfor Héritage?', 'Héritage henviser her til en familiecuvée, præsenteret som husets sjæl og båret af fire generationer. Krystalflasken understreger den arvemæssige dimension.'],
+      ['Hvordan er profilen?', 'Den er kraftfuld, næsten animalsk, med læder, tobak, gammelt træ og dyb rancio. Finalen forbliver blomstret og frisk med meget intens længde.'],
+      ['Hvordan serveres den?', 'Ren, i meget lille mængde, i et tulipanformet glas. Lad den ånde et par minutter: denne cognac kræver ro og tid.'],
+    ],
+    valentine: [
+      ['Hvorfor Valentine XO?', 'Valentine XO tager XO-dybden ind i et mere intimt 35 cl-format. Det er en bevidst gourmand fortolkning af tid.'],
+      ['Hvilke noter dominerer?', 'Valnød, kirsebær, chokolade, kanel og ingefær præger både næse og gane. Profilen er varm, krydret og let at huske.'],
+      ['Hvad passer den til?', 'Prøv den ren med en chokoladedessert, mandler eller en espresso. En lille mængde er nok til at forlænge gourmandpræget uden tyngde.'],
+    ],
+  },
+  sv: {
+    vs: [
+      ['Vad betyder VS i Cognac?', 'VS betyder Very Special: den yngsta eau-de-vie i blandningen har lagrats minst två år på ek. Stilen är ung, direkt och fruktig.'],
+      ['Varför välja en Fins Bois VS?', 'Eaux-de-vie från Fins Bois ger naturligt rundhet, mjukhet och frukt. I denna Léopold Croizet VS bär ursprunget upp toner av päron, persika och vinblomma.'],
+      ['Hur serveras denna VS?', 'Den passar i cocktails och long drinks med tonic eller ginger beer, liksom över is. Ren kan den serveras i liten mängd i ett tulpanformat glas.'],
+    ],
+    vsop: [
+      ['Vad betyder VSOP i Cognac?', 'VSOP betyder Very Superior Old Pale: den yngsta eau-de-vie i blandningen har lagrats minst fyra år på ek. Här får stilen mer rundhet, plommon, aprikos och mjuka kryddor.'],
+      ['Varför är Fins Bois intressant i VSOP?', 'Fins Bois ger naturligt rundhet, mjukhet och frukt. I denna Léopold Croizet VSOP bär det upp kompotttoner och en frisk avslutning av kryddnejlika.'],
+      ['Hur serveras denna VSOP?', 'Den kan njutas ren i tulpanformat glas, över is som aperitif eller i en elegant cocktail. Den passar också till desserter med gula frukter eller mandel.'],
+    ],
+    napoleon: [
+      ['Vad betyder Napoléon i Cognac?', 'Napoléon hör till åldersbeteckningar för cognac med minst sex års lagring. Den tiden leder mot torkad frukt, varmt trä och kryddor.'],
+      ['Vad smakar man i denna Napoléon?', 'Profilen lyfter jordnöt, mandel, hasselnöt, vanilj/toffee och en pepprig avslutning. Den är fyllig och träig utan att tappa Fins Bois generositet.'],
+      ['Hur serveras den?', 'Servera den ren, i liten mängd, i ett tulpanformat glas. Den passar väl efter måltiden med torkad frukt, kaffe eller mörk choklad med låg sötma.'],
+    ],
+    xo: [
+      ['Vad betyder XO i Cognac?', 'XO betyder Extra Old: den yngsta eau-de-vie i blandningen har lagrats minst tio år. Den mognaden ger struktur, rundhet och längd.'],
+      ['Vad är rancio i denna XO?', 'Rancio föds ur den långa dialogen mellan eau-de-vie, ek och tid. Här visar den sig i avslutningen med läder, tobak och torkade blommor.'],
+      ['Vad passar den till?', 'Ren i tulpanformat glas passar den naturligt till mörk choklad, mandlar, apelsindesserter eller en espresso.'],
+    ],
+    'xo-exception': [
+      ['Varför kalla den XO Exception?', 'Den stannar i XO-världen, men driver aromdjupet längre: torkad frukt, kanderad frukt, gammalt trä och en bärnstensfärg.'],
+      ['Vad ger det smälta träet?', 'Det integrerade träet dominerar inte: det rundar av gommen och bär kanel, tobak och kanderad frukt. Helheten känns intensiv men samlad.'],
+      ['Hur provar man den?', 'Låt den öppna sig långsamt i ett tulpanformat glas utan att värma den för mycket. Den står för sig själv eller till mycket ren mörk choklad.'],
+    ],
+    extra: [
+      ['Vad betyder Extra i Cognac?', 'Extra hör till de högsta åldersbeteckningarna, på samma reglerade nivå som XO: minst tio år för den yngsta eau-de-vie.'],
+      ['Varför nämna rancio?', 'Rancio markerar lång lagring: kanderad frukt, choklad, kryddor och träigt djup. I denna Léopold Croizet Extra håller vita blommor uttrycket friskt.'],
+      ['När serveras den?', 'Spara den för ren provning efter måltiden eller med en kryddig dessert. Muskot, kanel och choklad svarar den väl.'],
+    ],
+    excellence: [
+      ['Vad anger Excellence?', 'Excellence är en av de reglerade Cognac-åldersbeteckningarna. Här presenterar sidan en mycket gammal Fins Bois, byggd för komplexitet och längd.'],
+      ['Vad ger mycket gamla Fins Bois?', 'De behåller frukt och blommor och får sedan ceder, sandelträ och rancio. Kokos, passionsfrukt och eukalyptus ger den en egen signatur.'],
+      ['Hur närmar man sig den?', 'Häll en liten mängd i ett tulpanformat glas och låt doften öppna sig. Det är en långsam provningscognac, mer kontemplativ än demonstrativ.'],
+    ],
+    heritage: [
+      ['Varför Héritage?', 'Héritage syftar här på en familjecuvée, presenterad som husets själ och buren av fyra generationer. Kristallflaskan förstärker arvets dimension.'],
+      ['Hur är profilen?', 'Den är kraftfull, nästan animalisk, med läder, tobak, gammalt trä och djup rancio. Avslutningen förblir blommig och frisk med mycket intensiv längd.'],
+      ['Hur serveras den?', 'Ren, i mycket liten mängd, i ett tulpanformat glas. Låt den andas några minuter: denna cognac behöver stillhet och tid.'],
+    ],
+    valentine: [
+      ['Varför Valentine XO?', 'Valentine XO tar XO-djupet in i ett mer intimt 35 cl-format. Det är en medvetet gourmand tolkning av tid.'],
+      ['Vilka toner dominerar?', 'Valnöt, körsbär, choklad, kanel och ingefära präglar både doft och smak. Profilen är varm, kryddig och lätt att minnas.'],
+      ['Vad passar den till?', 'Prova den ren med en chokladdessert, mandlar eller en espresso. En liten mängd räcker för att förlänga gourmandkänslan utan tyngd.'],
+    ],
+  },
+  no: {
+    vs: [
+      ['Hva betyr VS i Cognac?', 'VS betyr Very Special: den yngste eau-de-vie i blandingen har ligget minst to år på eik. Stilen er ung, direkte og fruktig.'],
+      ['Hvorfor velge en Fins Bois VS?', 'Eaux-de-vie fra Fins Bois gir naturlig rundhet, mykhet og frukt. I denne Léopold Croizet VS løfter opprinnelsen toner av pære, fersken og vinblomst.'],
+      ['Hvordan serveres denne VS?', 'Den passer i cocktails og long drinks med tonic eller ginger beer, og også over is. Ren kan den serveres i en liten mengde i et tulipanformet glass.'],
+    ],
+    vsop: [
+      ['Hva betyr VSOP i Cognac?', 'VSOP betyr Very Superior Old Pale: den yngste eau-de-vie i blandingen har ligget minst fire år på eik. Her får stilen mer rundhet, plomme, aprikos og milde krydder.'],
+      ['Hvorfor er Fins Bois interessant i VSOP?', 'Fins Bois gir naturlig rundhet, mykhet og frukt. I denne Léopold Croizet VSOP løfter det kompottpregede noter og en frisk avslutning av nellik.'],
+      ['Hvordan serveres denne VSOP?', 'Den kan nytes ren i et tulipanformet glass, over is som aperitiff eller i en elegant cocktail. Den passer også til desserter med gule frukter eller mandler.'],
+    ],
+    napoleon: [
+      ['Hva betyr Napoléon i Cognac?', 'Napoléon hører til aldersbetegnelser for cognac med minst seks års lagring. Den tiden leder mot tørket frukt, varmt tre og krydder.'],
+      ['Hva smaker man i denne Napoléon?', 'Profilen fremhever peanøtt, mandel, hasselnøtt, vanilje/toffee og en pepperpreget avslutning. Den er fyldig og trepreget uten å miste Fins Bois-generøsiteten.'],
+      ['Hvordan serveres den?', 'Server den ren, i liten mengde, i et tulipanformet glass. Den passer godt etter måltidet med tørket frukt, kaffe eller lite søt mørk sjokolade.'],
+    ],
+    xo: [
+      ['Hva betyr XO i Cognac?', 'XO betyr Extra Old: den yngste eau-de-vie i blandingen har ligget minst ti år. Denne modenheten gir struktur, rundhet og lengde.'],
+      ['Hva er rancio i denne XO?', 'Rancio oppstår i den lange dialogen mellom eau-de-vie, eik og tid. Her viser den seg i avslutningen med lær, tobakk og tørkede blomster.'],
+      ['Hva passer den til?', 'Ren i et tulipanformet glass passer den naturlig til mørk sjokolade, mandler, appelsindesserter eller en espresso.'],
+    ],
+    'xo-exception': [
+      ['Hvorfor kalle den XO Exception?', 'Den forblir i XO-universet, men går lenger i aromatisk dybde: tørket frukt, kandisert frukt, gammelt tre og ravfarge.'],
+      ['Hva gir det smeltede treet?', 'Det integrerte treet dominerer ikke: det runder av ganen og bærer kanel, tobakk og kandisert frukt. Helheten virker intens, men samlet.'],
+      ['Hvordan smakes den?', 'La den åpne seg langsomt i et tulipanformet glass uten å varme den for mye. Den står fint alene, eller til svært ren mørk sjokolade.'],
+    ],
+    extra: [
+      ['Hva betyr Extra i Cognac?', 'Extra hører til de høyeste aldersbetegnelsene, på samme regulerte nivå som XO: minst ti år for den yngste eau-de-vie.'],
+      ['Hvorfor nevne rancio?', 'Rancio markerer lang lagring: kandisert frukt, sjokolade, krydder og tredybde. I denne Léopold Croizet Extra holder hvite blomster uttrykket friskt.'],
+      ['Når serveres den?', 'Spar den til ren smaking etter måltidet eller med en krydret dessert. Muskat, kanel og sjokolade svarer den godt.'],
+    ],
+    excellence: [
+      ['Hva betegner Excellence?', 'Excellence er en av de regulerte Cognac-aldersbetegnelsene. Her presenterer siden en svært gammel Fins Bois, skapt for kompleksitet og lengde.'],
+      ['Hva gir svært gamle Fins Bois?', 'De beholder frukt og blomster og får deretter seder, sandeltre og rancio. Kokos, pasjonsfrukt og eukalyptus gir den en egen signatur.'],
+      ['Hvordan nærmer man seg den?', 'Hell en liten mengde i et tulipanformet glass og la duften åpne seg. Dette er en langsom smakecognac, mer kontemplativ enn demonstrativ.'],
+    ],
+    heritage: [
+      ['Hvorfor Héritage?', 'Héritage viser her til en familiecuvée, presentert som husets sjel og båret av fire generasjoner. Krystallflasken understreker arvedimensjonen.'],
+      ['Hvordan er profilen?', 'Den er kraftfull, nesten animalsk, med lær, tobakk, gammelt tre og dyp rancio. Avslutningen er fortsatt blomsterpreget og frisk, med svært intens lengde.'],
+      ['Hvordan serveres den?', 'Ren, i svært liten mengde, i et tulipanformet glass. La den puste noen minutter: denne cognacen trenger ro og tid.'],
+    ],
+    valentine: [
+      ['Hvorfor Valentine XO?', 'Valentine XO tar XO-dybden inn i et mer intimt 35 cl-format. Det er en bevisst gourmand tolkning av tid.'],
+      ['Hvilke noter dominerer?', 'Valnøtt, kirsebær, sjokolade, kanel og ingefær preger både nese og gane. Profilen er varm, krydret og lett å huske.'],
+      ['Hva passer den til?', 'Prøv den ren med en sjokoladedessert, mandler eller en espresso. En liten mengde er nok til å forlenge gourmandpreget uten tyngde.'],
+    ],
+  },
+  zh: {
+    vs: [
+      ['VS 在干邑中代表什么？', 'VS 指 Very Special：调配中最年轻的 eau-de-vie 至少在橡木中陈酿两年。风格年轻、直接，并以果香为主。'],
+      ['为什么选择 Fins Bois VS？', 'Fins Bois 的 eaux-de-vie 通常带来圆润、柔和和果香。这款 Léopold Croizet VS 因此呈现梨、桃和葡萄花的细腻气息。'],
+      ['这款 VS 如何饮用？', '它适合调制鸡尾酒或以 tonic、ginger beer 做 long drink，也可加冰品饮。纯饮时，可用 tulip 杯少量品尝。'],
+    ],
+    vsop: [
+      ['VSOP 在干邑中代表什么？', 'VSOP 指 Very Superior Old Pale：调配中最年轻的 eau-de-vie 至少在橡木中陈酿四年。这里的风格更圆润，有李子、杏和柔和香料感。'],
+      ['为什么 Fins Bois 适合 VSOP？', 'Fins Bois 带来自然的圆润、柔和与果味。这款 Léopold Croizet VSOP 因此有果酱般的气息，并以清新的丁香收尾。'],
+      ['这款 VSOP 如何饮用？', '可用 tulip 杯纯饮，也可加冰作为开胃酒，或调成优雅鸡尾酒。它也适合搭配黄果类或杏仁甜点。'],
+    ],
+    napoleon: [
+      ['Napoléon 在干邑中代表什么？', 'Napoléon 属于与至少六年陈酿相关的年龄标识。这样的时间会带来干果、温暖木香和香料气息。'],
+      ['这款 Napoléon 有什么特点？', '品鉴中有花生、杏仁、榛子、香草/toffee 和胡椒感收尾。它饱满而有木香，同时保留 Fins Bois 的丰润。'],
+      ['它如何饮用？', '建议用 tulip 杯少量纯饮。餐后搭配干果、咖啡或不太甜的黑巧克力都很合适。'],
+    ],
+    xo: [
+      ['XO 在干邑中代表什么？', 'XO 指 Extra Old：调配中最年轻的 eau-de-vie 至少陈酿十年。这种成熟度带来结构、圆润和悠长余味。'],
+      ['这款 XO 的 rancio 是什么？', 'Rancio 来自 eau-de-vie、橡木与时间的长期对话。这里在余味中呈现皮革、烟草和干花气息。'],
+      ['适合搭配什么？', '用 tulip 杯纯饮时，它自然适合黑巧克力、杏仁、橙味甜点或 espresso。'],
+    ],
+    'xo-exception': [
+      ['为什么叫 XO Exception？', '它仍属于 XO 的世界，但进一步强调香气深度：干果、蜜饯、老木和琥珀色泽。'],
+      ['融合的木香带来什么？', '木香不占主导，而是让口感更圆润，并承托肉桂、烟草和蜜饯。整体浓郁但协调。'],
+      ['如何品鉴？', '用 tulip 杯慢慢展开，不要过度用手温热。它本身已经完整，也可搭配纯净的黑巧克力。'],
+    ],
+    extra: [
+      ['Extra 在干邑中代表什么？', 'Extra 属于较高等级的年龄标识，与 XO 处于同一法规层级：最年轻的 eau-de-vie 至少十年。'],
+      ['为什么提到 rancio？', 'Rancio 是长时间陈酿的标志：蜜饯、巧克力、香料和木质深度。这款 Léopold Croizet Extra 因白花气息保持清新。'],
+      ['什么时候饮用？', '适合餐后纯饮，或搭配带香料的甜点。肉豆蔻、肉桂和巧克力都能与它呼应。'],
+    ],
+    excellence: [
+      ['Excellence 代表什么？', 'Excellence 是受法规约束的 Cognac 年龄标识之一。这里呈现的是非常老的 Fins Bois，重点在复杂度和长度。'],
+      ['非常老的 Fins Bois 带来什么？', '它保留果香和花香，又发展出雪松、檀香和 rancio。椰子、百香果和桉树气息让它有独特签名。'],
+      ['如何接近它？', '在 tulip 杯中倒入少量，让香气慢慢打开。这是一款适合慢品的干邑，偏沉思而非炫耀。'],
+    ],
+    heritage: [
+      ['为什么叫 Héritage？', 'Héritage 在这里指一款家族调配，被呈现为酒庄灵魂，并由四代人共同塑造。水晶瓶也强化了传承感。'],
+      ['它的风格如何？', '它强劲、几乎带有野性，有皮革、烟草、老木和深沉 rancio。收尾仍有花香与清新感，长度非常强。'],
+      ['如何饮用？', '建议用 tulip 杯极少量纯饮。让它呼吸几分钟：这款干邑需要安静和时间。'],
+    ],
+    valentine: [
+      ['为什么是 Valentine XO？', 'Valentine XO 将 XO 的深度放入更亲密的 35 cl 规格中，是一种有意偏甜美的时间表达。'],
+      ['哪些香气最突出？', '核桃、樱桃、巧克力、肉桂和姜贯穿鼻腔与口感。整体温暖、有香料感，也容易记住。'],
+      ['适合搭配什么？', '可纯饮搭配巧克力甜点、杏仁或 espresso。少量即可延长甜美感，而不会显得沉重。'],
+    ],
+  },
+};
 
 function removeGalleryMedalImages(html, imageNames) {
   let next = html;
