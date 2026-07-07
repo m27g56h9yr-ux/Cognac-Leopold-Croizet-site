@@ -10,7 +10,7 @@ const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const TODAY = '2026-06-11';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
-const FAQ_PAGE_LASTMOD = '2026-06-29';
+const FAQ_PAGE_LASTMOD = '2026-07-07';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
 const MEDAL_PAGE_LASTMOD = '2026-07-02';
 const NUTRITION_PAGE_LASTMOD = '2026-06-30';
@@ -123,6 +123,34 @@ const externalAuthoritySources = [
     kind: 'VideoObject',
     note: 'Official house film also embedded on the site.',
     noteZh: '酒庄官方影片，也已嵌入网站。',
+  },
+];
+
+const legacyNameAuthoritySources = [
+  {
+    name: 'AV.ru - Cognac Pierre Croizet collection',
+    url: 'https://av.ru/collections/cognac_pierre_croizet',
+    kind: 'CollectionPage',
+  },
+  {
+    name: 'Cognac Expert Russia - Léopold Croizet Cognac',
+    url: 'https://www.cognac-expert.com/ru/brands/leopold-croizet-cognac',
+    kind: 'ProfilePage',
+  },
+  {
+    name: 'Inshaker Russia - Cognac Pierre Croizet and Cognac Léopold Croizet mention',
+    url: 'https://ru.inshaker.com/trends/znaniya/croizet-elitnyy-konyak-s-200-letney-istoriey',
+    kind: 'Article',
+  },
+  {
+    name: 'Russian import reference - Maison Pierre Croizet',
+    url: 'https://import-v-rossiu.ru/dostavka/konyak',
+    kind: 'WebPage',
+  },
+  {
+    name: 'Russian SGR reference - Cognac Pierre Croizet',
+    url: 'https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html',
+    kind: 'WebPage',
   },
 ];
 
@@ -413,6 +441,37 @@ const faqEnvironmentalEntries = {
   ],
 };
 
+const faqLegacyNameEntries = {
+  fr: {
+    question: 'Pourquoi certains sites mentionnent-ils Cognac Pierre Croizet ?',
+    answer: 'Cognac Léopold Croizet poursuit l’histoire connue sous l’ancien nom commercial Cognac Pierre Croizet. L’histoire a commencé avec le père de Pierre, qui commercialisait déjà les eaux-de-vie familiales sous une marque familiale antérieure dans les années 1940 et 1950. Pierre a ensuite développé la maison de Cognac sous son propre nom. Léopold a gardé cette tradition de transmission et utilise depuis quelques années son propre prénom pour signer la même continuité de produits, de terroir et de savoir-faire familial.',
+  },
+  en: {
+    question: 'Why do some websites mention Cognac Pierre Croizet?',
+    answer: 'Cognac Léopold Croizet continues the history known under the former commercial name Cognac Pierre Croizet. The story began with Pierre’s father, who was already marketing the family eaux-de-vie under an earlier family label in the 1940s and 1950s. Pierre then developed the Cognac house under his own name. Léopold has kept this tradition of transmission and has used his own first name for several years to sign the same continuity of products, terroir and family know-how.',
+  },
+  ru: {
+    question: 'Почему некоторые сайты упоминают Cognac Pierre Croizet?',
+    answer: 'Cognac Léopold Croizet продолжает историю, известную под прежним коммерческим названием Cognac Pierre Croizet. Эта история началась с отца Пьера, который уже в 1940-х и 1950-х годах продавал семейные eaux-de-vie под более ранним семейным именем. Затем Пьер развил дом Cognac под своим собственным именем. Léopold сохранил эту традицию передачи и уже несколько лет использует свое собственное имя, чтобы обозначить ту же преемственность продуктов, терруара и семейного savoir-faire.',
+  },
+  da: {
+    question: 'Hvorfor nævner nogle sider Cognac Pierre Croizet?',
+    answer: 'Cognac Léopold Croizet viderefører historien kendt under det tidligere kommercielle navn Cognac Pierre Croizet. Historien begyndte med Pierres far, som allerede i 1940’erne og 1950’erne solgte familiens eaux-de-vie under et tidligere familienavn. Pierre udviklede derefter cognachuset under sit eget navn. Léopold har bevaret denne tradition og bruger i dag sit eget fornavn til at markere den samme kontinuitet i produkter, terroir og familiens savoir-faire.',
+  },
+  sv: {
+    question: 'Varför nämner vissa webbplatser Cognac Pierre Croizet?',
+    answer: 'Cognac Léopold Croizet för vidare den historia som är känd under det tidigare kommersiella namnet Cognac Pierre Croizet. Historien började med Pierres far, som redan under 1940- och 1950-talen sålde familjens eaux-de-vie under ett tidigare familjenamn. Pierre utvecklade därefter cognachuset under sitt eget namn. Léopold har bevarat denna tradition och använder sedan några år sitt eget förnamn för att uttrycka samma kontinuitet i produkter, terroir och familjens savoir-faire.',
+  },
+  no: {
+    question: 'Hvorfor nevner noen nettsteder Cognac Pierre Croizet?',
+    answer: 'Cognac Léopold Croizet viderefører historien kjent under det tidligere kommersielle navnet Cognac Pierre Croizet. Historien begynte med Pierres far, som allerede på 1940- og 1950-tallet solgte familiens eaux-de-vie under et tidligere familienavn. Pierre utviklet deretter cognachuset under sitt eget navn. Léopold har bevart denne tradisjonen og bruker nå sitt eget fornavn for å uttrykke den samme kontinuiteten i produkter, terroir og familiens savoir-faire.',
+  },
+  zh: {
+    question: '为什么有些网站会提到 Cognac Pierre Croizet？',
+    answer: 'Cognac Léopold Croizet 延续了曾以 Cognac Pierre Croizet 这一旧商业名称为人所知的历史。故事始于 Pierre 的父亲，他在 1940 至 1950 年代已经以早期家族名称销售家族 eaux-de-vie。随后 Pierre 以自己的名字发展干邑酒庄。Léopold 保留了这种传承传统，并在近年使用自己的名字，延续同一系列产品、风土与家族 savoir-faire。',
+  },
+};
+
 const faqLocalizedEntries = {
   en: [
     { group: 'choose', question: 'What is cognac?', answer: 'Cognac is a wine spirit produced within the Cognac appellation area. It is made from white grapes, distilled, aged in oak casks, then blended before bottling.' },
@@ -662,6 +721,43 @@ const productNames = new Map([
   ['valentine', 'Valentine XO'],
   ['pineau-des-charentes', 'Pineau des Charentes'],
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
+]);
+
+const russianProductLegacyAlternateNames = new Map([
+  ['vs', ['Cognac Pierre Croizet VS', 'Коньяк Пьер Круазе VS', 'Cognac Leopold Croizet VS']],
+  ['vsop', ['Cognac Pierre Croizet VSOP', 'Коньяк Пьер Круазе VSOP', 'Cognac Leopold Croizet VSOP']],
+  ['napoleon', ['Cognac Pierre Croizet Napoléon', 'Коньяк Пьер Круазе Наполеон', 'Cognac Leopold Croizet Napoleon']],
+  ['xo', ['Cognac Pierre Croizet XO', 'Коньяк Пьер Круазе XO', 'Cognac Leopold Croizet XO']],
+  ['xo-exception', ['Cognac Pierre Croizet XO Exception', 'Коньяк Пьер Круазе XO Exception', 'Cognac Leopold Croizet XO Exception']],
+  ['extra', ['Cognac Pierre Croizet Extra', 'Коньяк Пьер Круазе Extra', 'Cognac Leopold Croizet Extra']],
+  ['excellence', ['Cognac Pierre Croizet Excellence', 'Коньяк Пьер Круазе Excellence', 'Cognac Leopold Croizet Excellence']],
+  ['heritage', ['Cognac Pierre Croizet Héritage', 'Коньяк Пьер Круазе Héritage', 'Cognac Leopold Croizet Heritage']],
+  ['valentine', ['Cognac Pierre Croizet Valentine XO', 'Коньяк Пьер Круазе Valentine XO', 'Cognac Leopold Croizet Valentine XO']],
+]);
+
+const russianProductSubjectOfSources = new Map([
+  ['vs', [
+    { name: 'AV.ru - Cognac Léopold Croizet VS 0.7 L', url: 'https://av.ru/i/1021709', kind: 'WebPage' },
+    { name: 'Russian SGR reference - Cognac Pierre Croizet VS', url: 'https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html', kind: 'WebPage' },
+  ]],
+  ['vsop', [
+    { name: 'AV.ru - Cognac Pierre Croizet VSOP 0.7 L', url: 'https://av.ru/i/174054', kind: 'WebPage' },
+  ]],
+  ['napoleon', [
+    { name: 'AV.ru - Cognac Léopold Croizet Napoléon 0.7 L', url: 'https://av.ru/i/1020490', kind: 'WebPage' },
+  ]],
+  ['xo-exception', [
+    { name: 'AV.ru - Cognac Léopold Croizet Exception XO 0.7 L', url: 'https://av.ru/i/1005624', kind: 'WebPage' },
+  ]],
+  ['extra', [
+    { name: 'AV.ru - Cognac Pierre Croizet Extra 0.7 L', url: 'https://av.ru/i/174057', kind: 'WebPage' },
+  ]],
+  ['excellence', [
+    { name: 'AV.ru - Cognac Pierre Croizet Excellence 0.7 L', url: 'https://av.ru/i/231809', kind: 'WebPage' },
+  ]],
+  ['valentine', [
+    { name: 'AV.ru - Cognac Pierre Croizet Valentine XO 0.35 L', url: 'https://av.ru/i/178511', kind: 'WebPage' },
+  ]],
 ]);
 
 const productPrimaryGtins = new Map([
@@ -2362,7 +2458,7 @@ function faqEntriesForLang(lang) {
       group: faqGroupKeyByFrench[entry.group] || 'choose',
     }));
 
-  return withFaqMedalEntries(withFaqEnvironmentalEntries(entries, lang), lang);
+  return withFaqMedalEntries(withFaqLegacyNameEntry(withFaqEnvironmentalEntries(entries, lang), lang), lang);
 }
 
 function withFaqEnvironmentalEntries(entries, lang) {
@@ -2372,6 +2468,20 @@ function withFaqEnvironmentalEntries(entries, lang) {
   return [
     ...entries.slice(0, insertIndex + 1),
     ...additions,
+    ...entries.slice(insertIndex + 1),
+  ];
+}
+
+function withFaqLegacyNameEntry(entries, lang) {
+  const addition = { group: 'choose', ...(faqLegacyNameEntries[lang] || faqLegacyNameEntries.fr) };
+  if (entries.some((entry) => /Cognac Pierre Croizet/i.test(`${entry.question} ${entry.answer || entry.answerHtml || ''}`))) {
+    return entries;
+  }
+  const insertIndex = entries.findIndex((entry) => /vient|come from|Откуда|kommer|Varifrån|来自/i.test(entry.question));
+  if (insertIndex === -1) return [...entries, addition];
+  return [
+    ...entries.slice(0, insertIndex + 1),
+    addition,
     ...entries.slice(insertIndex + 1),
   ];
 }
@@ -5209,9 +5319,9 @@ function repairGeneratedContent(html) {
     .replace(/Roger CROIZET/g, 'Roger Léopold Croizet')
     .replace(/Leopold CROIZET/g, 'Léopold Croizet')
     .replace(/Léopold CROIZET/g, 'Léopold Croizet')
-    .replace(/PIERRE CROIZET/g, 'LÉOPOLD CROIZET')
-    .replace(/Pierre CROIZET/g, 'Léopold Croizet')
-    .replace(/Pierre Croizet/g, 'Léopold Croizet')
+    .replace(/(?<!COGNAC )(?<!MAISON )PIERRE CROIZET/g, 'LÉOPOLD CROIZET')
+    .replace(/(?<!Cognac )(?<!Maison )Pierre CROIZET/g, 'Léopold Croizet')
+    .replace(/(?<!Cognac )(?<!Maison )Pierre Croizet/g, 'Léopold Croizet')
     .replace(/(?:LÉOPOLD\s+)+((?:Etiket|Etikett) (?:for|för) )/g, '$1')
     .replace(/(?:LÉOPOLD\s+){2,}CROIZET/g, 'LÉOPOLD CROIZET')
     .replace(/(?:Léopold\s+){2,}Croizet/g, 'Léopold Croizet');
@@ -7015,7 +7125,19 @@ function organizationSchema() {
     '@type': 'Organization',
     '@id': `${PUBLIC_ORIGIN}/#organization`,
     name: 'Cognac Léopold Croizet',
-    alternateName: ['Maison Léopold Croizet', 'Maison Cognac Léopold Croizet', 'Léopold Croizet 干邑', '法国 Léopold Croizet 干邑酒庄'],
+    alternateName: [
+      'Maison Léopold Croizet',
+      'Maison Cognac Léopold Croizet',
+      'Cognac Leopold Croizet',
+      'Leopold Croizet Cognac',
+      'Cognac Pierre Croizet',
+      'Maison Pierre Croizet',
+      'Коньяк Пьер Круазе',
+      'Пьер Круазе',
+      'Леопольд Круазе',
+      'Léopold Croizet 干邑',
+      '法国 Léopold Croizet 干邑酒庄',
+    ],
     url: PUBLIC_ORIGIN,
     logo: `${PUBLIC_ORIGIN}${BRAND_ICON_PATH}`,
     image: `${PUBLIC_ORIGIN}/wp-content/uploads/2024/03/img_slider_footer_01.png`,
@@ -7031,7 +7153,7 @@ function organizationSchema() {
       addressCountry: 'FR',
     },
     sameAs: authoritySameAsUrls,
-    subjectOf: externalAuthoritySources.map((source) => ({
+    subjectOf: [...externalAuthoritySources, ...legacyNameAuthoritySources].map((source) => ({
       '@type': source.kind,
       name: source.name,
       url: source.url,
@@ -7180,7 +7302,17 @@ function productSubjectOfItems(slug, lang) {
       name: productAwardText(medal, lang),
       ...(medal.href ? { url: medal.href } : {}),
     })),
+    ...productRussianSubjectOfItems(slug, lang),
   ];
+}
+
+function productRussianSubjectOfItems(slug, lang) {
+  if (lang !== 'ru') return [];
+  return (russianProductSubjectOfSources.get(slug) || []).map((source) => ({
+    '@type': source.kind,
+    name: source.name,
+    url: source.url,
+  }));
 }
 
 function faqPageSchema(route) {
@@ -7248,6 +7380,7 @@ function productSchema(route, metadata, image) {
   const lang = languageForRoute(route);
   const id = `${PUBLIC_ORIGIN}${route}#product`;
   const partnerOffer = productPartnerOffer(route, slug);
+  const alternateName = productAlternateNames(slug, lang);
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -7262,6 +7395,9 @@ function productSchema(route, metadata, image) {
     countryOfOrigin: 'France',
     additionalProperty: productStructuredProperties(slug, lang),
   };
+  if (alternateName.length) {
+    schema.alternateName = alternateName;
+  }
   if (partnerOffer) {
     schema.offers = partnerOffer;
   }
@@ -7285,6 +7421,11 @@ function productSchema(route, metadata, image) {
   const subjectOf = productSubjectOfItems(slug, lang);
   if (subjectOf.length) schema.subjectOf = subjectOf;
   return schema;
+}
+
+function productAlternateNames(slug, lang) {
+  if (lang !== 'ru') return [];
+  return russianProductLegacyAlternateNames.get(slug) || [];
 }
 
 function productPartnerOffer(route, slug) {

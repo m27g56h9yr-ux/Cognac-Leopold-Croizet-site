@@ -595,6 +595,8 @@ function decodeHtml(value) {
 
 function stripTechnicalBrandReferences(value) {
   return value
+    .replace(/\bCognac[\s\u00a0]+Pierre[\s\u00a0]+Croizet\b/gi, 'Cognac legacy name')
+    .replace(/\bMaison[\s\u00a0]+Pierre[\s\u00a0]+Croizet\b/gi, 'Maison legacy name')
     .replace(/\bhttps?:\/\/\S*croizet\S*/gi, ' ')
     .replace(/\bwww\.\S*croizet\S*/gi, ' ')
     .replace(/\b\S*@\S*croizet\S*/gi, ' ')
