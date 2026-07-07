@@ -1554,16 +1554,22 @@ const partnerOrderLinks = new Map([
 
 const SELLER_TRACKING_FILE = 'suivi-vendeurs.html';
 const SELLER_TRACKING_ENDPOINT = 'suivi-vendeurs-data.php';
-const SELLER_TRACKING_UPDATED_LABEL = '5 juillet 2026';
+const SELLER_TRACKING_UPDATED_AT = '2026-07-07';
+const SELLER_TRACKING_UPDATED_LABEL = '7 juillet 2026';
 const sellerTrackingFallbacks = new Map([
-  ['vs', { price: 4849, evidence: 'Collection AV.ru indexée : prix public 4 849 ₽.' }],
+  ['vs', { price: 4490, evidence: 'Fiche AV.ru indexée : prix public 4 490 ₽.' }],
   ['vsop', { price: 5480, listPrice: 6449, evidence: 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.' }],
-  ['napoleon', { price: 7190, listPrice: 8490, evidence: 'Collection AV.ru indexée : prix public 7 190 ₽, prix avant remise 8 490 ₽.' }],
-  ['xo', { price: 8790, evidence: 'Fiche AV.ru indexée : prix public 8 790 ₽.' }],
+  ['napoleon', { price: 8490, evidence: 'Fiche AV.ru indexée : prix public 8 490 ₽.' }],
   ['xo-exception', { price: 22980, evidence: 'Page marque AV.ru indexée : prix public 22 980 ₽.' }],
   ['extra', { price: 57790, evidence: 'Page marque AV.ru indexée : prix public 57 790 ₽.' }],
   ['excellence', { price: 76990, evidence: 'Collection AV.ru indexée : prix public 76 990 ₽.' }],
   ['valentine', { price: 6490, listPrice: 7690, evidence: 'Page marque AV.ru indexée : prix public 6 490 ₽, prix avant remise 7 690 ₽.' }],
+]);
+const sellerTrackingManualNotes = new Map([
+  ['xo', {
+    status: 'Fiche AV.ru disponible mais contenance différente',
+    notes: 'La fiche AV.ru publiée concerne un XO 0,35 L alors que la page officielle suivie est un XO 70 cl. Le lien partenaire est conservé faute de meilleure fiche XO 70 cl, mais aucun Offer/prix structuré n’est exposé.',
+  }],
 ]);
 const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine'].map((slug) => ({
   product_slug: slug,
@@ -1619,13 +1625,14 @@ function sellerTrackingFallbackOffer(slug) {
 }
 
 function sellerTrackingFallbackStatus(slug) {
-  return sellerTrackingFallbacks.has(slug)
-    ? 'Valeurs AV.ru issues de l’index public'
-    : 'Fiche produit AV.ru non trouvée dans l’index public';
+  if (sellerTrackingFallbacks.has(slug)) return 'Valeurs AV.ru issues de l’index public';
+  return sellerTrackingManualNotes.get(slug)?.status || 'Fiche produit AV.ru non trouvée dans l’index public';
 }
 
 function sellerTrackingFallbackNotes(slug) {
   const fallback = sellerTrackingFallbacks.get(slug);
+  const manualNote = sellerTrackingManualNotes.get(slug);
+  if (manualNote) return manualNote.notes;
   if (!fallback) {
     return 'Le lien partenaire publié ouvre une recherche AV.ru. Aucune fiche produit AV.ru indexée fiable n’a été trouvée pour ce produit ; review et aggregateRating restent donc non exposés.';
   }
@@ -1642,6 +1649,9 @@ function canonicalRouteForRoute(route) {
   return route;
 }
 
+let routeToGroup = new Map();
+
+async function main() {
 const targetRoute = normalizeTargetRoute(process.env.LC_SEO_ROUTE || '');
 
 if (!targetRoute) {
@@ -1652,7 +1662,7 @@ if (!targetRoute) {
 const routeMapHtmlFiles = await walkHtml(ROOT);
 const allHtmlFiles = targetRoute ? [fileForRoute(targetRoute)] : routeMapHtmlFiles;
 const existingRoutes = new Set(routeMapHtmlFiles.map((file) => routeForFile(file)));
-const routeToGroup = makeGroupMap(existingRoutes);
+routeToGroup = makeGroupMap(existingRoutes);
 const indexableRoutes = [];
 
 for (const file of allHtmlFiles) {
@@ -1690,6 +1700,7 @@ if (!targetRoute) {
 }
 
 console.log(`SEO hardening applied to ${allHtmlFiles.length} page${allHtmlFiles.length > 1 ? 's' : ''}`);
+}
 
 function normalizeTargetRoute(value) {
   if (!value) return '';
@@ -3762,7 +3773,7 @@ function nutritionPageCss() {
 
 function sellerTrackingPayload() {
   return {
-    updatedAt: '2026-07-05',
+    updatedAt: SELLER_TRACKING_UPDATED_AT,
     updatedAtLabel: SELLER_TRACKING_UPDATED_LABEL,
     rows: sellerTrackingRows,
   };
@@ -7643,3 +7654,5 @@ function productCategory(slug) {
 function escapeXml(value) {
   return escapeHtml(value).replace(/'/g, '&apos;');
 }
+
+await main();
