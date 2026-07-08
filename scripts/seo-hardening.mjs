@@ -111,6 +111,38 @@ const externalAuthoritySources = [
     noteZh: '供应商资料页面，列出官方网站。',
   },
   {
+    name: 'Spirits Selection 2024 - Cognac Léopold Croizet XO Exception',
+    url: 'https://results.spiritsselection.com/en/results/2024/222113-cognac-leopold-croizet-xo-exception',
+    kind: 'WebPage',
+    note: 'Competition result page linking Cognac Léopold Croizet XO Exception with SARL Maison des Pierres.',
+    noteFr: 'Page de résultat de concours reliant Cognac Léopold Croizet XO Exception à SARL Maison des Pierres.',
+    noteZh: '赛事结果页面，将 Cognac Léopold Croizet XO Exception 与 SARL Maison des Pierres 关联。',
+  },
+  {
+    name: 'Annuaire des Entreprises - LA MAISON DES PIERRES',
+    url: 'https://annuaire-entreprises.data.gouv.fr/etablissement/50810436100029',
+    kind: 'ProfilePage',
+    note: 'French official company directory entry for the publishing company behind the brand.',
+    noteFr: 'Fiche de l’annuaire officiel français des entreprises pour la société éditrice de la marque.',
+    noteZh: '法国官方企业名录中该品牌出版/经营公司的资料。',
+  },
+  {
+    name: 'Agence Bio - LA MAISON DES PIERRES',
+    url: 'https://annuaire.agencebio.org/operateur/31370/la-maison-des-pierres',
+    kind: 'ProfilePage',
+    note: 'Public organic-operator directory entry for LA MAISON DES PIERRES.',
+    noteFr: 'Fiche publique de l’annuaire des opérateurs bio pour LA MAISON DES PIERRES.',
+    noteZh: 'LA MAISON DES PIERRES 的法国有机经营者公开名录资料。',
+  },
+  {
+    name: 'France Quintessence - LA MAISON DES PIERRES',
+    url: 'https://www.france-quintessence.fr/salon/exposants/maison-des-pierres',
+    kind: 'WebPage',
+    note: 'French spirits fair exhibitor page for Maison des Pierres.',
+    noteFr: 'Fiche exposant du salon français des spiritueux pour Maison des Pierres.',
+    noteZh: '法国烈酒展 Maison des Pierres 参展商页面。',
+  },
+  {
     name: 'Maison Léopold Croizet - YouTube channel',
     url: 'https://www.youtube.com/@maisonleopoldcroizet',
     kind: 'ProfilePage',
@@ -123,6 +155,102 @@ const externalAuthoritySources = [
     kind: 'VideoObject',
     note: 'Official house film also embedded on the site.',
     noteZh: '酒庄官方影片，也已嵌入网站。',
+  },
+];
+
+const businessFranceProductSources = [
+  ['vs', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-vs.html', 'Cognac Léopold Croizet VS'],
+  ['napoleon', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-napoleon.html', 'Cognac Léopold Croizet Napoléon'],
+  ['xo', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-xo.html', 'Cognac Léopold Croizet XO'],
+  ['xo-exception', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-xo-exception.html', 'Cognac Léopold Croizet XO Exception'],
+  ['extra', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-extra.html', 'Cognac Léopold Croizet Extra'],
+  ['excellence', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-excellence.html', 'Cognac Léopold Croizet Excellence'],
+  ['heritage', 'https://www.marketplace.businessfrance.fr/cognac-leopold-croizet-heritage.html', 'Cognac Léopold Croizet Héritage'],
+].map(([productSlug, url, label]) => ({
+  name: `Business France Marketplace - ${label}`,
+  url,
+  kind: 'Product',
+  productSlug,
+  note: `Business France product page for ${label}.`,
+  noteFr: `Fiche produit Business France pour ${label}.`,
+  noteZh: `Business France 上 ${label} 的产品页面。`,
+}));
+
+const pressKitExternalReferenceSources = [
+  {
+    name: 'Cognac.com guide - Cognac Léopold Croizet archive',
+    url: 'https://cognac.com/guide/leopold-croizet-cognac/',
+    kind: 'WebPage',
+    note: 'Cognac.com archive page grouping Léopold Croizet Cognac references.',
+    noteFr: 'Page d’archive Cognac.com regroupant les références Léopold Croizet Cognac.',
+    noteZh: 'Cognac.com 归档页面，汇集 Léopold Croizet Cognac 相关资料。',
+  },
+  {
+    name: 'Business France Marketplace - LA MAISON DES PIERRES catalog',
+    url: 'https://www.marketplace.businessfrance.fr/seller/view/catalog/id/3942/',
+    kind: 'CollectionPage',
+    note: 'Business France catalog page listing Cognac Léopold Croizet products.',
+    noteFr: 'Catalogue Business France listant les produits Cognac Léopold Croizet.',
+    noteZh: 'Business France 产品目录页面，列出 Cognac Léopold Croizet 产品。',
+  },
+  ...businessFranceProductSources,
+  {
+    name: 'CWSA 2021 - Cognac Pierre Croizet Napoléon and Léopold Croizet',
+    url: 'https://cwsa.org/cwsa-2021-results/',
+    kind: 'WebPage',
+    productSlug: 'napoleon',
+    note: 'Competition result page listing Cognac Pierre Croizet Napoléon with Léopold Croizet.',
+    noteFr: 'Palmarès listant Cognac Pierre Croizet Napoléon avec Léopold Croizet.',
+    noteZh: '赛事结果页面，列出 Cognac Pierre Croizet Napoléon 与 Léopold Croizet。',
+  },
+  {
+    name: 'Societe.com - LA MAISON DES PIERRES company profile',
+    url: 'https://www.societe.com/societe/la-maison-des-pierres-508104361.html',
+    kind: 'ProfilePage',
+    note: 'French company profile for LA MAISON DES PIERRES with public legal and activity data.',
+    noteFr: 'Fiche d’entreprise française pour LA MAISON DES PIERRES avec données publiques juridiques et d’activité.',
+    noteZh: 'LA MAISON DES PIERRES 的法国企业资料页面，包含公开法律和经营信息。',
+  },
+  {
+    name: 'Salon Saveurs - COGNAC : MAISON DES PIERRES exhibitor page',
+    url: 'https://www.salon-saveurs.com/visiter/liste-des-exposants/page/2/',
+    kind: 'WebPage',
+    note: 'French gastronomy fair exhibitor listing for COGNAC : MAISON DES PIERRES.',
+    noteFr: 'Liste exposants d’un salon gastronomique français mentionnant COGNAC : MAISON DES PIERRES.',
+    noteZh: '法国美食展参展商列表，提到 COGNAC : MAISON DES PIERRES。',
+  },
+  {
+    name: 'Millésime Bio 2025 - Domaine de la Grande Versenne exhibitor list',
+    url: 'https://mobicheckin-assets.s3.eu-west-1.amazonaws.com/uploads/events/6673e3c294d37271ac6c7ed1/website/assets-folder66952702ea33dab1a25fe98f/Liste_Exposants_MillsimeBIO2025_fc832665-5d36-454f-83c5-46a6ba4e6a39.pdf',
+    kind: 'DigitalDocument',
+    note: 'Public exhibitor PDF listing Domaine de la Grande Versenne in Cognac and Spirit&Bio.',
+    noteFr: 'PDF public des exposants listant Domaine de la Grande Versenne en Cognac et Spirit&Bio.',
+    noteZh: '公开参展商 PDF，列出 Domaine de la Grande Versenne、Cognac 与 Spirit&Bio。',
+  },
+  {
+    name: 'France Quintessence 2022 program - Maison des Pierres',
+    url: 'https://www.france-quintessence.fr/download/FQ-2022_programme.pdf',
+    kind: 'DigitalDocument',
+    note: 'Public fair program mentioning Maison des Pierres among French spirits exhibitors.',
+    noteFr: 'Programme public de salon mentionnant Maison des Pierres parmi les exposants de spiritueux français.',
+    noteZh: '法国烈酒展公开节目单，提到 Maison des Pierres。',
+  },
+  {
+    name: 'Discover Cognac - Cognac Léopold Croizet VS',
+    url: 'https://www.discovercognac.com/product/leopold-croizet-vs/',
+    kind: 'Product',
+    productSlug: 'vs',
+    note: 'External product page for Cognac Léopold Croizet VS.',
+    noteFr: 'Fiche produit externe pour Cognac Léopold Croizet VS.',
+    noteZh: 'Cognac Léopold Croizet VS 的外部产品页面。',
+  },
+  {
+    name: 'VinBoutiquePro - Cognac Léopold Croizet archive',
+    url: 'https://www.vinboutiquepro.com/product-tag/leopold-croizet-cognac/',
+    kind: 'CollectionPage',
+    note: 'External marketplace archive using the Cognac Léopold Croizet name.',
+    noteFr: 'Archive de place de marché externe utilisant le nom Cognac Léopold Croizet.',
+    noteZh: '外部市场归档页面，使用 Cognac Léopold Croizet 名称。',
   },
 ];
 
@@ -155,7 +283,141 @@ const legacyNameAuthoritySources = [
     note: 'Russian registry reference for Cognac Pierre Croizet VS; useful as a product-level legacy-name signal.',
     noteZh: '俄罗斯登记参考页面，涉及 Cognac Pierre Croizet VS，可作为产品层面的旧名称信号。',
   },
+  {
+    name: 'Cognacton - Cognac Pierre Croizet producer page',
+    url: 'https://cognac-ton.nl/en/homepage/brands-and-producers/home-page-general/brand-information/pages-c-f/croizet-pierre/',
+    kind: 'WebPage',
+    note: 'Independent Cognac reference page connecting the former Cognac Pierre Croizet name with the current Léopold Croizet house in Lantin, Fins Bois.',
+    noteFr: 'Page de référence indépendante reliant l’ancien nom Cognac Pierre Croizet à la maison actuelle Léopold Croizet à Lantin, Fins Bois.',
+    noteZh: '独立干邑参考页面，将旧名称 Cognac Pierre Croizet 与位于 Lantin、Fins Bois 的现 Maison Léopold Croizet 关联。',
+  },
+  {
+    name: 'Difford’s Guide - Cognac Pierre Croizet producer history',
+    url: 'https://www.diffordsguide.com/producers/557/cognac-pierre-croizet/history',
+    kind: 'ProfilePage',
+    note: 'Producer reference page for Cognac Pierre Croizet with address and contact details.',
+    noteFr: 'Fiche producteur Cognac Pierre Croizet avec adresse et coordonnées.',
+    noteZh: 'Cognac Pierre Croizet 生产者参考页面，包含地址与联系方式。',
+  },
+  {
+    name: 'Cognacinfo - Maison Pierre Croizet producer page',
+    url: 'https://www.cognacinfo.com/en/konakovy-vyrobca/pierre-croizet.html',
+    kind: 'ProfilePage',
+    note: 'Cognac producer reference page under the former Maison Pierre Croizet name.',
+    noteFr: 'Fiche producteur de Cognac sous l’ancien nom Maison Pierre Croizet.',
+    noteZh: '以旧名称 Maison Pierre Croizet 发布的干邑生产者参考页面。',
+  },
 ];
+
+const legacyProductListingSources = [
+  {
+    publisher: 'Aperitif.no',
+    productSlug: 'napoleon',
+    url: 'https://www.aperitif.no/pollisten/produkt/cognac-pierre-croizet-napoleon%2C66463',
+    label: 'Cognac Pierre Croizet Napoléon',
+    descriptor: 'Norwegian product listing',
+  },
+  {
+    publisher: 'Cognacinfo',
+    productSlug: 'vsop',
+    url: 'https://www.cognacinfo.com/en/flase/pierre-croizet/maison-pierre-croizet-vsop.html',
+    label: 'Maison Pierre Croizet VSOP',
+    descriptor: 'Cognacinfo product listing',
+  },
+  {
+    publisher: 'Cognacinfo',
+    productSlug: 'xo-exception',
+    url: 'https://www.cognacinfo.com/en/flase/pierre-croizet/pierre-croizet-xo-exception.html',
+    label: 'Cognac Pierre Croizet XO Exception',
+    descriptor: 'Cognacinfo product listing',
+  },
+  {
+    publisher: 'Sommellerie de France',
+    productSlug: 'vs',
+    url: 'https://www.sommelleriedefrance.com/608-cognac/cognac-croizet-vs.html',
+    label: 'Cognac Pierre Croizet VS',
+    descriptor: 'French retailer product page',
+  },
+  {
+    publisher: 'Sommellerie de France',
+    productSlug: 'vsop',
+    url: 'https://www.sommelleriedefrance.com/609-cognac/cognac-croizet-vsop.html',
+    label: 'Cognac Pierre Croizet VSOP',
+    descriptor: 'French retailer product page',
+  },
+  {
+    publisher: 'Sommellerie de France',
+    productSlug: 'napoleon',
+    url: 'https://www.sommelleriedefrance.com/610-cognac/cognac-napoleon-croizet.html',
+    label: 'Cognac Pierre Croizet Napoléon',
+    descriptor: 'French retailer product page',
+  },
+  {
+    publisher: 'Business France Marketplace',
+    productSlug: 'valentine',
+    url: 'https://www.marketplace.businessfrance.fr/cognac-pierre-croizet-valentine-xo.html',
+    label: 'Cognac Pierre Croizet Valentine XO',
+    descriptor: 'Business France product page',
+  },
+  {
+    publisher: 'CaskCartel',
+    productSlug: 'excellence',
+    url: 'https://caskcartel.com/products/pierre-croizet-excellence-cognac-700ml',
+    label: 'Cognac Pierre Croizet Excellence',
+    descriptor: 'International product listing',
+  },
+  {
+    publisher: 'WineHelp',
+    productSlug: 'vs',
+    url: 'https://winehelp2.ru/product/konyak-pierre-croizet-vs-gift-box-700-ml/',
+    label: 'Cognac Pierre Croizet VS',
+    descriptor: 'Russian product page',
+  },
+  {
+    publisher: 'WineHelp',
+    productSlug: 'napoleon',
+    url: 'https://winehelp2.ru/product/konyak-pierre-croizet-napoleon-gift-box-700-ml/',
+    label: 'Cognac Pierre Croizet Napoléon',
+    descriptor: 'Russian product page',
+  },
+  {
+    publisher: 'WineHelp',
+    productSlug: 'xo-exception',
+    url: 'https://winehelp2.ru/product/konyak-pierre-croizet-kho-gift-box-700-ml/',
+    label: 'Cognac Pierre Croizet XO Exception',
+    descriptor: 'Russian product page',
+  },
+  {
+    publisher: 'WineHelp',
+    productSlug: 'excellence',
+    url: 'https://winehelp2.ru/product/konyak-pierre-croizet-excellence-gift-box-700-ml/',
+    label: 'Cognac Pierre Croizet Excellence',
+    descriptor: 'Russian product page',
+  },
+  {
+    publisher: 'LMDT Taiwan',
+    productSlug: 'excellence',
+    url: 'https://www.lmdtwine.com/product_detail.php?id=3819',
+    label: 'Cognac Pierre Croizet Excellence',
+    descriptor: 'Traditional Chinese product page',
+  },
+  {
+    publisher: 'Channg Ruey Taiwan',
+    productSlug: 'excellence',
+    url: 'https://www.cognac-house.com.tw/product/index.php?index_m1_id=9&index_m2_id=24',
+    label: 'Cognac Pierre Croizet Excellence',
+    descriptor: 'Taiwanese product page',
+  },
+].map(({ publisher, productSlug, url, label, descriptor }) => ({
+  name: `${publisher} - ${label} listing`,
+  url,
+  kind: 'Product',
+  productSlug,
+  note: `${descriptor} for ${label} under the former commercial name.`,
+  noteFr: `Fiche externe pour ${label} sous l’ancien nom commercial.`,
+  noteRu: `Внешняя карточка для ${label} под прежним коммерческим названием.`,
+  noteZh: `外部资料页面，使用旧商业名称 ${label}。`,
+}));
 
 const legacyProductEditorialSources = [
   {
@@ -178,6 +440,77 @@ const legacyProductEditorialSources = [
     noteRu: 'Русская дегустационная заметка о Cognac Pierre Croizet Valentine XO под прежним коммерческим названием; исторический редакционный сигнал, не официальное доказательство.',
     noteZh: '俄罗斯品鉴博客记录 Cognac Pierre Croizet Valentine XO 旧商业名称；可作为历史编辑信号，并非官方证明。',
   },
+  {
+    name: 'Good Spirits News - Cognac Pierre Croizet VS review',
+    url: 'https://goodspiritsnews.wordpress.com/2016/02/25/gsn-review-pierre-croziet-cognac/',
+    kind: 'Review',
+    productSlug: 'vs',
+    note: 'English review of Cognac Pierre Croizet VS under the former commercial name; useful as a product-level historical signal, not as official history.',
+    noteFr: 'Avis en anglais sur Cognac Pierre Croizet VS sous l’ancien nom commercial ; signal historique produit, pas histoire officielle.',
+    noteRu: 'Англоязычный обзор Cognac Pierre Croizet VS под прежним коммерческим названием; исторический сигнал на уровне продукта, не официальная история.',
+    noteZh: '英文评测 Cognac Pierre Croizet VS 旧商业名称；可作为产品层面的历史信号，并非官方历史。',
+  },
+  {
+    name: 'BevX - Cognac Pierre Croizet VS review',
+    url: 'https://bevx.com/spirits/croizet-vs/',
+    kind: 'Review',
+    productSlug: 'vs',
+    note: 'Spirits review for Cognac Pierre Croizet VS; retained as a tasting signal, not as an official identity source.',
+    noteFr: 'Avis spiritueux sur Cognac Pierre Croizet VS ; conservé comme signal de dégustation, pas comme source d’identité officielle.',
+    noteRu: 'Обзор Cognac Pierre Croizet VS; используется как дегустационный сигнал, не как официальный источник идентичности.',
+    noteZh: 'Cognac Pierre Croizet VS 烈酒评测；作为品鉴信号保留，并非官方身份来源。',
+  },
+  {
+    name: 'Cognac Expert Blog - Cognac Pierre Croizet XO tasting reference',
+    url: 'https://blog.cognac-expert.com/big-four-dusse-xo-cognac-showdown/',
+    kind: 'Article',
+    productSlug: 'xo',
+    note: 'Cognac Expert tasting article naming Cognac Pierre Croizet XO as an alternative in an XO comparison.',
+    noteFr: 'Article de dégustation Cognac Expert citant Cognac Pierre Croizet XO comme alternative dans une comparaison de XO.',
+    noteRu: 'Дегустационная статья Cognac Expert, где Cognac Pierre Croizet XO указан как альтернатива в сравнении XO.',
+    noteZh: 'Cognac Expert 品鉴文章，在 XO 对比中提到 Cognac Pierre Croizet XO。',
+  },
+  {
+    name: 'LiveJournal - Cognac Pierre Croizet XO tasting note',
+    url: 'https://cognac-ru.livejournal.com/161323.html',
+    kind: 'Article',
+    productSlug: 'xo',
+    note: 'Russian tasting note about Cognac Pierre Croizet XO under the former commercial name.',
+    noteFr: 'Note de dégustation russe sur Cognac Pierre Croizet XO sous l’ancien nom commercial.',
+    noteRu: 'Русская дегустационная заметка о Cognac Pierre Croizet XO под прежним коммерческим названием.',
+    noteZh: '俄罗斯品鉴记录 Cognac Pierre Croizet XO 旧商业名称。',
+  },
+  {
+    name: 'LiveJournal - Cognac Pierre Croizet XO archive note',
+    url: 'https://blackcat2000.livejournal.com/1740.html',
+    kind: 'Article',
+    productSlug: 'xo',
+    note: 'Russian archive tasting note about Cognac Pierre Croizet XO under the former commercial name.',
+    noteFr: 'Archive russe de dégustation sur Cognac Pierre Croizet XO sous l’ancien nom commercial.',
+    noteRu: 'Русская архивная дегустационная заметка о Cognac Pierre Croizet XO под прежним коммерческим названием.',
+    noteZh: '俄罗斯归档品鉴记录 Cognac Pierre Croizet XO 旧商业名称。',
+  },
+  {
+    name: 'Luxify - Cognac Pierre Croizet Excellence listing',
+    url: 'https://www.luxify.com/blogs/fine-wine-spirits/pierre-croizet-excellence-cognac',
+    kind: 'Article',
+    productSlug: 'excellence',
+    note: 'International product article for Cognac Pierre Croizet Excellence under the former commercial name.',
+    noteFr: 'Article produit international sur Cognac Pierre Croizet Excellence sous l’ancien nom commercial.',
+    noteRu: 'Международная публикация о Cognac Pierre Croizet Excellence под прежним коммерческим названием.',
+    noteZh: '国际产品文章，使用旧商业名称 Cognac Pierre Croizet Excellence。',
+  },
+  {
+    name: 'Cognac Embassy - Cognac Pierre Croizet XO Exception index',
+    url: 'https://www.cognac-embassy.com/files/output/cognac_embassy/files/assets/basic-html/toc.html',
+    kind: 'WebPage',
+    productSlug: 'xo-exception',
+    note: 'Cognac Embassy index page mentioning Cognac Pierre Croizet XO Exception under the former commercial name.',
+    noteFr: 'Index Cognac Embassy mentionnant Cognac Pierre Croizet XO Exception sous l’ancien nom commercial.',
+    noteRu: 'Индекс Cognac Embassy с упоминанием Cognac Pierre Croizet XO Exception под прежним коммерческим названием.',
+    noteZh: 'Cognac Embassy 索引页面，提到旧商业名称 Cognac Pierre Croizet XO Exception。',
+  },
+  ...legacyProductListingSources,
 ];
 
 function isAvRuSource(source) {
@@ -195,9 +528,16 @@ function pressKitLegacySourcesForLang(lang, options = {}) {
   ];
 }
 
-function pressKitAuthoritySourcesForLang(lang, options = {}) {
+function pressKitExternalSourcesForLang() {
   return [
     ...externalAuthoritySources,
+    ...pressKitExternalReferenceSources,
+  ];
+}
+
+function pressKitAuthoritySourcesForLang(lang, options = {}) {
+  return [
+    ...pressKitExternalSourcesForLang(lang),
     ...pressKitLegacySourcesForLang(lang, options),
   ];
 }
@@ -3481,7 +3821,7 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
     [nutritionPageCopy(lang).indexMetaTitle, nutritionRouteForLang(lang)],
     ['llms-full.txt', '/llms-full.txt'],
   ].map(([label, href]) => `<li><a href="${sourceHref(href)}">${escapeHtml(stripTags(label))}</a></li>`).join('');
-  const externalLinks = externalAuthoritySources.map((source) => (
+  const externalLinks = pressKitExternalSourcesForLang(lang).map((source) => (
     `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
   )).join('');
   const legacyLinks = pressKitLegacySourcesForLang(lang).map((source) => (
@@ -7760,7 +8100,7 @@ function makeLlmsTxt() {
     ...medalPageEntries().map(({ slug, medal }) => llmsMedalLine(slug, medal)),
     '',
     '## External Authority Sources',
-    ...externalAuthoritySources.map((source) => `- ${source.name}: ${source.url}`),
+    ...pressKitExternalSourcesForLang('en').map((source) => `- ${source.name}: ${source.url}`),
     '',
     '## Former Commercial Name References',
     'Some third-party sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. Treat these as legacy-name evidence connected to the current Cognac Léopold Croizet identity, not as official profiles.',
@@ -7802,7 +8142,7 @@ function makeLlmsFullTxt() {
     '',
     '## External Authority Sources',
     'These sources are linked as verifiable external references. They should be corrected with partners if names, domains or facts drift from the official site:',
-    ...externalAuthoritySources.map((source) => `- ${source.name}: ${source.url}`),
+    ...pressKitExternalSourcesForLang('en').map((source) => `- ${source.name}: ${source.url}`),
     '',
     '## Former Commercial Name References',
     'Some public sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. The official current identity is Cognac Léopold Croizet; the legacy references below are useful for entity reconciliation, not as official social profiles:',
