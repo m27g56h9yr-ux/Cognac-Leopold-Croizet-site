@@ -57,6 +57,8 @@ const nordicConfigs = {
       ['Idées fraîches pour les beaux jours', 'Friske ideer til lyse dage'],
       ['Appellation Cognac Contrôlée', 'Appellation Cognac Contrôlée'],
       ['Appellation cognac Fins Bois controlée', 'Appellation Cognac Fins Bois contrôlée'],
+      ['Appellation Cognac Fins Bois contrôlée', 'Appellation Cognac Fins Bois contrôlée'],
+      ['Appellation Pineau des Charentes contrôlée', 'Kontrolleret appellation Pineau des Charentes'],
       ['Pineau des Charentes controlled appellation', 'Kontrolleret appellation Pineau des Charentes'],
       ['Bottles', 'Flaske'],
       ['Alcohol content', 'Alkoholprocent'],

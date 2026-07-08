@@ -1298,6 +1298,8 @@ function localizeRussianStaticHtml(html, route) {
     ['>порядок<', '>Заказать<'],
     ['> порядок<', '>Заказать<'],
     ['Appellation cognac Fins Bois controlée', 'Контролируемое наименование Cognac Fins Bois'],
+    ['Appellation Cognac Fins Bois contrôlée', 'Контролируемое наименование Cognac Fins Bois'],
+    ['Appellation Pineau des Charentes contrôlée', 'Контролируемое наименование Pineau des Charentes'],
     ['Appellation Cognac Contrôlée', 'Контролируемое наименование Cognac'],
     ['Appelation Cognac Contrôlée', 'Контролируемое наименование Cognac'],
     ['Аппелласьон', 'Наименование'],

@@ -403,6 +403,7 @@ const chineseCleanupReplacements = [
   ['Appelation Cognac Contrôlée', 'Cognac 受控原产地名称'],
   ['Appellation Cognac Contrôlée', 'Cognac 受控原产地名称'],
   ['Pineau des Charentes controlée', 'Pineau des Charentes 受控原产地名称'],
+  ['Appellation Pineau des Charentes contrôlée', 'Pineau des Charentes 受控原产地名称'],
   ['Bottle size', '容量'],
   ['ABV', '酒精度'],
   ['International Cognac retailer and brand reference page.', '国际干邑零售商与品牌参考页面。'],
