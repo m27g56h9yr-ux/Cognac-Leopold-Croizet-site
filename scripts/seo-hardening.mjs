@@ -157,12 +157,49 @@ const legacyNameAuthoritySources = [
   },
 ];
 
+const legacyProductEditorialSources = [
+  {
+    name: 'LiveJournal - Cognac Pierre Croizet XO Exception tasting note',
+    url: 'https://anatoly-tokarev.livejournal.com/59126.html',
+    kind: 'Article',
+    productSlug: 'xo-exception',
+    note: 'Russian tasting blog note about Cognac Pierre Croizet XO Exception under the former commercial name; useful as a historical editorial signal, not as official proof.',
+    noteFr: 'Blog russe de dégustation sur Cognac Pierre Croizet XO Exception sous l’ancien nom commercial ; signal éditorial historique, pas preuve officielle.',
+    noteRu: 'Русская дегустационная заметка о Cognac Pierre Croizet XO Exception под прежним коммерческим названием; исторический редакционный сигнал, не официальное доказательство.',
+    noteZh: '俄罗斯品鉴博客记录 Cognac Pierre Croizet XO Exception 旧商业名称；可作为历史编辑信号，并非官方证明。',
+  },
+  {
+    name: 'LiveJournal - Cognac Pierre Croizet Valentine XO tasting note',
+    url: 'https://anatoly-tokarev.livejournal.com/21803.html',
+    kind: 'Article',
+    productSlug: 'valentine',
+    note: 'Russian tasting blog note about Cognac Pierre Croizet Valentine XO under the former commercial name; useful as a historical editorial signal, not as official proof.',
+    noteFr: 'Blog russe de dégustation sur Cognac Pierre Croizet Valentine XO sous l’ancien nom commercial ; signal éditorial historique, pas preuve officielle.',
+    noteRu: 'Русская дегустационная заметка о Cognac Pierre Croizet Valentine XO под прежним коммерческим названием; исторический редакционный сигнал, не официальное доказательство.',
+    noteZh: '俄罗斯品鉴博客记录 Cognac Pierre Croizet Valentine XO 旧商业名称；可作为历史编辑信号，并非官方证明。',
+  },
+];
+
 function isAvRuSource(source) {
   return /^https?:\/\/(?:www\.)?av\.ru\//i.test(source.url);
 }
 
 function legacyNameAuthoritySourcesForLang(lang, { includeAv = lang === 'ru' } = {}) {
   return legacyNameAuthoritySources.filter((source) => includeAv || !isAvRuSource(source));
+}
+
+function pressKitLegacySourcesForLang(lang, options = {}) {
+  return [
+    ...legacyNameAuthoritySourcesForLang(lang, options),
+    ...legacyProductEditorialSources,
+  ];
+}
+
+function pressKitAuthoritySourcesForLang(lang, options = {}) {
+  return [
+    ...externalAuthoritySources,
+    ...pressKitLegacySourcesForLang(lang, options),
+  ];
 }
 
 function authoritySourcesForLang(lang, { includeLegacy = true, includeAv = lang === 'ru' } = {}) {
@@ -3447,7 +3484,7 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
   const externalLinks = externalAuthoritySources.map((source) => (
     `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
   )).join('');
-  const legacyLinks = legacyNameAuthoritySourcesForLang(lang).map((source) => (
+  const legacyLinks = pressKitLegacySourcesForLang(lang).map((source) => (
     `<li><a href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.name)}</a><span>${escapeHtml(externalAuthorityNote(source, lang))}</span></li>`
   )).join('');
   const documentLinks = [
@@ -3498,6 +3535,8 @@ function pressKitPageHtml(route = '/dossier-de-presse/') {
 }
 
 function externalAuthorityNote(source, lang) {
+  if (lang === 'fr') return source.noteFr || source.note;
+  if (lang === 'ru') return source.noteRu || source.note;
   if (lang === 'zh') return source.noteZh || source.note;
   return source.note || '';
 }
@@ -7289,7 +7328,7 @@ function webPageSchema(route, metadata, image) {
       { '@type': 'Thing', name: 'Cognac Pierre Croizet' },
     ];
     schema.significantLink = [
-      ...authoritySourcesForLang(lang).map((source) => source.url),
+      ...pressKitAuthoritySourcesForLang(lang).map((source) => source.url),
       `${PUBLIC_ORIGIN}${faqRouteForLang(lang)}`,
       `${PUBLIC_ORIGIN}${medalRouteForLang(lang)}`,
       `${PUBLIC_ORIGIN}${proofRouteForLang(lang)}`,
@@ -7331,7 +7370,7 @@ function medalItemListSchema(route) {
 function authorityStructuredData(route) {
   if (PRESS_KIT_ROUTES.includes(route)) {
     const lang = languageForRoute(route);
-    const sources = authoritySourcesForLang(lang);
+    const sources = pressKitAuthoritySourcesForLang(lang);
     return {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
@@ -7344,7 +7383,13 @@ function authorityStructuredData(route) {
           '@type': source.kind,
           name: source.name,
           url: source.url,
-          about: { '@id': `${PUBLIC_ORIGIN}/#organization` },
+          about: source.productSlug
+            ? {
+              '@type': 'Product',
+              name: productFullName(source.productSlug),
+              url: `${PUBLIC_ORIGIN}${productRouteForLang(lang, source.productSlug)}`,
+            }
+            : { '@id': `${PUBLIC_ORIGIN}/#organization` },
         },
       })),
     };
@@ -7360,8 +7405,19 @@ function productSubjectOfItems(slug, lang) {
       name: productAwardText(medal, lang),
       ...(medal.href ? { url: medal.href } : {}),
     })),
+    ...productLegacyEditorialSubjectOfItems(slug),
     ...productRussianSubjectOfItems(slug, lang),
   ];
+}
+
+function productLegacyEditorialSubjectOfItems(slug) {
+  return legacyProductEditorialSources
+    .filter((source) => source.productSlug === slug)
+    .map((source) => ({
+      '@type': source.kind,
+      name: source.name,
+      url: source.url,
+    }));
 }
 
 function productRussianSubjectOfItems(slug, lang) {
@@ -7708,7 +7764,7 @@ function makeLlmsTxt() {
     '',
     '## Former Commercial Name References',
     'Some third-party sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. Treat these as legacy-name evidence connected to the current Cognac Léopold Croizet identity, not as official profiles.',
-    ...legacyNameAuthoritySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
+    ...pressKitLegacySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
     '',
     '## Contact',
     '- Email: cognac@mdpierre.com',
@@ -7750,7 +7806,7 @@ function makeLlmsFullTxt() {
     '',
     '## Former Commercial Name References',
     'Some public sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. The official current identity is Cognac Léopold Croizet; the legacy references below are useful for entity reconciliation, not as official social profiles:',
-    ...legacyNameAuthoritySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
+    ...pressKitLegacySourcesForLang('en', { includeAv: false }).map((source) => `- ${source.name}: ${source.url}`),
     '',
     '## Nutrition',
     'Nutrition pages list ingredients and average values per 30 ml and per 100 ml by product:',
