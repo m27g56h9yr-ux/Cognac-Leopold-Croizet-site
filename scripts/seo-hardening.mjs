@@ -142,13 +142,6 @@ const legacyNameAuthoritySources = [
     noteZh: '俄语品牌参考页面，将 Léopold Croizet 实体与干邑类别关联。',
   },
   {
-    name: 'Inshaker Russia - Cognac Pierre Croizet and Cognac Léopold Croizet mention',
-    url: 'https://ru.inshaker.com/trends/znaniya/croizet-elitnyy-konyak-s-200-letney-istoriey',
-    kind: 'Article',
-    note: 'Russian editorial reference where the former Cognac Pierre Croizet name and current Cognac Léopold Croizet name can help search engines reconcile the entity history.',
-    noteZh: '俄语编辑内容，可帮助搜索引擎关联旧名称 Cognac Pierre Croizet 与现名称 Cognac Léopold Croizet。',
-  },
-  {
     name: 'Russian import reference - Maison Pierre Croizet',
     url: 'https://import-v-rossiu.ru/dostavka/konyak',
     kind: 'WebPage',

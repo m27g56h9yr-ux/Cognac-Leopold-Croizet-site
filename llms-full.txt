@@ -44,7 +44,6 @@ These sources are linked as verifiable external references. They should be corre
 ## Former Commercial Name References
 Some public sources still mention Cognac Pierre Croizet or Maison Pierre Croizet. The official current identity is Cognac Léopold Croizet; the legacy references below are useful for entity reconciliation, not as official social profiles:
 - Cognac Expert Russia - Léopold Croizet Cognac: https://www.cognac-expert.com/ru/brands/leopold-croizet-cognac
-- Inshaker Russia - Cognac Pierre Croizet and Cognac Léopold Croizet mention: https://ru.inshaker.com/trends/znaniya/croizet-elitnyy-konyak-s-200-letney-istoriey
 - Russian import reference - Maison Pierre Croizet: https://import-v-rossiu.ru/dostavka/konyak
 - Russian SGR reference - Cognac Pierre Croizet: https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html
 

@@ -10,6 +10,7 @@ const checkedFiles = [];
 const missing = [];
 const dynamicReferences = [];
 const brandViolations = [];
+const competitorReferenceViolations = [];
 const pineauRedCollectionViolations = [];
 const pineauRedProductNavigationViolations = [];
 const collectionEndPageLayoutViolations = [];
@@ -23,6 +24,16 @@ const languageMenuViolations = [];
 const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
 const languageMenuExpectedHreflangs = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'];
+const forbiddenCompetitorReferences = [
+  {
+    label: 'competitor domain croizet.fr',
+    pattern: /https?:\/\/(?:www\.)?croizet\.fr\b[^\s"'<>)]*/gi,
+  },
+  {
+    label: 'Inshaker article about the competing Cognac Croizet brand',
+    pattern: /https?:\/\/ru\.inshaker\.com\/trends\/znaniya\/croizet-elitnyy-konyak-s-200-letney-istoriey\b[^\s"'<>)]*/gi,
+  },
+];
 const WALK_SKIP_DIRS = new Set([
   '.agents',
   '.github',
@@ -87,6 +98,7 @@ for (const file of checkedFiles) {
       legacyDeployBaseViolations.push(`${relativeFile}: contains ${GITHUB_PAGES_BASE_PATH}`);
     }
     brandViolations.push(...findBrandViolations(text, relativeFile));
+    competitorReferenceViolations.push(...findCompetitorReferenceViolations(text, relativeFile));
     imageDimensionViolations.push(...findImageDimensionViolations(text, relativeFile));
     missingImageAltViolations.push(...findMissingImageAltViolations(text, relativeFile));
     formLabelViolations.push(...findFormLabelViolations(text, relativeFile));
@@ -103,6 +115,7 @@ if (
   missing.length
   || dynamicReferences.length
   || brandViolations.length
+  || competitorReferenceViolations.length
   || pineauRedCollectionViolations.length
   || pineauRedProductNavigationViolations.length
   || collectionEndPageLayoutViolations.length
@@ -127,6 +140,11 @@ if (
   if (brandViolations.length) {
     console.error('Brand rule violations:');
     for (const item of brandViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (competitorReferenceViolations.length) {
+    console.error('Competitor brand/source references left in generated HTML:');
+    for (const item of competitorReferenceViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
   if (pineauRedCollectionViolations.length) {
@@ -253,6 +271,16 @@ function findBrandViolations(html, relativeFile) {
         const preview = visibleBrandText.slice(start, end).replace(/\s+/g, ' ').trim();
         violations.push(`${relativeFile} (${label}): "${preview}"`);
       }
+    }
+  }
+  return violations;
+}
+
+function findCompetitorReferenceViolations(html, relativeFile) {
+  const violations = [];
+  for (const { label, pattern } of forbiddenCompetitorReferences) {
+    for (const match of html.matchAll(pattern)) {
+      violations.push(`${relativeFile}: ${label}: ${match[0]}`);
     }
   }
   return violations;
