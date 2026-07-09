@@ -112,14 +112,17 @@ function fallback_seller_row(array $source): array
         return $row;
     }
 
+    $hidePrices = should_hide_prices_for_request();
     $offers = fallback_offer($source);
-    if (should_hide_prices_for_request()) {
+    if ($hidePrices) {
         $offers = remove_price_fields($offers);
     }
 
     $row['schema_status'] = 'Valeurs AV.ru issues de l’index public';
     $row['offers'] = $offers;
-    $row['notes'] = ($source['fallback_note'] ?? 'Valeur AV.ru issue de l’index public.') . ' L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.';
+    $row['notes'] = $hidePrices
+        ? 'Prix masqué pour ce contexte visiteur. L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.'
+        : ($source['fallback_note'] ?? 'Valeur AV.ru issue de l’index public.') . ' L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.';
     $row['refresh_status'] = 'fallback';
     return $row;
 }
@@ -261,7 +264,7 @@ function remove_price_fields($value)
         if (is_assoc($value)) {
             $clean = [];
             foreach ($value as $key => $child) {
-                if ($key === 'price' || $key === 'priceCurrency') continue;
+                if (stripos((string) $key, 'price') !== false) continue;
                 $clean[$key] = remove_price_fields($child);
             }
             return $clean;
