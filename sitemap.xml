@@ -492,7 +492,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -505,8 +505,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/da/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/da/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -520,7 +562,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -534,7 +576,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -547,8 +589,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/da/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -562,7 +618,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -575,8 +631,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/da/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/da/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -954,7 +1024,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -967,8 +1037,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/en/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/en/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -982,7 +1094,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -996,7 +1108,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -1009,8 +1121,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/en/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -1024,7 +1150,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -1037,8 +1163,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/en/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/en/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -1528,7 +1668,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -1541,8 +1681,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/no/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/no/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -1556,7 +1738,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -1570,7 +1752,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -1583,8 +1765,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/no/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -1598,7 +1794,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -1611,8 +1807,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/no/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/no/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -2018,7 +2228,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -2031,8 +2241,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/ru/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/ru/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -2046,7 +2298,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -2060,7 +2312,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -2073,8 +2325,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/ru/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -2088,7 +2354,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -2101,8 +2367,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/ru/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -2452,7 +2732,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -2465,8 +2745,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/sv/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/sv/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -2480,7 +2802,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -2494,7 +2816,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -2507,8 +2829,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/sv/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -2522,7 +2858,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -2535,8 +2871,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/sv/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -2592,7 +2942,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -2605,8 +2955,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -2620,7 +3012,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -2634,7 +3026,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -2647,8 +3039,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -2662,7 +3068,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -2675,8 +3081,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />
@@ -2998,7 +3418,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/" />
@@ -3011,8 +3431,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/zh/nutrition/excellence/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/excellence/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/excellence/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/nutrition/extra/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/extra/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/extra/" />
+  </url>
+  <url>
+    <loc>https://cognac-leopold-croizet.com/zh/nutrition/heritage/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/heritage/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/heritage/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/napoleon/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/" />
@@ -3026,7 +3488,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/pineau-des-charentes-rouge/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/" />
@@ -3040,7 +3502,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/pineau-des-charentes/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/" />
@@ -3053,8 +3515,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/pineau-des-charentes/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/zh/nutrition/valentine/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/valentine/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/valentine/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/vs/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vs/" />
@@ -3068,7 +3544,7 @@
   </url>
   <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/vsop/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/" />
@@ -3081,8 +3557,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/vsop/" />
   </url>
   <url>
+    <loc>https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://cognac-leopold-croizet.com/ru/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://cognac-leopold-croizet.com/da/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://cognac-leopold-croizet.com/sv/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="no" href="https://cognac-leopold-croizet.com/no/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cognac-leopold-croizet.com/zh/nutrition/xo-exception/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cognac-leopold-croizet.com/en/nutrition/xo-exception/" />
+  </url>
+  <url>
     <loc>https://cognac-leopold-croizet.com/zh/nutrition/xo/</loc>
-    <lastmod>2026-06-30</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/" />

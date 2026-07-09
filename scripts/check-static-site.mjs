@@ -209,6 +209,7 @@ async function walk(dir) {
   const entries = await readdir(dir);
   for (const entry of entries) {
     if (WALK_SKIP_DIRS.has(entry)) continue;
+    if (/ \d+$/.test(entry)) continue;
     const fullPath = path.join(dir, entry);
     const info = await stat(fullPath);
     if (info.isDirectory()) {

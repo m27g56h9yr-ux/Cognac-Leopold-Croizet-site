@@ -13,7 +13,7 @@ const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-07-07';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
 const MEDAL_PAGE_LASTMOD = '2026-07-02';
-const NUTRITION_PAGE_LASTMOD = '2026-06-30';
+const NUTRITION_PAGE_LASTMOD = '2026-07-09';
 const AUTHORITY_PAGE_LASTMOD = '2026-07-07';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
@@ -41,7 +41,7 @@ const FILM_ROUTES = ['/', '/en/', '/ru/', '/da/', '/sv/', '/no/', '/zh/'].map((p
 ));
 const SITE_LANGUAGES = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
-const NUTRITION_PRODUCT_SLUGS = ['vs', 'vsop', 'napoleon', 'xo', 'pineau-des-charentes', 'pineau-des-charentes-rouge'];
+const NUTRITION_PRODUCT_SLUGS = [...PRODUCT_SLUGS];
 const DEPRECATED_AUTHORITY_ARTIFACTS = [
   'assets/authority',
   ...SITE_LANGUAGES.map((lang) => (lang === 'fr' ? 'fiches-techniques' : `${lang}/fiches-techniques`)),
@@ -1255,6 +1255,66 @@ const nutritionProductData = [
     sourceUrl: 'https://cognac-esprit-organic.com/produits/transmission-xo.html',
   },
   {
+    slug: 'xo-exception',
+    name: 'XO Exception',
+    productKind: 'cognac',
+    sourceName: 'XO Exception',
+    valueGroup: 'older',
+    ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
+    sourceUrl: 'https://cognac-leopold-croizet.com/collection/xo-exception/',
+  },
+  {
+    slug: 'extra',
+    name: 'Extra',
+    productKind: 'cognac',
+    sourceName: 'Extra',
+    valueGroup: 'older',
+    ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
+    sourceUrl: 'https://cognac-leopold-croizet.com/collection/extra/',
+  },
+  {
+    slug: 'excellence',
+    name: 'Excellence',
+    productKind: 'cognac',
+    sourceName: 'Excellence',
+    valueGroup: 'older',
+    ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
+    sourceUrl: 'https://cognac-leopold-croizet.com/collection/excellence/',
+  },
+  {
+    slug: 'heritage',
+    name: 'Héritage',
+    productKind: 'cognac',
+    sourceName: 'Héritage',
+    valueGroup: 'older',
+    ingredientsGroup: 'cognac',
+    volume: '700 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
+    sourceUrl: 'https://cognac-leopold-croizet.com/collection/heritage/',
+  },
+  {
+    slug: 'valentine',
+    name: 'Valentine XO',
+    productKind: 'cognac',
+    sourceName: 'Valentine XO',
+    valueGroup: 'older',
+    ingredientsGroup: 'cognac',
+    volume: '350 ml',
+    abv: '40 % vol',
+    grapes: 'Ugni Blanc, Colombard, Folle Blanche',
+    sourceUrl: 'https://cognac-leopold-croizet.com/collection/valentine/',
+  },
+  {
     slug: 'pineau-des-charentes',
     name: 'Pineau des Charentes',
     productKind: 'pineauWhite',
@@ -2190,6 +2250,7 @@ async function walkHtml(dir) {
   const files = [];
   for (const entry of entries) {
     if (WALK_SKIP_DIRS.has(entry.name)) continue;
+    if (/ \d+$/.test(entry.name)) continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...await walkHtml(full));
@@ -6477,8 +6538,9 @@ function productMedalProofBlock(medals) {
 
 function injectProductDetailsAccordion(html, route) {
   const slug = matchFirst(route, /^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/([^/]+)\//);
-  if (!slug || !nutritionProductSlugs.has(slug)) return html;
-  const product = nutritionProductsBySlug.get(slug);
+  const detailSlug = slug === 'pineau-des-charentes-blanc' ? PINEAU_SLUG : slug;
+  if (!detailSlug || !nutritionProductSlugs.has(detailSlug)) return html;
+  const product = nutritionProductsBySlug.get(detailSlug);
   if (!product) return html;
 
   let next = html

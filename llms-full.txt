@@ -102,6 +102,11 @@ Nutrition pages list ingredients and average values per 30 ml and per 100 ml by 
 - Cognac Léopold Croizet VSOP: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/vsop/
 - Cognac Léopold Croizet Napoléon: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/napoleon/
 - Cognac Léopold Croizet XO: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo/
+- Cognac Léopold Croizet XO Exception: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/xo-exception/
+- Cognac Léopold Croizet Extra: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/extra/
+- Cognac Léopold Croizet Excellence: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/excellence/
+- Cognac Léopold Croizet Héritage: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/heritage/
+- Cognac Léopold Croizet Valentine XO: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/valentine/
 - Pineau des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes/
 - Pineau Rouge des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/valeurs-nutritionnelles/pineau-des-charentes-rouge/
 
