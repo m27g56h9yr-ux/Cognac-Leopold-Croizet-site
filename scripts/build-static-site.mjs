@@ -1207,7 +1207,7 @@ function updateExtraProductImagery(html, route) {
     },
   );
 
-  if (/^\/(?:(?:en|ru|da|sv|no)\/)?collection\/extra\/$/.test(route)) {
+  if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/extra\/$/.test(route)) {
     next = next.replace(
       /<figure class="woocommerce-product-gallery__wrapper">[\s\S]*?<\/figure>/,
       extraProductGalleryMarkup(base),
@@ -1228,10 +1228,12 @@ function extraProductGalleryMarkup(base) {
   const main = `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret`;
   const open = `${base}/wp-content/uploads/2026/06/extra-bt-dans-coffret`;
   const box = `${base}/wp-content/uploads/2026/06/extra-coffret-seul`;
+  const carafe = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet`;
   return `<figure class="woocommerce-product-gallery__wrapper">
         <div data-thumb="${main}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra avec coffret rouge" class="woocommerce-product-gallery__image"><a href="${main}.png"><img width="420" height="426" src="${main}-420.png" class="wp-post-image" alt="Cognac Léopold Croizet Extra avec coffret rouge" title="Cognac Léopold Croizet Extra avec coffret rouge" data-caption="" data-src="${main}.png" data-large_image="${main}.png" data-large_image_width="1200" data-large_image_height="1219" decoding="async" fetchpriority="high" srcset="${main}-420.png 420w, ${main}-500.png 500w, ${main}-720.png 720w, ${main}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
         <div data-thumb="${open}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra dans son coffret ouvert" class="woocommerce-product-gallery__image"><a href="${open}.png"><img width="420" height="381" src="${open}-420.png" class="" alt="Cognac Léopold Croizet Extra dans son coffret ouvert" title="Cognac Léopold Croizet Extra dans son coffret ouvert" data-caption="" data-src="${open}.png" data-large_image="${open}.png" data-large_image_width="1200" data-large_image_height="1089" decoding="async" loading="lazy" srcset="${open}-420.png 420w, ${open}-500.png 500w, ${open}-715.png 715w, ${open}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
-        <div data-thumb="${box}-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="${box}.png"><img width="420" height="567" src="${box}-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="${box}.png" data-large_image="${box}.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="${box}-420.png 420w, ${box}-500.png 500w, ${box}.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>`;
+        <div data-thumb="${box}-420.png" data-thumb-alt="Coffret rouge Cognac Léopold Croizet Extra" class="woocommerce-product-gallery__image"><a href="${box}.png"><img width="420" height="567" src="${box}-420.png" class="" alt="Coffret rouge Cognac Léopold Croizet Extra" title="Coffret rouge Cognac Léopold Croizet Extra" data-caption="" data-src="${box}.png" data-large_image="${box}.png" data-large_image_width="900" data-large_image_height="1216" decoding="async" loading="lazy" srcset="${box}-420.png 420w, ${box}-500.png 500w, ${box}.png 900w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>
+        <div data-thumb="${carafe}-420.png" data-thumb-alt="Cognac Léopold Croizet Extra en carafe" class="woocommerce-product-gallery__image"><a href="${carafe}.png"><img width="420" height="594" src="${carafe}-420.png" class="" alt="Cognac Léopold Croizet Extra en carafe" title="Cognac Léopold Croizet Extra en carafe" data-caption="" data-src="${carafe}.png" data-large_image="${carafe}.png" data-large_image_width="1200" data-large_image_height="1698" decoding="async" loading="lazy" srcset="${carafe}-420.png 420w, ${carafe}-500.png 500w, ${carafe}-720.png 720w, ${carafe}.png 1200w" sizes="(max-width: 420px) 100vw, 420px" /></a></div>    </figure>`;
 }
 
 function updateExcellenceProductImagery(html, route) {
