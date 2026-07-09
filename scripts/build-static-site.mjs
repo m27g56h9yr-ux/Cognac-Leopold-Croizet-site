@@ -1185,17 +1185,18 @@ function applyStaticAssetVersion(html) {
 
 function updateExtraProductImagery(html, route) {
   const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
-  const menuImage = `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu.png`;
+  const menuImageBase = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet`;
+  const menuImage = `${menuImageBase}-720.png`;
   const menuSrcset = [
-    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-420x642.png 420w`,
-    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-500x764.png 500w`,
-    `${base}/wp-content/uploads/2026/06/extra-bt-devant-coffret-menu-670x1024.png 670w`,
-    `${menuImage} 720w`,
+    `${menuImageBase}-420.png 420w`,
+    `${menuImageBase}-500.png 500w`,
+    `${menuImageBase}-720.png 720w`,
+    `${menuImageBase}.png 1200w`,
   ].join(', ');
+  const menuImgTag = `<img src="${menuImage}" alt="Cognac Léopold Croizet Extra" srcset="${menuSrcset}" width="720" height="1019" decoding="async" loading="lazy">`;
 
   let next = html
-    .replace(/src="[^"]*\/wp-content\/uploads\/2021\/06\/img_produit_extra_base(?:-[^"]+)?\.png"/g, `src="${menuImage}"`)
-    .replace(/srcset="[^"]*img_produit_extra_base[^"]*"/g, `srcset="${menuSrcset}"`);
+    .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu)[^>]*>/g, menuImgTag);
 
   next = next.replace(
     /<figure class="wp-block-image[^"]*">\s*(<a href="([^"]+)">)?<img[^>]+img_home_carre_extra_03-1[^>]+>(<\/a>)?\s*<\/figure>/g,
