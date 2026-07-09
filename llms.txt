@@ -46,6 +46,18 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Pineau Rouge des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/): Pineau Rouge des Charentes Léopold Croizet.
 Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.
 
+## Product PDF Sheets
+- [Cognac Léopold Croizet VS PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet VSOP PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vsop-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet Napoléon PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-napoleon-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet XO PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet XO Exception PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-exception-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet Extra PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-extra-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet Excellence PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-excellence-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet Héritage PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-heritage-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Cognac Léopold Croizet Valentine XO PDF](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-valentine-xo-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+- [Pineau des Charentes Léopold Croizet PDF](https://cognac-leopold-croizet.com/assets/product-sheets/pineau-des-charentes-leopold-croizet-product-sheet.pdf): one-page downloadable product sheet, prepared as PDF/A-2b.
+
 ## Public Proof Documents
 - [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.
 - [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.

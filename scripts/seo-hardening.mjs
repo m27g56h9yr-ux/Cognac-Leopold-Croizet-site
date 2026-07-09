@@ -8,7 +8,7 @@ import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
-const TODAY = '2026-07-08';
+const TODAY = '2026-07-09';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-07-07';
 const PROOF_PAGE_LASTMOD = '2026-07-01';
@@ -1087,6 +1087,19 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
+const productSheetDocuments = new Map([
+  ['vs', '/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf'],
+  ['vsop', '/assets/product-sheets/cognac-leopold-croizet-vsop-product-sheet.pdf'],
+  ['napoleon', '/assets/product-sheets/cognac-leopold-croizet-napoleon-product-sheet.pdf'],
+  ['xo', '/assets/product-sheets/cognac-leopold-croizet-xo-product-sheet.pdf'],
+  ['xo-exception', '/assets/product-sheets/cognac-leopold-croizet-xo-exception-product-sheet.pdf'],
+  ['extra', '/assets/product-sheets/cognac-leopold-croizet-extra-product-sheet.pdf'],
+  ['excellence', '/assets/product-sheets/cognac-leopold-croizet-excellence-product-sheet.pdf'],
+  ['heritage', '/assets/product-sheets/cognac-leopold-croizet-heritage-product-sheet.pdf'],
+  ['valentine', '/assets/product-sheets/cognac-leopold-croizet-valentine-xo-product-sheet.pdf'],
+  ['pineau-des-charentes', '/assets/product-sheets/pineau-des-charentes-leopold-croizet-product-sheet.pdf'],
+]);
+
 const productLegacyAlternateNames = new Map([
   ['vs', ['Cognac Pierre Croizet VS']],
   ['vsop', ['Cognac Pierre Croizet VSOP']],
@@ -1536,7 +1549,35 @@ const productPrimaryGalleryImages = new Map([
 
 const productMedalProofStyle = '<style id="lc-medal-proof-style">.lc-product-medals{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:16px 0 30px;clear:both}.lc-product-medal-link{display:inline-flex;align-items:center;justify-content:center;max-width:124px;transition:opacity .2s ease,transform .2s ease}.lc-product-medal-link:hover{opacity:.86;transform:translateY(-1px)}.lc-product-medal-link img{display:block;width:auto;max-width:100%;height:auto;max-height:150px}@media(max-width:767px){.lc-product-medals{gap:10px;margin:14px 0 24px}.lc-product-medal-link{max-width:104px}.lc-product-medal-link img{max-height:126px}}</style>';
 const productVsQuestionsStyle = '<style id="lc-product-vs-questions-style">.lc-product-vs-questions{width:70%;margin:14px auto 18px;font-family:"Montserrat",Arial,sans-serif;color:#493111}.lc-product-vs-question{border-top:1px solid rgba(137,80,6,.26);padding:8px 0}.lc-product-vs-question:last-child{border-bottom:1px solid rgba(137,80,6,.26)}.lc-product-vs-question summary{display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;color:#895006;font-family:"Playfair Display",serif;font-size:.95rem;font-style:italic;line-height:1.35}.lc-product-vs-question summary::-webkit-details-marker{display:none}.lc-product-vs-question summary::after{content:"+";flex:0 0 auto;font-family:"Montserrat",Arial,sans-serif;font-size:.86rem;font-style:normal;color:#895006}.lc-product-vs-question[open] summary::after{content:"-"}.lc-product-vs-question p{margin:8px 0 2px;font-size:.72rem;line-height:1.35rem;color:#493111}@media screen and (max-width:1199px){.lc-product-vs-questions{width:100%;padding:0 20px}.lc-product-vs-question p{font-size:.78rem}}</style>';
-const productDetailsAccordionStyle = '<style id="lc-product-details-accordion-style">.lc-product-details-accordion{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);font-family:Arial,sans-serif;color:#726858}.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}.lc-product-details-accordion summary span{border-bottom:1px solid rgba(114,104,88,.48)}.lc-product-details-accordion summary:hover{color:#2f261d}.lc-product-details-accordion summary:hover span{border-bottom-color:#2f261d}.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}.lc-product-details-list{display:grid;gap:8px;margin:0}.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}.lc-product-details-list dt,.lc-product-details-list dd{margin:0}.lc-product-details-list dt{font-weight:700;color:#8a806f}.lc-product-details-list dd{color:#2f261d}.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}@media(max-width:767px){.lc-product-details-accordion{margin:16px auto 4px}.lc-product-details-accordion summary{text-align:center}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}</style>';
+const productDetailsAccordionStyle = `<style id="lc-product-details-accordion-style">
+.lc-product-details-actions{clear:both;max-width:1120px;margin:16px auto 0;padding:0 clamp(18px,4vw,34px);display:flex;align-items:flex-start;justify-content:flex-end;gap:18px;font-family:Arial,sans-serif;color:#726858}
+.lc-product-details-accordion{flex:1 1 auto;min-width:0;margin:0;padding:0;color:#726858}
+.lc-product-details-accordion summary{display:block;cursor:pointer;text-align:right;font-size:12px;letter-spacing:0;text-transform:uppercase;color:#726858}
+.lc-product-details-accordion summary span,.lc-product-sheet-link{border-bottom:1px solid rgba(114,104,88,.48)}
+.lc-product-details-accordion summary:hover,.lc-product-sheet-link:hover{color:#2f261d}
+.lc-product-details-accordion summary:hover span,.lc-product-sheet-link:hover{border-bottom-color:#2f261d}
+.lc-product-details-accordion summary::marker,.lc-product-details-accordion summary::-webkit-details-marker{display:none}
+.lc-product-sheet-link{flex:0 0 auto;margin-top:0;font-size:12px;line-height:1.35;letter-spacing:0;text-transform:uppercase;color:#726858;text-decoration:none;white-space:nowrap}
+.lc-product-details-body{margin:14px 0 0 auto;max-width:780px;padding:18px 20px;border:1px solid rgba(114,104,88,.28);background:#fffdf9;text-align:left}
+.lc-product-details-section+.lc-product-details-section{margin-top:18px;padding-top:18px;border-top:1px solid rgba(114,104,88,.18)}
+.lc-product-details-section h3{margin:0 0 12px;font-size:12px;line-height:1.35;text-transform:uppercase;color:#9b7a35}
+.lc-product-details-list{display:grid;gap:8px;margin:0}
+.lc-product-details-list div{display:grid;grid-template-columns:minmax(140px,.42fr) 1fr;gap:12px;align-items:baseline}
+.lc-product-details-list dt,.lc-product-details-list dd{margin:0}
+.lc-product-details-list dt{font-weight:700;color:#8a806f}
+.lc-product-details-list dd{color:#2f261d}
+.lc-product-details-accordion .lc-nutrition-table-wrap{overflow-x:auto;border:1px solid rgba(114,104,88,.22);background:#fff}
+.lc-product-details-accordion .lc-nutrition-table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px;line-height:1.45}
+.lc-product-details-accordion .lc-nutrition-table caption{caption-side:top;text-align:left;padding:12px 14px;border-bottom:1px solid rgba(114,104,88,.18);font-family:Georgia,"Times New Roman",serif;font-size:16px;color:#2f261d}
+.lc-product-details-accordion .lc-nutrition-table th,.lc-product-details-accordion .lc-nutrition-table td{padding:9px 12px;border-bottom:1px solid rgba(114,104,88,.18);text-align:left;vertical-align:top;color:#2f261d}
+.lc-product-details-accordion .lc-nutrition-table thead th{font-size:11px;text-transform:uppercase;color:#8a806f}
+.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child th,.lc-product-details-accordion .lc-nutrition-table tbody tr:last-child td{border-bottom:0}
+.lc-product-details-accordion .lc-nutrition-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}
+.lc-product-details-accordion .lc-nutrition-meta div{padding:12px 14px;background:#fff;border:1px solid rgba(114,104,88,.18)}
+.lc-product-details-accordion .lc-nutrition-meta dt{margin:0 0 4px;font-size:11px;text-transform:uppercase;color:#9b7a35}
+.lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}
+@media(max-width:767px){.lc-product-details-actions{justify-content:center;gap:12px;flex-wrap:wrap;margin:16px auto 4px}.lc-product-details-accordion{flex:1 1 100%}.lc-product-details-accordion summary{text-align:center}.lc-product-sheet-link{order:2}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}
+</style>`;
 const partnerOfferStyle = '<style id="lc-partner-offer-style">.container-btn-commander-produit.lc-partner-offer-control{align-items:stretch}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:108px;line-height:1.1;white-space:nowrap}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container span{line-height:1.1}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container small{display:block;font-size:10px;line-height:1.1;text-transform:uppercase;letter-spacing:0;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-list-price{text-transform:none;color:rgba(255,255,255,.78)}.container-btn-commander-produit.lc-partner-offer-control .btn-commander-produit{display:flex;align-items:center;justify-content:center}@media(max-width:767px){.container-btn-commander-produit.lc-partner-offer-control{font-size:.9rem}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{min-width:112px;padding-left:8px;padding-right:8px}}</style>';
 const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
 const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
@@ -6544,11 +6585,13 @@ function injectProductDetailsAccordion(html, route) {
   if (!product) return html;
 
   let next = html
+    .replace(/\s*<!-- lc-product-details-start -->[\s\S]*?<!-- lc-product-details-end -->\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-nutrition-link-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-details-accordion-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-volume-selector-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<script\b[^>]*id=["']lc-product-volume-selector-script["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n')
     .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-nutrition-link\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
+    .replace(/\s*<a\b[^>]*class=["'][^"']*\blc-product-sheet-link\b[^"']*["'][\s\S]*?<\/a>\s*/gi, '\n')
     .replace(/\s*<details\b[^>]*class=["'][^"']*\blc-product-details-accordion\b[^"']*["'][^>]*>[\s\S]*?<\/details>\s*/gi, '\n');
   if (!/<\/main><\/div>/i.test(next)) return next;
 
@@ -6573,8 +6616,11 @@ function productDetailsAccordionHtml(product, lang) {
   const detailsCopy = productDetailsCopy(lang);
   const nutritionCopy = nutritionPageCopy(lang);
   const detailRows = productDetailRows(product, detailsCopy, lang).map(productDetailRowHtml).join('');
+  const sheetLink = productSheetLinkHtml(product, detailsCopy);
 
   return `
+<!-- lc-product-details-start -->
+<div class="lc-product-details-actions">
 <details class="lc-product-details-accordion">
   <summary><span>${escapeHtml(detailsCopy.summary)}</span></summary>
   <div class="lc-product-details-body">
@@ -6588,7 +6634,19 @@ function productDetailsAccordionHtml(product, lang) {
     </section>
   </div>
 </details>
+${sheetLink}
+</div>
+<!-- lc-product-details-end -->
 `;
+}
+
+function productSheetLinkHtml(product, copy) {
+  const href = productSheetDocuments.get(product.slug);
+  if (!href) return '';
+  const productName = nutritionProductPlainName(product).replace(/\u00a0/g, ' ');
+  const label = copy.pdfSheet || productDetailsCopy('fr').pdfSheet;
+  const aria = (copy.pdfSheetAria || productDetailsCopy('fr').pdfSheetAria).replace('%s', productName);
+  return `<a class="lc-product-sheet-link" href="${escapeHtml(href)}" type="application/pdf" download aria-label="${escapeHtml(aria)}">${escapeHtml(label)}</a>`;
 }
 
 function productDetailRowHtml(row) {
@@ -6613,6 +6671,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN variante %s',
       volumeSelectAria: 'Choisir la contenance',
       volumeOptionsAria: 'Contenances disponibles',
+      pdfSheet: 'Fiche PDF',
+      pdfSheetAria: 'Télécharger la fiche produit PDF %s',
     },
     en: {
       summary: 'Details',
@@ -6628,6 +6688,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN variant %s',
       volumeSelectAria: 'Select bottle size',
       volumeOptionsAria: 'Available bottle sizes',
+      pdfSheet: 'PDF sheet',
+      pdfSheetAria: 'Download the PDF product sheet for %s',
     },
     ru: {
       summary: 'Детали',
@@ -6643,6 +6705,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN вариант %s',
       volumeSelectAria: 'Выбрать объем',
       volumeOptionsAria: 'Доступные объемы',
+      pdfSheet: 'PDF',
+      pdfSheetAria: 'Скачать PDF-файл продукта %s',
     },
     da: {
       summary: 'Detaljer',
@@ -6658,6 +6722,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Vælg indhold',
       volumeOptionsAria: 'Tilgængelige størrelser',
+      pdfSheet: 'PDF-ark',
+      pdfSheetAria: 'Download PDF-produktarket for %s',
     },
     sv: {
       summary: 'Detaljer',
@@ -6673,6 +6739,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Välj volym',
       volumeOptionsAria: 'Tillgängliga volymer',
+      pdfSheet: 'PDF-blad',
+      pdfSheetAria: 'Ladda ned PDF-produktbladet för %s',
     },
     no: {
       summary: 'Detaljer',
@@ -6688,6 +6756,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Velg innhold',
       volumeOptionsAria: 'Tilgjengelige størrelser',
+      pdfSheet: 'PDF-ark',
+      pdfSheetAria: 'Last ned PDF-produktarket for %s',
     },
     zh: {
       summary: '详情',
@@ -6703,6 +6773,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN 规格 %s',
       volumeSelectAria: '选择容量',
       volumeOptionsAria: '可选容量',
+      pdfSheet: 'PDF',
+      pdfSheetAria: '下载 %s 的 PDF 产品资料',
     },
   }[lang] || productDetailsCopy('fr');
 }
@@ -8131,6 +8203,9 @@ function makeLlmsTxt() {
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
     'Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.',
     '',
+    '## Product PDF Sheets',
+    ...productSheetEntries().map(({ slug, href }) => `- [${productFullName(slug)} PDF](https://cognac-leopold-croizet.com${href}): one-page downloadable product sheet, prepared as PDF/A-2b.`),
+    '',
     '## Public Proof Documents',
     '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
     '- [HVE certificate 2024-2027](https://cognac-leopold-croizet.com/assets/environment/certificat-hve-grande-versenne-2024-2027.pdf): Haute Valeur Environnementale supporting document.',
@@ -8176,6 +8251,10 @@ function makeLlmsFullTxt() {
     '',
     '## Collection',
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
+    '',
+    '## Product PDF Sheets',
+    'Source product sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.',
+    ...productSheetEntries().map(({ slug, href }) => `- ${productFullName(slug)} PDF sheet: https://cognac-leopold-croizet.com${href}`),
     '',
     '## Authority Kit',
     '- Press kit page: https://cognac-leopold-croizet.com/dossier-de-presse/',
@@ -8285,6 +8364,12 @@ function escapeHtml(value) {
 function productFullName(slug) {
   const name = productNames.get(slug) || labelFromRoute(`/collection/${slug}/`);
   return slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
+}
+
+function productSheetEntries() {
+  return [...productSheetDocuments.entries()]
+    .filter(([slug]) => productNames.has(slug))
+    .map(([slug, href]) => ({ slug, href }));
 }
 
 function englishMedalLevel(level) {
