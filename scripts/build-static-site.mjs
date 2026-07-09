@@ -1186,6 +1186,7 @@ function applyStaticAssetVersion(html) {
 function updateExtraProductImagery(html, route) {
   const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
   const menuImageBase = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet-card`;
+  const thumbImageBase = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet-thumb`;
   const menuImage = `${menuImageBase}-720.webp`;
   const menuSrcset = [
     `${menuImageBase}-420.png 420w`,
@@ -1194,9 +1195,20 @@ function updateExtraProductImagery(html, route) {
     `${menuImageBase}.webp 1200w`,
   ].join(', ');
   const menuImgTag = `<img src="${menuImage}" alt="Cognac Léopold Croizet Extra" srcset="${menuSrcset}" width="720" height="1019" decoding="async" loading="lazy">`;
+  const thumbSrcset = [
+    `${thumbImageBase}-420.png 420w`,
+    `${thumbImageBase}-500.webp 500w`,
+    `${thumbImageBase}-720.webp 720w`,
+    `${thumbImageBase}.webp 1200w`,
+  ].join(', ');
+  const thumbImgTag = `<img src="${thumbImageBase}-720.webp" alt="Cognac Léopold Croizet Extra" srcset="${thumbSrcset}" width="720" height="1019" decoding="async" loading="lazy">`;
 
   let next = html
-    .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu|extra-carafe-leopold-croizet(?!-card))[^>]*>/g, menuImgTag);
+    .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu|extra-carafe-leopold-croizet(?!-(?:card|thumb)))[^>]*>/g, menuImgTag)
+    .replace(
+      /(<div class="produit-unique">\s*<a href="[^"]*\/collection\/extra\/">\s*(?:<div class="etoile-produit">\*<\/div>\s*)?)<img\b[^>]*>(\s*<div class="titre-produit">Extra<\/div>)/g,
+      `$1${thumbImgTag}$2`,
+    );
 
   next = next.replace(
     /<figure class="wp-block-image[^"]*">\s*(<a href="([^"]+)">)?<img[^>]+img_home_carre_extra_03-1[^>]+>(<\/a>)?\s*<\/figure>/g,
