@@ -3110,7 +3110,7 @@ function faqPageHtml(route = '/faq/') {
     },
     visit: {
       className: 'lc-faq-step',
-      src: '/wp-content/uploads/2022/02/propriete_02-scaled.jpg',
+      src: '/wp-content/uploads/2022/02/propriete_02-scaled.webp',
       width: 2560,
       height: 2088,
     },

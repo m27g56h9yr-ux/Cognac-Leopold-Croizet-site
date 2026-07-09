@@ -1102,11 +1102,11 @@ function repairKnownBrokenAssets(html) {
     .replace(/<\/style><a href="https:\/\/www\.embedgooglemap\.net"><\/a>\s*<style>/gi, '</style>\n                <style>')
     .replace(/\/wp-content\/uploads\/2021\/12\/cropped-favicon_512-(?:32x32|180x180|192x192|270x270)\.png/gi, '/wp-content/uploads/2021/10/logo_croizet_blason.svg')
     .replace(/https:\/wp-content\/uploads\/2021\/12\/cropped-favicon_512-(?:32x32|180x180|192x192|270x270)\.png/gi, '/wp-content/uploads/2021/10/logo_croizet_blason.svg')
-    .replace(/\/wp-content\/uploads\/2021\/06\/domaine-pierre-croizet\.jpg/gi, '/wp-content/uploads/2022/02/propriete_02-scaled.jpg')
+    .replace(/\/wp-content\/uploads\/2021\/06\/domaine-pierre-croizet\.jpg/gi, '/wp-content/uploads/2022/02/propriete_02-scaled.webp')
     .replace(/\/wp-content\/uploads\/2021\/11\/Sparks12-1\.mp4/gi, '/wp-content/uploads/2021/11/Sparks12.mp4')
     .replace(/\/wp-content\/uploads\/2021\/10\/distillation_compress\.mp4/gi, '/wp-content/uploads/2021/11/distillation_compress-1.mp4')
     .replace(/\/wp-content\/uploads\/2021\/12\/video_le-vieillissement_mobile\.mp4/gi, '/wp-content/uploads/2021/11/video_le-vieillissement_mobile.mp4')
-    .replace(/\/wp-content\/uploads\/2021\/12\/propriete-scaled-e1638897046384\.jpg/gi, '/wp-content/uploads/2022/02/propriete_02-scaled.jpg')
+    .replace(/\/wp-content\/uploads\/2021\/12\/propriete-scaled-e1638897046384\.jpg/gi, '/wp-content/uploads/2022/02/propriete_02-scaled.webp')
     .replace(/\/wp-content\/uploads\/2021\/12\/contact-2-e1638897169480\.png/gi, '/wp-content/uploads/2021/12/contact.png')
     .replace(/\/wp-content\/uploads\/2021\/11\/img_archive_divers-actes_mob-1\.jpg/gi, '/wp-content/uploads/2024/03/img_archive_divers-actes_mob.jpg')
     .replace(/\/wp-content\/uploads\/2021\/11\/img_archive_jeanmarc-fouche%CC%81_mobile\.jpg/gi, '/wp-content/uploads/2024/03/img_archive_jeanmarc-fouche_mobile-1.jpg')
@@ -1185,18 +1185,18 @@ function applyStaticAssetVersion(html) {
 
 function updateExtraProductImagery(html, route) {
   const base = DEPLOY_BASE_PATH ? DEPLOY_BASE_PATH.replace(/\/$/, '') : '';
-  const menuImageBase = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet`;
-  const menuImage = `${menuImageBase}-720.png`;
+  const menuImageBase = `${base}/wp-content/uploads/2026/07/extra-carafe-leopold-croizet-card`;
+  const menuImage = `${menuImageBase}-720.webp`;
   const menuSrcset = [
     `${menuImageBase}-420.png 420w`,
-    `${menuImageBase}-500.png 500w`,
-    `${menuImageBase}-720.png 720w`,
-    `${menuImageBase}.png 1200w`,
+    `${menuImageBase}-500.webp 500w`,
+    `${menuImageBase}-720.webp 720w`,
+    `${menuImageBase}.webp 1200w`,
   ].join(', ');
   const menuImgTag = `<img src="${menuImage}" alt="Cognac Léopold Croizet Extra" srcset="${menuSrcset}" width="720" height="1019" decoding="async" loading="lazy">`;
 
   let next = html
-    .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu)[^>]*>/g, menuImgTag);
+    .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu|extra-carafe-leopold-croizet(?!-card))[^>]*>/g, menuImgTag);
 
   next = next.replace(
     /<figure class="wp-block-image[^"]*">\s*(<a href="([^"]+)">)?<img[^>]+img_home_carre_extra_03-1[^>]+>(<\/a>)?\s*<\/figure>/g,
