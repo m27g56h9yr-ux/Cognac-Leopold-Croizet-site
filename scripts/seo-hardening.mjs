@@ -1087,17 +1087,27 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
+const productSheetLocaleSuffixes = new Map([
+  ['fr', 'fr-fiche-degustation'],
+  ['en', 'en-tasting-sheet'],
+  ['ru', 'ru-degustation-sheet'],
+  ['da', 'da-smageark'],
+  ['sv', 'sv-provningsblad'],
+  ['no', 'no-smaksark'],
+  ['zh', 'zh-pinjiansheet'],
+]);
+
 const productSheetDocuments = new Map([
-  ['vs', '/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf'],
-  ['vsop', '/assets/product-sheets/cognac-leopold-croizet-vsop-product-sheet.pdf'],
-  ['napoleon', '/assets/product-sheets/cognac-leopold-croizet-napoleon-product-sheet.pdf'],
-  ['xo', '/assets/product-sheets/cognac-leopold-croizet-xo-product-sheet.pdf'],
-  ['xo-exception', '/assets/product-sheets/cognac-leopold-croizet-xo-exception-product-sheet.pdf'],
-  ['extra', '/assets/product-sheets/cognac-leopold-croizet-extra-product-sheet.pdf'],
-  ['excellence', '/assets/product-sheets/cognac-leopold-croizet-excellence-product-sheet.pdf'],
-  ['heritage', '/assets/product-sheets/cognac-leopold-croizet-heritage-product-sheet.pdf'],
-  ['valentine', '/assets/product-sheets/cognac-leopold-croizet-valentine-xo-product-sheet.pdf'],
-  ['pineau-des-charentes', '/assets/product-sheets/pineau-des-charentes-leopold-croizet-product-sheet.pdf'],
+  ['vs', 'cognac-leopold-croizet-vs'],
+  ['vsop', 'cognac-leopold-croizet-vsop'],
+  ['napoleon', 'cognac-leopold-croizet-napoleon'],
+  ['xo', 'cognac-leopold-croizet-xo'],
+  ['xo-exception', 'cognac-leopold-croizet-xo-exception'],
+  ['extra', 'cognac-leopold-croizet-extra'],
+  ['excellence', 'cognac-leopold-croizet-excellence'],
+  ['heritage', 'cognac-leopold-croizet-heritage'],
+  ['valentine', 'cognac-leopold-croizet-valentine-xo'],
+  ['pineau-des-charentes', 'pineau-des-charentes-leopold-croizet'],
 ]);
 
 const productLegacyAlternateNames = new Map([
@@ -6616,7 +6626,7 @@ function productDetailsAccordionHtml(product, lang) {
   const detailsCopy = productDetailsCopy(lang);
   const nutritionCopy = nutritionPageCopy(lang);
   const detailRows = productDetailRows(product, detailsCopy, lang).map(productDetailRowHtml).join('');
-  const sheetLink = productSheetLinkHtml(product, detailsCopy);
+  const sheetLink = productSheetLinkHtml(product, detailsCopy, lang);
 
   return `
 <!-- lc-product-details-start -->
@@ -6640,8 +6650,8 @@ ${sheetLink}
 `;
 }
 
-function productSheetLinkHtml(product, copy) {
-  const href = productSheetDocuments.get(product.slug);
+function productSheetLinkHtml(product, copy, lang) {
+  const href = productSheetHref(product.slug, lang);
   if (!href) return '';
   const productName = nutritionProductPlainName(product).replace(/\u00a0/g, ' ');
   const label = copy.pdfSheet || productDetailsCopy('fr').pdfSheet;
@@ -6671,8 +6681,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN variante %s',
       volumeSelectAria: 'Choisir la contenance',
       volumeOptionsAria: 'Contenances disponibles',
-      pdfSheet: 'Fiche PDF',
-      pdfSheetAria: 'Télécharger la fiche produit PDF %s',
+      pdfSheet: 'Fiche de dégustation',
+      pdfSheetAria: 'Télécharger la fiche de dégustation %s',
     },
     en: {
       summary: 'Details',
@@ -6688,8 +6698,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN variant %s',
       volumeSelectAria: 'Select bottle size',
       volumeOptionsAria: 'Available bottle sizes',
-      pdfSheet: 'PDF sheet',
-      pdfSheetAria: 'Download the PDF product sheet for %s',
+      pdfSheet: 'Tasting sheet',
+      pdfSheetAria: 'Download the tasting sheet for %s',
     },
     ru: {
       summary: 'Детали',
@@ -6705,8 +6715,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN вариант %s',
       volumeSelectAria: 'Выбрать объем',
       volumeOptionsAria: 'Доступные объемы',
-      pdfSheet: 'PDF',
-      pdfSheetAria: 'Скачать PDF-файл продукта %s',
+      pdfSheet: 'Дегустационная карта',
+      pdfSheetAria: 'Скачать дегустационную карту %s',
     },
     da: {
       summary: 'Detaljer',
@@ -6722,8 +6732,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Vælg indhold',
       volumeOptionsAria: 'Tilgængelige størrelser',
-      pdfSheet: 'PDF-ark',
-      pdfSheetAria: 'Download PDF-produktarket for %s',
+      pdfSheet: 'Smageark',
+      pdfSheetAria: 'Download smagearket for %s',
     },
     sv: {
       summary: 'Detaljer',
@@ -6739,8 +6749,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Välj volym',
       volumeOptionsAria: 'Tillgängliga volymer',
-      pdfSheet: 'PDF-blad',
-      pdfSheetAria: 'Ladda ned PDF-produktbladet för %s',
+      pdfSheet: 'Provningsblad',
+      pdfSheetAria: 'Ladda ned provningsbladet för %s',
     },
     no: {
       summary: 'Detaljer',
@@ -6756,8 +6766,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN-variant %s',
       volumeSelectAria: 'Velg innhold',
       volumeOptionsAria: 'Tilgjengelige størrelser',
-      pdfSheet: 'PDF-ark',
-      pdfSheetAria: 'Last ned PDF-produktarket for %s',
+      pdfSheet: 'Smaksark',
+      pdfSheetAria: 'Last ned smaksarket for %s',
     },
     zh: {
       summary: '详情',
@@ -6773,8 +6783,8 @@ function productDetailsCopy(lang) {
       gtinVariant: 'GTIN 规格 %s',
       volumeSelectAria: '选择容量',
       volumeOptionsAria: '可选容量',
-      pdfSheet: 'PDF',
-      pdfSheetAria: '下载 %s 的 PDF 产品资料',
+      pdfSheet: '品鉴资料',
+      pdfSheetAria: '下载 %s 的品鉴资料',
     },
   }[lang] || productDetailsCopy('fr');
 }
@@ -8203,8 +8213,8 @@ function makeLlmsTxt() {
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
     'Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.',
     '',
-    '## Product PDF Sheets',
-    ...productSheetEntries().map(({ slug, href }) => `- [${productFullName(slug)} PDF](https://cognac-leopold-croizet.com${href}): one-page downloadable product sheet, prepared as PDF/A-2b.`),
+    '## Product Tasting Sheets',
+    ...productSheetEntries('en').map(({ slug, href }) => `- [${productFullName(slug)} tasting sheet](https://cognac-leopold-croizet.com${href}): one-page downloadable tasting sheet, localized and prepared as PDF/A-2b.`),
     '',
     '## Public Proof Documents',
     '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
@@ -8252,9 +8262,9 @@ function makeLlmsFullTxt() {
     '## Collection',
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
     '',
-    '## Product PDF Sheets',
-    'Source product sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.',
-    ...productSheetEntries().map(({ slug, href }) => `- ${productFullName(slug)} PDF sheet: https://cognac-leopold-croizet.com${href}`),
+    '## Product Tasting Sheets',
+    'Localized tasting sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.',
+    ...productSheetEntries('en').map(({ slug, href }) => `- ${productFullName(slug)} tasting sheet: https://cognac-leopold-croizet.com${href}`),
     '',
     '## Authority Kit',
     '- Press kit page: https://cognac-leopold-croizet.com/dossier-de-presse/',
@@ -8366,10 +8376,17 @@ function productFullName(slug) {
   return slug === PINEAU_SLUG || slug === PINEAU_RED_SLUG ? `${name} Léopold Croizet` : `Cognac Léopold Croizet ${name}`;
 }
 
-function productSheetEntries() {
-  return [...productSheetDocuments.entries()]
-    .filter(([slug]) => productNames.has(slug))
-    .map(([slug, href]) => ({ slug, href }));
+function productSheetHref(slug, lang = 'fr') {
+  const stem = productSheetDocuments.get(slug);
+  if (!stem) return '';
+  const suffix = productSheetLocaleSuffixes.get(lang) || productSheetLocaleSuffixes.get('fr');
+  return `/assets/product-sheets/${stem}-${suffix}.pdf`;
+}
+
+function productSheetEntries(lang = 'fr') {
+  return [...productSheetDocuments.keys()]
+    .filter((slug) => productNames.has(slug))
+    .map((slug) => ({ slug, href: productSheetHref(slug, lang) }));
 }
 
 function englishMedalLevel(level) {

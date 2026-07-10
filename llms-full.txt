@@ -28,18 +28,18 @@ The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as 
 - Pineau des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes/
 - Pineau Rouge des Charentes Léopold Croizet: https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/
 
-## Product PDF Sheets
-Source product sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.
-- Cognac Léopold Croizet VS PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf
-- Cognac Léopold Croizet VSOP PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vsop-product-sheet.pdf
-- Cognac Léopold Croizet Napoléon PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-napoleon-product-sheet.pdf
-- Cognac Léopold Croizet XO PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-product-sheet.pdf
-- Cognac Léopold Croizet XO Exception PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-exception-product-sheet.pdf
-- Cognac Léopold Croizet Extra PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-extra-product-sheet.pdf
-- Cognac Léopold Croizet Excellence PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-excellence-product-sheet.pdf
-- Cognac Léopold Croizet Héritage PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-heritage-product-sheet.pdf
-- Cognac Léopold Croizet Valentine XO PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-valentine-xo-product-sheet.pdf
-- Pineau des Charentes Léopold Croizet PDF sheet: https://cognac-leopold-croizet.com/assets/product-sheets/pineau-des-charentes-leopold-croizet-product-sheet.pdf
+## Product Tasting Sheets
+Localized tasting sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.
+- Cognac Léopold Croizet VS tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vs-en-tasting-sheet.pdf
+- Cognac Léopold Croizet VSOP tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vsop-en-tasting-sheet.pdf
+- Cognac Léopold Croizet Napoléon tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-napoleon-en-tasting-sheet.pdf
+- Cognac Léopold Croizet XO tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-en-tasting-sheet.pdf
+- Cognac Léopold Croizet XO Exception tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-xo-exception-en-tasting-sheet.pdf
+- Cognac Léopold Croizet Extra tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-extra-en-tasting-sheet.pdf
+- Cognac Léopold Croizet Excellence tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-excellence-en-tasting-sheet.pdf
+- Cognac Léopold Croizet Héritage tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-heritage-en-tasting-sheet.pdf
+- Cognac Léopold Croizet Valentine XO tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-valentine-xo-en-tasting-sheet.pdf
+- Pineau des Charentes Léopold Croizet tasting sheet: https://cognac-leopold-croizet.com/assets/product-sheets/pineau-des-charentes-leopold-croizet-en-tasting-sheet.pdf
 
 ## Authority Kit
 - Press kit page: https://cognac-leopold-croizet.com/dossier-de-presse/
