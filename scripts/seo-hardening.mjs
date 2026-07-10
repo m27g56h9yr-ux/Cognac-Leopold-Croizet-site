@@ -1087,27 +1087,17 @@ const productNames = new Map([
   ['pineau-des-charentes-rouge', 'Pineau Rouge des Charentes'],
 ]);
 
-const productSheetLocaleSuffixes = new Map([
-  ['fr', 'fr-fiche-degustation'],
-  ['en', 'en-tasting-sheet'],
-  ['ru', 'ru-degustation-sheet'],
-  ['da', 'da-smageark'],
-  ['sv', 'sv-provningsblad'],
-  ['no', 'no-smaksark'],
-  ['zh', 'zh-pinjiansheet'],
-]);
-
 const productSheetDocuments = new Map([
-  ['vs', 'cognac-leopold-croizet-vs'],
-  ['vsop', 'cognac-leopold-croizet-vsop'],
-  ['napoleon', 'cognac-leopold-croizet-napoleon'],
-  ['xo', 'cognac-leopold-croizet-xo'],
-  ['xo-exception', 'cognac-leopold-croizet-xo-exception'],
-  ['extra', 'cognac-leopold-croizet-extra'],
-  ['excellence', 'cognac-leopold-croizet-excellence'],
-  ['heritage', 'cognac-leopold-croizet-heritage'],
-  ['valentine', 'cognac-leopold-croizet-valentine-xo'],
-  ['pineau-des-charentes', 'pineau-des-charentes-leopold-croizet'],
+  ['vs', '/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf'],
+  ['vsop', '/assets/product-sheets/cognac-leopold-croizet-vsop-product-sheet.pdf'],
+  ['napoleon', '/assets/product-sheets/cognac-leopold-croizet-napoleon-product-sheet.pdf'],
+  ['xo', '/assets/product-sheets/cognac-leopold-croizet-xo-product-sheet.pdf'],
+  ['xo-exception', '/assets/product-sheets/cognac-leopold-croizet-xo-exception-product-sheet.pdf'],
+  ['extra', '/assets/product-sheets/cognac-leopold-croizet-extra-product-sheet.pdf'],
+  ['excellence', '/assets/product-sheets/cognac-leopold-croizet-excellence-product-sheet.pdf'],
+  ['heritage', '/assets/product-sheets/cognac-leopold-croizet-heritage-product-sheet.pdf'],
+  ['valentine', '/assets/product-sheets/cognac-leopold-croizet-valentine-xo-product-sheet.pdf'],
+  ['pineau-des-charentes', '/assets/product-sheets/pineau-des-charentes-leopold-croizet-product-sheet.pdf'],
 ]);
 
 const productLegacyAlternateNames = new Map([
@@ -8214,7 +8204,7 @@ function makeLlmsTxt() {
     'Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.',
     '',
     '## Product Tasting Sheets',
-    ...productSheetEntries('en').map(({ slug, href }) => `- [${productFullName(slug)} tasting sheet](https://cognac-leopold-croizet.com${href}): one-page downloadable tasting sheet, localized and prepared as PDF/A-2b.`),
+    ...productSheetEntries('en').map(({ slug, href }) => `- [${productFullName(slug)} tasting sheet](https://cognac-leopold-croizet.com${href}): one-page downloadable tasting sheet, prepared as PDF/A-2b.`),
     '',
     '## Public Proof Documents',
     '- [CEC attestation 2025-2028](https://cognac-leopold-croizet.com/assets/environment/attestation-cec-grande-versenne-2025-2028.pdf): Certification Environnementale Cognac supporting document.',
@@ -8263,7 +8253,7 @@ function makeLlmsFullTxt() {
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),
     '',
     '## Product Tasting Sheets',
-    'Localized tasting sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.',
+    'Prepared tasting sheets are linked from the visible product detail area when a matching PDF exists. They are product documents, not third-party proof sources.',
     ...productSheetEntries('en').map(({ slug, href }) => `- ${productFullName(slug)} tasting sheet: https://cognac-leopold-croizet.com${href}`),
     '',
     '## Authority Kit',
@@ -8377,10 +8367,7 @@ function productFullName(slug) {
 }
 
 function productSheetHref(slug, lang = 'fr') {
-  const stem = productSheetDocuments.get(slug);
-  if (!stem) return '';
-  const suffix = productSheetLocaleSuffixes.get(lang) || productSheetLocaleSuffixes.get('fr');
-  return `/assets/product-sheets/${stem}-${suffix}.pdf`;
+  return productSheetDocuments.get(slug) || '';
 }
 
 function productSheetEntries(lang = 'fr') {
