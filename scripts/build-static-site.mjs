@@ -364,10 +364,10 @@ async function main() {
 
 async function cleanGeneratedFiles() {
   for (const entry of GENERATED_TOP_LEVEL) {
-    await rm(path.join(ROOT, entry), { recursive: true, force: true });
+    await rm(path.join(ROOT, entry), { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
   for (const file of GENERATED_FILES) {
-    await rm(path.join(ROOT, file), { force: true });
+    await rm(path.join(ROOT, file), { force: true, maxRetries: 5, retryDelay: 100 });
   }
 }
 
@@ -1207,6 +1207,10 @@ function updateExtraProductImagery(html, route) {
     .replace(/<img\b[^>]*(?:img_produit_extra_base|extra-bt-devant-coffret-menu|extra-carafe-leopold-croizet(?!-(?:card|thumb)))[^>]*>/g, menuImgTag)
     .replace(
       /(<div class="produit-unique">\s*<a href="[^"]*\/collection\/extra\/">\s*(?:<div class="etoile-produit">\*<\/div>\s*)?)<img\b[^>]*>(\s*<div class="titre-produit">Extra<\/div>)/g,
+      `$1${thumbImgTag}$2`,
+    )
+    .replace(
+      /(<div class="collection-item-container">\s*<a href="[^"]*\/collection\/extra\/">\s*)<img\b[^>]*>(\s*<h3>Extra<\/h3>)/g,
       `$1${thumbImgTag}$2`,
     );
 
