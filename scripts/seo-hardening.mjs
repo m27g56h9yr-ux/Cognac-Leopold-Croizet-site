@@ -1135,7 +1135,7 @@ const russianProductSubjectOfSources = new Map([
     { name: 'Russian SGR reference - Cognac Pierre Croizet VS', url: 'https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html', kind: 'WebPage' },
   ]],
   ['vsop', [
-    { name: 'AV.ru - Cognac Léopold Croizet VSOP 0.7 L with gift box and two glasses', url: 'https://av.ru/i/1016261', kind: 'WebPage' },
+    { name: 'AV.ru - Cognac Pierre Croizet VSOP 0.7 L', url: 'https://av.ru/i/174054', kind: 'WebPage' },
   ]],
   ['napoleon', [
     { name: 'AV.ru - Cognac Léopold Croizet Napoléon 0.7 L', url: 'https://av.ru/i/1020490', kind: 'WebPage' },
@@ -2123,13 +2123,21 @@ const noindexRoutes = new Set([
 
 const partnerOrderLinks = new Map([
   ['/ru/collection/vs/', 'https://av.ru/i/1021709'],
-  ['/ru/collection/vsop/', 'https://av.ru/i/1016261'],
+  ['/ru/collection/vsop/', 'https://av.ru/i/174054'],
   ['/ru/collection/napoleon/', 'https://av.ru/i/1020490'],
   ['/ru/collection/xo/', 'https://av.ru/i/1020491'],
   ['/ru/collection/xo-exception/', 'https://av.ru/i/1005624'],
   ['/ru/collection/extra/', 'https://av.ru/i/174057'],
   ['/ru/collection/excellence/', 'https://av.ru/i/231809'],
   ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
+]);
+
+const partnerOrderContexts = new Map([
+  ['/ru/collection/xo/', {
+    productName: 'Cognac Léopold\u00a0Croizet XO 35 cl',
+    size: '35 cl',
+    seller: 'AV.ru',
+  }],
 ]);
 
 const sellerTrackingSourceLinks = new Map([
@@ -2144,7 +2152,7 @@ const SELLER_TRACKING_UPDATED_LABEL = '7 juillet 2026';
 const SELLER_TRACKING_MAX_AGE_DAYS = 30;
 const sellerTrackingFallbacks = new Map([
   ['vs', { price: 4490, evidence: 'Fiche AV.ru indexée : prix public 4 490 ₽.' }],
-  ['vsop', { price: 7690, listPrice: 8990, evidence: 'Fiche Léopold Croizet AV.ru : prix public 7 690 ₽, prix avant remise 8 990 ₽.' }],
+  ['vsop', { price: 5480, listPrice: 6449, evidence: 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.' }],
   ['napoleon', { price: 8490, evidence: 'Fiche AV.ru indexée : prix public 8 490 ₽.' }],
   ['xo-exception', { price: 22980, evidence: 'Page marque AV.ru indexée : prix public 22 980 ₽.' }],
   ['extra', { price: 57790, evidence: 'Page marque AV.ru indexée : prix public 57 790 ₽.' }],
@@ -2153,8 +2161,8 @@ const sellerTrackingFallbacks = new Map([
 ]);
 const sellerTrackingManualNotes = new Map([
   ['xo', {
-    status: 'Fiche AV.ru disponible mais contenance différente',
-    notes: 'La fiche AV.ru publiée concerne un XO 0,35 L alors que la page officielle suivie est un XO 70 cl. Le lien partenaire est conservé faute de meilleure fiche XO 70 cl, mais aucun Offer/prix structuré n’est exposé.',
+    status: 'Lien AV.ru validé pour le XO 35 cl',
+    notes: 'La fiche AV.ru concerne le même XO en 35 cl. Ce format est accepté comme destination d’achat faute de fiche XO 70 cl. Le bouton visible et le BuyAction indiquent 35 cl ; aucun prix ni Offer ne sont exposés tant qu’un prix AV.ru vérifiable n’est pas disponible.',
   }],
 ]);
 const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine'].map((slug) => ({
@@ -7446,6 +7454,19 @@ function restorePartnerOrderButton(html, route) {
     }
   }
 
+  const context = partnerOrderContexts.get(route);
+  if (context) {
+    const partnerButtonPattern = new RegExp(
+      String.raw`<a\b(?=[^>]*\bclass=["'][^"']*\bbtn-commander-produit\b)(?=[^>]*\bhref=["']${escapedHref}["'])[^>]*>`,
+      'i',
+    );
+    next = next.replace(partnerButtonPattern, (tag) => setAttribute(
+      tag,
+      'aria-label',
+      `Заказать ${context.productName.replace('\u00a0', ' ')} на ${context.seller}`,
+    ));
+  }
+
   return ensurePartnerOrderButtonScript(next);
 }
 
@@ -7453,9 +7474,11 @@ function syncPartnerVisibleOffer(html, route) {
   let next = removePartnerVisibleOffer(html);
   const slug = matchFirst(route, /^\/ru\/collection\/([^/]+)\//);
   const offer = slug ? productPartnerOffer(route, slug) : null;
-  if (!offer?.price || !offer?.url) return next;
+  const context = partnerOrderContexts.get(route);
+  const href = offer?.url || partnerOrderLinks.get(route);
+  if ((!offer?.price && !context) || !href) return next;
 
-  const escapedHref = escapeRegExp(offer.url);
+  const escapedHref = escapeRegExp(href);
   const containerPattern = new RegExp(
     String.raw`(<div\b[^>]*class=["'][^"']*\bcontainer-btn-commander-produit\b[^"']*["'][^>]*>)([\s\S]*?<a\b(?=[^>]*class=["'][^"']*\bbtn-commander-produit\b)(?=[^>]*href=["']${escapedHref}["'])[^>]*>[\s\S]*?<\/a>[\s\S]*?)(<\/div>)`,
     'i',
@@ -7463,7 +7486,8 @@ function syncPartnerVisibleOffer(html, route) {
   let inserted = false;
   next = next.replace(containerPattern, (match, open, inner, close) => {
     inserted = true;
-    return `${addClassToTag(open, 'lc-partner-offer-control')}\n        ${partnerOfferPriceBox(offer)}${inner}${close}`;
+    const partnerBox = offer?.price ? partnerOfferPriceBox(offer) : partnerOrderContextBox(context);
+    return `${addClassToTag(open, 'lc-partner-offer-control')}\n        ${partnerBox}${inner}${close}`;
   });
 
   if (!inserted) return next;
@@ -7478,7 +7502,12 @@ function removePartnerVisibleOffer(html) {
     .replace(/\s*<style\b[^>]*id=["']lc-partner-offer-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<p\b[^>]*class=["'][^"']*\blc-partner-offer-note\b[^"']*["'][^>]*>[\s\S]*?<\/p>\s*/gi, '\n')
     .replace(/\s*<div\b(?=[^>]*class=["'][^"']*\bprix-produit-container\b)(?=[^>]*data-partner-offer-price=)[^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
+    .replace(/\s*<div\b(?=[^>]*class=["'][^"']*\bprix-produit-container\b)(?=[^>]*data-partner-product-size=)[^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
     .replace(/<div\b[^>]*class=["'][^"']*\bcontainer-btn-commander-produit\b[^"']*\blc-partner-offer-control\b[^"']*["'][^>]*>/gi, (tag) => removeClassFromTag(tag, 'lc-partner-offer-control'));
+}
+
+function partnerOrderContextBox(context) {
+  return `<div class="prix-produit-container" data-partner-product-size="${escapeHtml(context.size)}" aria-label="${escapeHtml(`${context.seller} : ${context.productName.replace('\u00a0', ' ')}`)}"><small class="lc-partner-offer-seller">${escapeHtml(context.seller)}</small> <span>XO ${escapeHtml(context.size)}</span></div>`;
 }
 
 function partnerOfferPriceBox(offer) {
@@ -7812,7 +7841,31 @@ function webPageSchema(route, metadata, image) {
   if (route === '/') {
     schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
   }
+  const purchaseAction = partnerPurchaseAction(route);
+  if (purchaseAction) schema.potentialAction = purchaseAction;
   return schema;
+}
+
+function partnerPurchaseAction(route) {
+  const context = partnerOrderContexts.get(route);
+  const url = partnerOrderLinks.get(route);
+  if (!context || !url) return null;
+  return {
+    '@type': 'BuyAction',
+    name: `Купить ${context.productName.replace('\u00a0', ' ')} на ${context.seller}`,
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: url,
+    },
+    object: {
+      '@type': 'Thing',
+      name: context.productName,
+    },
+    seller: {
+      '@type': 'Organization',
+      name: context.seller,
+    },
+  };
 }
 
 function medalItemListSchema(route) {

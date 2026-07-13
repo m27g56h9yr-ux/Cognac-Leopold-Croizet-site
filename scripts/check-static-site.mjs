@@ -66,9 +66,9 @@ const productImageAltRules = [
 ];
 const russianPartnerPages = [
   { slug: 'vs', url: 'https://av.ru/i/1021709', price: 4490 },
-  { slug: 'vsop', url: 'https://av.ru/i/1016261', price: 7690, forbiddenUrls: ['https://av.ru/i/174054'] },
+  { slug: 'vsop', url: 'https://av.ru/i/174054', price: 5480, forbiddenUrls: ['https://av.ru/i/1016261'] },
   { slug: 'napoleon', url: 'https://av.ru/i/1020490', price: 8490 },
-  { slug: 'xo', url: 'https://av.ru/i/1020491' },
+  { slug: 'xo', url: 'https://av.ru/i/1020491', partnerSize: '35 cl', officialSize: '700 ml' },
   { slug: 'xo-exception', url: 'https://av.ru/i/1005624', price: 22980 },
   { slug: 'extra', url: 'https://av.ru/i/174057', price: 57790 },
   { slug: 'excellence', url: 'https://av.ru/i/231809', price: 76990 },
@@ -302,6 +302,7 @@ async function findPartnerOfferViolations() {
     const html = await readFile(file, 'utf8');
     const partnerCtaUrls = extractPartnerCtaUrls(html);
     const product = extractMainProductSchema(html, expected.slug);
+    const webPage = extractWebPageSchema(html, expected.slug);
 
     if (expected.url) {
       if (!partnerCtaUrls.includes(expected.url)) {
@@ -337,6 +338,17 @@ async function findPartnerOfferViolations() {
     } else {
       if (product.offers) violations.push(`${relativeFile}: Offer published without an exact matching visible offer`);
       if (/\bdata-partner-offer-price=["']/i.test(html)) violations.push(`${relativeFile}: visible price published without an exact matching offer`);
+    }
+
+    if (expected.partnerSize) {
+      const visiblePartnerSize = html.match(/\bdata-partner-product-size=["']([^"']+)["']/i)?.[1];
+      const action = webPage?.potentialAction;
+      if (visiblePartnerSize !== expected.partnerSize) violations.push(`${relativeFile}: visible partner size does not match ${expected.partnerSize}`);
+      if (product.size !== expected.officialSize) violations.push(`${relativeFile}: official Product size must remain ${expected.officialSize}`);
+      if (action?.['@type'] !== 'BuyAction') violations.push(`${relativeFile}: partner BuyAction missing`);
+      if (action?.target?.urlTemplate !== expected.url) violations.push(`${relativeFile}: BuyAction URL does not match the partner CTA`);
+      if (action?.object?.name !== `Cognac Léopold\u00a0Croizet XO ${expected.partnerSize}`) violations.push(`${relativeFile}: BuyAction product context is not the XO ${expected.partnerSize}`);
+      if (action?.seller?.name !== 'AV.ru') violations.push(`${relativeFile}: BuyAction seller is not AV.ru`);
     }
 
     for (const forbiddenUrl of expected.forbiddenUrls || []) {
@@ -434,6 +446,21 @@ function extractMainProductSchema(html, slug) {
       if (product) return product;
     } catch {
       // General JSON-LD syntax checks are handled by the SEO generator; keep this check focused on offers.
+    }
+  }
+  return null;
+}
+
+function extractWebPageSchema(html, slug) {
+  const expectedId = `${PUBLIC_ORIGIN}/ru/collection/${slug}/#webpage`;
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      const nodes = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
+      const webPage = nodes.find((node) => node?.['@type'] === 'WebPage' && node?.['@id'] === expectedId);
+      if (webPage) return webPage;
+    } catch {
+      // General JSON-LD syntax checks are handled by the SEO generator; keep this check focused on partner actions.
     }
   }
   return null;
