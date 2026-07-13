@@ -21,6 +21,8 @@ const formLabelViolations = [];
 const productAltViolations = [];
 const homeMediaViolations = [];
 const languageMenuViolations = [];
+const partnerOfferViolations = [];
+const structuredDataEntityViolations = [];
 const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
 const languageMenuExpectedHreflangs = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'];
@@ -62,9 +64,21 @@ const productImageAltRules = [
   [/pineau-des-charentes-rouge/i, /Pineau Rouge des Charentes Léopold Croizet/i],
   [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, /Pineau des Charentes Léopold Croizet/i],
 ];
+const russianPartnerPages = [
+  { slug: 'vs', url: 'https://av.ru/i/1021709', price: 4490 },
+  { slug: 'vsop', url: 'https://av.ru/i/1016261', price: 7690, forbiddenUrls: ['https://av.ru/i/174054'] },
+  { slug: 'napoleon', url: 'https://av.ru/i/1020490', price: 8490 },
+  { slug: 'xo', url: 'https://av.ru/i/1020491' },
+  { slug: 'xo-exception', url: 'https://av.ru/i/1005624', price: 22980 },
+  { slug: 'extra', url: 'https://av.ru/i/174057', price: 57790 },
+  { slug: 'excellence', url: 'https://av.ru/i/231809', price: 76990 },
+  { slug: 'heritage' },
+  { slug: 'valentine', url: 'https://av.ru/i/178511', price: 6490 },
+];
 
 
 await walk(ROOT);
+partnerOfferViolations.push(...await findPartnerOfferViolations());
 
 for (const file of checkedFiles) {
   const text = await readFile(file, 'utf8');
@@ -105,6 +119,7 @@ for (const file of checkedFiles) {
     productAltViolations.push(...findProductAltViolations(text, relativeFile));
     homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
     languageMenuViolations.push(...findLanguageMenuViolations(text, relativeFile));
+    structuredDataEntityViolations.push(...findStructuredDataEntityViolations(text, relativeFile));
     pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
     pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
     collectionEndPageLayoutViolations.push(...findCollectionEndPageLayoutViolations(text, relativeFile));
@@ -126,6 +141,8 @@ if (
   || productAltViolations.length
   || homeMediaViolations.length
   || languageMenuViolations.length
+  || partnerOfferViolations.length
+  || structuredDataEntityViolations.length
 ) {
   if (missing.length) {
     console.error('Missing local targets:');
@@ -197,6 +214,16 @@ if (
     for (const item of languageMenuViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
+  if (partnerOfferViolations.length) {
+    console.error('Russian partner offer regressions:');
+    for (const item of partnerOfferViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
+  if (structuredDataEntityViolations.length) {
+    console.error('Structured data entity regressions:');
+    for (const item of structuredDataEntityViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
   process.exit(1);
 }
 
@@ -258,6 +285,158 @@ function localTargetExists(localUrl) {
     const pageTarget = path.join(ROOT, localPath, 'index.html');
     return existsSync(fileTarget) || existsSync(pageTarget);
   });
+}
+
+async function findPartnerOfferViolations() {
+  const violations = [];
+  const offersAreFresh = await partnerOfferDataIsFresh();
+
+  for (const expected of russianPartnerPages) {
+    const relativeFile = `ru/collection/${expected.slug}/index.html`;
+    const file = path.join(ROOT, relativeFile);
+    if (!existsSync(file)) {
+      violations.push(`${relativeFile}: page missing`);
+      continue;
+    }
+
+    const html = await readFile(file, 'utf8');
+    const partnerCtaUrls = extractPartnerCtaUrls(html);
+    const product = extractMainProductSchema(html, expected.slug);
+
+    if (expected.url) {
+      if (!partnerCtaUrls.includes(expected.url)) {
+        violations.push(`${relativeFile}: missing partner CTA ${expected.url}`);
+      }
+      for (const url of partnerCtaUrls) {
+        if (url !== expected.url) violations.push(`${relativeFile}: unexpected partner CTA ${url}`);
+      }
+    } else if (partnerCtaUrls.length) {
+      violations.push(`${relativeFile}: partner CTA published without an exact AV.ru product page`);
+    }
+
+    if (!product) {
+      violations.push(`${relativeFile}: main Product JSON-LD missing`);
+      continue;
+    }
+
+    const expectedPrice = offersAreFresh ? expected.price : undefined;
+    if (expectedPrice) {
+      if (!product.offers || Array.isArray(product.offers)) {
+        violations.push(`${relativeFile}: single Product Offer missing`);
+      } else {
+        if (product.offers.url !== expected.url) violations.push(`${relativeFile}: Offer URL does not match the partner CTA`);
+        if (Number(product.offers.price) !== expectedPrice) violations.push(`${relativeFile}: Offer price does not match ${expectedPrice}`);
+        if (product.offers.priceCurrency !== 'RUB') violations.push(`${relativeFile}: Offer currency is not RUB`);
+        if (product.offers.seller?.name !== 'AV.ru') violations.push(`${relativeFile}: Offer seller is not AV.ru`);
+      }
+
+      const visiblePrice = html.match(/\bdata-partner-offer-price=["']([^"']+)["']/i)?.[1];
+      const visibleCurrency = html.match(/\bdata-partner-offer-currency=["']([^"']+)["']/i)?.[1];
+      if (Number(visiblePrice) !== expectedPrice) violations.push(`${relativeFile}: visible partner price does not match ${expectedPrice}`);
+      if (visibleCurrency !== 'RUB') violations.push(`${relativeFile}: visible partner currency is not RUB`);
+    } else {
+      if (product.offers) violations.push(`${relativeFile}: Offer published without an exact matching visible offer`);
+      if (/\bdata-partner-offer-price=["']/i.test(html)) violations.push(`${relativeFile}: visible price published without an exact matching offer`);
+    }
+
+    for (const forbiddenUrl of expected.forbiddenUrls || []) {
+      if (html.includes(forbiddenUrl)) violations.push(`${relativeFile}: obsolete partner URL remains (${forbiddenUrl})`);
+    }
+  }
+
+  return violations;
+}
+
+async function partnerOfferDataIsFresh(asOf = new Date()) {
+  const trackingHtml = await readFile(path.join(ROOT, 'suivi-vendeurs.html'), 'utf8');
+  const observedAtValue = trackingHtml.match(/"updatedAt"\s*:\s*"(\d{4}-\d{2}-\d{2})"/)?.[1];
+  const maxAgeDays = Number(trackingHtml.match(/"maxOfferAgeDays"\s*:\s*(\d+)/)?.[1]);
+  const observedAt = new Date(`${observedAtValue || ''}T23:59:59Z`);
+  if (Number.isNaN(observedAt.getTime()) || !Number.isFinite(maxAgeDays) || maxAgeDays <= 0) return false;
+  const expiresAt = new Date(observedAt.getTime() + maxAgeDays * 24 * 60 * 60 * 1000);
+  return asOf.getTime() <= expiresAt.getTime();
+}
+
+function findStructuredDataEntityViolations(html, relativeFile) {
+  const violations = [];
+  const productNodes = [];
+
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    let parsed;
+    try {
+      parsed = JSON.parse(match[1]);
+    } catch {
+      continue;
+    }
+
+    const roots = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
+    for (const root of roots) {
+      visitStructuredDataNode(root, (node) => {
+        const types = Array.isArray(node?.['@type']) ? node['@type'] : [node?.['@type']].filter(Boolean);
+        if (types.includes('Product')) productNodes.push(node);
+        if (node?.hasVariant) violations.push(`${relativeFile}: Product.hasVariant must not create incomplete Product entities`);
+        if (types.includes('Review') && (!node.author || !node.itemReviewed || !node.reviewRating)) {
+          violations.push(`${relativeFile}: incomplete Review used for an external reference`);
+        }
+        if (types.includes('VideoObject') && (!node.thumbnailUrl || !node.uploadDate || (!node.contentUrl && !node.embedUrl))) {
+          violations.push(`${relativeFile}: incomplete VideoObject used for an external reference`);
+        }
+      });
+    }
+  }
+
+  const mainProducts = productNodes.filter((node) => /#product$/.test(node?.['@id'] || ''));
+  const incompleteProducts = productNodes.filter((node) => !/#product$/.test(node?.['@id'] || ''));
+  for (const node of incompleteProducts) {
+    violations.push(`${relativeFile}: secondary Product entity must be an @id reference or WebPage (${node.name || node.url || 'unnamed'})`);
+  }
+
+  const isProductPage = /^(?:(?:en|ru|da|sv|no|zh)\/)?collection\/[^/]+\/index\.html$/.test(relativeFile)
+    && relativeFile !== 'collection/pineau-des-charentes-blanc/index.html';
+  if (isProductPage && mainProducts.length !== 1) {
+    violations.push(`${relativeFile}: expected exactly one main Product, found ${mainProducts.length}`);
+  }
+  if (!relativeFile.startsWith('ru/collection/')) {
+    for (const product of mainProducts) {
+      if (product.offers) violations.push(`${relativeFile}: Product Offer is only allowed on verified Russian partner pages`);
+    }
+  }
+
+  return violations;
+}
+
+function visitStructuredDataNode(value, visitor) {
+  if (!value || typeof value !== 'object') return;
+  if (Array.isArray(value)) {
+    for (const item of value) visitStructuredDataNode(item, visitor);
+    return;
+  }
+  visitor(value);
+  for (const child of Object.values(value)) visitStructuredDataNode(child, visitor);
+}
+
+function extractPartnerCtaUrls(html) {
+  const urls = [];
+  for (const match of html.matchAll(/<a\b(?=[^>]*\bclass=["'][^"']*\bbtn-commander-produit\b)[^>]*>/gi)) {
+    const href = match[0].match(/\bhref=["']([^"']+)["']/i)?.[1];
+    if (href?.startsWith('https://av.ru/')) urls.push(href.replace(/&amp;/g, '&'));
+  }
+  return urls;
+}
+
+function extractMainProductSchema(html, slug) {
+  const expectedId = `${PUBLIC_ORIGIN}/ru/collection/${slug}/#product`;
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      const nodes = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed];
+      const product = nodes.find((node) => node?.['@type'] === 'Product' && node?.['@id'] === expectedId);
+      if (product) return product;
+    } catch {
+      // General JSON-LD syntax checks are handled by the SEO generator; keep this check focused on offers.
+    }
+  }
+  return null;
 }
 
 function findBrandViolations(html, relativeFile) {

@@ -486,6 +486,11 @@ function isAvRuSource(source) {
   return /^https?:\/\/(?:www\.)?av\.ru\//i.test(source.url);
 }
 
+function externalReferenceSchemaType(source) {
+  if (['Product', 'Review', 'VideoObject'].includes(source?.kind)) return 'WebPage';
+  return source?.kind || 'WebPage';
+}
+
 function legacyNameAuthoritySourcesForLang(lang, { includeAv = lang === 'ru' } = {}) {
   return legacyNameAuthoritySources.filter((source) => includeAv || !isAvRuSource(source));
 }
@@ -1130,10 +1135,13 @@ const russianProductSubjectOfSources = new Map([
     { name: 'Russian SGR reference - Cognac Pierre Croizet VS', url: 'https://reestr-sgr.ru/svidetelstvo/182542/konyaki-cognac-pierre-croizet-vskonyak-per-kruaze-vs-cognac.html', kind: 'WebPage' },
   ]],
   ['vsop', [
-    { name: 'AV.ru - Cognac Pierre Croizet VSOP 0.7 L', url: 'https://av.ru/i/174054', kind: 'WebPage' },
+    { name: 'AV.ru - Cognac Léopold Croizet VSOP 0.7 L with gift box and two glasses', url: 'https://av.ru/i/1016261', kind: 'WebPage' },
   ]],
   ['napoleon', [
     { name: 'AV.ru - Cognac Léopold Croizet Napoléon 0.7 L', url: 'https://av.ru/i/1020490', kind: 'WebPage' },
+  ]],
+  ['xo', [
+    { name: 'AV.ru - Cognac Léopold Croizet XO 0.35 L', url: 'https://av.ru/i/1020491', kind: 'WebPage' },
   ]],
   ['xo-exception', [
     { name: 'AV.ru - Cognac Léopold Croizet Exception XO 0.7 L', url: 'https://av.ru/i/1005624', kind: 'WebPage' },
@@ -2115,23 +2123,28 @@ const noindexRoutes = new Set([
 
 const partnerOrderLinks = new Map([
   ['/ru/collection/vs/', 'https://av.ru/i/1021709'],
-  ['/ru/collection/vsop/', 'https://av.ru/i/174054'],
+  ['/ru/collection/vsop/', 'https://av.ru/i/1016261'],
   ['/ru/collection/napoleon/', 'https://av.ru/i/1020490'],
   ['/ru/collection/xo/', 'https://av.ru/i/1020491'],
   ['/ru/collection/xo-exception/', 'https://av.ru/i/1005624'],
   ['/ru/collection/extra/', 'https://av.ru/i/174057'],
   ['/ru/collection/excellence/', 'https://av.ru/i/231809'],
-  ['/ru/collection/heritage/', 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
   ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
+]);
+
+const sellerTrackingSourceLinks = new Map([
+  ...partnerOrderLinks,
+  ['/ru/collection/heritage/', 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
 ]);
 
 const SELLER_TRACKING_FILE = 'suivi-vendeurs.html';
 const SELLER_TRACKING_ENDPOINT = 'suivi-vendeurs-data.php';
 const SELLER_TRACKING_UPDATED_AT = '2026-07-07';
 const SELLER_TRACKING_UPDATED_LABEL = '7 juillet 2026';
+const SELLER_TRACKING_MAX_AGE_DAYS = 30;
 const sellerTrackingFallbacks = new Map([
   ['vs', { price: 4490, evidence: 'Fiche AV.ru indexée : prix public 4 490 ₽.' }],
-  ['vsop', { price: 5480, listPrice: 6449, evidence: 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.' }],
+  ['vsop', { price: 7690, listPrice: 8990, evidence: 'Fiche Léopold Croizet AV.ru : prix public 7 690 ₽, prix avant remise 8 990 ₽.' }],
   ['napoleon', { price: 8490, evidence: 'Fiche AV.ru indexée : prix public 8 490 ₽.' }],
   ['xo-exception', { price: 22980, evidence: 'Page marque AV.ru indexée : prix public 22 980 ₽.' }],
   ['extra', { price: 57790, evidence: 'Page marque AV.ru indexée : prix public 57 790 ₽.' }],
@@ -2150,7 +2163,7 @@ const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'ext
   market: 'Russie',
   seller: 'AV.ru',
   product: sellerTrackingProductName(slug),
-  source_url: partnerOrderLinks.get(`/ru/collection/${slug}/`),
+  source_url: sellerTrackingSourceLinks.get(`/ru/collection/${slug}/`),
   schema_status: sellerTrackingFallbackStatus(slug),
   offers: sellerTrackingFallbackOffer(slug),
   review: null,
@@ -2177,8 +2190,8 @@ function sellerTrackingProductName(slug) {
 
 function sellerTrackingFallbackOffer(slug) {
   const fallback = sellerTrackingFallbacks.get(slug);
-  const url = partnerOrderLinks.get(`/ru/collection/${slug}/`);
-  if (!fallback || !fallback.price) return null;
+  const url = sellerTrackingSourceLinks.get(`/ru/collection/${slug}/`);
+  if (!fallback || !fallback.price || !sellerTrackingOfferDataIsFresh()) return null;
   const offer = {
     '@type': 'Offer',
     price: fallback.price,
@@ -2197,7 +2210,17 @@ function sellerTrackingFallbackOffer(slug) {
   return offer;
 }
 
+function sellerTrackingOfferDataIsFresh(asOf = new Date()) {
+  const observedAt = new Date(`${SELLER_TRACKING_UPDATED_AT}T23:59:59Z`);
+  if (Number.isNaN(observedAt.getTime())) return false;
+  const expiresAt = new Date(observedAt.getTime() + SELLER_TRACKING_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+  return asOf.getTime() <= expiresAt.getTime();
+}
+
 function sellerTrackingFallbackStatus(slug) {
+  if (sellerTrackingFallbacks.has(slug) && !sellerTrackingOfferDataIsFresh()) {
+    return 'Relevé AV.ru expiré - nouvelle vérification requise';
+  }
   if (sellerTrackingFallbacks.has(slug)) return 'Valeurs AV.ru issues de l’index public';
   return sellerTrackingManualNotes.get(slug)?.status || 'Fiche produit AV.ru non trouvée dans l’index public';
 }
@@ -2206,6 +2229,9 @@ function sellerTrackingFallbackNotes(slug) {
   const fallback = sellerTrackingFallbacks.get(slug);
   const manualNote = sellerTrackingManualNotes.get(slug);
   if (manualNote) return manualNote.notes;
+  if (fallback && !sellerTrackingOfferDataIsFresh()) {
+    return `Le relevé du ${SELLER_TRACKING_UPDATED_LABEL} a dépassé ${SELLER_TRACKING_MAX_AGE_DAYS} jours. Le bouton partenaire reste disponible, mais le prix, la disponibilité et l’Offer ne sont plus exposés avant une nouvelle vérification.`;
+  }
   if (!fallback) {
     return 'Le lien partenaire publié ouvre une recherche AV.ru. Aucune fiche produit AV.ru indexée fiable n’a été trouvée pour ce produit ; review et aggregateRating restent donc non exposés.';
   }
@@ -4387,6 +4413,7 @@ function sellerTrackingPayload() {
   return {
     updatedAt: SELLER_TRACKING_UPDATED_AT,
     updatedAtLabel: SELLER_TRACKING_UPDATED_LABEL,
+    maxOfferAgeDays: SELLER_TRACKING_MAX_AGE_DAYS,
     rows: sellerTrackingRows,
   };
 }
@@ -7693,7 +7720,7 @@ function organizationSchema(lang = 'fr') {
     },
     sameAs: authoritySameAsUrls,
     subjectOf: authoritySourcesForLang(lang).map((source) => ({
-      '@type': source.kind,
+      '@type': externalReferenceSchemaType(source),
       name: source.name,
       url: source.url,
     })),
@@ -7804,11 +7831,7 @@ function medalItemListSchema(route) {
         '@type': 'CreativeWork',
         name: `${copy.level[medal.level] || medal.level} - ${medal.award} ${medal.year}`,
         ...(medal.href ? { url: medal.href } : {}),
-        about: {
-          '@type': 'Product',
-          name: productFullName(slug),
-          url: `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}`,
-        },
+        about: { '@id': `${PUBLIC_ORIGIN}${productRouteForLang(lang, slug)}#product` },
       },
     })),
   };
@@ -7827,15 +7850,11 @@ function authorityStructuredData(route) {
         '@type': 'ListItem',
         position: index + 1,
         item: {
-          '@type': source.kind,
+          '@type': externalReferenceSchemaType(source),
           name: source.name,
           url: source.url,
           about: source.productSlug
-            ? {
-              '@type': 'Product',
-              name: productFullName(source.productSlug),
-              url: `${PUBLIC_ORIGIN}${productRouteForLang(lang, source.productSlug)}`,
-            }
+            ? { '@id': `${PUBLIC_ORIGIN}${productRouteForLang(lang, source.productSlug)}#product` }
             : { '@id': `${PUBLIC_ORIGIN}/#organization` },
         },
       })),
@@ -7861,7 +7880,7 @@ function productLegacyEditorialSubjectOfItems(slug) {
   return legacyProductEditorialSources
     .filter((source) => source.productSlug === slug)
     .map((source) => ({
-      '@type': source.kind,
+      '@type': externalReferenceSchemaType(source),
       name: source.name,
       url: source.url,
     }));
@@ -7870,7 +7889,7 @@ function productLegacyEditorialSubjectOfItems(slug) {
 function productRussianSubjectOfItems(slug, lang) {
   if (lang !== 'ru') return [];
   return (russianProductSubjectOfSources.get(slug) || []).map((source) => ({
-    '@type': source.kind,
+    '@type': externalReferenceSchemaType(source),
     name: source.name,
     url: source.url,
   }));
@@ -7954,7 +7973,10 @@ function productSchema(route, metadata, image) {
     manufacturer: { '@id': `${PUBLIC_ORIGIN}/#organization` },
     url: `${PUBLIC_ORIGIN}${route}`,
     countryOfOrigin: 'France',
-    additionalProperty: productStructuredProperties(slug, lang),
+    additionalProperty: [
+      ...productStructuredProperties(slug, lang),
+      ...productVariantIdentifierProperties(slug),
+    ],
   };
   if (alternateName.length) {
     schema.alternateName = alternateName;
@@ -7966,16 +7988,6 @@ function productSchema(route, metadata, image) {
   if (primaryGtin) {
     schema.size = primaryGtin.size;
     schema.gtin13 = primaryGtin.gtin13;
-  }
-  const variants = productGtinVariants.get(slug) || [];
-  if (variants.length) {
-    schema.hasVariant = variants.map((variant) => ({
-      '@type': 'Product',
-      name: variant.name,
-      size: variant.size,
-      gtin13: variant.gtin13,
-      isVariantOf: { '@id': id },
-    }));
   }
   const awards = productMedalProofs.get(slug)?.map((medal) => productAwardText(medal, lang)) || [];
   if (awards.length) schema.award = awards;
@@ -7989,6 +8001,16 @@ function productAlternateNames(slug, lang) {
     ...(productLegacyAlternateNames.get(slug) || []),
     ...(lang === 'ru' ? (russianProductLegacyAlternateNames.get(slug) || []) : []),
   ];
+}
+
+function productVariantIdentifierProperties(slug) {
+  return (productGtinVariants.get(slug) || []).map((variant) => ({
+    '@type': 'PropertyValue',
+    name: variant.name,
+    propertyID: 'GTIN-13',
+    value: variant.gtin13,
+    unitText: variant.size,
+  }));
 }
 
 function productPartnerOffer(route, slug) {
