@@ -43,6 +43,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y php-cli
           php -l api/conversion.php
+          php -l scripts/test-conversion-endpoint.php
+          conversion_test_dir="$(mktemp -d)"
+          LC_CONVERSION_STORAGE_PATH="$conversion_test_dir/conversions.csv" \
+            php scripts/test-conversion-endpoint.php > "$conversion_test_dir/response.json"
+          grep -F '"status":"recorded"' "$conversion_test_dir/response.json"
+          test "$(wc -l < "$conversion_test_dir/conversions.csv")" -eq 2
+          grep -F 'contact_clicked' "$conversion_test_dir/conversions.csv"
+          grep -F ',google' "$conversion_test_dir/conversions.csv"
+          rm -rf "$conversion_test_dir"
           npm run check
 
       - name: Prepare deployment bundle
