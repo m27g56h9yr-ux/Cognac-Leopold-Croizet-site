@@ -8,6 +8,7 @@ import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase } from './deploy-config.mjs
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
+const CONVERSION_TRACKING_ASSET = '/assets/js/conversion-tracking.js?v=20260714-1';
 const TODAY = '2026-07-09';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-07-07';
@@ -5185,7 +5186,15 @@ function hardenHtml(html, route, file) {
   next = repairInactiveCommercePage(next, route);
   next = repairLegalNoticePage(next, route);
   next = repairCgvPage(next, route);
+  next = injectConversionTracking(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function injectConversionTracking(html, route) {
+  const cleaned = html.replace(/\s*<script\b[^>]*id=["']lc-conversion-tracking-js["'][^>]*><\/script>\s*/gi, '\n');
+  if (isNoindexRoute(route)) return cleaned;
+  const script = `<script id="lc-conversion-tracking-js" src="${CONVERSION_TRACKING_ASSET}" defer></script>`;
+  return /<\/body>/i.test(cleaned) ? cleaned.replace(/<\/body>/i, `${script}\n</body>`) : `${cleaned}\n${script}\n`;
 }
 
 function repairLegalNoticePage(html, route) {

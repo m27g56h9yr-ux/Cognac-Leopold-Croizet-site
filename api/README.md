@@ -17,3 +17,19 @@ cognac@mdpierre.com
 ```
 
 La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier l'adresse d'envoi ou le chemin du CSV, copier ce fichier en `newsletter-config.php`.
+
+## Mesure des conversions SEO/GEO
+
+Le script `conversion.php` enregistre uniquement trois familles d'actions :
+
+- ouverture de la page de rencontre, clic e-mail ou clic téléphone ;
+- inscription newsletter confirmée par le serveur ;
+- clic vers une fiche partenaire AV.ru.
+
+Les données sont enregistrées dans `conversion-data/conversions.csv`. Elles sont limitées à la date, au type d'action, à la langue, au chemin interne, au groupe de page, au produit éventuel et à une catégorie de source de trafic.
+
+Le fichier ne contient ni adresse e-mail, ni adresse IP, ni navigateur, ni URL référente complète, ni identifiant visiteur. Aucun cookie, localStorage ou sessionStorage n'est utilisé.
+
+Un rapport contenant seulement les nouvelles lignes est envoyé au maximum une fois par période de 24 heures à `cognac@mdpierre.com`, lors de la première conversion qui suit l'échéance. La configuration peut être adaptée en copiant `conversion-config.sample.php` vers `conversion-config.php`.
+
+Le dossier `conversion-data/` et le fichier local `api/conversion-config.php` sont exclus des publications destructives afin de préserver les mesures déjà enregistrées.

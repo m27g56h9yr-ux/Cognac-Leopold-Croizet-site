@@ -37,7 +37,13 @@ jobs:
           test -f robots.txt
 
       - name: Check static site
-        run: npm run check
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y php-cli
+          php -l api/conversion.php
+          npm run check
 
       - name: Prepare deployment bundle
         shell: bash
@@ -64,7 +70,9 @@ jobs:
             --exclude='yarn.lock' \
             --exclude='pnpm-lock.yaml' \
             --exclude='newsletter-data/' \
+            --exclude='conversion-data/' \
             --exclude='api/newsletter-config.php' \
+            --exclude='api/conversion-config.php' \
             --exclude='.htpasswd' \
             --exclude='.user.ini' \
             --exclude='php.ini' \
@@ -87,7 +95,9 @@ jobs:
             -name '.git' -o \
             -name '.github' -o \
             -name 'newsletter-data' -o \
+            -name 'conversion-data' -o \
             -name 'newsletter-config.php' -o \
+            -name 'conversion-config.php' -o \
             -name '.htpasswd' -o \
             -name '.user.ini' -o \
             -name 'php.ini' -o \
@@ -151,7 +161,9 @@ jobs:
           set sftp:auto-confirm yes
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude '(^|/)newsletter-data(/|$)' \
+            --exclude '(^|/)conversion-data(/|$)' \
             --exclude '(^|/)api/newsletter-config\.php$' \
+            --exclude '(^|/)api/conversion-config\.php$' \
             --exclude '(^|/)\.htpasswd$' \
             --exclude '(^|/)\.user\.ini$' \
             --exclude '(^|/)php\.ini$' \
