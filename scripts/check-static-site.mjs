@@ -65,15 +65,15 @@ const productImageAltRules = [
   [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, /Pineau des Charentes Léopold Croizet/i],
 ];
 const russianPartnerPages = [
-  { slug: 'vs', url: 'https://av.ru/i/1021709', price: 4490 },
-  { slug: 'vsop', url: 'https://av.ru/i/174054', price: 5480, forbiddenUrls: ['https://av.ru/i/1016261'] },
-  { slug: 'napoleon', url: 'https://av.ru/i/1020490', price: 8490 },
-  { slug: 'xo', url: 'https://av.ru/i/1020491', partnerSize: '35 cl', officialSize: '700 ml' },
-  { slug: 'xo-exception', url: 'https://av.ru/i/1005624', price: 22980 },
-  { slug: 'extra', url: 'https://av.ru/i/174057', price: 57790 },
-  { slug: 'excellence', url: 'https://av.ru/i/231809', price: 76990 },
+  { slug: 'vs', url: 'https://av.ru/i/1021709', productName: 'Cognac Léopold\u00a0Croizet VS', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'vsop', url: 'https://av.ru/i/174054', productName: 'Cognac Léopold\u00a0Croizet VSOP', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14', forbiddenUrls: ['https://av.ru/i/1016261'] },
+  { slug: 'napoleon', url: 'https://av.ru/i/1020490', productName: 'Cognac Léopold\u00a0Croizet Napoléon', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'xo', url: 'https://av.ru/i/1020491', productName: 'Cognac Léopold\u00a0Croizet XO', partnerSize: '35 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'xo-exception', url: 'https://av.ru/i/1005624', productName: 'Cognac Léopold\u00a0Croizet XO Exception', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'extra', url: 'https://av.ru/i/174057', productName: 'Cognac Léopold\u00a0Croizet Extra', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'excellence', url: 'https://av.ru/i/231809', productName: 'Cognac Léopold\u00a0Croizet Excellence', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
   { slug: 'heritage' },
-  { slug: 'valentine', url: 'https://av.ru/i/178511', price: 6490 },
+  { slug: 'valentine', url: 'https://av.ru/i/178511', productName: 'Cognac Léopold\u00a0Croizet Valentine XO', partnerSize: '35 cl', officialSize: '350 ml', lastmod: '2026-07-14' },
 ];
 
 
@@ -289,7 +289,24 @@ function localTargetExists(localUrl) {
 
 async function findPartnerOfferViolations() {
   const violations = [];
-  const offersAreFresh = await partnerOfferDataIsFresh();
+  const trackingHtml = await readFile(path.join(ROOT, 'suivi-vendeurs.html'), 'utf8');
+  const trackingPayload = extractSellerTrackingPayload(trackingHtml);
+  const trackingRows = new Map((trackingPayload?.rows || []).map((row) => [row.product_slug, row]));
+  const sitemap = await readFile(path.join(ROOT, 'sitemap.xml'), 'utf8');
+  const sellerEndpoint = await readFile(path.join(ROOT, 'suivi-vendeurs-data.php'), 'utf8');
+
+  if (trackingPayload?.maxOfferAgeDays !== 7) {
+    violations.push(`suivi-vendeurs.html: maxOfferAgeDays must be 7, found ${trackingPayload?.maxOfferAgeDays ?? 'missing'}`);
+  }
+  if (!partnerOfferDataIsFresh('2026-07-07', 7, new Date('2026-07-14T23:59:59Z'))) {
+    violations.push('partner offer freshness: a seven-day-old observation should remain valid through the end of day 7');
+  }
+  if (partnerOfferDataIsFresh('2026-07-07', 7, new Date('2026-07-15T00:00:00Z'))) {
+    violations.push('partner offer freshness: an observation must expire after seven days');
+  }
+  if (/\bfallback_(?:price|list_price)\b/.test(sellerEndpoint)) {
+    violations.push('suivi-vendeurs-data.php: stale fallback prices must not be exposed after an unverifiable refresh');
+  }
 
   for (const expected of russianPartnerPages) {
     const relativeFile = `ru/collection/${expected.slug}/index.html`;
@@ -303,6 +320,29 @@ async function findPartnerOfferViolations() {
     const partnerCtaUrls = extractPartnerCtaUrls(html);
     const product = extractMainProductSchema(html, expected.slug);
     const webPage = extractWebPageSchema(html, expected.slug);
+    const trackingRow = trackingRows.get(expected.slug);
+
+    if (!trackingRow) {
+      violations.push(`suivi-vendeurs.html: missing tracking evidence for ${expected.slug}`);
+    } else {
+      if (trackingRow.source_url !== (expected.url || 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage')) {
+        violations.push(`suivi-vendeurs.html: source URL mismatch for ${expected.slug}`);
+      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(trackingRow.checked_at || '')) {
+        violations.push(`suivi-vendeurs.html: checked_at missing for ${expected.slug}`);
+      }
+      if (!trackingRow.geographic_context) {
+        violations.push(`suivi-vendeurs.html: geographic context missing for ${expected.slug}`);
+      }
+      if (trackingRow.offers) {
+        if (!trackingRow.offers.price || !trackingRow.offers.availability) {
+          violations.push(`suivi-vendeurs.html: incomplete Offer for ${expected.slug}`);
+        }
+        if (!partnerOfferDataIsFresh(trackingRow.checked_at, trackingPayload.maxOfferAgeDays)) {
+          violations.push(`suivi-vendeurs.html: stale Offer retained for ${expected.slug}`);
+        }
+      }
+    }
 
     if (expected.url) {
       if (!partnerCtaUrls.includes(expected.url)) {
@@ -320,25 +360,8 @@ async function findPartnerOfferViolations() {
       continue;
     }
 
-    const expectedPrice = offersAreFresh ? expected.price : undefined;
-    if (expectedPrice) {
-      if (!product.offers || Array.isArray(product.offers)) {
-        violations.push(`${relativeFile}: single Product Offer missing`);
-      } else {
-        if (product.offers.url !== expected.url) violations.push(`${relativeFile}: Offer URL does not match the partner CTA`);
-        if (Number(product.offers.price) !== expectedPrice) violations.push(`${relativeFile}: Offer price does not match ${expectedPrice}`);
-        if (product.offers.priceCurrency !== 'RUB') violations.push(`${relativeFile}: Offer currency is not RUB`);
-        if (product.offers.seller?.name !== 'AV.ru') violations.push(`${relativeFile}: Offer seller is not AV.ru`);
-      }
-
-      const visiblePrice = html.match(/\bdata-partner-offer-price=["']([^"']+)["']/i)?.[1];
-      const visibleCurrency = html.match(/\bdata-partner-offer-currency=["']([^"']+)["']/i)?.[1];
-      if (Number(visiblePrice) !== expectedPrice) violations.push(`${relativeFile}: visible partner price does not match ${expectedPrice}`);
-      if (visibleCurrency !== 'RUB') violations.push(`${relativeFile}: visible partner currency is not RUB`);
-    } else {
-      if (product.offers) violations.push(`${relativeFile}: Offer published without an exact matching visible offer`);
-      if (/\bdata-partner-offer-price=["']/i.test(html)) violations.push(`${relativeFile}: visible price published without an exact matching offer`);
-    }
+    if (product.offers) violations.push(`${relativeFile}: Offer published without a fresh, geography-aware visible offer`);
+    if (/\bdata-partner-offer-price=["']/i.test(html)) violations.push(`${relativeFile}: visible price published without a fresh matching Offer`);
 
     if (expected.partnerSize) {
       const visiblePartnerSize = html.match(/\bdata-partner-product-size=["']([^"']+)["']/i)?.[1];
@@ -347,26 +370,67 @@ async function findPartnerOfferViolations() {
       if (product.size !== expected.officialSize) violations.push(`${relativeFile}: official Product size must remain ${expected.officialSize}`);
       if (action?.['@type'] !== 'BuyAction') violations.push(`${relativeFile}: partner BuyAction missing`);
       if (action?.target?.urlTemplate !== expected.url) violations.push(`${relativeFile}: BuyAction URL does not match the partner CTA`);
-      if (action?.object?.name !== `Cognac Léopold\u00a0Croizet XO ${expected.partnerSize}`) violations.push(`${relativeFile}: BuyAction product context is not the XO ${expected.partnerSize}`);
+      if (action?.object?.name !== `${expected.productName} ${expected.partnerSize}`) violations.push(`${relativeFile}: BuyAction product context does not match ${expected.productName} ${expected.partnerSize}`);
       if (action?.seller?.name !== 'AV.ru') violations.push(`${relativeFile}: BuyAction seller is not AV.ru`);
+      if (!new RegExp(`aria-label=["'][^"']*${escapeRegExp(expected.productName.replace('\u00a0', ' '))}[^"']*AV\\.ru`, 'i').test(html)) {
+        violations.push(`${relativeFile}: partner CTA accessible label must identify the product and AV.ru`);
+      }
+    } else if (webPage?.potentialAction?.['@type'] === 'BuyAction') {
+      violations.push(`${relativeFile}: BuyAction published without an exact product page and format`);
+    }
+
+    const sitemapLastmod = sitemapLastmodForRoute(sitemap, `/ru/collection/${expected.slug}/`);
+    if (expected.lastmod) {
+      if (webPage?.dateModified !== expected.lastmod) violations.push(`${relativeFile}: dateModified must be ${expected.lastmod}`);
+      if (sitemapLastmod !== expected.lastmod) violations.push(`${relativeFile}: sitemap lastmod must be ${expected.lastmod}`);
     }
 
     for (const forbiddenUrl of expected.forbiddenUrls || []) {
       if (html.includes(forbiddenUrl)) violations.push(`${relativeFile}: obsolete partner URL remains (${forbiddenUrl})`);
     }
+
+    for (const localePrefix of ['', 'en/', 'da/', 'sv/', 'no/', 'zh/']) {
+      const localizedFile = path.join(ROOT, `${localePrefix}collection/${expected.slug}/index.html`);
+      if (!existsSync(localizedFile)) continue;
+      const localizedHtml = await readFile(localizedFile, 'utf8');
+      if (extractPartnerCtaUrls(localizedHtml).length) {
+        violations.push(`${path.relative(ROOT, localizedFile)}: Russian partner CTA leaked into another locale`);
+      }
+      if (/"@type":"BuyAction"/.test(localizedHtml)) {
+        violations.push(`${path.relative(ROOT, localizedFile)}: Russian BuyAction leaked into another locale`);
+      }
+    }
+  }
+
+  const vsopHtml = await readFile(path.join(ROOT, 'ru/collection/vsop/index.html'), 'utf8');
+  if (/(?:5\s*480|5480|6\s*290|6290)\s*₽?/.test(vsopHtml)) {
+    violations.push('ru/collection/vsop/index.html: a Moscow-specific or divergent AV.ru price remains visible');
   }
 
   return violations;
 }
 
-async function partnerOfferDataIsFresh(asOf = new Date()) {
-  const trackingHtml = await readFile(path.join(ROOT, 'suivi-vendeurs.html'), 'utf8');
-  const observedAtValue = trackingHtml.match(/"updatedAt"\s*:\s*"(\d{4}-\d{2}-\d{2})"/)?.[1];
-  const maxAgeDays = Number(trackingHtml.match(/"maxOfferAgeDays"\s*:\s*(\d+)/)?.[1]);
+function partnerOfferDataIsFresh(observedAtValue, maxAgeDays, asOf = new Date()) {
   const observedAt = new Date(`${observedAtValue || ''}T23:59:59Z`);
   if (Number.isNaN(observedAt.getTime()) || !Number.isFinite(maxAgeDays) || maxAgeDays <= 0) return false;
   const expiresAt = new Date(observedAt.getTime() + maxAgeDays * 24 * 60 * 60 * 1000);
   return asOf.getTime() <= expiresAt.getTime();
+}
+
+function extractSellerTrackingPayload(html) {
+  const raw = html.match(/<script\b[^>]*id=["']seller-tracking-data["'][^>]*>([\s\S]*?)<\/script>/i)?.[1];
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function sitemapLastmodForRoute(sitemap, route) {
+  const url = `${PUBLIC_ORIGIN}${route}`;
+  const block = sitemap.match(new RegExp(`<url>\\s*<loc>${escapeRegExp(url)}<\\/loc>([\\s\\S]*?)<\\/url>`, 'i'))?.[1] || '';
+  return block.match(/<lastmod>([^<]+)<\/lastmod>/i)?.[1] || '';
 }
 
 function findStructuredDataEntityViolations(html, relativeFile) {

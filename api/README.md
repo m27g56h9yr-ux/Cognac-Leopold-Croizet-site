@@ -33,3 +33,9 @@ Le fichier ne contient ni adresse e-mail, ni adresse IP, ni navigateur, ni URL r
 Un rapport contenant seulement les nouvelles lignes est envoyé au maximum une fois par période de 24 heures à `cognac@mdpierre.com`, lors de la première conversion qui suit l'échéance. La configuration peut être adaptée en copiant `conversion-config.sample.php` vers `conversion-config.php`.
 
 Le dossier `conversion-data/` et le fichier local `api/conversion-config.php` sont exclus des publications destructives afin de préserver les mesures déjà enregistrées.
+
+## Prix partenaires AV.ru
+
+Les pages produit russes chargent `/api/partner-offers.php?slug=...` à chaque visite. L’endpoint répond immédiatement depuis `partner-data/avru-offers.json`, puis tente en arrière-plan une actualisation de l’API produit AV.ru lorsque le relevé dépasse 15 minutes.
+
+Le cache n’est jamais public directement et il est conservé pendant les déploiements. `api/partner-offers-seed.json` fournit uniquement le relevé initial vérifié. Un prix n’est affiché et injecté dans `Product.offers` que pendant sept jours maximum, avec le vendeur AV.ru, la ville de Moscou, le format et la disponibilité correspondants. En cas d’échec, le bouton AV.ru reste visible sans prix trompeur.

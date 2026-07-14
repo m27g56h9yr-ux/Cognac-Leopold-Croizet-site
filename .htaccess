@@ -13,6 +13,9 @@ Options -Indexes
   # Conversion aggregates are server-side operational data, never public files.
   RewriteRule ^conversion-data(?:/|$) - [F,L]
 
+  # The live AV.ru price cache is served only through the validated API.
+  RewriteRule ^partner-data(?:/|$) - [F,L]
+
   # Prevent HTTP/2 connection reuse from serving the static site on the legacy
   # WordPress host. Browsers should retry the request on the correct vhost.
   RewriteCond %{HTTP_HOST} ^(?:www\.)?ancien\.cognac-leopold-croizet\.com$ [NC]
@@ -84,7 +87,7 @@ Options -Indexes
 </IfModule>
 
 <IfModule mod_headers.c>
-  <FilesMatch "^(?:newsletter|conversion)\.php$">
+  <FilesMatch "^(?:newsletter|conversion|partner-offers)\.php$">
     Header always set Cache-Control "no-store, max-age=0"
   </FilesMatch>
 </IfModule>

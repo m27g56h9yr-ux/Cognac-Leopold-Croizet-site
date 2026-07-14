@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const CONVERSION_TRACKING_ASSET = '/assets/js/conversion-tracking.js?v=20260714-1';
+const PARTNER_OFFER_ASSET = '/assets/js/partner-offers.js?v=20260714-1';
 const TODAY = '2026-07-09';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-07-07';
@@ -1587,7 +1588,7 @@ const productDetailsAccordionStyle = `<style id="lc-product-details-accordion-st
 .lc-product-details-accordion .lc-nutrition-meta dd{margin:0;color:#2f261d}
 @media(max-width:767px){.lc-product-details-actions{justify-content:center;gap:12px;flex-wrap:wrap;margin:16px auto 4px}.lc-product-details-accordion{flex:1 1 100%}.lc-product-details-accordion summary{text-align:center}.lc-product-sheet-link{order:2}.lc-product-details-body{max-width:100%;padding:16px}.lc-product-details-list div,.lc-product-details-accordion .lc-nutrition-meta{grid-template-columns:1fr;gap:3px}.lc-product-details-accordion .lc-nutrition-table{min-width:500px}}
 </style>`;
-const partnerOfferStyle = '<style id="lc-partner-offer-style">.container-btn-commander-produit.lc-partner-offer-control{align-items:stretch}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:108px;line-height:1.1;white-space:nowrap}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container span{line-height:1.1}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container small{display:block;font-size:10px;line-height:1.1;text-transform:uppercase;letter-spacing:0;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-list-price{text-transform:none;color:rgba(255,255,255,.78)}.container-btn-commander-produit.lc-partner-offer-control .btn-commander-produit{display:flex;align-items:center;justify-content:center}@media(max-width:767px){.container-btn-commander-produit.lc-partner-offer-control{font-size:.9rem}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{min-width:112px;padding-left:8px;padding-right:8px}}</style>';
+const partnerOfferStyle = '<style id="lc-partner-offer-style">.container-btn-commander-produit.lc-partner-offer-control{align-items:stretch}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:108px;line-height:1.1;white-space:normal;text-align:center}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container span{line-height:1.1;overflow-wrap:anywhere}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container small{display:block;font-size:10px;line-height:1.1;text-transform:uppercase;letter-spacing:0;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-list-price,.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-status{text-transform:none;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .btn-commander-produit{display:flex;align-items:center;justify-content:center}@media(max-width:767px){.container-btn-commander-produit.lc-partner-offer-control{font-size:.9rem}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{min-width:124px;padding-left:8px;padding-right:8px}}</style>';
 const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
 const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
 
@@ -2122,63 +2123,176 @@ const noindexRoutes = new Set([
   ...LEGACY_PROOF_ROUTES,
 ]);
 
-const partnerOrderLinks = new Map([
-  ['/ru/collection/vs/', 'https://av.ru/i/1021709'],
-  ['/ru/collection/vsop/', 'https://av.ru/i/174054'],
-  ['/ru/collection/napoleon/', 'https://av.ru/i/1020490'],
-  ['/ru/collection/xo/', 'https://av.ru/i/1020491'],
-  ['/ru/collection/xo-exception/', 'https://av.ru/i/1005624'],
-  ['/ru/collection/extra/', 'https://av.ru/i/174057'],
-  ['/ru/collection/excellence/', 'https://av.ru/i/231809'],
-  ['/ru/collection/valentine/', 'https://av.ru/i/178511'],
-]);
-
-const partnerOrderContexts = new Map([
-  ['/ru/collection/xo/', {
-    productName: 'Cognac Léopold\u00a0Croizet XO 35 cl',
-    size: '35 cl',
-    seller: 'AV.ru',
-  }],
-]);
-
-const sellerTrackingSourceLinks = new Map([
-  ...partnerOrderLinks,
-  ['/ru/collection/heritage/', 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage'],
-]);
-
 const SELLER_TRACKING_FILE = 'suivi-vendeurs.html';
 const SELLER_TRACKING_ENDPOINT = 'suivi-vendeurs-data.php';
-const SELLER_TRACKING_UPDATED_AT = '2026-07-07';
-const SELLER_TRACKING_UPDATED_LABEL = '7 juillet 2026';
-const SELLER_TRACKING_MAX_AGE_DAYS = 30;
-const sellerTrackingFallbacks = new Map([
-  ['vs', { price: 4490, evidence: 'Fiche AV.ru indexée : prix public 4 490 ₽.' }],
-  ['vsop', { price: 5480, listPrice: 6449, evidence: 'Collection AV.ru indexée : prix public 5 480 ₽, prix avant remise 6 449 ₽.' }],
-  ['napoleon', { price: 8490, evidence: 'Fiche AV.ru indexée : prix public 8 490 ₽.' }],
-  ['xo-exception', { price: 22980, evidence: 'Page marque AV.ru indexée : prix public 22 980 ₽.' }],
-  ['extra', { price: 57790, evidence: 'Page marque AV.ru indexée : prix public 57 790 ₽.' }],
-  ['excellence', { price: 76990, evidence: 'Collection AV.ru indexée : prix public 76 990 ₽.' }],
-  ['valentine', { price: 6490, listPrice: 7690, evidence: 'Page marque AV.ru indexée : prix public 6 490 ₽, prix avant remise 7 690 ₽.' }],
-]);
-const sellerTrackingManualNotes = new Map([
-  ['xo', {
-    status: 'Lien AV.ru validé pour le XO 35 cl',
-    notes: 'La fiche AV.ru concerne le même XO en 35 cl. Ce format est accepté comme destination d’achat faute de fiche XO 70 cl. Le bouton visible et le BuyAction indiquent 35 cl ; aucun prix ni Offer ne sont exposés tant qu’un prix AV.ru vérifiable n’est pas disponible.',
+const SELLER_TRACKING_UPDATED_AT = '2026-07-14';
+const SELLER_TRACKING_UPDATED_LABEL = '14 juillet 2026';
+const SELLER_TRACKING_MAX_AGE_DAYS = 7;
+
+const partnerListingEvidence = new Map([
+  ['/ru/collection/vs/', {
+    slug: 'vs',
+    url: 'https://av.ru/i/1021709',
+    productName: 'Cognac Léopold\u00a0Croizet VS',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 3790, availability: 'https://schema.org/InStock', stockLevel: 2 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 3 790 ₽ et 2 unités.',
+  }],
+  ['/ru/collection/vsop/', {
+    slug: 'vsop',
+    url: 'https://av.ru/i/174054',
+    productName: 'Cognac Léopold\u00a0Croizet VSOP',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur ; historique divergent le 13 juillet 2026.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 6449, availability: 'https://schema.org/InStock', stockLevel: 5 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. Après l’observation à 6 290 ₽ et 7 unités du 13 juillet, l’API AV.ru consultée à Moscou le 14 juillet 2026 indiquait 6 449 ₽ et 5 unités.',
+  }],
+  ['/ru/collection/napoleon/', {
+    slug: 'napoleon',
+    url: 'https://av.ru/i/1020490',
+    productName: 'Cognac Léopold\u00a0Croizet Napoléon',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 8490, availability: 'https://schema.org/InStock', stockLevel: 3 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 8 490 ₽ et 3 unités.',
+  }],
+  ['/ru/collection/xo/', {
+    slug: 'xo',
+    url: 'https://av.ru/i/1020491',
+    productName: 'Cognac Léopold\u00a0Croizet XO',
+    size: '35 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 8790, availability: 'https://schema.org/InStock', stockLevel: 1 },
+    notes: 'La fiche partenaire concerne le même XO en 35 cl, format accepté comme destination d’achat faute de fiche XO 70 cl. L’API AV.ru consultée à Moscou le 14 juillet 2026 indiquait 8 790 ₽ et 1 unité. Le produit officiel de la page reste le XO 70 cl.',
+  }],
+  ['/ru/collection/xo-exception/', {
+    slug: 'xo-exception',
+    url: 'https://av.ru/i/1005624',
+    productName: 'Cognac Léopold\u00a0Croizet XO Exception',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 22980, availability: 'https://schema.org/InStock', stockLevel: 1 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 22 980 ₽ et 1 unité.',
+  }],
+  ['/ru/collection/extra/', {
+    slug: 'extra',
+    url: 'https://av.ru/i/174057',
+    productName: 'Cognac Léopold\u00a0Croizet Extra',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 57790, availability: 'https://schema.org/OutOfStock', stockLevel: 0 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 57 790 ₽, avec un stock nul.',
+  }],
+  ['/ru/collection/excellence/', {
+    slug: 'excellence',
+    url: 'https://av.ru/i/231809',
+    productName: 'Cognac Léopold\u00a0Croizet Excellence',
+    size: '70 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 76990, availability: 'https://schema.org/InStock', stockLevel: 1 },
+    notes: 'La fiche produit et le format 70 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 76 990 ₽ et 1 unité.',
+  }],
+  ['/ru/collection/heritage/', {
+    slug: 'heritage',
+    url: 'https://av.ru/search/?freeText=Leopold%20Croizet%20Heritage',
+    productName: 'Cognac Léopold\u00a0Croizet Héritage',
+    size: null,
+    identityVerified: false,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Contexte géographique non déterminé ; contrôle serveur sans ville.',
+    httpStatus: 450,
+    status: 'manual_review',
+    notes: 'La destination reste une recherche AV.ru et non une fiche produit exacte. Aucun bouton partenaire, prix, disponibilité, Offer ou BuyAction n’est publié.',
+  }],
+  ['/ru/collection/valentine/', {
+    slug: 'valentine',
+    url: 'https://av.ru/i/178511',
+    productName: 'Cognac Léopold\u00a0Croizet Valentine XO',
+    size: '35 cl',
+    identityVerified: true,
+    checkedAt: '2026-07-14',
+    geographicContext: 'Moscou (msk), API AV.ru v1 consultée dans un navigateur.',
+    httpStatus: 200,
+    status: 'browser_verified',
+    offer: { price: 7690, availability: 'https://schema.org/InStock', stockLevel: 2 },
+    notes: 'La fiche produit et le format 35 cl sont confirmés. L’API AV.ru consultée dans un navigateur à Moscou le 14 juillet 2026 indiquait 7 690 ₽ et 2 unités.',
   }],
 ]);
-const sellerTrackingRows = ['vs', 'vsop', 'napoleon', 'xo', 'xo-exception', 'extra', 'excellence', 'heritage', 'valentine'].map((slug) => ({
-  product_slug: slug,
+
+const partnerOrderLinks = new Map(
+  [...partnerListingEvidence.entries()]
+    .filter(([, evidence]) => evidence.identityVerified)
+    .map(([route, evidence]) => [route, evidence.url]),
+);
+
+const partnerOrderContexts = new Map(
+  [...partnerListingEvidence.entries()]
+    .filter(([, evidence]) => evidence.identityVerified)
+    .map(([route, evidence]) => [route, {
+      productName: `${evidence.productName} ${evidence.size}`,
+      productLabel: productNames.get(evidence.slug) || evidence.slug,
+      size: evidence.size,
+      seller: 'AV.ru',
+    }]),
+);
+
+const partnerCommerceRouteLastmods = new Map([
+  ['/ru/collection/vs/', '2026-07-14'],
+  ['/ru/collection/vsop/', '2026-07-14'],
+  ['/ru/collection/napoleon/', '2026-07-14'],
+  ['/ru/collection/xo/', '2026-07-14'],
+  ['/ru/collection/xo-exception/', '2026-07-14'],
+  ['/ru/collection/extra/', '2026-07-14'],
+  ['/ru/collection/excellence/', '2026-07-14'],
+  ['/ru/collection/valentine/', '2026-07-14'],
+]);
+
+const sellerTrackingRows = [...partnerListingEvidence.values()].map((evidence) => ({
+  product_slug: evidence.slug,
   market_key: 'ru',
   market: 'Russie',
   seller: 'AV.ru',
-  product: sellerTrackingProductName(slug),
-  source_url: sellerTrackingSourceLinks.get(`/ru/collection/${slug}/`),
-  schema_status: sellerTrackingFallbackStatus(slug),
-  offers: sellerTrackingFallbackOffer(slug),
+  product: evidence.productName,
+  partner_size: evidence.size,
+  source_url: evidence.url,
+  checked_at: evidence.checkedAt,
+  geographic_context: evidence.geographicContext,
+  http_status: evidence.httpStatus,
+  schema_status: sellerTrackingStatus(evidence),
+  offers: sellerTrackingOffer(evidence),
   review: null,
   aggregateRating: null,
-  notes: sellerTrackingFallbackNotes(slug),
-  refresh_status: sellerTrackingFallbacks.has(slug) ? 'fallback' : 'manual_review',
+  notes: evidence.notes,
+  refresh_status: evidence.status,
 }));
 
 const sellerTrackingColumns = [
@@ -2193,58 +2307,49 @@ const sellerTrackingColumns = [
   { key: 'notes', title: 'Note', definition: 'Lecture humaine du résultat, notamment les limites ou absences détectées dans les données partenaires.' },
 ];
 
-function sellerTrackingProductName(slug) {
-  return `Cognac Léopold\u00a0Croizet ${productNames.get(slug) || slug}`;
-}
-
-function sellerTrackingFallbackOffer(slug) {
-  const fallback = sellerTrackingFallbacks.get(slug);
-  const url = sellerTrackingSourceLinks.get(`/ru/collection/${slug}/`);
-  if (!fallback || !fallback.price || !sellerTrackingOfferDataIsFresh()) return null;
+function sellerTrackingOffer(evidence, asOf = new Date()) {
+  const verifiedOffer = evidence.offer;
+  if (!verifiedOffer?.price || !verifiedOffer.availability || !sellerTrackingOfferDataIsFresh(evidence.checkedAt, asOf)) return null;
   const offer = {
     '@type': 'Offer',
-    price: fallback.price,
+    price: verifiedOffer.price,
     priceCurrency: 'RUB',
-    availability: 'https://schema.org/InStock',
+    availability: verifiedOffer.availability,
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@type': 'Organization', name: 'AV.ru' },
-    url,
+    url: evidence.url,
+    validFrom: evidence.checkedAt,
+    priceValidUntil: offerExpiryDate(evidence.checkedAt),
   };
-  if (fallback.listPrice) {
+  if (verifiedOffer.listPrice) {
     offer.priceSpecification = [
-      { '@type': 'UnitPriceSpecification', name: 'Prix public relevé', price: fallback.price, priceCurrency: 'RUB' },
-      { '@type': 'UnitPriceSpecification', name: 'Prix avant remise indiqué', price: fallback.listPrice, priceCurrency: 'RUB' },
+      { '@type': 'UnitPriceSpecification', name: 'Prix public relevé', price: verifiedOffer.price, priceCurrency: 'RUB' },
+      { '@type': 'UnitPriceSpecification', name: 'Prix avant remise indiqué', price: verifiedOffer.listPrice, priceCurrency: 'RUB' },
     ];
   }
   return offer;
 }
 
-function sellerTrackingOfferDataIsFresh(asOf = new Date()) {
-  const observedAt = new Date(`${SELLER_TRACKING_UPDATED_AT}T23:59:59Z`);
+function sellerTrackingOfferDataIsFresh(checkedAt, asOf = new Date()) {
+  const observedAt = new Date(`${checkedAt || ''}T23:59:59Z`);
   if (Number.isNaN(observedAt.getTime())) return false;
   const expiresAt = new Date(observedAt.getTime() + SELLER_TRACKING_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
   return asOf.getTime() <= expiresAt.getTime();
 }
 
-function sellerTrackingFallbackStatus(slug) {
-  if (sellerTrackingFallbacks.has(slug) && !sellerTrackingOfferDataIsFresh()) {
-    return 'Relevé AV.ru expiré - nouvelle vérification requise';
-  }
-  if (sellerTrackingFallbacks.has(slug)) return 'Valeurs AV.ru issues de l’index public';
-  return sellerTrackingManualNotes.get(slug)?.status || 'Fiche produit AV.ru non trouvée dans l’index public';
+function offerExpiryDate(checkedAt) {
+  const observedAt = new Date(`${checkedAt || ''}T00:00:00Z`);
+  if (Number.isNaN(observedAt.getTime())) return undefined;
+  return new Date(observedAt.getTime() + SELLER_TRACKING_MAX_AGE_DAYS * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
 }
 
-function sellerTrackingFallbackNotes(slug) {
-  const fallback = sellerTrackingFallbacks.get(slug);
-  const manualNote = sellerTrackingManualNotes.get(slug);
-  if (manualNote) return manualNote.notes;
-  if (fallback && !sellerTrackingOfferDataIsFresh()) {
-    return `Le relevé du ${SELLER_TRACKING_UPDATED_LABEL} a dépassé ${SELLER_TRACKING_MAX_AGE_DAYS} jours. Le bouton partenaire reste disponible, mais le prix, la disponibilité et l’Offer ne sont plus exposés avant une nouvelle vérification.`;
-  }
-  if (!fallback) {
-    return 'Le lien partenaire publié ouvre une recherche AV.ru. Aucune fiche produit AV.ru indexée fiable n’a été trouvée pour ce produit ; review et aggregateRating restent donc non exposés.';
-  }
-  return `${fallback.evidence} L’accès direct AV.ru reste restreint depuis les serveurs de contrôle ; review et aggregateRating ne sont pas exposés dans l’extrait public.`;
+function sellerTrackingStatus(evidence) {
+  if (sellerTrackingOffer(evidence)) return 'Offre AV.ru vérifiée et fraîche';
+  if (evidence.status === 'divergent') return 'Prix ou disponibilité divergents selon le contexte';
+  if (evidence.httpStatus === 450) return 'Contrôle direct bloqué (HTTP 450)';
+  return 'Vérification manuelle requise';
 }
 
 function isNoindexRoute(route) {
@@ -4839,6 +4944,7 @@ function sellerTrackingRuntimeScript() {
         const exportPayload = {
           updatedAt: payload.updatedAt || payload.updatedAtLabel || "",
           updatedAtLabel: payload.updatedAtLabel || "",
+          maxOfferAgeDays: payload.maxOfferAgeDays || ${SELLER_TRACKING_MAX_AGE_DAYS},
           rows
         };
         const jsonText = JSON.stringify(exportPayload, null, 2);
@@ -4860,8 +4966,8 @@ function sellerTrackingRuntimeScript() {
           const payload = await response.json();
           if (!payload || !Array.isArray(payload.rows)) throw new Error("Réponse incomplète");
           render(payload);
-          const fallbackCount = payload.rows.filter((row) => row && row.refresh_status === "fallback").length;
-          setStatus(fallbackCount ? "Valeurs chargées via index public (" + fallbackCount + ")" : "Données actualisées au chargement", "ok");
+          const restrictedCount = payload.rows.filter((row) => row && ["blocked", "divergent", "manual_review"].includes(row.refresh_status)).length;
+          setStatus(restrictedCount ? "Données commerciales non publiables (" + restrictedCount + ")" : "Données actualisées au chargement", restrictedCount ? "error" : "ok");
         } catch (error) {
           setStatus("Actualisation impossible : dernier relevé intégré affiché", "error");
         } finally {
@@ -5186,8 +5292,17 @@ function hardenHtml(html, route, file) {
   next = repairInactiveCommercePage(next, route);
   next = repairLegalNoticePage(next, route);
   next = repairCgvPage(next, route);
+  next = injectPartnerOfferRuntime(next, route);
   next = injectConversionTracking(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function injectPartnerOfferRuntime(html, route) {
+  const cleaned = html.replace(/\s*<script\b[^>]*id=["']lc-partner-offer-js["'][^>]*><\/script>\s*/gi, '\n');
+  const evidence = partnerListingEvidence.get(route);
+  if (languageForRoute(route) !== 'ru' || !evidence?.identityVerified) return cleaned;
+  const script = `<script id="lc-partner-offer-js" src="${PARTNER_OFFER_ASSET}" data-product-slug="${escapeHtml(evidence.slug)}" defer></script>`;
+  return /<\/body>/i.test(cleaned) ? cleaned.replace(/<\/body>/i, `${script}\n</body>`) : `${cleaned}\n${script}\n`;
 }
 
 function injectConversionTracking(html, route) {
@@ -7516,7 +7631,7 @@ function removePartnerVisibleOffer(html) {
 }
 
 function partnerOrderContextBox(context) {
-  return `<div class="prix-produit-container" data-partner-product-size="${escapeHtml(context.size)}" aria-label="${escapeHtml(`${context.seller} : ${context.productName.replace('\u00a0', ' ')}`)}"><small class="lc-partner-offer-seller">${escapeHtml(context.seller)}</small> <span>XO ${escapeHtml(context.size)}</span></div>`;
+  return `<div class="prix-produit-container" data-partner-product-size="${escapeHtml(context.size)}" aria-label="${escapeHtml(`${context.seller} : ${context.productName.replace('\u00a0', ' ')}`)}"><small class="lc-partner-offer-seller">${escapeHtml(context.seller)}</small> <span>${escapeHtml(context.productLabel)} ${escapeHtml(context.size)}</span></div>`;
 }
 
 function partnerOfferPriceBox(offer) {
@@ -8076,9 +8191,9 @@ function productVariantIdentifierProperties(slug) {
 }
 
 function productPartnerOffer(route, slug) {
-  if (languageForRoute(route) !== 'ru') return null;
-  if (productRouteForLang('ru', slug) !== route) return null;
-  return sellerTrackingFallbackOffer(slug);
+  // AV.ru prices are injected from the fresh same-origin cache at page render.
+  // Keeping the generated Product offer-free prevents stale static prices.
+  return null;
 }
 
 function productStructuredProperties(slug, lang = 'fr') {
@@ -8225,6 +8340,7 @@ function makeSitemap(routes) {
 }
 
 function lastmodForRoute(route) {
+  if (partnerCommerceRouteLastmods.has(route)) return partnerCommerceRouteLastmods.get(route);
   if (FAQ_ROUTES.includes(route)) return FAQ_PAGE_LASTMOD;
   if (PROOF_ROUTES.includes(route)) return PROOF_PAGE_LASTMOD;
   if (MEDAL_ROUTES.includes(route)) return MEDAL_PAGE_LASTMOD;

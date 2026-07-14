@@ -1,6 +1,7 @@
 /api/newsletter-config.php
 /api/conversion-config.php
 /conversion-data/
+/partner-data/
 .DS_Store
 
 # Local Codex/audit work artifacts
