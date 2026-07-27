@@ -2031,6 +2031,10 @@ nav.navbar .lc-language-menu.is-open > ul.lc-language-menu-list,
 }
 
 function repairScriptAsset(body, localPath) {
+  if (localPath === 'wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js') {
+    return ensureNewsletterClientScript(body);
+  }
+
   if (localPath === 'wp-content/themes/theme-site-pc/js/modal.js') {
     return `$(document).ready(function () {
     $("#age-legal").modal({
@@ -2065,6 +2069,32 @@ function repairScriptAsset(body, localPath) {
   }
 
   return body;
+}
+
+function ensureNewsletterClientScript(body) {
+  let repaired = body;
+  if (!repaired.includes("input[name='form_started_at']")) {
+    repaired = repaired.replace(
+      /(\$\(document\)\.ready\(function\s*\(\)\s*\{\s*)/,
+      `$1\n    $(".container-newsletter input[name='form_started_at']").val(Date.now().toString());\n`,
+    );
+  }
+
+  const missingOptions = [];
+  if (!/\bdataType\s*:\s*["']json["']/.test(repaired)) missingOptions.push('dataType: "json"');
+  if (!/\bjsonp\s*:\s*false/.test(repaired)) missingOptions.push('jsonp: false');
+  if (!/\btimeout\s*:\s*10000/.test(repaired)) missingOptions.push('timeout: 10000');
+
+  if (missingOptions.length) {
+    repaired = repaired.replace(
+      /(\n([ \t]*)data\s*:\s*data),?/,
+      (match, dataLine, indentation) => (
+        `${dataLine},\n${missingOptions.map((option) => `${indentation}${option},`).join('\n')}`
+      ),
+    );
+  }
+
+  return repaired;
 }
 
 function ensureLanguageMenuScript(body) {

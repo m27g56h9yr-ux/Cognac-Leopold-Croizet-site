@@ -10,13 +10,24 @@ newsletter-data/subscriptions.csv
 
 Chaque ligne contient la date d'enregistrement, l'adresse e-mail, la langue de la page, l'URL de la page, la version du consentement, l'adresse IP, le navigateur, la page d'origine et la langue du navigateur.
 
-Après chaque inscription valide, le script envoie le fichier CSV complet en pièce jointe à :
+Le parcours reste limité à un champ e-mail et un clic. Un champ piège hors écran et un horodatage technique fournissent seulement des signaux d'observation : ils ne provoquent aucun rejet, aucun CAPTCHA et aucune étape supplémentaire. Les décisions sont journalisées sans adresse e-mail ni adresse IP dans :
 
 ```text
-cognac@mdpierre.com
+newsletter-data/submission-risk.csv
 ```
 
-La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier l'adresse d'envoi ou le chemin du CSV, copier ce fichier en `newsletter-config.php`.
+Une adresse déjà présente, après suppression des espaces en début et fin et passage en minuscules, reçoit la même réponse de succès sans créer de deuxième ligne ni envoyer un deuxième courriel. Les points et suffixes propres à certains fournisseurs de messagerie ne sont pas modifiés.
+
+Après chaque inscription valide, le script envoie le fichier CSV complet en pièce jointe avec les adresses suivantes :
+
+```text
+Expéditeur : newsletter@cognac-leopold-croizet.com
+Destinataire : leo.croizet@free.fr
+```
+
+La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier le destinataire, l'expéditeur ou les chemins des fichiers CSV, copier ce fichier en `newsletter-config.php`.
+
+Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `leo.croizet@free.fr`.
 
 ## Mesure des conversions SEO/GEO
 

@@ -33,6 +33,8 @@
 
 $(document).ready(function () {
 
+    $(".container-newsletter input[name='form_started_at']").val(Date.now().toString());
+
     $(".container-newsletter").on("submit", function (event) {
         event.preventDefault();
 
@@ -58,6 +60,9 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             data: data,
+            dataType: "json",
+            jsonp: false,
+            timeout: 10000,
         }).done(function (response) {
             var data = typeof response === "string" ? $.parseJSON(response) : response;
             if (data && data.ok) {

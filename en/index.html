@@ -822,6 +822,11 @@ of our know-how.</p>
         By entering your email address, you agree to receive our latest news about our products and acknowledge our <a href="/mentions-legales/">legal notices</a>.
     </div>
 <div class="info-systeme"></div>
+    <div class="lc-newsletter-trap" aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+        <label for="newsletter-company-url">Leave this field empty</label>
+        <input type="text" id="newsletter-company-url" name="company_url" tabindex="-1" autocomplete="off" aria-label="Leave this field empty">
+    </div>
+    <input type="hidden" name="form_started_at" value="">
     <input type="email" name="newsletter" id="newsletter-email" placeholder="Leave us your email" autocomplete="email" inputmode="email" aria-describedby="newsletter-email-legal">
     <button type="submit">Send</button>
 

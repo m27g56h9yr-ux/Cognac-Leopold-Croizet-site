@@ -1411,6 +1411,8 @@ const PINEAU_SLUG = 'pineau-des-charentes';
 const PINEAU_RED_SLUG = 'pineau-des-charentes-rouge';
 
 const NEWSLETTER_INPUT_ID = 'newsletter-email';
+const NEWSLETTER_TRAP_ID = 'newsletter-company-url';
+const NEWSLETTER_STARTED_AT_NAME = 'form_started_at';
 
 const productImageAltRules = [
   [/img_prod_xo_exception_home|img_nom_produit_xo-exception/i, 'Cognac Léopold Croizet XO Exception'],
@@ -6235,6 +6237,14 @@ function repairNewsletterBlock(html, route) {
     (form) => {
       let next = form
         .replace(
+          /\s*<div\b(?=[^>]*class=["'][^"']*\blc-newsletter-trap\b[^"']*["'])[^>]*>[\s\S]*?<\/div>\s*/gi,
+          '\n',
+        )
+        .replace(
+          new RegExp(`\\s*<input\\b(?=[^>]*\\bname=["']${NEWSLETTER_STARTED_AT_NAME}["'])[^>]*>\\s*`, 'gi'),
+          '\n',
+        )
+        .replace(
           /<label\b[^>]*>[\s\S]*?<\/label>/i,
           `<label for="${NEWSLETTER_INPUT_ID}">${copy.label}</label>`,
         )
@@ -6252,6 +6262,16 @@ function repairNewsletterBlock(html, route) {
           input = setAttribute(input, 'aria-describedby', `${NEWSLETTER_INPUT_ID}-legal`);
           return input;
         });
+
+      const invisibleSignals = `<div class="lc-newsletter-trap" aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+        <label for="${NEWSLETTER_TRAP_ID}">Leave this field empty</label>
+        <input type="text" id="${NEWSLETTER_TRAP_ID}" name="company_url" tabindex="-1" autocomplete="off" aria-label="Leave this field empty">
+    </div>
+    <input type="hidden" name="${NEWSLETTER_STARTED_AT_NAME}" value="">`;
+      next = next.replace(
+        /<input\b(?=[^>]*\bname=["']newsletter["'])[^>]*>/i,
+        (input) => `${invisibleSignals}\n    ${input}`,
+      );
 
       next = next.replace(
         /(<button\b(?=[^>]*type=["']submit["'])[^>]*>)[\s\S]*?(<\/button>)/i,

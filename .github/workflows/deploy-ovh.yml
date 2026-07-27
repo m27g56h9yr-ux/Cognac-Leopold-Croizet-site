@@ -42,6 +42,40 @@ jobs:
           set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y php-cli
+          php -l api/newsletter.php
+          php -l scripts/test-newsletter-endpoint.php
+          newsletter_test_dir="$(mktemp -d)"
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+            php scripts/test-newsletter-endpoint.php normal > "$newsletter_test_dir/normal.json"
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+            php scripts/test-newsletter-endpoint.php duplicate > "$newsletter_test_dir/duplicate.json"
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+            php scripts/test-newsletter-endpoint.php honeypot > "$newsletter_test_dir/honeypot.json"
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+            php scripts/test-newsletter-endpoint.php concurrent > "$newsletter_test_dir/concurrent-1.json" &
+          newsletter_pid_1=$!
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+            php scripts/test-newsletter-endpoint.php concurrent > "$newsletter_test_dir/concurrent-2.json" &
+          newsletter_pid_2=$!
+          wait "$newsletter_pid_1"
+          wait "$newsletter_pid_2"
+          LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
+          LC_NEWSLETTER_RISK_LOG_PATH="$newsletter_test_dir" \
+            php scripts/test-newsletter-endpoint.php risk_log_failure > "$newsletter_test_dir/risk-log-failure.json"
+          for response in "$newsletter_test_dir"/*.json; do
+            grep -F '"ok":true' "$response"
+          done
+          grep -F '"status":"already_registered"' "$newsletter_test_dir/duplicate.json"
+          grep -F 'honeypot_filled' "$newsletter_test_dir/submission-risk.csv"
+          if grep -Eq 'person@example\.com|observed@example\.com|concurrent@example\.com|192\.0\.2\.10' "$newsletter_test_dir/submission-risk.csv"; then
+            echo "::error::Newsletter risk log contains personal test data"
+            exit 1
+          fi
+          test "$(wc -l < "$newsletter_test_dir/subscriptions.csv")" -eq 5
+          test "$(grep -c 'person@example.com' "$newsletter_test_dir/subscriptions.csv")" -eq 1
+          test "$(grep -c 'concurrent@example.com' "$newsletter_test_dir/subscriptions.csv")" -eq 1
+          test "$(grep -c 'riskfail@example.com' "$newsletter_test_dir/subscriptions.csv")" -eq 1
+          rm -rf "$newsletter_test_dir"
           php -l api/conversion.php
           php -l scripts/test-conversion-endpoint.php
           conversion_test_dir="$(mktemp -d)"
