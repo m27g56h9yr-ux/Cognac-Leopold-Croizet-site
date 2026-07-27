@@ -1,0 +1,240 @@
+name: One-time newsletter cleanup
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/newsletter-cleanup-once.yml"
+      - "scripts/newsletter-cleanup-once.php"
+      - "scripts/test-newsletter-cleanup-once.php"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ovh-production
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    name: Backup and clean newsletter CSV
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y lftp php-cli
+
+      - name: Test cleanup logic
+        shell: bash
+        run: |
+          set -euo pipefail
+          php -l scripts/newsletter-cleanup-once.php
+          php -l scripts/test-newsletter-cleanup-once.php
+          php scripts/test-newsletter-cleanup-once.php
+
+      - name: Verify newsletter storage is private
+        shell: bash
+        run: |
+          set -euo pipefail
+          storage_status="$(curl --silent --output /dev/null --write-out '%{http_code}' \
+            --connect-timeout 10 --max-time 20 \
+            "https://cognac-leopold-croizet.com/newsletter-data/subscriptions.csv")"
+          if [ "$storage_status" != "403" ]; then
+            echo "::error::Newsletter storage must be inaccessible before backup; received HTTP $storage_status"
+            exit 1
+          fi
+          echo "Newsletter storage is protected from public HTTP access (403)."
+
+      - name: Stage and run locked cleanup
+        env:
+          SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
+          SFTP_USERNAME: ${{ secrets.OVH_SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
+          SFTP_TARGET_DIR: ${{ secrets.OVH_SFTP_TARGET_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +x
+          umask 077
+
+          : "${SFTP_HOST:?Missing GitHub secret OVH_SFTP_HOST}"
+          : "${SFTP_USERNAME:?Missing GitHub secret OVH_SFTP_USERNAME}"
+          : "${SFTP_PASSWORD:?Missing GitHub secret OVH_SFTP_PASSWORD}"
+          : "${SFTP_TARGET_DIR:?Missing GitHub secret OVH_SFTP_TARGET_DIR}"
+          if [ "$SFTP_TARGET_DIR" != "." ]; then
+            echo "::error::OVH_SFTP_TARGET_DIR must be '.'"
+            exit 1
+          fi
+
+          cleanup_token="$(openssl rand -hex 32)"
+          echo "::add-mask::$cleanup_token"
+          work_dir="$RUNNER_TEMP/newsletter-cleanup"
+          mkdir -p "$work_dir"
+          cp scripts/newsletter-cleanup-once.php "$work_dir/newsletter-cleanup-20260727.php"
+          printf '%s' "$cleanup_token" > "$work_dir/cleanup-token"
+          chmod 600 "$work_dir/newsletter-cleanup-20260727.php" "$work_dir/cleanup-token"
+
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_COMMANDS
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set sftp:auto-confirm yes
+          put "$work_dir/cleanup-token" -o "newsletter-data/.newsletter-cleanup-20260727.token"
+          chmod 640 "newsletter-data/.newsletter-cleanup-20260727.token"
+          put "$work_dir/newsletter-cleanup-20260727.php" -o "api/newsletter-cleanup-20260727.php"
+          chmod 640 "api/newsletter-cleanup-20260727.php"
+          bye
+          LFTP_COMMANDS
+
+          response_file="$RUNNER_TEMP/newsletter-cleanup-response.json"
+          set +e
+          http_status="$(curl --silent --show-error \
+            --request POST \
+            --header "X-Newsletter-Cleanup-Token: $cleanup_token" \
+            --header "Cache-Control: no-cache" \
+            --connect-timeout 10 \
+            --max-time 30 \
+            --output "$response_file" \
+            --write-out '%{http_code}' \
+            "https://cognac-leopold-croizet.com/api/newsletter-cleanup-20260727.php")"
+          curl_status=$?
+          set -e
+
+          if [ "$curl_status" -eq 0 ] && [ "$http_status" = "200" ] && php -r '
+            $result = json_decode(file_get_contents($argv[1]), true);
+            if (!is_array($result)
+              || ($result["ok"] ?? false) !== true
+              || !in_array(
+                ($result["status"] ?? ""),
+                ["cleaned", "cleaned_after_recovery", "recovered_done"],
+                true
+              )
+              || ($result["spam_removed"] ?? 0) !== 7
+              || ($result["test_removed"] ?? 0) !== 1
+            ) {
+              exit(1);
+            }
+          ' "$response_file"; then
+            echo "Locked cleanup returned a valid completion response."
+          else
+            echo "::warning::Cleanup response was inconclusive; the independent SFTP verification will decide the result."
+          fi
+
+      - name: Verify remote backup and cleaned CSV
+        env:
+          SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
+          SFTP_USERNAME: ${{ secrets.OVH_SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +x
+          umask 077
+          verify_dir="$RUNNER_TEMP/newsletter-cleanup-verification"
+          mkdir -p "$verify_dir"
+
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_COMMANDS
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          set sftp:auto-confirm yes
+          get "newsletter-data/subscriptions.csv" -o "$verify_dir/subscriptions.csv"
+          get "newsletter-data/backups/subscriptions-pre-antibot-20260727.csv" -o "$verify_dir/backup.csv"
+          get "newsletter-data/backups/cleanup-pre-antibot-20260727.done.json" -o "$verify_dir/marker.json"
+          bye
+          LFTP_COMMANDS
+
+          LC_NEWSLETTER_CLEANUP_LIBRARY_ONLY=1 php -r '
+            define("LC_NEWSLETTER_CLEANUP_LIBRARY_ONLY", true);
+            require $argv[1];
+            $current = lc_parse_newsletter_csv(file_get_contents($argv[2]));
+            $backup = lc_parse_newsletter_csv(file_get_contents($argv[3]));
+            $backupPartition = lc_partition_rows($backup);
+            $currentPartition = lc_partition_rows($current);
+            $marker = json_decode(file_get_contents($argv[4]), true);
+            $markerRows = (int) ($marker["kept_rows"] ?? -1);
+            $snapshotRows = $markerRows >= 0
+              ? array_slice($current, 0, $markerRows)
+              : [];
+            if ($backupPartition["spam_removed"] !== 7
+              || $backupPartition["test_removed"] !== 1
+              || $currentPartition["spam_removed"] !== 0
+              || $currentPartition["test_removed"] !== 0
+              || !lc_rows_start_with($current, $backupPartition["kept_rows"])
+              || !is_array($marker)
+              || ($marker["spam_removed"] ?? 0) !== 7
+              || ($marker["test_removed"] ?? 0) !== 1
+              || $markerRows < count($backupPartition["kept_rows"])
+              || $markerRows > count($current)
+              || ($marker["backup_sha256"] ?? "") !== hash("sha256", file_get_contents($argv[3]))
+              || ($marker["after_sha256"] ?? "") !== hash("sha256", lc_encode_newsletter_csv($snapshotRows))
+            ) {
+              fwrite(STDERR, "Remote verification failed\n");
+              exit(1);
+            }
+            printf(
+              "Remote CSV verified: %d retained row(s), backup verified, no reviewed target remains.\n",
+              count($current)
+            );
+          ' \
+            scripts/newsletter-cleanup-once.php \
+            "$verify_dir/subscriptions.csv" \
+            "$verify_dir/backup.csv" \
+            "$verify_dir/marker.json"
+
+          backup_status="$(curl --silent --output /dev/null --write-out '%{http_code}' \
+            --connect-timeout 10 --max-time 20 \
+            "https://cognac-leopold-croizet.com/newsletter-data/backups/subscriptions-pre-antibot-20260727.csv")"
+          if [ "$backup_status" != "403" ]; then
+            echo "::error::Newsletter backup must remain publicly inaccessible; received HTTP $backup_status"
+            exit 1
+          fi
+          echo "Remote backup is protected from public HTTP access (403)."
+
+      - name: Remove one-time endpoint and token
+        if: always()
+        env:
+          SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
+          SFTP_USERNAME: ${{ secrets.OVH_SFTP_USERNAME }}
+          SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +x
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_COMMANDS
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 2
+          set sftp:auto-confirm yes
+          rm -f "newsletter-data/.newsletter-cleanup-20260727.token"
+          rm -f "api/newsletter-cleanup-20260727.php"
+          bye
+          LFTP_COMMANDS
+
+          cleanup_listing="$RUNNER_TEMP/newsletter-cleanup-listing.txt"
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" > "$cleanup_listing" <<LFTP_COMMANDS
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 2
+          set sftp:auto-confirm yes
+          cls -1a "api"
+          cls -1a "newsletter-data"
+          bye
+          LFTP_COMMANDS
+          if grep -Fq "newsletter-cleanup-20260727.php" "$cleanup_listing" \
+            || grep -Fq ".newsletter-cleanup-20260727.token" "$cleanup_listing"; then
+            echo "::error::One-time newsletter maintenance files remain on OVH"
+            exit 1
+          fi
+          echo "One-time endpoint and token are absent from OVH."
