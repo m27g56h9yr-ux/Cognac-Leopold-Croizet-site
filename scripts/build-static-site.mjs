@@ -1520,7 +1520,7 @@ function correctRussianProductCopy(html, route) {
   const copy = slug ? RUSSIAN_PRODUCT_COPY[slug] : null;
   if (!copy) return html;
 
-  return html
+  let translated = html
     .replace(
       /(<div class="container-histoire-produit">[\s\S]*?<div class="donnees">)[\s\S]*?(<\/div>\s*<\/div>)/,
       `$1${copy.history}$2`,
