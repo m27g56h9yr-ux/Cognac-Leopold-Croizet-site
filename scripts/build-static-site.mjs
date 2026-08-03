@@ -1439,7 +1439,28 @@ function localizeRussianStaticHtml(html, route) {
       'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
     );
 
+  localized = correctRussianVsopCopy(localized, route);
+
   return applyRussianOrderLinks(removeRussianPrices(applyRussianSeo(localized, route)), route);
+}
+
+function correctRussianVsopCopy(html, route) {
+  if (route !== '/ru/collection/vsop/') return html;
+
+  return html
+    .replace(
+      /(<div class="container-histoire-produit">[\s\S]*?<div class="donnees">)[\s\S]*?(<\/div>\s*<\/div>)/,
+      '$1VSOP Léopold Croizet — округлый, насыщенный коньяк. Первые годы выдержки в бочках придают ему ноты сливового и абрикосового конфитюра. Древесина дуба добавляет ванильные оттенки, а в свежем послевкусии раскрывается гвоздика.$2',
+    )
+    .replace(/(<div class="donnees-vue">)[\s\S]*?(<\/div>)/, '$1Золотисто-жёлтый$2')
+    .replace(
+      /(<div class="donnees-odorat">)[\s\S]*?(<\/div>)/,
+      '$1Сбалансированный, округлый аромат: дуб и ваниль. Тонкие ноты томлёных фруктов — чернослива и абрикоса.$2',
+    )
+    .replace(
+      /(<div class="donnees-gout">)[\s\S]*?(<\/div>)/,
+      '$1Богатый, объёмный вкус с ярким фруктовым характером, типичным для крю Fins Bois. Финал свежий, с нотой гвоздики.$2',
+    );
 }
 
 function removeRussianPrices(html) {
