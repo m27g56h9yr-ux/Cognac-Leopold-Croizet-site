@@ -25,6 +25,14 @@ Expéditeur : newsletter@cognac-leopold-croizet.com
 Destinataire : leo.croizet@free.fr
 ```
 
+La pièce jointe porte un nom propre au site, compatible avec les traitements automatisés :
+
+```text
+cognac-leopold-croizet-newsletter-inscriptions-AAAAMMJJ-HHMMSS-utc.csv
+```
+
+Ce nom permet d'identifier immédiatement Cognac Léopold Croizet et l'instant d'envoi sans modifier le stockage serveur, qui reste `newsletter-data/subscriptions.csv`.
+
 La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier le destinataire, l'expéditeur ou les chemins des fichiers CSV, copier ce fichier en `newsletter-config.php`.
 
 Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `leo.croizet@free.fr`.
@@ -50,3 +58,5 @@ Le dossier `conversion-data/` et le fichier local `api/conversion-config.php` so
 Les pages produit russes chargent `/api/partner-offers.php?slug=...` à chaque visite. L’endpoint répond immédiatement depuis `partner-data/avru-offers.json`, puis tente en arrière-plan une actualisation de l’API produit AV.ru lorsque le relevé dépasse 15 minutes.
 
 Le cache n’est jamais public directement et il est conservé pendant les déploiements. `api/partner-offers-seed.json` fournit uniquement le relevé initial vérifié. Un prix n’est affiché et injecté dans `Product.offers` que pendant sept jours maximum, avec le vendeur AV.ru, la ville de Moscou, le format et la disponibilité correspondants. En cas d’échec, le bouton AV.ru reste visible sans prix trompeur.
+
+Pour les pages russes VS et VSOP, chaque modèle 35 cl, 70 cl ou coffret pointe vers sa propre fiche AV.ru et charge son propre prix. Le XO n’affiche actuellement une offre que pour le modèle 35 cl, seul format dont la fiche vendeur exacte est vérifiée. Lorsqu’aucune fiche exacte n’est connue pour le modèle choisi, le contrôle de commande est masqué au lieu de reprendre le prix d’un autre format.

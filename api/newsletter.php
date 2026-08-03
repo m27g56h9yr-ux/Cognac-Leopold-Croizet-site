@@ -278,6 +278,7 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
 
     $csv = (string) file_get_contents($csvPath);
     $boundary = 'lc-newsletter-' . bin2hex(random_bytes(12));
+    $attachmentFilename = newsletter_attachment_filename();
     $to = (string) $config['notification_to'];
     $from = (string) $config['notification_from'];
     $siteName = (string) $config['site_name'];
@@ -290,11 +291,11 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
         '',
         'Une nouvelle adresse e-mail a été enregistrée : ' . $email,
         '',
-        'Le fichier complet newsletter-data/subscriptions.csv est joint à cet e-mail.',
+        'Le fichier complet newsletter-data/subscriptions.csv est joint sous le nom : ' . $attachmentFilename,
         '',
         '--' . $boundary,
-        'Content-Type: text/csv; charset=UTF-8; name="subscriptions.csv"',
-        'Content-Disposition: attachment; filename="subscriptions.csv"',
+        'Content-Type: text/csv; charset=UTF-8; name="' . $attachmentFilename . '"',
+        'Content-Disposition: attachment; filename="' . $attachmentFilename . '"',
         'Content-Transfer-Encoding: base64',
         '',
         chunk_split(base64_encode($csv)),
@@ -310,6 +311,13 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
     ];
 
     return mail($to, encoded_subject($subject), implode("\r\n", $body), implode("\r\n", $headers));
+}
+
+function newsletter_attachment_filename(): string
+{
+    return 'cognac-leopold-croizet-newsletter-inscriptions-'
+        . gmdate('Ymd-His')
+        . '-utc.csv';
 }
 
 function encoded_subject(string $subject): string

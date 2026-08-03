@@ -67,9 +67,34 @@ expect(endpoint.includes("'risk_log_path'"), 'endpoint: separate risk log path m
 expect(endpoint.includes("'created' => false"), 'endpoint: exact duplicate handling missing');
 expect(endpoint.includes("'already_registered'"), 'endpoint: duplicate success response missing');
 expect(endpoint.includes("'honeypot_filled'"), 'endpoint: honeypot observation signal missing');
+expect(
+  /function\s+newsletter_attachment_filename\(\):\s*string/.test(endpoint),
+  'endpoint: site-specific attachment filename helper missing',
+);
+expect(
+  endpoint.includes("'cognac-leopold-croizet-newsletter-inscriptions-'"),
+  'endpoint: attachment filename must identify Cognac Léopold Croizet',
+);
+expect(endpoint.includes("gmdate('Ymd-His')"), 'endpoint: attachment filename timestamp missing');
+expect(
+  endpoint.includes(`'Content-Type: text/csv; charset=UTF-8; name="' . $attachmentFilename . '"'`),
+  'endpoint: MIME content name must use the site-specific attachment filename',
+);
+expect(
+  endpoint.includes(`'Content-Disposition: attachment; filename="' . $attachmentFilename . '"'`),
+  'endpoint: MIME attachment filename must use the site-specific filename',
+);
+expect(
+  !endpoint.includes('filename="subscriptions.csv"') && !endpoint.includes('name="subscriptions.csv"'),
+  'endpoint: generic newsletter attachment filename must not return',
+);
 expect(generator.includes('lc-newsletter-trap'), 'generator: durable honeypot markup missing');
 expect(builder.includes('ensureNewsletterClientScript'), 'builder: durable newsletter client repair missing');
 expect(readme.includes('aucun rejet, aucun CAPTCHA'), 'documentation: non-blocking behavior missing');
+expect(
+  readme.includes('cognac-leopold-croizet-newsletter-inscriptions-AAAAMMJJ-HHMMSS-utc.csv'),
+  'documentation: site-specific attachment filename convention missing',
+);
 
 if (failures.length) {
   console.error(failures.join('\n'));

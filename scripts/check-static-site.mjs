@@ -68,7 +68,7 @@ const productImageAltRules = [
 ];
 const russianPartnerPages = [
   { slug: 'vs', url: 'https://av.ru/i/1021709', productName: 'Cognac Léopold\u00a0Croizet VS', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'vsop', url: 'https://av.ru/i/174054', productName: 'Cognac Léopold\u00a0Croizet VSOP', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14', forbiddenUrls: ['https://av.ru/i/1016261'] },
+  { slug: 'vsop', url: 'https://av.ru/i/174054', productName: 'Cognac Léopold\u00a0Croizet VSOP', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
   { slug: 'napoleon', url: 'https://av.ru/i/1020490', productName: 'Cognac Léopold\u00a0Croizet Napoléon', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
   { slug: 'xo', url: 'https://av.ru/i/1020491', productName: 'Cognac Léopold\u00a0Croizet XO', partnerSize: '35 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
   { slug: 'xo-exception', url: 'https://av.ru/i/1005624', productName: 'Cognac Léopold\u00a0Croizet XO Exception', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
@@ -378,6 +378,49 @@ async function findPartnerOfferViolations() {
   const trackingRows = new Map((trackingPayload?.rows || []).map((row) => [row.product_slug, row]));
   const sitemap = await readFile(path.join(ROOT, 'sitemap.xml'), 'utf8');
   const sellerEndpoint = await readFile(path.join(ROOT, 'suivi-vendeurs-data.php'), 'utf8');
+  const partnerSeed = JSON.parse(await readFile(path.join(ROOT, 'api/partner-offers-seed.json'), 'utf8'));
+  const partnerRuntime = await readFile(path.join(ROOT, 'assets/js/partner-offers.js'), 'utf8');
+  const partnerLibrary = await readFile(path.join(ROOT, 'api/partner-offers-lib.php'), 'utf8');
+  const expectedVariantOffers = [
+    { offerSlug: 'vs', modelKey: '700 ml', productId: '1021709', partnerSize: '70 cl' },
+    { offerSlug: 'vs-350', modelKey: '350 ml', productId: '533004', partnerSize: '35 cl' },
+    { offerSlug: 'vsop', modelKey: '700 ml', productId: '174054', partnerSize: '70 cl' },
+    { offerSlug: 'vsop-350', modelKey: '350 ml', productId: '234764', partnerSize: '35 cl' },
+    { offerSlug: 'vsop-gift', modelKey: 'vsop-gift-set-70cl-2-glasses', productId: '1016261', partnerSize: '70 cl + 2 бокала' },
+    { offerSlug: 'xo', modelKey: '350 ml', productId: '1020491', partnerSize: '35 cl' },
+  ];
+
+  if (!partnerRuntime.includes("event.target.closest('[data-product-model-option], [data-volume-option]')")) {
+    violations.push('assets/js/partner-offers.js: product model click listener is missing');
+  }
+  if (!partnerRuntime.includes('if (!config.schemaEligible) return')) {
+    violations.push('assets/js/partner-offers.js: non-primary variants must remain excluded from Product Offer JSON-LD');
+  }
+  for (const expected of expectedVariantOffers) {
+    const offer = partnerSeed?.offers?.[expected.offerSlug];
+    if (!offer) {
+      violations.push(`api/partner-offers-seed.json: missing variant offer ${expected.offerSlug}`);
+      continue;
+    }
+    if (offer.productId !== expected.productId || offer.url !== `https://av.ru/i/${expected.productId}`) {
+      violations.push(`api/partner-offers-seed.json: product identity mismatch for ${expected.offerSlug}`);
+    }
+    if (offer.partnerSize !== expected.partnerSize) {
+      violations.push(`api/partner-offers-seed.json: format mismatch for ${expected.offerSlug}`);
+    }
+    if (!Number.isFinite(Number(offer.price)) || Number(offer.price) <= 0) {
+      violations.push(`api/partner-offers-seed.json: invalid price for ${expected.offerSlug}`);
+    }
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(offer.checkedAt || '')) {
+      violations.push(`api/partner-offers-seed.json: browser verification timestamp missing for ${expected.offerSlug}`);
+    }
+    if (!partnerLibrary.includes(`'${expected.offerSlug}' => ['productId' => '${expected.productId}'`)) {
+      violations.push(`api/partner-offers-lib.php: refresh definition missing for ${expected.offerSlug}`);
+    }
+    if (!partnerRuntime.includes(`'${expected.modelKey}'`) || !partnerRuntime.includes(`https://av.ru/i/${expected.productId}`)) {
+      violations.push(`assets/js/partner-offers.js: model mapping missing for ${expected.offerSlug}`);
+    }
+  }
 
   if (trackingPayload?.maxOfferAgeDays !== 7) {
     violations.push(`suivi-vendeurs.html: maxOfferAgeDays must be 7, found ${trackingPayload?.maxOfferAgeDays ?? 'missing'}`);

@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const PUBLIC_ORIGIN = 'https://cognac-leopold-croizet.com';
 const CONVERSION_TRACKING_ASSET = '/assets/js/conversion-tracking.js?v=20260714-1';
-const PARTNER_OFFER_ASSET = '/assets/js/partner-offers.js?v=20260714-1';
+const PARTNER_OFFER_ASSET = '/assets/js/partner-offers.js?v=20260803-1';
 const TODAY = '2026-07-09';
 const SOURCE_PAGE_LASTMOD = '2026-06-26';
 const FAQ_PAGE_LASTMOD = '2026-07-07';

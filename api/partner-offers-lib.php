@@ -8,7 +8,10 @@ function lc_partner_definitions(): array
 {
     return [
         'vs' => ['productId' => '1021709', 'productName' => 'Cognac Léopold Croizet VS', 'partnerSize' => '70 cl', 'grams' => 700, 'tokens' => ['croizet', 'vs']],
+        'vs-350' => ['productId' => '533004', 'productName' => 'Cognac Léopold Croizet VS', 'partnerSize' => '35 cl', 'grams' => 350, 'tokens' => ['croizet', 'vs']],
         'vsop' => ['productId' => '174054', 'productName' => 'Cognac Léopold Croizet VSOP', 'partnerSize' => '70 cl', 'grams' => 700, 'tokens' => ['croizet', 'vsop']],
+        'vsop-350' => ['productId' => '234764', 'productName' => 'Cognac Léopold Croizet VSOP', 'partnerSize' => '35 cl', 'grams' => 350, 'tokens' => ['croizet', 'vsop']],
+        'vsop-gift' => ['productId' => '1016261', 'productName' => 'Cognac Léopold Croizet VSOP', 'partnerSize' => '70 cl + 2 бокала', 'grams' => 700, 'tokens' => ['croizet', 'vsop', '2 бокала']],
         'napoleon' => ['productId' => '1020490', 'productName' => 'Cognac Léopold Croizet Napoléon', 'partnerSize' => '70 cl', 'grams' => 700, 'tokens' => ['croizet', 'napoleon']],
         'xo' => ['productId' => '1020491', 'productName' => 'Cognac Léopold Croizet XO', 'partnerSize' => '35 cl', 'grams' => 350, 'tokens' => ['croizet', 'xo']],
         'xo-exception' => ['productId' => '1005624', 'productName' => 'Cognac Léopold Croizet XO Exception', 'partnerSize' => '70 cl', 'grams' => 700, 'tokens' => ['croizet', 'exception', 'xo']],
