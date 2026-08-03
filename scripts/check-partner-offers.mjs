@@ -33,9 +33,12 @@ const [seedRaw, client, sourceClient, endpoint, library, htaccess, workflow] = a
 ]);
 
 const seed = JSON.parse(seedRaw);
-const expected = {
-  vs: ['1021709', '70 cl', 3790, 'InStock'],
-  vsop: ['174054', '70 cl', 6449, 'InStock'],
+const expectedOffers = {
+  vs: ['1021709', '70 cl', 4490, 'InStock'],
+  'vs-350': ['533004', '35 cl', 3390, 'InStock'],
+  vsop: ['174054', '70 cl', 5490, 'InStock'],
+  'vsop-350': ['234764', '35 cl', 3990, 'InStock'],
+  'vsop-gift': ['1016261', '70 cl + 2 бокала', 8990, 'InStock'],
   napoleon: ['1020490', '70 cl', 8490, 'InStock'],
   xo: ['1020491', '35 cl', 8790, 'InStock'],
   'xo-exception': ['1005624', '70 cl', 22980, 'InStock'],
@@ -43,12 +46,25 @@ const expected = {
   excellence: ['231809', '70 cl', 76990, 'InStock'],
   valentine: ['178511', '35 cl', 7690, 'InStock'],
 };
+const expectedPages = {
+  vs: '1021709',
+  vsop: '174054',
+  napoleon: '1020490',
+  xo: '1020491',
+  'xo-exception': '1005624',
+  extra: '174057',
+  excellence: '231809',
+  valentine: '178511',
+};
 
 expect(seed.maxAgeSeconds === 604800, 'seed: maximum offer age must be seven days');
 expect(seed.refreshIntervalSeconds === 900, 'seed: refresh interval must be fifteen minutes');
-expect(Object.keys(seed.offers || {}).length === 8, 'seed: exactly eight exact AV.ru fiches are expected');
+expect(
+  Object.keys(seed.offers || {}).length === Object.keys(expectedOffers).length,
+  `seed: exactly ${Object.keys(expectedOffers).length} exact AV.ru fiches are expected`,
+);
 
-for (const [slug, [productId, partnerSize, price, availability]] of Object.entries(expected)) {
+for (const [slug, [productId, partnerSize, price, availability]] of Object.entries(expectedOffers)) {
   const offer = seed.offers?.[slug];
   expect(offer?.productId === productId, `${slug}: partner product id mismatch`);
   expect(offer?.partnerSize === partnerSize, `${slug}: partner format mismatch`);
@@ -56,7 +72,9 @@ for (const [slug, [productId, partnerSize, price, availability]] of Object.entri
   expect(offer?.availability === `https://schema.org/${availability}`, `${slug}: availability mismatch`);
   expect(offer?.url === `https://av.ru/i/${productId}`, `${slug}: partner URL mismatch`);
   expect(/Z$/.test(offer?.checkedAt || ''), `${slug}: checkedAt must be an absolute UTC timestamp`);
+}
 
+for (const [slug, productId] of Object.entries(expectedPages)) {
   const relativeFile = `ru/collection/${slug}/index.html`;
   const html = await readFile(path.join(ROOT, relativeFile), 'utf8');
   expect(new RegExp(`id=["']lc-partner-offer-js["'][^>]+data-product-slug=["']${slug}["']`).test(html), `${relativeFile}: dynamic offer loader missing`);
@@ -80,7 +98,10 @@ for (const required of ['/api/partner-offers.php?slug=', 'lcPartnerOfferReady', 
 }
 expect(!client.includes('av.ru/occ/api'), 'client: cross-origin AV.ru API calls are forbidden');
 expect(client === sourceClient, 'client: generated partner loader must match its static-assets source');
-expect(client.includes('offerMatchesProductSize'), 'client: partner and official product formats must be compared before injecting Offer');
+expect(
+  client.includes('sizeInMilliliters') && client.includes('partnerSize !== productSize'),
+  'client: partner and official product formats must be compared before injecting Offer',
+);
 expect(endpoint.includes('fastcgi_finish_request'), 'endpoint: background refresh response flush missing');
 expect(library.includes('/occ/api/v1/products/'), 'library: AV.ru product API missing');
 expect(library.includes('LOCK_EX | LOCK_NB'), 'library: refresh lock missing');
@@ -96,5 +117,5 @@ if (failures.length) {
   console.error(failures.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log('Checked dynamic AV.ru offers on 8 Russian product pages.');
+  console.log(`Checked ${Object.keys(expectedOffers).length} dynamic AV.ru offers on ${Object.keys(expectedPages).length} Russian product pages.`);
 }
