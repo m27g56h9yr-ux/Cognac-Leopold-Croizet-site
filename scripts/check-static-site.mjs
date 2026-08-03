@@ -80,6 +80,7 @@ const russianPartnerPages = [
 
 await walk(ROOT);
 partnerOfferViolations.push(...await findPartnerOfferViolations());
+partnerOfferViolations.push(...await findRussianRetailerEntryPointViolations());
 
 for (const file of checkedFiles) {
   const text = await readFile(file, 'utf8');
@@ -443,6 +444,54 @@ async function findPartnerOfferViolations() {
     violations.push('ru/collection/vsop/index.html: a Moscow-specific or divergent AV.ru price remains visible');
   }
 
+  return violations;
+}
+
+async function findRussianRetailerEntryPointViolations() {
+  const violations = [];
+  const homeFile = path.join(ROOT, 'ru/index.html');
+  const collectionFile = path.join(ROOT, 'ru/a-faire/index.html');
+  const home = await readFile(homeFile, 'utf8');
+  const collection = await readFile(collectionFile, 'utf8');
+  const collectionUrl = 'https://av.ru/collections/cognac_pierre_croizet';
+
+  if ((home.match(/class="lc-ru-retailer"/g) || []).length !== 1) {
+    violations.push('ru/index.html: expected exactly one Russian retailer home block');
+  }
+  if (!home.includes('Где купить в России') || !home.includes('Азбука вкуса')) {
+    violations.push('ru/index.html: Russian retailer home copy is incomplete');
+  }
+  if (!home.includes(`href="${collectionUrl}"`)) {
+    violations.push('ru/index.html: Russian retailer collection link is missing');
+  }
+  if (!home.includes('id="lc-russian-retailer-style"') || !collection.includes('id="lc-russian-retailer-style"')) {
+    violations.push('Russian retailer editorial styling is missing from the home or collection page');
+  }
+
+  const expectedLinks = russianPartnerPages.filter((item) => item.url).map((item) => item.url);
+  const cardLinks = [...collection.matchAll(/<a\b(?=[^>]*class="[^"]*\blc-ru-retailer-card-link\b)[^>]*>/gi)]
+    .map((match) => match[0].match(/\bhref="([^"]+)"/i)?.[1])
+    .filter(Boolean);
+  if (cardLinks.length !== expectedLinks.length) {
+    violations.push(`ru/a-faire/index.html: expected ${expectedLinks.length} verified Azbuka card links, found ${cardLinks.length}`);
+  }
+  for (const expectedLink of expectedLinks) {
+    if (cardLinks.filter((href) => href === expectedLink).length !== 1) {
+      violations.push(`ru/a-faire/index.html: expected one editorial card link to ${expectedLink}`);
+    }
+  }
+  for (const href of cardLinks) {
+    if (!expectedLinks.includes(href)) {
+      violations.push(`ru/a-faire/index.html: unverified editorial card link published (${href})`);
+    }
+  }
+
+  for (const relativeFile of ['index.html', 'en/index.html', 'da/index.html', 'sv/index.html', 'no/index.html', 'zh/index.html', 'collection/index.html', 'en/shop/index.html', 'da/shop/index.html', 'sv/shop/index.html', 'no/shop/index.html', 'zh/shop/index.html']) {
+    const localized = await readFile(path.join(ROOT, relativeFile), 'utf8');
+    if (/\blc-ru-retailer(?:-card-link)?\b/.test(localized)) {
+      violations.push(`${relativeFile}: Russian retailer entry point leaked into another locale`);
+    }
+  }
   return violations;
 }
 

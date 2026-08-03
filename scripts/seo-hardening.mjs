@@ -2267,6 +2267,18 @@ const partnerOrderContexts = new Map(
     }]),
 );
 
+const RUSSIAN_RETAILER_COLLECTION_URL = 'https://av.ru/collections/cognac_pierre_croizet';
+const RUSSIAN_RETAILER_STYLE = `<style id="lc-russian-retailer-style">
+.lc-ru-retailer{box-sizing:border-box;max-width:1000px;margin:42px auto 8px;padding:20px 3px;display:flex;align-items:center;justify-content:space-between;gap:30px;border-top:1px solid #cdbb9f;border-bottom:1px solid #cdbb9f;color:#303030}.lc-ru-retailer-copy{display:flex;align-items:baseline;gap:17px;min-width:0}.lc-ru-retailer-eyebrow{margin:0;color:#895006;font-family:"Montserrat",Arial,sans-serif;font-size:10px;line-height:1.4;letter-spacing:.18em;text-transform:uppercase}.lc-ru-retailer-title{margin:0;color:#303030;font-family:"Playfair Display",Georgia,serif;font-size:22px;line-height:1.15;font-weight:400;white-space:nowrap}.lc-ru-retailer-cta,.lc-ru-retailer-card-link{display:inline-flex;align-items:center;color:#895006!important;border-bottom:1px solid #895006;text-decoration:none!important;font-family:"Montserrat",Arial,sans-serif}.lc-ru-retailer-cta{min-height:34px;padding:0 2px 3px;font-size:10px;line-height:1.25;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}.lc-ru-retailer-card-link{margin-top:12px;padding:0 0 3px;font-size:9px;line-height:1.25;letter-spacing:.02em;white-space:nowrap}.lc-ru-retailer-arrow{margin-left:6px}.lc-ru-retailer-cta:hover,.lc-ru-retailer-card-link:hover{color:#303030!important;border-bottom-color:#303030}@media(max-width:700px){.lc-ru-retailer{display:block;margin:24px 20px 2px;padding:18px 0}.lc-ru-retailer-copy{display:block}.lc-ru-retailer-eyebrow{margin-bottom:7px}.lc-ru-retailer-title{white-space:normal}.lc-ru-retailer-cta{margin-top:13px}.lc-ru-retailer-card-link{font-size:8px;line-height:1.25;letter-spacing:0;white-space:nowrap}.container-collection-produit .informations-produit-collection{margin-bottom:12px}}
+</style>`;
+const RUSSIAN_RETAILER_HOME_BLOCK = `<section class="lc-ru-retailer" aria-labelledby="lc-ru-retailer-title">
+<div class="lc-ru-retailer-copy">
+<p class="lc-ru-retailer-eyebrow">Где купить в России</p>
+<h2 class="lc-ru-retailer-title" id="lc-ru-retailer-title">Азбука вкуса</h2>
+</div>
+<a class="lc-ru-retailer-cta" href="${RUSSIAN_RETAILER_COLLECTION_URL}" target="_blank" rel="noopener sponsored" aria-label="Смотреть коллекцию Cognac Léopold Croizet в «Азбуке вкуса»">Смотреть коллекцию <span class="lc-ru-retailer-arrow" aria-hidden="true">↗</span></a>
+</section>`;
+
 const partnerCommerceRouteLastmods = new Map([
   ['/ru/collection/vs/', '2026-07-14'],
   ['/ru/collection/vsop/', '2026-07-14'],
@@ -5285,6 +5297,7 @@ function hardenHtml(html, route, file) {
   next = removeUnavailableOrderControls(next, route);
   next = restorePartnerOrderButton(next, route);
   next = syncPartnerVisibleOffer(next, route);
+  next = injectRussianRetailerEntryPoints(next, route);
   next = normalizeGithubPagesLinks(next, route);
   next = injectFilmNavigationLink(next, route);
   next = repairLanguageMenuLinks(next, route);
@@ -5297,6 +5310,60 @@ function hardenHtml(html, route, file) {
   next = injectPartnerOfferRuntime(next, route);
   next = injectConversionTracking(next, route);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
+}
+
+function injectRussianRetailerEntryPoints(html, route) {
+  let next = html
+    .replace(/\s*<style\b[^>]*id=["']lc-russian-retailer-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<section\b[^>]*class=["'][^"']*\blc-ru-retailer\b[^"']*["'][^>]*>[\s\S]*?<\/section>\s*/gi, '\n')
+    .replace(/\s*<a\b[^>]*class=["'][^"']*\blc-ru-retailer-card-link\b[^"']*["'][^>]*>[\s\S]*?<\/a>\s*/gi, '\n');
+
+  if (route !== '/ru/' && route !== '/ru/a-faire/') return next;
+  next = next.replace(/<\/head>/i, `${RUSSIAN_RETAILER_STYLE}\n</head>`);
+
+  if (route === '/ru/') {
+    return next.replace(
+      /(<div class="container-front-page">)/,
+      `${RUSSIAN_RETAILER_HOME_BLOCK}\n$1`,
+    );
+  }
+
+  for (const [productRoute, href] of partnerOrderLinks) {
+    const context = partnerOrderContexts.get(productRoute);
+    const productName = context?.productName?.replace(/\s+(?:35|70) cl$/, '') || 'Cognac Léopold Croizet';
+    const link = `<a class="lc-ru-retailer-card-link" href="${href}" target="_blank" rel="noopener sponsored" aria-label="Купить ${escapeHtml(productName.replace('\u00a0', ' '))} в «Азбуке вкуса»">Купить в «Азбуке вкуса» <span class="lc-ru-retailer-arrow" aria-hidden="true">↗</span></a>`;
+    next = insertInsideCollectionCardInformation(next, productRoute, link);
+  }
+  return next;
+}
+
+function insertInsideCollectionCardInformation(html, productRoute, content) {
+  const pageStart = html.indexOf('<div class="container-page">');
+  if (pageStart < 0) return html;
+  const anchorIndex = html.indexOf(`href="${productRoute}"`, pageStart);
+  if (anchorIndex < 0) return html;
+  const infoIndex = html.indexOf('<div class="informations-produit-collection">', anchorIndex);
+  if (infoIndex < 0) return html;
+
+  const nextCardIndex = html.indexOf('<div class="container-collection-produit', anchorIndex + 1);
+  if (nextCardIndex >= 0 && infoIndex > nextCardIndex) return html;
+
+  const closingIndex = closingDivIndex(html, infoIndex);
+  if (closingIndex < 0 || (nextCardIndex >= 0 && closingIndex > nextCardIndex)) return html;
+  return `${html.slice(0, closingIndex)}${content}\n${html.slice(closingIndex)}`;
+}
+
+function closingDivIndex(html, openingIndex) {
+  const tagPattern = /<\/?div\b[^>]*>/gi;
+  tagPattern.lastIndex = openingIndex;
+  let depth = 0;
+  let match;
+  while ((match = tagPattern.exec(html))) {
+    if (match[0].startsWith('</')) depth -= 1;
+    else depth += 1;
+    if (depth === 0) return match.index;
+  }
+  return -1;
 }
 
 function injectPartnerOfferRuntime(html, route) {
