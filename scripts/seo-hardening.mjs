@@ -1225,6 +1225,23 @@ const productVolumeOrderBySlug = new Map([
   ['napoleon', ['700 ml', '1 L']],
 ]);
 
+const VSOP_GIFT_SET_MODEL = 'vsop-gift-set-70cl-2-glasses';
+const productModelOptionsBySlug = new Map([
+  ['vs', [
+    { key: '700 ml', volume: '700 ml' },
+    { key: '350 ml', volume: '350 ml' },
+  ]],
+  ['vsop', [
+    { key: '700 ml', volume: '700 ml' },
+    { key: '350 ml', volume: '350 ml' },
+    { key: VSOP_GIFT_SET_MODEL, volume: '' },
+  ]],
+  ['xo', [
+    { key: '700 ml', volume: '700 ml' },
+    { key: '350 ml', volume: '350 ml' },
+  ]],
+]);
+
 // The GENCOD workbook lists the Pineau 75 row with a wrong check digit; this map uses the corrected GTIN-13 key.
 
 const nutritionProductSlugs = new Set(NUTRITION_PRODUCT_SLUGS);
@@ -1592,7 +1609,19 @@ const productDetailsAccordionStyle = `<style id="lc-product-details-accordion-st
 </style>`;
 const partnerOfferStyle = '<style id="lc-partner-offer-style">.container-btn-commander-produit.lc-partner-offer-control{align-items:stretch}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:108px;line-height:1.1;white-space:normal;text-align:center}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container span{line-height:1.1;overflow-wrap:anywhere}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container small{display:block;font-size:10px;line-height:1.1;text-transform:uppercase;letter-spacing:0;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-list-price,.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container .lc-partner-offer-status{text-transform:none;color:rgba(255,255,255,.86)}.container-btn-commander-produit.lc-partner-offer-control .btn-commander-produit{display:flex;align-items:center;justify-content:center}@media(max-width:767px){.container-btn-commander-produit.lc-partner-offer-control{font-size:.9rem}.container-btn-commander-produit.lc-partner-offer-control .prix-produit-container{min-width:124px;padding-left:8px;padding-right:8px}}</style>';
 const productVolumeSelectorStyle = '<style id="lc-product-volume-selector-style">.lc-product-volume-select{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.lc-product-volume-select-toggle{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:92px;padding:4px 10px;border:1px solid rgba(114,104,88,.36);background:#fffdf9;color:#2f261d;font:inherit;line-height:1.25;cursor:pointer}.lc-product-volume-select-toggle::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}.lc-product-volume-select-toggle[aria-expanded="true"]{border-color:#9b7a35;background:#fff8eb}.lc-product-volume-options{position:absolute;left:0;top:calc(100% + 4px);z-index:30;min-width:100%;padding:4px;border:1px solid rgba(114,104,88,.34);background:#fffdf9;box-shadow:0 10px 22px rgba(47,38,29,.14)}.lc-product-volume-options[hidden]{display:none}.lc-product-volume-options button{display:block;width:100%;min-width:92px;padding:5px 9px;border:0;background:transparent;color:#2f261d;font:inherit;line-height:1.25;text-align:left;cursor:pointer;white-space:nowrap}.lc-product-volume-options button:hover,.lc-product-volume-options button[aria-selected="true"]{background:#f3ebdf;color:#2f261d}@media(max-width:767px){.lc-product-volume-select-toggle,.lc-product-volume-options button{min-height:32px}}</style>';
-const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function selectProductVolume(selector,volume){var selected=selector.querySelector("[data-selected-volume]");if(selected)selected.textContent=volume;selector.querySelectorAll("[data-volume-option]").forEach(function(option){option.setAttribute("aria-selected",String(option.dataset.volumeOption===volume));});var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=row.dataset.gtinForVolume!==volume;});}}document.addEventListener("click",function(event){var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductVolume(optionSelector,option.dataset.volumeOption);closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
+const productModelSelectorStyle = `<style id="lc-product-model-selector-style">
+.container-informations-produit.lc-product-model-row{align-items:flex-start}
+.lc-product-model-row .label{width:24%;min-height:34px;align-items:center}
+.lc-product-model-row .donnees{width:72%;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.lc-product-model-option{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:6px 10px;border:1px solid #895006;border-radius:3px;background:transparent;color:#895006;font-family:"Montserrat",Arial,sans-serif;font-size:11px;line-height:1.15;text-align:center;cursor:pointer;transition:background-color .18s ease,color .18s ease,border-color .18s ease}
+.lc-product-model-option:hover{background:#f3ebdf}
+.lc-product-model-option[aria-pressed="true"]{border-color:#895006;background:#895006;color:#fffdf9}
+.lc-product-model-option:focus-visible{outline:2px solid #b58a46;outline-offset:2px}
+.lc-product-model-option--gift{flex:0 1 auto}
+@media(max-width:767px){.lc-product-model-row .label{width:27%;font-size:.94rem}.lc-product-model-row .donnees{width:70%;gap:6px}.lc-product-model-option{min-height:34px;padding:6px 9px;font-size:10px}.lc-product-model-option--gift{flex:1 1 100%}}
+@media(max-width:480px){.lc-product-model-row .label{width:100%;min-height:auto;margin-bottom:8px;justify-content:flex-start;gap:8px}.lc-product-model-row .label span{display:none}.lc-product-model-row .donnees{width:100%}.lc-product-model-option{flex:1 1 72px}.lc-product-model-option--gift{flex-basis:100%}}
+</style>`;
+const productVolumeSelectorScript = `<script id="lc-product-volume-selector-script">(function(){function closeVolumeSelector(selector){var toggle=selector.querySelector("[data-volume-toggle]");var options=selector.querySelector("[data-volume-options]");if(toggle)toggle.setAttribute("aria-expanded","false");if(options)options.hidden=true;}function optionVolume(option){return option.hasAttribute("data-volume-value")?option.getAttribute("data-volume-value"):option.dataset.volumeOption;}function selectProductModel(modelKey,volume){document.querySelectorAll("[data-product-model-option]").forEach(function(button){button.setAttribute("aria-pressed",String(button.dataset.productModelOption===modelKey));});document.querySelectorAll("[data-volume-selector]").forEach(function(selector){var selected=selector.querySelector("[data-selected-volume]");var selectedOption=null;selector.querySelectorAll("[data-volume-option]").forEach(function(option){var isSelected=option.dataset.volumeOption===modelKey;option.setAttribute("aria-selected",String(isSelected));if(isSelected)selectedOption=option;});if(selected)selected.textContent=selectedOption?selectedOption.textContent:modelKey;var details=selector.closest(".lc-product-details-accordion");if(details){details.querySelectorAll("[data-gtin-for-volume]").forEach(function(row){row.hidden=!volume||row.dataset.gtinForVolume!==volume;});}});}document.addEventListener("click",function(event){var modelButton=event.target.closest("[data-product-model-option]");if(modelButton){selectProductModel(modelButton.dataset.productModelOption,modelButton.getAttribute("data-volume-value")||"");return;}var toggle=event.target.closest("[data-volume-toggle]");if(toggle){var selector=toggle.closest("[data-volume-selector]");var options=selector&&selector.querySelector("[data-volume-options]");if(!selector||!options)return;var willOpen=options.hidden;document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);toggle.setAttribute("aria-expanded",String(willOpen));options.hidden=!willOpen;return;}var option=event.target.closest("[data-volume-option]");if(option){var optionSelector=option.closest("[data-volume-selector]");if(!optionSelector)return;selectProductModel(option.dataset.volumeOption,optionVolume(option));closeVolumeSelector(optionSelector);return;}if(!event.target.closest("[data-volume-selector]")){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});document.addEventListener("keydown",function(event){if(event.key==="Escape"){document.querySelectorAll("[data-volume-selector]").forEach(closeVolumeSelector);}});})();</script>`;
 
 const imageDimensionCache = new Map();
 
@@ -6835,6 +6864,7 @@ function injectProductDetailsAccordion(html, route) {
     .replace(/\s*<style\b[^>]*id=["']lc-product-nutrition-link-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-details-accordion-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<style\b[^>]*id=["']lc-product-volume-selector-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
+    .replace(/\s*<style\b[^>]*id=["']lc-product-model-selector-style["'][^>]*>[\s\S]*?<\/style>\s*/gi, '\n')
     .replace(/\s*<script\b[^>]*id=["']lc-product-volume-selector-script["'][^>]*>[\s\S]*?<\/script>\s*/gi, '\n')
     .replace(/\s*<div\b[^>]*class=["'][^"']*\blc-product-nutrition-link\b[^"']*["'][^>]*>[\s\S]*?<\/div>\s*/gi, '\n')
     .replace(/\s*<a\b[^>]*class=["'][^"']*\blc-product-sheet-link\b[^"']*["'][\s\S]*?<\/a>\s*/gi, '\n')
@@ -6844,6 +6874,7 @@ function injectProductDetailsAccordion(html, route) {
   const lang = languageForRoute(route);
   const block = productDetailsAccordionHtml(product, lang);
   next = next.replace(/(\s*<\/main><\/div>)/i, `${block}$1`);
+  next = injectProductModelSelector(next, product, lang);
 
   if (!next.includes('id="lc-product-details-accordion-style"')) {
     next = next.replace(/<\/head>/i, `${productDetailsAccordionStyle}\n</head>`);
@@ -6851,11 +6882,38 @@ function injectProductDetailsAccordion(html, route) {
   if (block.includes('data-volume-selector') && !next.includes('id="lc-product-volume-selector-style"')) {
     next = next.replace(/<\/head>/i, `${productVolumeSelectorStyle}\n</head>`);
   }
-  if (block.includes('data-volume-selector') && !next.includes('id="lc-product-volume-selector-script"')) {
+  if (next.includes('data-product-model-selector') && !next.includes('id="lc-product-model-selector-style"')) {
+    next = next.replace(/<\/head>/i, `${productModelSelectorStyle}\n</head>`);
+  }
+  if ((block.includes('data-volume-selector') || next.includes('data-product-model-selector')) && !next.includes('id="lc-product-volume-selector-script"')) {
     next = next.replace(/<\/body>/i, `${productVolumeSelectorScript}\n</body>`);
   }
 
   return next;
+}
+
+function injectProductModelSelector(html, product, lang) {
+  const models = productModelOptionsBySlug.get(product.slug) || [];
+  if (!models.length) return html;
+
+  const block = productModelSelectorHtml(product, lang, models);
+  const markedBlock = `<!-- lc-product-model-selector-start -->\n${block}\n<!-- lc-product-model-selector-end -->`;
+  const existing = /<!-- lc-product-model-selector-start -->[\s\S]*?<!-- lc-product-model-selector-end -->/i;
+  if (existing.test(html)) return html.replace(existing, markedBlock);
+
+  const legacyVolumeRow = /<div class="container-informations-produit">\s*<div class="label">(?:(?!<\/div>)[\s\S])*?<\/div>\s*<div class="donnees">\s*(?:70\s*cl|700\s*ml)\s*<\/div>\s*<img\b[^>]*separateur_page_prod[^>]*>\s*<\/div>/i;
+  return legacyVolumeRow.test(html) ? html.replace(legacyVolumeRow, markedBlock) : html;
+}
+
+function productModelSelectorHtml(product, lang, models) {
+  const copy = productModelCopy(lang);
+  const selectedKey = gtinVolumeGroup(product.volume);
+  const buttons = models.map((model) => {
+    const selected = model.key === selectedKey;
+    const giftClass = model.key === VSOP_GIFT_SET_MODEL ? ' lc-product-model-option--gift' : '';
+    return `<button type="button" class="lc-product-model-option${giftClass}" data-product-model-option="${escapeHtml(model.key)}" data-volume-value="${escapeHtml(model.volume)}" aria-pressed="${selected ? 'true' : 'false'}">${escapeHtml(productModelLabel(model.key, lang))}</button>`;
+  }).join('');
+  return `<div class="container-informations-produit lc-product-model-row" data-product-model-selector data-product-slug="${escapeHtml(product.slug)}"><div class="label">${escapeHtml(copy.label)}<span> | </span></div><div class="donnees" role="group" aria-label="${escapeHtml(copy.aria)}">${buttons}</div><img src="/wp-content/uploads/2021/06/separateur_page_prod.png" alt="" width="771" height="2" decoding="async" loading="lazy"></div>`;
 }
 
 function productDetailsAccordionHtml(product, lang) {
@@ -7025,13 +7083,44 @@ function productDetailsCopy(lang) {
   }[lang] || productDetailsCopy('fr');
 }
 
+function productModelCopy(lang) {
+  return {
+    fr: { label: 'Modèle', aria: 'Choisir le modèle' },
+    en: { label: 'Model', aria: 'Choose the model' },
+    ru: { label: 'Модель', aria: 'Выбрать модель' },
+    da: { label: 'Model', aria: 'Vælg model' },
+    sv: { label: 'Modell', aria: 'Välj modell' },
+    no: { label: 'Modell', aria: 'Velg modell' },
+    zh: { label: '型号', aria: '选择型号' },
+  }[lang] || productModelCopy('fr');
+}
+
+function productModelLabel(modelKey, lang) {
+  if (modelKey === '700 ml') return '70 cl';
+  if (modelKey === '350 ml') return '35 cl';
+  if (modelKey !== VSOP_GIFT_SET_MODEL) return modelKey;
+  return {
+    fr: 'Coffret 70 cl + 2 verres',
+    en: 'Gift set 70 cl + 2 glasses',
+    ru: 'Набор 70 cl + 2 бокала',
+    da: 'Gaveæske 70 cl + 2 glas',
+    sv: 'Presentask 70 cl + 2 glas',
+    no: 'Gavesett 70 cl + 2 glass',
+    zh: '70 cl 礼盒 + 2只酒杯',
+  }[lang] || productModelLabel(modelKey, 'fr');
+}
+
+function productModelVolume(productSlug, modelKey) {
+  return (productModelOptionsBySlug.get(productSlug) || []).find((model) => model.key === modelKey)?.volume ?? modelKey;
+}
+
 function productDetailRows(product, copy, lang) {
   const volumeOptions = productVolumeOptions(product);
   const hasVolumeSelector = volumeOptions.length > 1;
   const rows = [
     productDetailRow(copy.category, productDetailCategory(product, lang)),
     productDetailRow(copy.origin, copy.originValue),
-    productDetailRow(copy.volume, hasVolumeSelector ? productVolumeSelectorHtml(product, copy, volumeOptions) : product.volume, { html: hasVolumeSelector }),
+    productDetailRow(copy.volume, hasVolumeSelector ? productVolumeSelectorHtml(product, copy, volumeOptions, lang) : product.volume, { html: hasVolumeSelector }),
     productDetailRow(copy.abv, product.abv),
     productDetailRow(copy.grapes, product.grapes),
   ];
@@ -7066,14 +7155,17 @@ function productGtinDetailRow(label, size, gtin13, defaultVolume, hasVolumeSelec
 
 function productVolumeOptions(product) {
   const configured = productVolumeOrderBySlug.get(product.slug);
-  if (configured) return configured;
-
   const volumes = [];
   const add = (value) => {
     const volume = gtinVolumeGroup(value);
     if (volume && !volumes.includes(volume)) volumes.push(volume);
   };
   add(product.volume);
+  for (const model of productModelOptionsBySlug.get(product.slug) || []) add(model.key);
+  if (configured) {
+    for (const volume of configured) add(volume);
+    return volumes;
+  }
   const primary = productPrimaryGtins.get(product.slug);
   if (primary) add(primary.size);
   for (const variant of productGtinVariants.get(product.slug) || []) {
@@ -7082,12 +7174,12 @@ function productVolumeOptions(product) {
   return volumes;
 }
 
-function productVolumeSelectorHtml(product, copy, volumeOptions) {
+function productVolumeSelectorHtml(product, copy, volumeOptions, lang) {
   const selectedVolume = gtinVolumeGroup(product.volume);
   const options = volumeOptions.map((volume) => (
-    `<button type="button" role="option" data-volume-option="${escapeHtml(volume)}" aria-selected="${volume === selectedVolume ? 'true' : 'false'}">${escapeHtml(volume)}</button>`
+    `<button type="button" role="option" data-volume-option="${escapeHtml(volume)}" data-volume-value="${escapeHtml(productModelVolume(product.slug, volume))}" aria-selected="${volume === selectedVolume ? 'true' : 'false'}">${escapeHtml(productModelLabel(volume, lang))}</button>`
   )).join('');
-  return `<div class="lc-product-volume-select" data-volume-selector><button type="button" class="lc-product-volume-select-toggle" data-volume-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="${escapeHtml(copy.volumeSelectAria)}"><span data-selected-volume>${escapeHtml(selectedVolume)}</span></button><div class="lc-product-volume-options" data-volume-options role="listbox" aria-label="${escapeHtml(copy.volumeOptionsAria)}" hidden>${options}</div></div>`;
+  return `<div class="lc-product-volume-select" data-volume-selector><button type="button" class="lc-product-volume-select-toggle" data-volume-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="${escapeHtml(copy.volumeSelectAria)}"><span data-selected-volume>${escapeHtml(productModelLabel(selectedVolume, lang))}</span></button><div class="lc-product-volume-options" data-volume-options role="listbox" aria-label="${escapeHtml(copy.volumeOptionsAria)}" hidden>${options}</div></div>`;
 }
 
 function gtinVolumeGroup(value) {

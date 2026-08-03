@@ -24,6 +24,7 @@ const languageMenuViolations = [];
 const partnerOfferViolations = [];
 const russianTranslationViolations = [];
 const structuredDataEntityViolations = [];
+const productModelSelectorViolations = [];
 const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
 const languageMenuExpectedHreflangs = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'];
@@ -81,6 +82,7 @@ const russianPartnerPages = [
 await walk(ROOT);
 partnerOfferViolations.push(...await findPartnerOfferViolations());
 partnerOfferViolations.push(...await findRussianRetailerEntryPointViolations());
+productModelSelectorViolations.push(...await findProductModelSelectorViolations());
 
 for (const file of checkedFiles) {
   const text = await readFile(file, 'utf8');
@@ -147,6 +149,7 @@ if (
   || partnerOfferViolations.length
   || russianTranslationViolations.length
   || structuredDataEntityViolations.length
+  || productModelSelectorViolations.length
 ) {
   if (missing.length) {
     console.error('Missing local targets:');
@@ -233,10 +236,48 @@ if (
     for (const item of structuredDataEntityViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
+  if (productModelSelectorViolations.length) {
+    console.error('Product model selector regressions:');
+    for (const item of productModelSelectorViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
   process.exit(1);
 }
 
 console.log(`Checked ${checkedFiles.length} HTML/CSS files`);
+
+async function findProductModelSelectorViolations() {
+  const violations = [];
+  const expectedModels = new Map([
+    ['vs', ['700 ml', '350 ml']],
+    ['vsop', ['700 ml', '350 ml', 'vsop-gift-set-70cl-2-glasses']],
+    ['xo', ['700 ml', '350 ml']],
+  ]);
+
+  for (const lang of siteLanguages) {
+    const prefix = lang === 'fr' ? '' : `${lang}/`;
+    for (const [slug, models] of expectedModels) {
+      const relativeFile = `${prefix}collection/${slug}/index.html`;
+      const html = await readFile(path.join(ROOT, relativeFile), 'utf8');
+      if ((html.match(/data-product-model-selector/g) || []).length !== 1) {
+        violations.push(`${relativeFile}: expected exactly one visible model selector`);
+      }
+      if (!html.includes('id="lc-product-model-selector-style"') || !html.includes('id="lc-product-volume-selector-script"')) {
+        violations.push(`${relativeFile}: model selector styling or synchronization script is missing`);
+      }
+      for (const model of models) {
+        if (!html.includes(`data-product-model-option="${model}"`)) {
+          violations.push(`${relativeFile}: visible model option is missing (${model})`);
+        }
+        if (!html.includes(`data-volume-option="${model}"`)) {
+          violations.push(`${relativeFile}: Details volume option is not connected (${model})`);
+        }
+      }
+    }
+  }
+
+  return violations;
+}
 
 function findRussianTranslationViolations(html, relativeFile) {
   if (!/^ru\/collection\/[^/]+\/index\.html$/.test(relativeFile)) return [];
