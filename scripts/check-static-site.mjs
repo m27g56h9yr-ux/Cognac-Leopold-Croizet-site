@@ -250,13 +250,16 @@ async function findProductModelSelectorViolations() {
   const violations = [];
   const expectedModels = new Map([
     ['vs', ['700 ml', '350 ml']],
-    ['vsop', ['700 ml', '350 ml', 'vsop-gift-set-70cl-2-glasses']],
+    ['vsop', ['700 ml', '350 ml']],
     ['xo', ['700 ml', '350 ml']],
   ]);
 
   for (const lang of siteLanguages) {
     const prefix = lang === 'fr' ? '' : `${lang}/`;
-    for (const [slug, models] of expectedModels) {
+    for (const [slug, baseModels] of expectedModels) {
+      const models = slug === 'vsop' && lang === 'ru'
+        ? [...baseModels, 'vsop-gift-set-70cl-2-glasses']
+        : baseModels;
       const relativeFile = `${prefix}collection/${slug}/index.html`;
       const html = await readFile(path.join(ROOT, relativeFile), 'utf8');
       if ((html.match(/data-product-model-selector/g) || []).length !== 1) {
@@ -272,6 +275,9 @@ async function findProductModelSelectorViolations() {
         if (!html.includes(`data-volume-option="${model}"`)) {
           violations.push(`${relativeFile}: Details volume option is not connected (${model})`);
         }
+      }
+      if (slug === 'vsop' && lang !== 'ru' && html.includes('vsop-gift-set-70cl-2-glasses')) {
+        violations.push(`${relativeFile}: Russia-only gift set is exposed outside the Russian locale`);
       }
     }
   }

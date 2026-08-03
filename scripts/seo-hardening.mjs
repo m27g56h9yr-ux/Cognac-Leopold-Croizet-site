@@ -6893,7 +6893,7 @@ function injectProductDetailsAccordion(html, route) {
 }
 
 function injectProductModelSelector(html, product, lang) {
-  const models = productModelOptionsBySlug.get(product.slug) || [];
+  const models = productModelOptions(product.slug, lang);
   if (!models.length) return html;
 
   const block = productModelSelectorHtml(product, lang, models);
@@ -6903,6 +6903,11 @@ function injectProductModelSelector(html, product, lang) {
 
   const legacyVolumeRow = /<div class="container-informations-produit">\s*<div class="label">(?:(?!<\/div>)[\s\S])*?<\/div>\s*<div class="donnees">\s*(?:70\s*cl|700\s*ml)\s*<\/div>\s*<img\b[^>]*separateur_page_prod[^>]*>\s*<\/div>/i;
   return legacyVolumeRow.test(html) ? html.replace(legacyVolumeRow, markedBlock) : html;
+}
+
+function productModelOptions(productSlug, lang) {
+  const models = productModelOptionsBySlug.get(productSlug) || [];
+  return models.filter((model) => model.key !== VSOP_GIFT_SET_MODEL || lang === 'ru');
 }
 
 function productModelSelectorHtml(product, lang, models) {
@@ -7115,7 +7120,7 @@ function productModelVolume(productSlug, modelKey) {
 }
 
 function productDetailRows(product, copy, lang) {
-  const volumeOptions = productVolumeOptions(product);
+  const volumeOptions = productVolumeOptions(product, lang);
   const hasVolumeSelector = volumeOptions.length > 1;
   const rows = [
     productDetailRow(copy.category, productDetailCategory(product, lang)),
@@ -7153,7 +7158,7 @@ function productGtinDetailRow(label, size, gtin13, defaultVolume, hasVolumeSelec
   return productDetailRow(label, gtin13, { attrs });
 }
 
-function productVolumeOptions(product) {
+function productVolumeOptions(product, lang) {
   const configured = productVolumeOrderBySlug.get(product.slug);
   const volumes = [];
   const add = (value) => {
@@ -7161,7 +7166,7 @@ function productVolumeOptions(product) {
     if (volume && !volumes.includes(volume)) volumes.push(volume);
   };
   add(product.volume);
-  for (const model of productModelOptionsBySlug.get(product.slug) || []) add(model.key);
+  for (const model of productModelOptions(product.slug, lang)) add(model.key);
   if (configured) {
     for (const volume of configured) add(volume);
     return volumes;
