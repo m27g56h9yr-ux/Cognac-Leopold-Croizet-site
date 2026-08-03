@@ -21,6 +21,74 @@ const PINEAU_RED_IMAGE = '/wp-content/uploads/2026/06/pineau-des-charentes-rouge
 const PINEAU_COLLECTION_IMAGE = '/wp-content/uploads/2021/06/img_produit_pineau_base-1.png';
 const PINEAU_COLLECTION_TITLE = 'Pineau Blanc';
 const PINEAU_RED_COLLECTION_IMAGE = `${PINEAU_RED_IMAGE}.png`;
+const RUSSIAN_PRODUCT_COPY = {
+  vs: {
+    history: 'Молодой, выразительный коньяк. VS отличается свежестью: в аромате звучат груша, персик и цветы виноградной лозы. Первые танины дуба раскрывают ноты бриоши. Идеален для коктейлей или подачи со льдом.',
+    view: 'Золотисто-жёлтый / соломенно-жёлтый',
+    nose: 'Ароматы свежих фруктов — груши и персика — и томлёных фруктов: печёного яблока и золотистого изюма.',
+    mouth: 'Тонкое сочетание свежести и фруктовости переходит в округлые ноты бриоши и ванили. Финал свежий, с нотами винограда и груши.',
+  },
+  vsop: {
+    history: 'VSOP Léopold Croizet — округлый, насыщенный коньяк. Первые годы выдержки в бочках придают ему ноты сливового и абрикосового конфитюра. Древесина дуба добавляет ванильные оттенки, а в свежем послевкусии раскрывается гвоздика.',
+    view: 'Золотисто-жёлтый',
+    nose: 'Сбалансированный, округлый аромат: дуб и ваниль. Тонкие ноты томлёных фруктов — чернослива и абрикоса.',
+    mouth: 'Богатый, объёмный вкус с ярким фруктовым характером, типичным для крю Fins Bois. Финал свежий, с нотой гвоздики.',
+  },
+  napoleon: {
+    history: 'Щедрая выдержка в бочках придаёт ему прекрасные ноты сухофруктов и орехов — арахиса, миндаля и фундука, — а также тёплого дерева с лёгкими оттенками ванили и ириски. Финал долгий, с перечной пряностью.',
+    view: 'Оранжево-жёлтый',
+    nose: 'Выдержка в бочках раскрывает первые древесные и ванильные ноты.',
+    mouth: 'Тонкие дубовые танины сочетаются с нотами миндаля, фундука и грецкого ореха. Финал мужественный, сбалансированный, с лёгкими перечными и мятными оттенками.',
+  },
+  xo: {
+    history: 'Cognac XO обладает хорошо выстроенной структурой и уже заметной округлостью во вкусе. Первые ноты томлёной чёрной вишни и личи сменяются цветочными оттенками ириса и сухоцветов. В продолжительном финале характер рансьо раскрывается нотами кожи и табака.',
+    view: 'Светло-янтарный',
+    nose: 'Сложный, сбалансированный аромат. Гармоничное сочетание фруктовых, древесных и пряных нот.',
+    mouth: 'Хорошо структурированный вкус с мягкостью, приобретённой благодаря долгой выдержке в дубе.',
+  },
+  'xo-exception': {
+    history: 'Для создания XO Exception потребовались долгие годы выдержки. Этот коньяк сияет янтарными оттенками. Сложный аромат раскрывает сухофрукты, цукаты и старое дерево. Вкус насыщенный; хорошо интегрированная древесность сопровождается нотами корицы и табака.',
+    view: 'Золотисто-янтарный',
+    nose: 'Мягкая груша сочетается с полевыми цветами и тёплыми пряностями. Со временем аромат развивается в сторону цукатов и специй.',
+    mouth: 'Щедрый, насыщенный вкус со множеством пряных оттенков. Финал — мускатный орех и корица.',
+  },
+  extra: {
+    history: 'Этот Cognac Extra отличается богатством и сложностью. Его рансьо раскрывается нотами цукатов и шоколада. Свежий, цветочный вкус наполнен ароматами жимолости и жасмина. Финал пряный, с нотами мускатного ореха и корицы.',
+    view: 'Золотисто-янтарный / оранжевый',
+    nose: 'Богатый, сложный аромат с нотами цукатов и сухофруктов. Появляются первые оттенки рансьо и лесного подлеска.',
+    mouth: 'Превосходная округлость. Тонкие цветочные ноты жасмина и жимолости. Выразительная, но гармонично интегрированная древесность — результат десятилетий выдержки. Прекрасный баланс фруктов и пряностей. Финал пряный, с нотами грецкого ореха и сухофруктов.',
+  },
+  excellence: {
+    history: 'Очень старый Cognac, характерный для Fins Bois. Его сложный фруктово-цветочный аромат раскрывает кокос и маракуйю. Затем рансьо уступает место более выраженным нотам кедра и сандала. Свежий эвкалиптовый финал отличается исключительной продолжительностью.',
+    view: 'Оранжево-янтарный, с лёгким красным отблеском',
+    nose: 'Интенсивный, глубокий и сложный аромат. Ноты маракуйи и кокоса переплетаются с рансьо и выдержанной древесиной.',
+    mouth: 'Мощный, богатый и мягкий вкус. Сандал и кедр придают этому Cognac Excellence силу и характер. Свежий эвкалиптовый финал отличается исключительной продолжительностью.',
+  },
+  heritage: {
+    history: 'В хрустальном флаконе, созданном мастером вручную, заключена душа дома: не менее четырёх поколений семьи с увлечением формировали характер этого коньяка. Мощный, почти животный аромат одновременно густой и сложный. В нём ощущается вес прошедших лет: кожа, табак и старое дерево раскрывают исключительный рансьо. Взрывной цветочный и свежий финал обладает редкой интенсивностью и продолжительностью.',
+    view: 'Глубокий, насыщенный красно-янтарный цвет',
+    nose: 'Мощный и сложный аромат.',
+    mouth: 'Невероятно мягкий, густой вкус с мощным ароматическим раскрытием. Выразительный рансьо, хорошо развитые ноты старого дерева и лесного подлеска. Финал исключительно долгий и насыщенный.',
+  },
+  valentine: {
+    history: 'Над Cognac Valentine, как и над любой женщиной, время не властно. Этот XO — настоящее лакомство: грецкий орех, вишня, шоколад, корица и имбирь звучат и в аромате, и во вкусе. Он порадует всех ценителей изысканных удовольствий.',
+    view: 'Светлый, сияющий янтарный цвет',
+    nose: 'Богатый, соблазнительный аромат с нотами шоколада, имбиря и корицы.',
+    mouth: 'Округлый, щедрый вкус с нотами рождественского пудинга, чёрной вишни и шоколада. Финал насыщенный и фруктовый.',
+  },
+  'pineau-des-charentes': {
+    history: 'Pineau des Charentes Léopold Croizet создаётся из купажа коньячных спиртов и виноградного сусла сортов Colombard и Ugni Blanc. После ассамбляжа напиток регулярно перемешивают в дубовой бочке в первые месяцы, затем выдерживают много лет. Он отличается ярким, сияющим янтарным цветом. Округлые, мягкие ароматы цукатов и ванили обволакивают нёбо. В финале раскрываются характерные для выдержанного Pineau ноты грецкого ореха и лесного подлеска. Структурный, насыщенный и богатый, этот Pineau не содержит добавленных сульфитов.',
+    view: 'Золотисто-жёлтый / янтарный',
+    nose: 'Ароматы цукатов и мёда с нотами абрикоса, чернослива и вишни.',
+    mouth: 'Тонкий баланс сладости, округлых ванильных нот и цукатов. В финале — яркие оттенки фруктов, мёда и грецкого ореха, характерные для выдержанного Pineau des Charentes.',
+  },
+  'pineau-des-charentes-rouge': {
+    history: 'Pineau Rouge des Charentes Léopold Croizet создаётся из купажа коньячных спиртов и виноградного сусла сортов Merlot и Ugni Blanc. После ассамбляжа напиток перемешивают в дубовой бочке в первые месяцы, затем долго выдерживают. Рубиновый цвет с янтарными отблесками открывает щедрый аромат чёрной вишни, засахаренных красных ягод и чернослива. Merlot придаёт вкусу мягкую округлость, бархатистую текстуру и ноты ежевики, ванили и нежных пряностей. В щедром финале звучат грецкий орех, какао и лесные оттенки.',
+    view: 'Глубокий рубиновый / янтарные отблески',
+    nose: 'Чёрная вишня, засахаренные красные ягоды, чернослив и ежевика с лёгким оттенком ванили.',
+    mouth: 'Округлый, бархатистый вкус. Спелые красные ягоды переходят в нежные пряности, какао и грецкий орех, завершаясь тёплым финалом.',
+  },
+};
 const PINEAU_RED_COPY = {
   fr: {
     appellationLabel: 'Appellation',
@@ -73,15 +141,15 @@ const PINEAU_RED_COPY = {
     alcoholLabel: 'Крепость',
     tastingTitle: 'Дегустационные ноты',
     sensoryTitle: 'Сенсорные ноты',
-    note: 'Pineau Rouge des Charentes Léopold Croizet создается из купажа коньячных спиртов и виноградного сусла сортов Merlot и Ugni Blanc. После ассамбляжа напиток перемешивается в дубовых бочках в первые месяцы, затем долго выдерживается. Рубиновый оттенок с янтарными отблесками открывает аромат черной вишни, засахаренных красных ягод и чернослива. Во вкусе Merlot придает мягкую округлость, бархатистую текстуру и ноты ежевики, ванили и нежных специй. Финал щедрый, с оттенками ореха, какао и лесной подстилки.',
+    note: 'Pineau Rouge des Charentes Léopold Croizet создаётся из купажа коньячных спиртов и виноградного сусла сортов Merlot и Ugni Blanc. После ассамбляжа напиток перемешивают в дубовой бочке в первые месяцы, затем долго выдерживают. Рубиновый цвет с янтарными отблесками открывает щедрый аромат чёрной вишни, засахаренных красных ягод и чернослива. Merlot придаёт вкусу мягкую округлость, бархатистую текстуру и ноты ежевики, ванили и нежных пряностей. В щедром финале звучат грецкий орех, какао и лесные оттенки.',
     view: 'Глубокий рубиновый / янтарные отблески',
-    nose: 'Черная вишня, засахаренные красные ягоды, чернослив и ежевика, с легкой ванилью.',
-    mouth: 'Округлый и бархатистый вкус. Спелые красные ягоды переходят в нежные специи, какао, орех и теплый финал.',
+    nose: 'Чёрная вишня, засахаренные красные ягоды, чернослив и ежевика с лёгким оттенком ванили.',
+    mouth: 'Округлый, бархатистый вкус. Спелые красные ягоды переходят в нежные пряности, какао и грецкий орех, завершаясь тёплым финалом.',
     sensoryLines: [
-      { label: 'Черная вишня', width: 72, color: '#7b1423' },
+      { label: 'Чёрная вишня', width: 72, color: '#7b1423' },
       { label: 'Засахаренные красные ягоды', width: 68, color: '#9d1f2f' },
       { label: 'Чернослив', width: 58, color: '#5b2a21' },
-      { label: 'Нежные специи', width: 42, color: '#8a4a18' },
+      { label: 'Нежные пряности', width: 42, color: '#8a4a18' },
       { label: 'Ваниль', width: 32, color: '#3f1c00' },
     ],
     quantity: 'Количество Pineau Rouge',
@@ -140,12 +208,12 @@ const PINEAU_LOCALIZED_PAGES = [
       alcoholLabel: 'Крепость',
       tastingTitle: 'Дегустационные ноты',
       sensoryTitle: 'Сенсорные ноты',
-      note: 'Pineau des Charentes Léopold Croizet создается из купажа коньячных спиртов и виноградного сусла сортов Colombard и Ugni Blanc. После ассамбляжа напиток перемешивается в дубовых бочках в первые месяцы, затем выдерживается многие годы. Он раскрывает яркий янтарный оттенок, округлые ароматы цукатов и ванили, а в финале ноты ореха и лесной подстилки.',
-      view: 'Золотисто-желтый / янтарный',
-      nose: 'Ароматы цукатов и меда, с нотами абрикоса, чернослива и вишни.',
-      mouth: 'Тонкий баланс сладости, округлых ванильных нот и цукатов. Финал: фрукт, мед и ореховые оттенки, типичные для старого Pineau des Charentes.',
+      note: 'Pineau des Charentes Léopold Croizet создаётся из купажа коньячных спиртов и виноградного сусла сортов Colombard и Ugni Blanc. После ассамбляжа напиток регулярно перемешивают в дубовой бочке в первые месяцы, затем выдерживают много лет. Он отличается ярким, сияющим янтарным цветом. Округлые, мягкие ароматы цукатов и ванили обволакивают нёбо. В финале раскрываются характерные для выдержанного Pineau ноты грецкого ореха и лесного подлеска. Структурный, насыщенный и богатый, этот Pineau не содержит добавленных сульфитов.',
+      view: 'Золотисто-жёлтый / янтарный',
+      nose: 'Ароматы цукатов и мёда с нотами абрикоса, чернослива и вишни.',
+      mouth: 'Тонкий баланс сладости, округлых ванильных нот и цукатов. В финале — яркие оттенки фруктов, мёда и грецкого ореха, характерные для выдержанного Pineau des Charentes.',
       sensory: {
-        apricot: 'Сушеный абрикос',
+        apricot: 'Сушёный абрикос',
         cherry: 'Вишня',
         fruit: 'Цукаты',
         walnut: 'Орех',
@@ -741,6 +809,9 @@ function pineauProductBlock(config) {
   const base = deployBase();
   const route = `${base}${config.route}`;
   const copy = config.copy;
+  const pictogramAlts = config.route.startsWith('/ru/')
+    ? { sensory: 'Дегустационные характеристики', eye: 'Пиктограмма: глаз', nose: 'Пиктограмма: нос', mouth: 'Пиктограмма: рот' }
+    : { sensory: 'Sensory notes', eye: 'Eye pictogram', nose: 'Nose pictogram', mouth: 'Mouth pictogram' };
   const galleryHtml = config.galleryHtml || `<figure class="woocommerce-product-gallery__wrapper">
             <div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01-420x642.jpg" class="wp-post-image" alt="Pineau des Charentes" title="img_diapo_pineau-01" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-01.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div><div class="woocommerce-product-gallery__image"><a href="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg"><img width="420" height="642" src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02-420x642.jpg" class="" alt="Pineau des Charentes" title="img_diapo_pineau-02" data-caption="" data-src="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image="${base}/wp-content/uploads/2021/06/img_diapo_pineau-02.jpg" data-large_image_width="720" data-large_image_height="1100" decoding="async" /></a></div>    </figure>`;
 
@@ -777,7 +848,7 @@ function pineauProductBlock(config) {
     </div>
 
     <div class="container-notes-sensorielles">
-        <div class="titre-notes-sensorielles"><img src="${base}/wp-content/uploads/2021/06/picto_sensor.svg" alt="Sensory notes"> ${escapeHtml(copy.sensoryTitle)}</div>
+        <div class="titre-notes-sensorielles"><img src="${base}/wp-content/uploads/2021/06/picto_sensor.svg" alt="${pictogramAlts.sensory}"> ${escapeHtml(copy.sensoryTitle)}</div>
         <div class="inner-container-notes-sensorielles">
             ${pineauSensoryLines(copy)}
 
@@ -785,21 +856,21 @@ function pineauProductBlock(config) {
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto">
-                    <img src="${base}/wp-content/uploads/2021/06/picto_oeil.svg" alt="Eye pictogram">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_oeil.svg" alt="${pictogramAlts.eye}">
                 </div>
                 <div class="donnees-vue">${escapeHtml(copy.view)}</div>
             </div>
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto odorat">
-                    <img src="${base}/wp-content/uploads/2021/06/picto_nez.svg" alt="Nose pictogram">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_nez.svg" alt="${pictogramAlts.nose}">
                 </div>
                 <div class="donnees-odorat">${escapeHtml(copy.nose)}</div>
             </div>
 
             <div class="container-vu-odorat-gout">
                 <div class="container-picto">
-                    <img src="${base}/wp-content/uploads/2021/06/picto_bouche.svg" alt="Mouth pictogram">
+                    <img src="${base}/wp-content/uploads/2021/06/picto_bouche.svg" alt="${pictogramAlts.mouth}">
                 </div>
                 <div class="donnees-gout">${escapeHtml(copy.mouth)}</div>
             </div>
@@ -1061,7 +1132,7 @@ function removeExcludedNavigationLinks(html) {
 }
 
 function stripDynamicWordPressNoise(html) {
-  return html
+  let translated = html
     .replace(/<link[^>]+rel=["']profile["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']pingback["'][^>]*>\s*/gi, '')
     .replace(/<link[^>]+rel=["']dns-prefetch["'][^>]*>\s*/gi, '')
@@ -1439,28 +1510,43 @@ function localizeRussianStaticHtml(html, route) {
       'Я — Леопольд Круазе, представитель девятого поколения виноградарей этого поместья. Я унаследовал его от отца, который унаследовал его от своей матери, а она — от своего отца, и так далее… Наш виноградник, расположенный главным образом в коммуне Triac-Lautrait, занимает 30 гектаров вокруг типичной шарантской фермы. Здесь мы находимся в самом сердце деревни Lantin, недалеко от Jarnac. Это исключительный терруар: он относится к крю Fins Bois и пользуется глинисто-известковыми границами земель Champagne. ',
     );
 
-  localized = correctRussianVsopCopy(localized, route);
+  localized = correctRussianProductCopy(localized, route);
 
   return applyRussianOrderLinks(removeRussianPrices(applyRussianSeo(localized, route)), route);
 }
 
-function correctRussianVsopCopy(html, route) {
-  if (route !== '/ru/collection/vsop/') return html;
+function correctRussianProductCopy(html, route) {
+  const slug = route.match(/^\/ru\/collection\/([^/]+)\/$/)?.[1];
+  const copy = slug ? RUSSIAN_PRODUCT_COPY[slug] : null;
+  if (!copy) return html;
 
   return html
     .replace(
       /(<div class="container-histoire-produit">[\s\S]*?<div class="donnees">)[\s\S]*?(<\/div>\s*<\/div>)/,
-      '$1VSOP Léopold Croizet — округлый, насыщенный коньяк. Первые годы выдержки в бочках придают ему ноты сливового и абрикосового конфитюра. Древесина дуба добавляет ванильные оттенки, а в свежем послевкусии раскрывается гвоздика.$2',
+      `$1${copy.history}$2`,
     )
-    .replace(/(<div class="donnees-vue">)[\s\S]*?(<\/div>)/, '$1Золотисто-жёлтый$2')
+    .replace(/(<div class="donnees-vue">)[\s\S]*?(<\/div>)/, `$1${copy.view}$2`)
     .replace(
       /(<div class="donnees-odorat">)[\s\S]*?(<\/div>)/,
-      '$1Сбалансированный, округлый аромат: дуб и ваниль. Тонкие ноты томлёных фруктов — чернослива и абрикоса.$2',
+      `$1${copy.nose}$2`,
     )
     .replace(
       /(<div class="donnees-gout">)[\s\S]*?(<\/div>)/,
-      '$1Богатый, объёмный вкус с ярким фруктовым характером, типичным для крю Fins Bois. Финал свежий, с нотой гвоздики.$2',
+      `$1${copy.mouth}$2`,
     );
+
+  if (slug.startsWith('pineau-des-charentes')) {
+    translated = translated
+      .replace(/alt="Sensory notes"/g, 'alt="Дегустационные характеристики"')
+      .replace(/alt="Eye pictogram"/g, 'alt="Пиктограмма: глаз"')
+      .replace(/alt="Nose pictogram"/g, 'alt="Пиктограмма: нос"')
+      .replace(/alt="Mouth pictogram"/g, 'alt="Пиктограмма: рот"')
+      .replace(/Сушеный абрикос/g, 'Сушёный абрикос')
+      .replace(/Черная вишня/g, 'Чёрная вишня')
+      .replace(/Нежные специи/g, 'Нежные пряности');
+  }
+
+  return translated;
 }
 
 function removeRussianPrices(html) {

@@ -22,6 +22,7 @@ const productAltViolations = [];
 const homeMediaViolations = [];
 const languageMenuViolations = [];
 const partnerOfferViolations = [];
+const russianTranslationViolations = [];
 const structuredDataEntityViolations = [];
 const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
@@ -120,6 +121,7 @@ for (const file of checkedFiles) {
     homeMediaViolations.push(...findHomeMediaViolations(text, relativeFile));
     languageMenuViolations.push(...findLanguageMenuViolations(text, relativeFile));
     structuredDataEntityViolations.push(...findStructuredDataEntityViolations(text, relativeFile));
+    russianTranslationViolations.push(...findRussianTranslationViolations(text, relativeFile));
     pineauRedCollectionViolations.push(...findPineauRedCollectionViolations(text, relativeFile));
     pineauRedProductNavigationViolations.push(...findPineauRedProductNavigationViolations(text, relativeFile));
     collectionEndPageLayoutViolations.push(...findCollectionEndPageLayoutViolations(text, relativeFile));
@@ -142,6 +144,7 @@ if (
   || homeMediaViolations.length
   || languageMenuViolations.length
   || partnerOfferViolations.length
+  || russianTranslationViolations.length
   || structuredDataEntityViolations.length
 ) {
   if (missing.length) {
@@ -219,6 +222,11 @@ if (
     for (const item of partnerOfferViolations.slice(0, 60)) console.error(`- ${item}`);
   }
 
+  if (russianTranslationViolations.length) {
+    console.error('Russian product translation regressions:');
+    for (const item of russianTranslationViolations.slice(0, 60)) console.error(`- ${item}`);
+  }
+
   if (structuredDataEntityViolations.length) {
     console.error('Structured data entity regressions:');
     for (const item of structuredDataEntityViolations.slice(0, 60)) console.error(`- ${item}`);
@@ -228,6 +236,34 @@ if (
 }
 
 console.log(`Checked ${checkedFiles.length} HTML/CSS files`);
+
+function findRussianTranslationViolations(html, relativeFile) {
+  if (!/^ru\/collection\/[^/]+\/index\.html$/.test(relativeFile)) return [];
+
+  const violations = [];
+  const forbidden = [
+    /8-х летняя выдержках/,
+    /серого амбергриса/,
+    /интенсивный и глубокий каштановый/,
+    /столь же приторный/,
+    /Варенный джем/,
+    /пунш из личи/,
+    /\b(?:eau-de-vie|long drinks|tonic|ginger beer|tulip|espresso|toffee|rancio)\b/i,
+  ];
+  for (const pattern of forbidden) {
+    if (pattern.test(html)) violations.push(`${relativeFile}: obsolete or untranslated wording remains (${pattern.source})`);
+  }
+
+  const requiredByFile = new Map([
+    ['ru/collection/napoleon/index.html', 'Щедрая выдержка в бочках'],
+    ['ru/collection/pineau-des-charentes/index.html', 'не содержит добавленных сульфитов'],
+    ['ru/collection/valentine/index.html', 'Светлый, сияющий янтарный цвет'],
+  ]);
+  const required = requiredByFile.get(relativeFile);
+  if (required && !html.includes(required)) violations.push(`${relativeFile}: expected revised Russian copy is missing (${required})`);
+
+  return violations;
+}
 
 async function walk(dir) {
   if (dir.includes(`${path.sep}.git${path.sep}`)) return;
