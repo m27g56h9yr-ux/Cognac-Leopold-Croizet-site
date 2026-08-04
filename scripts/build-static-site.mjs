@@ -1161,6 +1161,8 @@ function stripDynamicWordPressNoise(html) {
     .replace(/<style[^>]+id=["']wp-emoji-styles-inline-css["'][\s\S]*?<\/style>\s*/gi, '')
     .replace(/<script type=["']module["'][\s\S]*?wpEmojiSettingsSupports[\s\S]*?<\/script>\s*/gi, '')
     .replace(/<script[^>]+src=["'][^"']*wp-emoji-release[^"']*["'][^>]*><\/script>\s*/gi, '');
+
+  return translated;
 }
 
 function repairKnownBrokenAssets(html) {
@@ -1603,7 +1605,7 @@ function applyRussianSeo(html, route) {
 function russianRouteTitles(route) {
   const titles = new Map([
     ['/ru/', 'Cognac Léopold Croizet'],
-    ['/ru/a-faire/', 'Коллекция Cognac Léopold Croizet | Cognac Léopold Croizet'],
+    ['/ru/a-faire/', 'Купить Cognac Léopold Croizet в России | AV.ru'],
     ['/ru/categorie-produit/non-classe-ru/', 'Коллекция Cognac Léopold Croizet | Cognac Léopold Croizet'],
     ['/ru/rencontre/', 'Визит в наши погреба… | Cognac Léopold Croizet'],
     ['/ru/mon-compte-2/', 'Мой аккаунт | Cognac Léopold Croizet'],
@@ -1618,7 +1620,7 @@ function russianRouteTitles(route) {
 function russianRouteDescription(route) {
   const descriptions = new Map([
     ['/ru/', 'Cognac Léopold Croizet: семейное мастерство, органический виноградник, коллекция коньяков и визиты в погреба.'],
-    ['/ru/a-faire/', 'Коллекция Cognac Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence и Héritage.'],
+    ['/ru/a-faire/', 'Официальная коллекция Cognac Léopold Croizet с прямыми ссылками на точные карточки «Азбуки вкуса» (AV.ru). Заказ и наличие подтверждаются продавцом.'],
     ['/ru/categorie-produit/non-classe-ru/', 'Коллекция Cognac Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence и Héritage.'],
     ['/ru/la-matiere/', 'Материя Cognac Léopold Croizet: виноградник, органическое земледелие, виноград и сбор урожая.'],
     ['/ru/lalchimie/', 'Алхимия Cognac Léopold Croizet: ассамбляж, розлив и создание коньяков дома.'],

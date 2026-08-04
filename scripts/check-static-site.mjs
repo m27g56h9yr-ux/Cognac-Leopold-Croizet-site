@@ -25,6 +25,7 @@ const partnerOfferViolations = [];
 const russianTranslationViolations = [];
 const structuredDataEntityViolations = [];
 const productModelSelectorViolations = [];
+const RUSSIAN_PURCHASE_LASTMOD = '2026-08-04';
 const siteLanguages = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh'];
 const languageMenuExpectedLabels = ['Français', 'English', 'Русский', 'Dansk', 'Svenska', 'Norsk', '中文'];
 const languageMenuExpectedHreflangs = ['fr', 'en', 'ru', 'da', 'sv', 'no', 'zh-CN'];
@@ -67,15 +68,15 @@ const productImageAltRules = [
   [/img_produit_pineau_base|img_diapo_pineau|img_nom_produit_pineau/i, /Pineau des Charentes Léopold Croizet/i],
 ];
 const russianPartnerPages = [
-  { slug: 'vs', url: 'https://av.ru/i/1021709', productName: 'Cognac Léopold\u00a0Croizet VS', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'vsop', url: 'https://av.ru/i/174054', productName: 'Cognac Léopold\u00a0Croizet VSOP', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'napoleon', url: 'https://av.ru/i/1020490', productName: 'Cognac Léopold\u00a0Croizet Napoléon', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'xo', url: 'https://av.ru/i/1020491', productName: 'Cognac Léopold\u00a0Croizet XO', partnerSize: '35 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'xo-exception', url: 'https://av.ru/i/1005624', productName: 'Cognac Léopold\u00a0Croizet XO Exception', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'extra', url: 'https://av.ru/i/174057', productName: 'Cognac Léopold\u00a0Croizet Extra', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
-  { slug: 'excellence', url: 'https://av.ru/i/231809', productName: 'Cognac Léopold\u00a0Croizet Excellence', partnerSize: '70 cl', officialSize: '700 ml', lastmod: '2026-07-14' },
+  { slug: 'vs', url: 'https://av.ru/i/1021709', productName: 'Cognac Léopold\u00a0Croizet VS', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2021/05/VS_2024.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'vsop', url: 'https://av.ru/i/174054', productName: 'Cognac Léopold\u00a0Croizet VSOP', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2021/06/VSOP_2024.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'napoleon', url: 'https://av.ru/i/1020490', productName: 'Cognac Léopold\u00a0Croizet Napoléon', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2021/06/NAPOLEON_2024.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'xo', url: 'https://av.ru/i/1020491', productName: 'Cognac Léopold\u00a0Croizet XO', partnerSize: '35 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2021/06/XO_2024.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'xo-exception', url: 'https://av.ru/i/1005624', productName: 'Cognac Léopold\u00a0Croizet XO Exception', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2021/06/img_nom_produit_xo-exception_01.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'extra', url: 'https://av.ru/i/174057', productName: 'Cognac Léopold\u00a0Croizet Extra', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png', lastmod: RUSSIAN_PURCHASE_LASTMOD },
+  { slug: 'excellence', url: 'https://av.ru/i/231809', productName: 'Cognac Léopold\u00a0Croizet Excellence', partnerSize: '70 cl', officialSize: '700 ml', expectedImage: '/wp-content/uploads/2026/06/img_excellence_etui.jpg', lastmod: RUSSIAN_PURCHASE_LASTMOD },
   { slug: 'heritage' },
-  { slug: 'valentine', url: 'https://av.ru/i/178511', productName: 'Cognac Léopold\u00a0Croizet Valentine XO', partnerSize: '35 cl', officialSize: '350 ml', lastmod: '2026-07-14' },
+  { slug: 'valentine', url: 'https://av.ru/i/178511', productName: 'Cognac Léopold\u00a0Croizet Valentine XO', partnerSize: '35 cl', officialSize: '350 ml', expectedImage: '/wp-content/uploads/2021/06/img_produit_valentine-1.webp', lastmod: RUSSIAN_PURCHASE_LASTMOD },
 ];
 
 
@@ -478,6 +479,15 @@ async function findPartnerOfferViolations() {
       for (const url of partnerCtaUrls) {
         if (url !== expected.url) violations.push(`${relativeFile}: unexpected partner CTA ${url}`);
       }
+      const productLabel = expected.productName.replace(/^Cognac Léopold(?:\s|\u00a0)+Croizet\s+/, '');
+      const expectedTitle = `Коньяк Léopold Croizet ${productLabel} — купить в России | AV.ru`;
+      if (!html.includes(`<title>${expectedTitle}</title>`)) {
+        violations.push(`${relativeFile}: Russian purchase-intent title is missing`);
+      }
+      const metaDescription = html.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)["']/i)?.[1] || '';
+      if (!metaDescription.includes('точная карточка продавца «Азбука вкуса»') || !metaDescription.includes('подтверждаются на сайте продавца')) {
+        violations.push(`${relativeFile}: Russian partner meta description is incomplete`);
+      }
     } else if (partnerCtaUrls.length) {
       violations.push(`${relativeFile}: partner CTA published without an exact AV.ru product page`);
     }
@@ -489,6 +499,12 @@ async function findPartnerOfferViolations() {
 
     if (product.offers) violations.push(`${relativeFile}: Offer published without a fresh, geography-aware visible offer`);
     if (/\bdata-partner-offer-price=["']/i.test(html)) violations.push(`${relativeFile}: visible price published without a fresh matching Offer`);
+    if (expected.expectedImage) {
+      const expectedImageUrl = `${PUBLIC_ORIGIN}${expected.expectedImage}`;
+      if (product.image !== expectedImageUrl) violations.push(`${relativeFile}: Product image must match the first visible gallery image`);
+      if (webPage?.primaryImageOfPage?.url !== expectedImageUrl) violations.push(`${relativeFile}: WebPage primary image must match the first visible gallery image`);
+      if (!html.includes(`<meta property="og:image" content="${expectedImageUrl}">`)) violations.push(`${relativeFile}: Open Graph image must match the first visible gallery image`);
+    }
 
     if (expected.partnerSize) {
       const visiblePartnerSize = html.match(/\bdata-partner-product-size=["']([^"']+)["']/i)?.[1];
@@ -543,6 +559,10 @@ async function findRussianRetailerEntryPointViolations() {
   const collectionFile = path.join(ROOT, 'ru/a-faire/index.html');
   const home = await readFile(homeFile, 'utf8');
   const collection = await readFile(collectionFile, 'utf8');
+  const faq = await readFile(path.join(ROOT, 'ru/faq/index.html'), 'utf8');
+  const llms = await readFile(path.join(ROOT, 'llms.txt'), 'utf8');
+  const llmsFull = await readFile(path.join(ROOT, 'llms-full.txt'), 'utf8');
+  const sitemap = await readFile(path.join(ROOT, 'sitemap.xml'), 'utf8');
   const collectionUrl = '/ru/a-faire/';
 
   if ((home.match(/class="lc-ru-retailer"/g) || []).length !== 1) {
@@ -556,6 +576,52 @@ async function findRussianRetailerEntryPointViolations() {
   }
   if (!home.includes('id="lc-russian-retailer-style"') || !collection.includes('id="lc-russian-retailer-style"')) {
     violations.push('Russian retailer editorial styling is missing from the home or collection page');
+  }
+  if (!home.includes('<title>Cognac Léopold Croizet (Леопольд Круазе) | Fins Bois</title>')) {
+    violations.push('ru/index.html: Russian entity title is missing the official Cyrillic transcription');
+  }
+  if (!collection.includes('<title>Купить Cognac Léopold Croizet в России | AV.ru</title>')) {
+    violations.push('ru/a-faire/index.html: purchase-intent title is missing');
+  }
+  if (!collection.includes('Где купить <strong>Cognac</strong> Léopold&nbsp;Croizet в России')) {
+    violations.push('ru/a-faire/index.html: visible purchase-intent H1 is missing');
+  }
+  if (!collection.includes('Заказ, оплата, актуальная цена, наличие и доставка оформляются и подтверждаются на сайте продавца.')) {
+    violations.push('ru/a-faire/index.html: visible AV.ru transaction boundary is missing');
+  }
+  if (!faq.includes('Где купить Cognac Léopold Croizet в России?') || !faq.includes('Дом Cognac Léopold Croizet не принимает оплату за эти заказы.')) {
+    violations.push('ru/faq/index.html: Russian purchase answer is missing or ambiguous');
+  }
+  if (!llms.includes('Where to buy in Russia') || !llms.includes('AV.ru (Azbuka Vkusa)')) {
+    violations.push('llms.txt: Russian partner purchase path is missing');
+  }
+  if (!llmsFull.includes('## Russian Purchase Context') || !llmsFull.includes('seller page https://av.ru/')) {
+    violations.push('llms-full.txt: Russian partner facts are missing');
+  }
+
+  const collectionSchemas = extractStructuredDataRoots(collection);
+  const collectionPage = collectionSchemas.find((node) => node?.['@type'] === 'CollectionPage' && node?.['@id'] === `${PUBLIC_ORIGIN}${collectionUrl}#webpage`);
+  const partnerList = collectionSchemas.find((node) => node?.['@type'] === 'ItemList' && node?.['@id'] === `${PUBLIC_ORIGIN}${collectionUrl}#partner-products`);
+  if (collectionPage?.mainEntity?.['@id'] !== `${PUBLIC_ORIGIN}${collectionUrl}#partner-products`) {
+    violations.push('ru/a-faire/index.html: CollectionPage does not reference the visible partner product list');
+  }
+  if (!partnerList || partnerList.numberOfItems !== russianPartnerPages.filter((item) => item.url).length) {
+    violations.push('ru/a-faire/index.html: Russian partner ItemList is missing or has the wrong size');
+  } else {
+    const actions = (partnerList.itemListElement || []).map((entry) => entry?.item?.potentialAction);
+    const actionUrls = actions.map((action) => action?.target?.urlTemplate).filter(Boolean);
+    for (const expected of russianPartnerPages.filter((item) => item.url)) {
+      if (!actionUrls.includes(expected.url)) violations.push(`ru/a-faire/index.html: ItemList BuyAction missing ${expected.url}`);
+    }
+    if (JSON.stringify(partnerList).includes('"offers"')) {
+      violations.push('ru/a-faire/index.html: partner ItemList must not publish unverified Offer data');
+    }
+  }
+
+  for (const route of ['/ru/', '/ru/a-faire/', '/ru/faq/']) {
+    if (sitemapLastmodForRoute(sitemap, route) !== RUSSIAN_PURCHASE_LASTMOD) {
+      violations.push(`${route}: sitemap lastmod must be ${RUSSIAN_PURCHASE_LASTMOD}`);
+    }
   }
 
   const expectedLinks = russianPartnerPages.filter((item) => item.url).map((item) => item.url);
@@ -703,6 +769,19 @@ function extractWebPageSchema(html, slug) {
     }
   }
   return null;
+}
+
+function extractStructuredDataRoots(html) {
+  const roots = [];
+  for (const match of html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const parsed = JSON.parse(match[1]);
+      roots.push(...(Array.isArray(parsed) ? parsed : Array.isArray(parsed?.['@graph']) ? parsed['@graph'] : [parsed]));
+    } catch {
+      // JSON-LD syntax errors are reported by the generator validation.
+    }
+  }
+  return roots;
 }
 
 function findBrandViolations(html, relativeFile) {

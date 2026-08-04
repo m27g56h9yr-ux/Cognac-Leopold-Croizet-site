@@ -15,6 +15,17 @@ Cognac Léopold Croizet is a family Cognac house based at 30 Rue d'Angoulême, 1
 ## Simplified Chinese Search Context
 The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.
 
+## Russian Purchase Context
+The official Russian collection is https://cognac-leopold-croizet.com/ru/a-faire/. Cognac Léopold Croizet is also written Леопольд Круазе in Russian. Product pages remain the factual source of truth; AV.ru (Azbuka Vkusa) is the independent seller where purchase, payment, current price, stock and delivery are confirmed.
+- Cognac Léopold Croizet VS 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/vs/; seller page https://av.ru/i/1021709
+- Cognac Léopold Croizet VSOP 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/vsop/; seller page https://av.ru/i/174054
+- Cognac Léopold Croizet Napoléon 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/napoleon/; seller page https://av.ru/i/1020490
+- Cognac Léopold Croizet XO 35 cl: official page https://cognac-leopold-croizet.com/ru/collection/xo/; seller page https://av.ru/i/1020491
+- Cognac Léopold Croizet XO Exception 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/xo-exception/; seller page https://av.ru/i/1005624
+- Cognac Léopold Croizet Extra 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/extra/; seller page https://av.ru/i/174057
+- Cognac Léopold Croizet Excellence 70 cl: official page https://cognac-leopold-croizet.com/ru/collection/excellence/; seller page https://av.ru/i/231809
+- Cognac Léopold Croizet Valentine XO 35 cl: official page https://cognac-leopold-croizet.com/ru/collection/valentine/; seller page https://av.ru/i/178511
+
 ## Collection
 - Cognac Léopold Croizet VS: https://cognac-leopold-croizet.com/collection/vs/
 - Cognac Léopold Croizet VSOP: https://cognac-leopold-croizet.com/collection/vsop/

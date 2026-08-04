@@ -17,6 +17,7 @@ const PROOF_PAGE_LASTMOD = '2026-07-01';
 const MEDAL_PAGE_LASTMOD = '2026-07-02';
 const NUTRITION_PAGE_LASTMOD = '2026-07-09';
 const AUTHORITY_PAGE_LASTMOD = '2026-07-07';
+const RUSSIAN_PURCHASE_PAGE_LASTMOD = '2026-08-04';
 const BING_SITE_VERIFICATION = '93401B39EB94158CBBF8CCBDB7119EAE';
 const BRAND_ICON_PATH = '/assets/brand/favicon-512.png';
 const FILM_SLUG = 'film-maison-leopold-croizet';
@@ -915,7 +916,7 @@ const faqLocalizedEntries = {
     { group: 'visit', question: 'Нужно ли бронировать заранее и что подготовить?', answer: 'Да, лучше бронировать заранее. Подготовьте число гостей, желаемое время, вопросы доступа, наличие гостей без дегустации алкоголя и ответственный способ возвращения после дегустации.' },
     { group: 'visit', question: 'Где находится дом для визита?', answer: 'Дом находится в Triac-Lautrait, Charente, по адресу, указанному на странице Visit. Там же есть практическая информация для подготовки маршрута.' },
     { group: 'visit', question: 'Какие дни, часы и условия визита?', answer: 'Часы и условия могут меняться по сезону и доступности. Перед поездкой свяжитесь с домом, чтобы подтвердить время, размер группы и условия дегустации.' },
-    { group: 'ask', question: 'Где купить или забрать бутылку?', answer: 'Доступность зависит от страны, кюве и канала продаж. Для самовывоза в Triac-Lautrait или запроса покупки свяжитесь с домом, чтобы проверить бутылку и возможное время.' },
+    { group: 'ask', question: 'Где купить Cognac Léopold Croizet в России?', answer: 'В России страницы доступных у партнёра кюве ведут на точные карточки «Азбуки вкуса» (AV.ru). Выберите бутылку в русской коллекции: заказ, оплата, наличие и доставка оформляются и подтверждаются на сайте продавца. Дом Cognac Léopold Croizet не принимает оплату за эти заказы.' },
     { group: 'ask', question: 'Как связаться с домом?', answer: 'Для вопроса, визита, информации о продукте или самовывоза используйте официальные контакты сайта. Можно написать на cognac@mdpierre.com или позвонить +33 5 45 35 88 10.' },
     { group: 'ask', question: 'Что указать в профессиональном запросе?', answer: 'Укажите имя, компанию, страну, деятельность, тип потребности, желаемые объемы или форматы и контакты. Запросы импорта, дистрибуции, отелей, ресторанов и cavistes рассматриваются напрямую домом.' },
     { group: 'ask', question: 'Покупает ли дом или оценивает старые бутылки?', answer: 'Для старой бутылки отправьте четкие фото бутылки, уровня, этикетки, капсулы и, если возможно, известную историю. Дом сообщит, возможен ли ответ, без гарантии оценки или выкупа.' },
@@ -1680,8 +1681,8 @@ const routeMetadata = new Map([
     description: 'Cognac Léopold Croizet is a family estate in Triac-Lautrait, Fins Bois, producing VS, VSOP, Napoléon, XO and Extra cognacs with vineyard-to-cellar know-how.',
   }],
   ['/ru/', {
-    title: 'Cognac Léopold Croizet | Семейный дом коньяка Fins Bois',
-    description: 'Cognac Léopold Croizet: семейное поместье в Triac-Lautrait, Fins Bois, коллекция VS, VSOP, Napoléon, XO и Extra, мастерство и визиты в погреба.',
+    title: 'Cognac Léopold Croizet (Леопольд Круазе) | Fins Bois',
+    description: 'Официальный русский сайт Cognac Léopold Croizet (Леопольд Круазе): семейный дом Fins Bois, коллекция коньяков и прямой путь к продавцу AV.ru в России.',
   }],
   ['/da/', {
     title: 'Cognac Léopold Croizet | Familieejet cognachus i Fins Bois',
@@ -1704,8 +1705,8 @@ const routeMetadata = new Map([
     description: 'Discover the Léopold Croizet collection: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes and Pineau Rouge.',
   }],
   ['/ru/a-faire/', {
-    title: 'Коллекция Cognac и Pineau Léopold Croizet | VS, VSOP, XO и Extra',
-    description: 'Откройте коллекцию Léopold Croizet: VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage, Valentine XO, Pineau des Charentes и Pineau Rouge.',
+    title: 'Купить Cognac Léopold Croizet в России | AV.ru',
+    description: 'Официальная коллекция Cognac Léopold Croizet (Леопольд Круазе) с прямыми ссылками на точные карточки «Азбуки вкуса» (AV.ru). Заказ и наличие подтверждаются продавцом.',
   }],
   ['/da/shop/', {
     title: 'Cognac og Pineau Léopold Croizet Kollektion | VS, VSOP, XO og Extra',
@@ -2296,7 +2297,16 @@ const partnerOrderContexts = new Map(
     }]),
 );
 
+for (const [route, context] of partnerOrderContexts) {
+  routeMetadata.set(route, {
+    title: `Коньяк Léopold Croizet ${context.productLabel} — купить в России | AV.ru`,
+    description: `Купить ${context.productName.replace('\u00a0', ' ')} в России через AV.ru: точная карточка продавца «Азбука вкуса». Заказ, цена, наличие и доставка подтверждаются на сайте продавца.`,
+  });
+}
+
 const RUSSIAN_RETAILER_HOME_URL = '/ru/a-faire/';
+const RUSSIAN_PURCHASE_COLLECTION_H1 = 'Где купить <strong>Cognac</strong> Léopold&nbsp;Croizet в России';
+const RUSSIAN_PURCHASE_COLLECTION_INTRO = 'Официальная коллекция Cognac Léopold&nbsp;Croizet (Леопольд Круазе): VS, VSOP, Napoléon, XO, XO Exception, Extra, Excellence, Héritage и Valentine XO. Для доступных у партнёра кюве указаны прямые ссылки на точные карточки «Азбуки вкуса» (AV.ru). Заказ, оплата, актуальная цена, наличие и доставка оформляются и подтверждаются на сайте продавца.';
 const RUSSIAN_RETAILER_STYLE = `<style id="lc-russian-retailer-style">
 .lc-ru-retailer{box-sizing:border-box;max-width:1000px;margin:42px auto 8px;padding:20px 3px;display:flex;align-items:center;justify-content:space-between;gap:30px;border-top:1px solid #cdbb9f;border-bottom:1px solid #cdbb9f;color:#303030}.lc-ru-retailer-copy{display:flex;align-items:baseline;gap:17px;min-width:0}.lc-ru-retailer-eyebrow{margin:0;color:#895006;font-family:"Montserrat",Arial,sans-serif;font-size:10px;line-height:1.4;letter-spacing:.18em;text-transform:uppercase}.lc-ru-retailer-title{margin:0;color:#303030;font-family:"Playfair Display",Georgia,serif;font-size:22px;line-height:1.15;font-weight:400;white-space:nowrap}.lc-ru-retailer-cta,.lc-ru-retailer-card-link{display:inline-flex;align-items:center;color:#895006!important;border-bottom:1px solid #895006;text-decoration:none!important;font-family:"Montserrat",Arial,sans-serif}.lc-ru-retailer-cta{min-height:34px;padding:0 2px 3px;font-size:10px;line-height:1.25;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}.lc-ru-retailer-card-link{margin-top:12px;padding:0 0 3px;font-size:9px;line-height:1.25;letter-spacing:.02em;white-space:nowrap}.lc-ru-retailer-arrow{margin-left:6px}.lc-ru-retailer-cta:hover,.lc-ru-retailer-card-link:hover{color:#303030!important;border-bottom-color:#303030}@media(max-width:700px){.lc-ru-retailer{display:block;margin:24px 20px 2px;padding:18px 0}.lc-ru-retailer-copy{display:block}.lc-ru-retailer-eyebrow{margin-bottom:7px}.lc-ru-retailer-title{white-space:normal}.lc-ru-retailer-cta{margin-top:13px}.lc-ru-retailer-card-link{font-size:8px;line-height:1.25;letter-spacing:0;white-space:nowrap}.container-collection-produit .informations-produit-collection{margin-bottom:12px}}
 </style>`;
@@ -2309,14 +2319,19 @@ const RUSSIAN_RETAILER_HOME_BLOCK = `<section class="lc-ru-retailer" aria-labell
 </section>`;
 
 const partnerCommerceRouteLastmods = new Map([
-  ['/ru/collection/vs/', '2026-07-14'],
-  ['/ru/collection/vsop/', '2026-07-14'],
-  ['/ru/collection/napoleon/', '2026-07-14'],
-  ['/ru/collection/xo/', '2026-07-14'],
-  ['/ru/collection/xo-exception/', '2026-07-14'],
-  ['/ru/collection/extra/', '2026-07-14'],
-  ['/ru/collection/excellence/', '2026-07-14'],
-  ['/ru/collection/valentine/', '2026-07-14'],
+  ['/ru/collection/vs/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/vsop/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/napoleon/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/xo/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/xo-exception/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/extra/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/excellence/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/collection/valentine/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+]);
+const russianPurchaseRouteLastmods = new Map([
+  ['/ru/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/a-faire/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
+  ['/ru/faq/', RUSSIAN_PURCHASE_PAGE_LASTMOD],
 ]);
 
 const sellerTrackingRows = [...partnerListingEvidence.values()].map((evidence) => ({
@@ -5357,6 +5372,16 @@ function injectRussianRetailerEntryPoints(html, route) {
     );
   }
 
+  next = next
+    .replace(
+      /<h1\b[^>]*class=["'][^"']*\btitre-collection\b[^"']*["'][^>]*>[\s\S]*?<\/h1>/i,
+      `<h1 class="titre-collection wp-block-heading">${RUSSIAN_PURCHASE_COLLECTION_H1}</h1>`,
+    )
+    .replace(
+      /<p\b[^>]*class=["'][^"']*\btexte-collection\b[^"']*["'][^>]*>[\s\S]*?<\/p>/i,
+      `<p class="texte-collection wp-block-paragraph">${RUSSIAN_PURCHASE_COLLECTION_INTRO}</p>`,
+    );
+
   for (const [productRoute, href] of partnerOrderLinks) {
     const context = partnerOrderContexts.get(productRoute);
     const productName = context?.productName?.replace(/\s+(?:35|70) cl$/, '') || 'Cognac Léopold Croizet';
@@ -7921,6 +7946,12 @@ function bestImageForPage(html, route) {
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/pineau-des-charentes-rouge\/$/.test(route)) return '/wp-content/uploads/2026/06/pineau-des-charentes-rouge.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/extra\/$/.test(route)) return '/wp-content/uploads/2026/06/extra-bt-devant-coffret.png';
   if (/^\/(?:(?:en|ru|da|sv|no|zh)\/)?collection\/excellence\/$/.test(route)) return '/wp-content/uploads/2026/06/img_excellence_etui.jpg';
+  const gallery = matchFirst(html, /<figure\b[^>]*class=["'][^"']*\bwoocommerce-product-gallery__wrapper\b[^"']*["'][^>]*>([\s\S]*?)<\/figure>/i);
+  const galleryImageTag = gallery ? matchFirst(gallery, /(<img\b[^>]*>)/i) : '';
+  const galleryImage = galleryImageTag
+    ? matchFirst(galleryImageTag, /\bdata-src=["']([^"']+)["']/i) || matchFirst(galleryImageTag, /\bsrc=["']([^"']+)["']/i)
+    : '';
+  if (galleryImage) return normalizePublicPath(galleryImage);
   const productImage = matchFirst(html, /<img\b[^>]+class=["'][^"']*(?:wp-post-image|attachment-woocommerce_single)[^"']*["'][^>]+src=["']([^"']+)["']/i)
     || matchFirst(html, /<img\b[^>]+src=["']([^"']*img_produit[^"']+)["']/i);
   if (productImage) return normalizePublicPath(productImage);
@@ -8010,6 +8041,8 @@ function replaceStructuredData(html, route, metadata, image) {
   if (faq) schemas.push(faq);
   const medalList = medalItemListSchema(route);
   if (medalList) schemas.push(medalList);
+  const russianPurchaseList = russianPurchaseItemListSchema(route);
+  if (russianPurchaseList) schemas.push(russianPurchaseList);
   const product = productSchema(route, metadata, image);
   if (product) schemas.push(product);
   const authority = authorityStructuredData(route);
@@ -8084,7 +8117,7 @@ function webSiteSchema() {
 function webPageSchema(route, metadata, image) {
   const schema = {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
+    '@type': route === '/ru/a-faire/' ? 'CollectionPage' : 'WebPage',
     '@id': `${PUBLIC_ORIGIN}${route}#webpage`,
     url: `${PUBLIC_ORIGIN}${route}`,
     name: metadata.title,
@@ -8149,6 +8182,9 @@ function webPageSchema(route, metadata, image) {
   if (route === '/') {
     schema.significantLink = keySearchResultPages().map((page) => `${PUBLIC_ORIGIN}${page.url}`);
   }
+  if (route === '/ru/a-faire/') {
+    schema.mainEntity = { '@id': `${PUBLIC_ORIGIN}${route}#partner-products` };
+  }
   const purchaseAction = partnerPurchaseAction(route);
   if (purchaseAction) schema.potentialAction = purchaseAction;
   return schema;
@@ -8173,6 +8209,29 @@ function partnerPurchaseAction(route) {
       '@type': 'Organization',
       name: context.seller,
     },
+  };
+}
+
+function russianPurchaseItemListSchema(route) {
+  if (route !== '/ru/a-faire/') return null;
+  const itemListElement = [...partnerOrderContexts.entries()].map(([productRoute, context], index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Product',
+      '@id': `${PUBLIC_ORIGIN}${productRoute}#product`,
+      name: context.productName,
+      url: `${PUBLIC_ORIGIN}${productRoute}`,
+      potentialAction: partnerPurchaseAction(productRoute),
+    },
+  }));
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${PUBLIC_ORIGIN}${route}#partner-products`,
+    name: 'Купить Cognac Léopold Croizet в России через AV.ru',
+    numberOfItems: itemListElement.length,
+    itemListElement,
   };
 }
 
@@ -8524,6 +8583,7 @@ function makeSitemap(routes) {
 }
 
 function lastmodForRoute(route) {
+  if (russianPurchaseRouteLastmods.has(route)) return russianPurchaseRouteLastmods.get(route);
   if (partnerCommerceRouteLastmods.has(route)) return partnerCommerceRouteLastmods.get(route);
   if (FAQ_ROUTES.includes(route)) return FAQ_PAGE_LASTMOD;
   if (PROOF_ROUTES.includes(route)) return PROOF_PAGE_LASTMOD;
@@ -8560,6 +8620,7 @@ function makeLlmsTxt() {
     '- [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.',
     '- [English homepage](https://cognac-leopold-croizet.com/en/): Official English homepage.',
     '- [Russian homepage](https://cognac-leopold-croizet.com/ru/): Official Russian homepage.',
+    '- [Where to buy in Russia](https://cognac-leopold-croizet.com/ru/a-faire/): Official Russian collection with exact product links to the partner seller AV.ru (Azbuka Vkusa).',
     '- [Danish homepage](https://cognac-leopold-croizet.com/da/): Official Danish homepage.',
     '- [Swedish homepage](https://cognac-leopold-croizet.com/sv/): Official Swedish homepage.',
     '- [Norwegian homepage](https://cognac-leopold-croizet.com/no/): Official Norwegian homepage.',
@@ -8586,6 +8647,7 @@ function makeLlmsTxt() {
     '## Product Pages',
     ...[...productNames.keys()].map((slug) => `- [${productNames.get(slug)}](https://cognac-leopold-croizet.com/collection/${slug}/): ${productFullName(slug)}.`),
     'Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.',
+    'For Russia, the official product pages remain the factual source of truth while AV.ru is the independent seller. Purchase, payment, current price, stock and delivery are confirmed on AV.ru; stale commercial data must not be inferred from the official site.',
     '',
     '## Product Tasting Sheets',
     ...productSheetEntries('en').map(({ slug, href }) => `- [${productFullName(slug)} tasting sheet](https://cognac-leopold-croizet.com${href}): one-page downloadable tasting sheet, prepared as PDF/A-2b.`),
@@ -8632,6 +8694,10 @@ function makeLlmsFullTxt() {
     '',
     '## Simplified Chinese Search Context',
     'The Chinese version uses zh-CN metadata and presents Cognac Léopold Croizet as a French cognac house from Fins Bois. Relevant Chinese concepts include 法国干邑, 干邑酒庄, 法国白兰地, Fins Bois, 干邑鸡尾酒, 酒窖参观 and Triac-Lautrait. Product pages in Chinese intentionally do not display prices.',
+    '',
+    '## Russian Purchase Context',
+    'The official Russian collection is https://cognac-leopold-croizet.com/ru/a-faire/. Cognac Léopold Croizet is also written Леопольд Круазе in Russian. Product pages remain the factual source of truth; AV.ru (Azbuka Vkusa) is the independent seller where purchase, payment, current price, stock and delivery are confirmed.',
+    ...[...partnerOrderContexts.entries()].map(([route, context]) => `- ${context.productName.replace('\u00a0', ' ')}: official page ${PUBLIC_ORIGIN}${route}; seller page ${partnerOrderLinks.get(route)}`),
     '',
     '## Collection',
     ...[...productNames.keys()].map((slug) => `- ${productFullName(slug)}: https://cognac-leopold-croizet.com/collection/${slug}/`),

@@ -9,6 +9,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [French homepage](https://cognac-leopold-croizet.com/): Official French homepage.
 - [English homepage](https://cognac-leopold-croizet.com/en/): Official English homepage.
 - [Russian homepage](https://cognac-leopold-croizet.com/ru/): Official Russian homepage.
+- [Where to buy in Russia](https://cognac-leopold-croizet.com/ru/a-faire/): Official Russian collection with exact product links to the partner seller AV.ru (Azbuka Vkusa).
 - [Danish homepage](https://cognac-leopold-croizet.com/da/): Official Danish homepage.
 - [Swedish homepage](https://cognac-leopold-croizet.com/sv/): Official Swedish homepage.
 - [Norwegian homepage](https://cognac-leopold-croizet.com/no/): Official Norwegian homepage.
@@ -45,6 +46,7 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Pineau des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes/): Pineau des Charentes Léopold Croizet.
 - [Pineau Rouge des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/): Pineau Rouge des Charentes Léopold Croizet.
 Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.
+For Russia, the official product pages remain the factual source of truth while AV.ru is the independent seller. Purchase, payment, current price, stock and delivery are confirmed on AV.ru; stale commercial data must not be inferred from the official site.
 
 ## Product Tasting Sheets
 - [Cognac Léopold Croizet VS tasting sheet](https://cognac-leopold-croizet.com/assets/product-sheets/cognac-leopold-croizet-vs-product-sheet.pdf): one-page downloadable tasting sheet, prepared as PDF/A-2b.
