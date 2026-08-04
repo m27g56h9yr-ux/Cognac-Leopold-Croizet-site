@@ -543,7 +543,7 @@ async function findRussianRetailerEntryPointViolations() {
   const collectionFile = path.join(ROOT, 'ru/a-faire/index.html');
   const home = await readFile(homeFile, 'utf8');
   const collection = await readFile(collectionFile, 'utf8');
-  const collectionUrl = 'https://av.ru/collections/cognac_pierre_croizet';
+  const collectionUrl = '/ru/a-faire/';
 
   if ((home.match(/class="lc-ru-retailer"/g) || []).length !== 1) {
     violations.push('ru/index.html: expected exactly one Russian retailer home block');
@@ -552,7 +552,7 @@ async function findRussianRetailerEntryPointViolations() {
     violations.push('ru/index.html: Russian retailer home copy is incomplete');
   }
   if (!home.includes(`href="${collectionUrl}"`)) {
-    violations.push('ru/index.html: Russian retailer collection link is missing');
+    violations.push('ru/index.html: reliable internal Russian collection link is missing');
   }
   if (!home.includes('id="lc-russian-retailer-style"') || !collection.includes('id="lc-russian-retailer-style"')) {
     violations.push('Russian retailer editorial styling is missing from the home or collection page');

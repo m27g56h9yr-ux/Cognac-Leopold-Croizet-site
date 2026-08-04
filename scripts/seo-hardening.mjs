@@ -2296,7 +2296,7 @@ const partnerOrderContexts = new Map(
     }]),
 );
 
-const RUSSIAN_RETAILER_COLLECTION_URL = 'https://av.ru/collections/cognac_pierre_croizet';
+const RUSSIAN_RETAILER_HOME_URL = '/ru/a-faire/';
 const RUSSIAN_RETAILER_STYLE = `<style id="lc-russian-retailer-style">
 .lc-ru-retailer{box-sizing:border-box;max-width:1000px;margin:42px auto 8px;padding:20px 3px;display:flex;align-items:center;justify-content:space-between;gap:30px;border-top:1px solid #cdbb9f;border-bottom:1px solid #cdbb9f;color:#303030}.lc-ru-retailer-copy{display:flex;align-items:baseline;gap:17px;min-width:0}.lc-ru-retailer-eyebrow{margin:0;color:#895006;font-family:"Montserrat",Arial,sans-serif;font-size:10px;line-height:1.4;letter-spacing:.18em;text-transform:uppercase}.lc-ru-retailer-title{margin:0;color:#303030;font-family:"Playfair Display",Georgia,serif;font-size:22px;line-height:1.15;font-weight:400;white-space:nowrap}.lc-ru-retailer-cta,.lc-ru-retailer-card-link{display:inline-flex;align-items:center;color:#895006!important;border-bottom:1px solid #895006;text-decoration:none!important;font-family:"Montserrat",Arial,sans-serif}.lc-ru-retailer-cta{min-height:34px;padding:0 2px 3px;font-size:10px;line-height:1.25;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}.lc-ru-retailer-card-link{margin-top:12px;padding:0 0 3px;font-size:9px;line-height:1.25;letter-spacing:.02em;white-space:nowrap}.lc-ru-retailer-arrow{margin-left:6px}.lc-ru-retailer-cta:hover,.lc-ru-retailer-card-link:hover{color:#303030!important;border-bottom-color:#303030}@media(max-width:700px){.lc-ru-retailer{display:block;margin:24px 20px 2px;padding:18px 0}.lc-ru-retailer-copy{display:block}.lc-ru-retailer-eyebrow{margin-bottom:7px}.lc-ru-retailer-title{white-space:normal}.lc-ru-retailer-cta{margin-top:13px}.lc-ru-retailer-card-link{font-size:8px;line-height:1.25;letter-spacing:0;white-space:nowrap}.container-collection-produit .informations-produit-collection{margin-bottom:12px}}
 </style>`;
@@ -2305,7 +2305,7 @@ const RUSSIAN_RETAILER_HOME_BLOCK = `<section class="lc-ru-retailer" aria-labell
 <p class="lc-ru-retailer-eyebrow">Где купить в России</p>
 <h2 class="lc-ru-retailer-title" id="lc-ru-retailer-title">Азбука вкуса</h2>
 </div>
-<a class="lc-ru-retailer-cta" href="${RUSSIAN_RETAILER_COLLECTION_URL}" target="_blank" rel="noopener sponsored" aria-label="Смотреть коллекцию Cognac Léopold Croizet в «Азбуке вкуса»">Смотреть коллекцию <span class="lc-ru-retailer-arrow" aria-hidden="true">↗</span></a>
+<a class="lc-ru-retailer-cta" href="${RUSSIAN_RETAILER_HOME_URL}" aria-label="Смотреть коллекцию Cognac Léopold Croizet">Смотреть коллекцию <span class="lc-ru-retailer-arrow" aria-hidden="true">→</span></a>
 </section>`;
 
 const partnerCommerceRouteLastmods = new Map([
