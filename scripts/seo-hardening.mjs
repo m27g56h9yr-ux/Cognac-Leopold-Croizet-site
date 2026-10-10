@@ -5267,6 +5267,9 @@ function hrefLangForRoute(route) {
 }
 
 function hardenHtml(html, route, file) {
+  // The legacy footer labelled a Facebook URL as Instagram in every locale.
+  html = html.replace(/(<a\b[^>]*\bhref=)(["'])https:\/\/www\.facebook\.com\/leopold\.croizet\.cognac\2([^>]*>\s*Instagram\s*<\/a>)/gi,
+    '$1$2https://www.instagram.com/cognac_leopold_croizet/$2$3');
   const metadata = metadataForRoute(route, html);
   const canonicalRoute = canonicalRouteForRoute(route);
   const canonical = `${PUBLIC_ORIGIN}${canonicalRoute}`;
