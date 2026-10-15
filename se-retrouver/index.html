@@ -26,11 +26,12 @@
     :focus-visible{outline:3px solid #895006;outline-offset:3px}
     .skip{position:absolute;top:-80px;left:12px;z-index:4;padding:12px;background:#fff}
     .skip:focus{top:12px}
-    .page{max-width:480px;min-height:480px;height:100svh;margin:auto;padding:10px 18px max(8px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px}
+    .page{max-width:480px;min-height:480px;height:100svh;margin:auto;padding:max(10px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:10px}
+    .discovery{display:flex;flex:1;min-height:0;min-width:0;flex-direction:column;gap:10px}
+    .details{display:flex;flex:none;min-width:0;flex-direction:column;gap:10px}
     .masthead{display:flex;align-items:center;justify-content:center;flex:none;height:50px}
     .logo{display:block}
     .logo img{display:block;width:116px;height:50px;object-fit:cover;mix-blend-mode:multiply}
-    main{display:flex;flex:1;min-height:0;flex-direction:column;gap:10px}
     .intro{text-align:center;flex:none}
     h1{font:400 30px/1.1 var(--serif);letter-spacing:-.02em}
     .intro p{margin-top:5px;font-size:11px;color:var(--muted)}
@@ -48,7 +49,7 @@
     .contact{flex:none;border-top:1px solid var(--line);padding-top:10px}
     .contact-intro{font-size:11px;line-height:1.45;margin-bottom:7px}
     .channel-choice{font-size:10px;line-height:1.4;color:var(--muted);margin:0 0 7px}
-    .channels{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .channels{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:10px}
     .channel{min-width:0}
     .channel-label{display:block;font-size:11px;margin-bottom:4px}
     .coordinate{width:100%;height:44px;padding:8px 10px;border:1px solid #b6ad9e;background:#fff;color:var(--ink);border-radius:0;min-width:0;font-size:16px;scroll-margin-block:90px}
@@ -73,20 +74,49 @@
     .close-notice{position:absolute;right:10px;top:10px;width:40px;height:40px;border:0;background:transparent;cursor:pointer;font:28px/1 Arial,sans-serif}
     .page:has(.status:not(:empty)){height:auto;min-height:100svh}
     .page:has(.status:not(:empty)) .social-links{min-height:200px}
-    @media(min-width:761px){.page{padding-block:22px;max-height:940px;min-height:700px}.masthead{height:70px}.logo img{width:145px;height:64px}.social-card{padding-inline:28px}.social-card strong{font-size:39px}}
-    @media(max-height:650px) and (max-width:760px){.page{gap:7px;padding-top:6px;padding-bottom:6px}.masthead{height:40px}.logo img{height:40px;width:105px}main{gap:8px}h1{font-size:26px}.intro p{font-size:10px;margin-top:3px}.social-links{gap:8px;min-height:138px}.social-card{padding:10px 16px}.social-card strong{font-size:29px}.contact{padding-top:7px}.health{font-size:8px}.footer-links a,.footer-links button{min-height:25px}}
-    @media(max-width:350px){.page{padding-inline:14px}.social-card{gap:10px;padding-inline:14px}.social-card strong{font-size:28px}.social-card small{font-size:9px}.contact-intro{font-size:10px}.submit{font-size:13px}.footer-links{column-gap:12px}}
-    @media(max-height:550px) and (max-width:760px){.page{gap:5px}.masthead{height:36px}.logo img{height:36px}main{gap:6px}.contact{padding-top:5px}.contact-intro,.channel-choice{margin-bottom:5px}}
+    @media(min-width:761px){.page{padding-block:max(22px,env(safe-area-inset-top)) max(22px,env(safe-area-inset-bottom));max-height:940px;min-height:700px}.masthead{height:70px}.logo img{width:145px;height:64px}.social-card{padding-inline:28px}.social-card strong{font-size:39px}}
+    @media(max-height:650px) and (max-width:760px){.page{gap:7px;padding-top:max(6px,env(safe-area-inset-top));padding-bottom:max(6px,env(safe-area-inset-bottom))}.masthead{height:40px}.logo img{height:40px;width:105px}.discovery,.details{gap:8px}h1{font-size:26px}.intro p{font-size:10px;margin-top:3px}.social-links{gap:8px;min-height:138px}.social-card{padding:10px 16px}.social-card strong{font-size:29px}.contact{padding-top:7px}.health{font-size:8px}.footer-links a,.footer-links button{min-height:25px}}
+    @media(max-width:350px){.page{padding-inline:max(14px,env(safe-area-inset-left)) max(14px,env(safe-area-inset-right))}.social-card{gap:10px;padding-inline:14px}.social-card strong{font-size:28px}.social-card small{font-size:9px}.contact-intro{font-size:10px}.submit{font-size:13px}.footer-links{column-gap:12px}}
+    @media(max-height:550px) and (max-width:760px){.page{gap:5px}.masthead{height:36px}.logo img{height:36px}.discovery,.details{gap:6px}.contact{padding-top:5px}.contact-intro,.channel-choice{margin-bottom:5px}}
+    @media(min-width:560px) and (orientation:landscape){
+      .page{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:stretch;gap:clamp(20px,4vw,56px);max-width:1180px;min-height:320px;padding-block:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-bottom));padding-inline:max(24px,env(safe-area-inset-left)) max(24px,env(safe-area-inset-right))}
+      .discovery{min-height:280px}
+      .details{align-self:center;gap:18px}
+      .social-links{min-height:156px}
+      .facebook{background-position:60% 12%}
+      .contact{border-top:0;padding-top:0}
+      .contact-intro{font-size:14px;line-height:1.6;margin-bottom:14px}
+      .channel-choice{font-size:11px;margin-bottom:12px}
+      .channels{gap:12px}
+      .channel-label{font-size:12px}
+      .submit{margin-top:12px;font-size:17px}
+      .footer-links{column-gap:14px}
+      .footer-links a,.footer-links button{min-height:36px}
+      .health{font-size:9px}
+      .page:has(.status:not(:empty)){height:auto;min-height:min(100svh,940px)}
+    }
+    @media(min-width:560px) and (orientation:landscape) and (max-height:500px){
+      .page{gap:20px;padding-block:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-bottom));padding-inline:max(16px,env(safe-area-inset-left)) max(16px,env(safe-area-inset-right))}
+      .discovery{gap:6px;min-height:260px}
+      .masthead{height:36px}.logo img{width:105px;height:36px}
+      h1{font-size:26px}.intro p{font-size:10px;margin-top:3px}
+      .social-links{gap:8px}.social-card{gap:10px;padding:10px 16px}.social-card strong{font-size:29px}
+      .details{gap:8px}.contact-intro{font-size:11px;line-height:1.45;margin-bottom:7px}
+      .channel-choice{font-size:10px;margin-bottom:7px}.channels{gap:8px}.channel-label{font-size:10px}
+      .submit{margin-top:6px;font-size:15px}.footer-links{column-gap:10px}
+      .footer-links a,.footer-links button{min-height:28px;font-size:9px}.health{font-size:8px}
+    }
+    @media(min-width:560px) and (max-width:700px) and (orientation:landscape){.page{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
   <a class="skip" href="#main">Aller au contenu</a>
-  <div class="page">
+  <main class="page" id="main">
+    <div class="discovery">
     <header class="masthead">
       <a class="logo" href="https://cognac-leopold-croizet.com/" aria-label="Cognac Léopold Croizet, site officiel"><img src="../wp-content/uploads/2024/03/img_slider_footer_01.png" width="600" height="600" alt="Maison Léopold Croizet Cognac"></a>
     </header>
-    <main id="main">
       <div class="intro"><h1>On se retrouve ?</h1><p>Suivez les nouvelles de la maison.</p></div>
       <nav class="social-links" aria-label="Suivre Cognac Léopold Croizet sur les réseaux sociaux">
         <a class="social-card instagram" href="https://www.instagram.com/cognac_leopold_croizet/" target="_blank" rel="noopener noreferrer" aria-label="Suivre Cognac Léopold Croizet sur Instagram, nouvel onglet">
@@ -98,6 +128,8 @@
           <span><small>Suivez-nous sur</small><strong>Facebook</strong></span><span class="arrow" aria-hidden="true">↗</span>
         </a>
       </nav>
+    </div>
+    <div class="details">
       <section class="contact" aria-label="Recevoir les nouvelles de Cognac Léopold Croizet">
         <p class="contact-intro" id="contact-intro">Je souhaite recevoir des invitations aux prochains salons et des offres de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span> :</p>
         <form id="salon-form" name="salon-contact" data-mode="subscribe" action="../api/salon-contact.php" method="post" autocomplete="on" aria-describedby="contact-intro channel-choice">
@@ -119,12 +151,12 @@
         </form>
         <noscript><p>Activez JavaScript pour vous inscrire ou écrivez à cognac@mdpierre.com.</p></noscript>
       </section>
-    </main>
     <footer>
       <nav class="footer-links" aria-label="Informations"><button id="privacy-open" type="button" aria-haspopup="dialog">Vos données</button><a href="desinscription/">Désinscription</a><a href="https://cognac-leopold-croizet.com/collection/">Nos cognacs</a></nav>
       <p class="health">L’abus d’alcool est dangereux pour la santé.<br>À consommer avec modération.</p>
     </footer>
-  </div>
+    </div>
+  </main>
   <dialog id="privacy-notice" aria-labelledby="privacy-title">
     <button class="close-notice" id="privacy-close" type="button" aria-label="Fermer les informations sur vos données">×</button>
     <h2 id="privacy-title">Vos données et vos choix</h2>
