@@ -245,9 +245,9 @@ jobs:
           set net:max-retries 3
           set net:reconnect-interval-base 5
           set sftp:auto-confirm yes
-          put /tmp/lc-salon-config.php -o "$SFTP_TARGET_DIR/api/salon-config.php.new"
-          chmod 600 "$SFTP_TARGET_DIR/api/salon-config.php.new"
-          mv -f "$SFTP_TARGET_DIR/api/salon-config.php.new" "$SFTP_TARGET_DIR/api/salon-config.php"
+          put /tmp/lc-salon-config.php -o "$SFTP_TARGET_DIR/api/salon-config.php"
+          chmod 600 "$SFTP_TARGET_DIR/api/salon-config.php"
+          rm -f "$SFTP_TARGET_DIR/api/salon-config.php.new"
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude '(^|/)newsletter-data(/|$)' \
             --exclude '(^|/)conversion-data(/|$)' \
