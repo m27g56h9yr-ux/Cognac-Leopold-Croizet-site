@@ -20,7 +20,7 @@ import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 PHP = os.environ.get('PHP_BINARY', 'php')
-VERSION = 'salon-contact-2026-10-15-v5'
+VERSION = 'salon-contact-2026-10-15-v6'
 checks = 0
 
 def check(value, label):

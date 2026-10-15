@@ -11,11 +11,10 @@
   document.getElementById('privacy-close')?.addEventListener('click', () => notice.close());
   if (notice && location.hash === '#privacy-notice') openNotice();
 
-  document.querySelectorAll('#salon-form, form[data-salon-channel]').forEach(initializeForm);
+  document.querySelectorAll('#salon-form').forEach(initializeForm);
   function initializeForm(form) {
     const endpoint = form.action;
     const withdraw = form.dataset.mode === 'withdraw';
-    const channel = form.dataset.salonChannel;
     const status = form.querySelector('.status');
     const phone = form.elements.phone;
     const email = form.elements.email;
@@ -27,7 +26,7 @@
     let privateReady = false;
     let busy = false;
     const messages = {
-      consent_required: 'Choisissez les SMS, les e-mails, ou les deux : c’est vous qui décidez.',
+      consent_required: 'Renseignez votre téléphone, votre e-mail, ou les deux pour vous inscrire.',
       channel_required: 'Choisissez les SMS, les e-mails, ou les deux.',
       invalid_sms: 'Vérifiez votre mobile : 06 ou 07 en France, ou le préfixe international (+…).',
       invalid_email: 'Vérifiez votre adresse e-mail, s’il vous plaît.',
@@ -91,10 +90,11 @@
         field.removeAttribute('aria-invalid');
         field.removeAttribute('aria-describedby');
       });
-      // Only the submitted form grants consent. Autofilling the other field never does.
-      const wantsSms = withdraw ? sms.checked : channel === 'sms';
-      const wantsEmail = withdraw ? mail.checked : channel === 'email';
-      if (!wantsSms && !wantsEmail) return show(messages[withdraw ? 'channel_required' : 'consent_required'], sms);
+      // Read current values at submission, including Safari fills without input events.
+      // No request is made merely because a coordinate was typed or autofilled.
+      const wantsSms = withdraw ? sms.checked : Boolean(phone.value.trim());
+      const wantsEmail = withdraw ? mail.checked : Boolean(email.value.trim());
+      if (!wantsSms && !wantsEmail) return show(messages[withdraw ? 'channel_required' : 'consent_required'], withdraw ? sms : phone);
       if (!privateReady && wantsSms && !phone.value.trim()) return show('Ajoutez le numéro de mobile concerné.', phone);
       if (!privateReady && wantsEmail && (!email.value.trim() || !email.validity.valid)) return show(messages.invalid_email, email);
       const payload = {
@@ -115,7 +115,7 @@
         form.reset();
         show(withdraw
           ? 'Votre demande est prise en compte. Vous ne recevrez plus nos communications sur les canaux choisis.'
-          : `Merci ! Votre inscription par ${channel === 'sms' ? 'SMS' : 'e-mail'} est enregistrée.`, null, true);
+          : `Merci ! Votre inscription par ${wantsSms && wantsEmail ? 'SMS et e-mail' : wantsSms ? 'SMS' : 'e-mail'} est enregistrée.`, null, true);
         if (withdraw) {
           if (privateReady) {
             const current = await request({ action: 'inspect', token });
@@ -135,7 +135,7 @@
             // On the local preview, keep the withdrawal flow on the same local service.
             link.href = location.hostname === '127.0.0.1' || location.hostname === 'localhost' ? url.pathname + url.hash : url.href;
             link.className = 'success-link';
-            link.textContent = channel === 'sms' ? 'Gérer mes SMS (lien à conserver)' : 'Gérer mes e-mails (lien à conserver)';
+            link.textContent = 'Gérer mes inscriptions (lien à conserver)';
             link.rel = 'noreferrer';
             status.append(link);
           }

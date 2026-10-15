@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 /** Dedicated consent store for Cognac Léopold Croizet. No marketing transport. */
 const LC_SALON_BRAND = 'Cognac Léopold Croizet';
-const LC_SALON_VERSION = 'salon-contact-2026-10-15-v5';
+const LC_SALON_VERSION = 'salon-contact-2026-10-15-v6';
 const LC_SALON_ORIGIN = 'https://cognac-leopold-croizet.com';
 const LC_SALON_TEXT = [
-    'sms' => 'Je souhaite recevoir par SMS les actualités et offres de Cognac Léopold Croizet.',
-    'email' => 'Je souhaite recevoir par e-mail les actualités et offres de Cognac Léopold Croizet.',
+    'sms' => 'Je souhaite recevoir par SMS des invitations aux prochains salons et des offres de Cognac Léopold Croizet.',
+    'email' => 'Je souhaite recevoir par e-mail des invitations aux prochains salons et des offres de Cognac Léopold Croizet.',
 ];
 
 final class SalonError extends RuntimeException
@@ -294,8 +294,9 @@ function salon_subscribe(array $store, array $input): array
         $q->execute([$id, $channel, salon_encrypt($store, $record), $now, $now, gmdate('c', strtotime('+3 years'))]);
         salon_event($store, $id, $channel, 'consent_granted', [
             'text' => LC_SALON_TEXT[$channel],
-            'positive_action' => 'channel_specific_subscription_submit',
-            'button_text' => $channel === 'sms' ? 'M’inscrire par SMS' : 'M’inscrire par e-mail',
+            'positive_action' => 'filled_contact_fields_and_subscription_submit',
+            'button_text' => 'M’inscrire',
+            'channel_choice_text' => 'Par SMS et/ou e-mail, selon les champs remplis.',
             'challenge_hash' => hash('sha256', (string) $input['challenge']),
         ]);
     }
