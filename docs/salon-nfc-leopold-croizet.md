@@ -1,9 +1,10 @@
-# Page salon NFC / QR · Cognac Léopold Croizet
+# Page Se retrouver · NFC / QR · Cognac Léopold Croizet
 
 ## Adresses et sources
 
-- Destination permanente NFC / QR : `https://cognac-leopold-croizet.com/salon/`.
-- Retrait public, sans compte : `https://cognac-leopold-croizet.com/salon/desinscription/`.
+- Les anciens chemins `/salon/` et `/salon/desinscription/` redirigent en 301 vers les nouveaux chemins ; les fragments privés restent valides.
+- Destination permanente NFC / QR : `https://cognac-leopold-croizet.com/se-retrouver/`.
+- Retrait public, sans compte : `https://cognac-leopold-croizet.com/se-retrouver/desinscription/`.
 - Sources : `scripts/page-templates/salon.html.in`, `salon-desinscription.html.in`, `assets/js/salon-contact.js`.
 - Génération : `node scripts/build-salon-page.mjs`, également appelée par le build général.
 - Pages autonomes et `noindex`, hors sitemap, sans géolocalisation, traceur, newsletter générique ni stockage navigateur.
@@ -22,9 +23,9 @@ Le propriétaire a signalé une absence de suggestion sur iPhone avec la version
 
 `api/salon-contact.php` accepte des requêtes JSON sur la même origine HTTPS. Les deux consentements indépendants sont validés côté serveur. Le consentement résulte du clic sur « M’inscrire » pour les canaux dont le champ est rempli ; aucune case supplémentaire n’est nécessaire. Si une coordonnée remplie est invalide, la demande entière est refusée et aucun des deux canaux n’est enregistré. La preuve chiffrée enregistre le type d’action et le texte du bouton. La confirmation de majorité a été retirée à la demande du propriétaire ; aucune majorité n’est déclarée automatiquement. Une coordonnée sans le consentement correspondant est ignorée, même si elle a été saisie. Un téléphone français doit avoir la structure d’un mobile ; les numéros internationaux doivent suivre le format E.164.
 
-Chaque canal est dédupliqué séparément. Une inscription enregistre la date UTC, la marque, la source `salon-nfc-qr`, la page, la version et le texte exact du consentement et la preuve de l’action positive. La version courante est `salon-contact-2026-10-15-v6`. Les soumissions concurrentes sont transactionnelles. L’adresse IP brute et l’agent utilisateur ne sont pas conservés par cette application ; l’hébergeur peut disposer de ses propres journaux techniques.
+Chaque canal est dédupliqué séparément. Une inscription enregistre la date UTC, la marque, la source `se-retrouver`, la page, la version et le texte exact du consentement et la preuve de l’action positive. La version courante est `salon-contact-2026-10-15-v7`. Les soumissions concurrentes sont transactionnelles. La base newsletter commune conserve aussi les métadonnées techniques prévues par le formulaire historique (IP, navigateur, langue et référent sans requête ni fragment). La notice affichée le précise.
 
-La propriété de l’adresse ou du téléphone est **déclarée, non vérifiée**. Aucun code SMS, double opt-in par e-mail ni service d’envoi commercial n’est branché. Le champ `ownership` de l’export le précise. La collecte ne déclenche aucun message ni transfert de fichier par e-mail. Le formulaire newsletter historique conserve son fonctionnement propre.
+La propriété de l’adresse ou du téléphone est **déclarée, non vérifiée**. Aucun code SMS, double opt-in par e-mail ni service d’envoi commercial n’est branché. Le champ `ownership` de l’export le précise. La collecte utilise désormais le fichier commun `newsletter-data/subscriptions.csv`. Comme pour le formulaire newsletter, une nouvelle inscription déclenche l’envoi du CSV complet au responsable de la maison (`leo.croizet@free.fr`), depuis `newsletter@cognac-leopold-croizet.com`. Aucun message commercial n’est envoyé au visiteur. Voir `api/README.md` pour les colonnes, la migration et la reprise des écritures.
 
 ## Stockage et accès
 
@@ -54,7 +55,7 @@ Avant chaque campagne, refaire l’export pour tenir compte des oppositions. Un 
 
 Après l’inscription, un lien privé permet de gérer les canaux enregistrés sans saisir à nouveau ses coordonnées. Son jeton signé ne contient que des identifiants opaques et figure après `#`, hors requête URL et journaux d’accès. La page n’utilise aucun tiers ni traceur.
 
-Sans lien, le formulaire public accepte une opposition par téléphone ou e-mail. Sa réponse ne révèle jamais si la coordonnée était inscrite. Les retraits sont réalisés exclusivement par POST : visiter un lien ne désinscrit personne. Chaque canal coché est retiré immédiatement ; l’autre reste actif. Le retrait efface la coordonnée chiffrée de la liste active et l’exclut de tout nouvel export. Une nouvelle inscription nécessite un nouveau consentement explicite.
+Sans lien, le formulaire public accepte une opposition par téléphone ou e-mail. Sa réponse ne révèle jamais si la coordonnée était inscrite. Les retraits sont réalisés exclusivement par POST : visiter un lien ne désinscrit personne. Chaque canal coché est retiré immédiatement ; l’autre reste actif. Le retrait efface la coordonnée chiffrée et la coordonnée dans le CSV commun ; il l’exclut des nouveaux exports. Les anciennes pièces jointes doivent être mises à jour avant usage. Une nouvelle inscription nécessite un nouveau consentement explicite.
 
 Les coordonnées actives expirent trois ans après le dernier consentement explicite. Les preuves sont conservées trois ans ; une empreinte protégée d’opposition est conservée trois ans après retrait. Les données échues sont purgées à chaque accès, export et contrôle de santé. Le workflow `salon-retention.yml` appelle ce contrôle quotidiennement, y compris sans visite sur la page. Sa bonne exécution est visible dans GitHub Actions.
 
@@ -69,5 +70,5 @@ Repères officiels : [CNIL, prospection électronique](https://www.cnil.fr/fr/la
 - `git diff --check`, syntaxe PHP et JavaScript, régénération identique des deux pages.
 - Parcours local en navigateur : e-mail seul sans téléphone, lien privé reconnu puis retrait confirmé.
 - Publication : push sur `main` → workflow `Deploy OVH` → tests → vérification HTTPS du WordPress historique → préparation du secret privé → SFTP → contrôle des pages, du marqueur de commit, du stockage et des refus 401/403.
-- Après publication, contrôler en production une inscription synthétique, la lecture privée, le retrait d’un canal puis de l’autre, et l’absence finale des contacts synthétiques dans l’export actif. Les résultats de déploiement sont consultables dans GitHub Actions.
-- Utiliser exactement l’URL permanente ci-dessus sur NFC/QR. Les anciens SVG provisoires locaux encodent cette URL ; la destination doit être observée en production avant fabrication.
+- Après publication, lire le statut privé et le schéma commun sans exposer les coordonnées. Une inscription synthétique en production déclencherait l’envoi du CSV réel au responsable ; préférer les contrôles isolés de la CI pour les scénarios de collecte. Les résultats de déploiement sont consultables dans GitHub Actions.
+- Utiliser exactement l’URL permanente ci-dessus sur NFC/QR. Les anciens SVG provisoires locaux encodent `/salon/`, qui redirige vers cette URL ; la destination doit être observée en production avant fabrication.

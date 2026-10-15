@@ -1,6 +1,6 @@
 # Newsletter OVH
 
-Le formulaire newsletter envoie les adresses e-mail vers `api/newsletter.php`.
+Le formulaire newsletter envoie les adresses e-mail vers `api/newsletter.php`. La page `/se-retrouver/` utilise `api/salon-contact.php` pour le téléphone, l’e-mail ou les deux. Les deux parcours alimentent le même fichier ci-dessous, via `api/newsletter-lib.php`.
 
 Sur OVH, le script crée et met à jour le fichier :
 
@@ -8,7 +8,7 @@ Sur OVH, le script crée et met à jour le fichier :
 newsletter-data/subscriptions.csv
 ```
 
-Chaque ligne contient la date d'enregistrement, l'adresse e-mail, la langue de la page, l'URL de la page, la version du consentement, l'adresse IP, le navigateur, la page d'origine et la langue du navigateur.
+Chaque ligne conserve les neuf colonnes historiques : date, e-mail, langue, page d’origine, version du consentement, IP, navigateur, référent et langue du navigateur. Les nouvelles colonnes ajoutent `phone`, `consent_email`, `consent_sms`, `email_page`, `phone_page`, `last_page`, `updated_at` et les dates, textes et versions de consentement de chaque canal. `page` garde la première origine ; les colonnes par canal indiquent la page de leur dernier consentement enregistré. Les nouveaux chemins ne contiennent ni requête ni fragment. Aucun consentement SMS n’est déduit d’une ancienne inscription e-mail. Un envoi avec les deux coordonnées les regroupe lorsque cela n’écrase pas une coordonnée différente déjà enregistrée.
 
 Le parcours reste limité à un champ e-mail et un clic. Un champ piège hors écran et un horodatage technique fournissent seulement des signaux d'observation : ils ne provoquent aucun rejet, aucun CAPTCHA et aucune étape supplémentaire. Les décisions sont journalisées sans adresse e-mail ni adresse IP dans :
 
@@ -33,9 +33,20 @@ cognac-leopold-croizet-newsletter-inscriptions-AAAAMMJJ-HHMMSS-utc.csv
 
 Ce nom permet d'identifier immédiatement Cognac Léopold Croizet et l'instant d'envoi sans modifier le stockage serveur, qui reste `newsletter-data/subscriptions.csv`.
 
-La configuration par défaut est dans `newsletter-config.sample.php`. Pour modifier le destinataire, l'expéditeur ou les chemins des fichiers CSV, copier ce fichier en `newsletter-config.php`.
+La configuration effective est chargée par `newsletter-lib.php` ; `newsletter-config.sample.php` en fournit le modèle. Pour modifier le destinataire, l'expéditeur ou les chemins des fichiers CSV, copier ce fichier en `newsletter-config.php`.
 
 Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `leo.croizet@free.fr`.
+
+
+## Écriture commune et désinscription
+
+Les anciens fichiers à neuf colonnes sont relus par nom de colonne ; les colonnes supplémentaires éventuelles sont conservées. La migration refuse un fichier mal formé avant toute écriture. Un verrou stable `.lock` et un remplacement atomique par fichier temporaire 0600 protègent les mises à jour concurrentes. `record_version=2` signale l’échappement réversible des cellules pouvant être interprétées comme formules de tableur.
+
+Les nouveaux consentements et les opérations en attente sont chiffrés dans la base privée SQLite. Une inscription ou un retrait n’est confirmé qu’après application au CSV commun. En cas de panne entre les deux écritures, l’opération reste en attente et sera rejouée sans perdre les autres lignes au prochain accès ou contrôle de santé quotidien. Le raccordement initial reprend les consentements actifs historiques de la page sans notification en masse. Les oppositions connues sont appliquées à la base commune.
+
+`/se-retrouver/desinscription/` retire uniquement le canal demandé, y compris un e-mail inscrit par l’ancien formulaire. L’autre coordonnée reste active. L’expiration des nouveaux consentements est répercutée dans le CSV. Les copies de CSV déjà envoyées par e-mail ne se modifient pas rétroactivement : toujours utiliser la liste serveur actuelle et répercuter les retraits avant une campagne. Ne pas réimporter une ancienne pièce jointe comme liste active.
+
+`python3 scripts/salon-admin.py` affiche les compteurs, le schéma du CSV, les pages d’origine et la conformité des adresses de notification sans afficher les coordonnées. Son export historique reste un export des preuves chiffrées ; les anciens inscrits présents seulement dans le CSV restent dans la liste commune.
 
 ## Mesure des conversions SEO/GEO
 

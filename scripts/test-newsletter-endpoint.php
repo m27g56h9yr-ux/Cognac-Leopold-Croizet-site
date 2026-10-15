@@ -7,6 +7,7 @@ if (getenv('LC_NEWSLETTER_STORAGE_PATH') === false) {
 }
 
 putenv('LC_NEWSLETTER_DISABLE_EMAIL=1');
+putenv('LC_SALON_PRIVATE_DIR=' . dirname(getenv('LC_NEWSLETTER_STORAGE_PATH')) . '/private');
 
 $scenario = (string) ($argv[1] ?? 'normal');
 $nowMilliseconds = (int) floor(microtime(true) * 1000);

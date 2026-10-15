@@ -2122,6 +2122,7 @@ for (const lang of SITE_LANGUAGES) {
 
 const noindexRoutes = new Set([
   '/salon/',
+  '/se-retrouver/',
   '/categorie-produit/non-classe/',
   '/en/categorie-produit/non-classe-en/',
   '/ru/categorie-produit/non-classe-ru/',
@@ -2412,7 +2413,7 @@ function sellerTrackingStatus(evidence) {
 }
 
 function isNoindexRoute(route) {
-  return route.startsWith('/salon/') || noindexRoutes.has(route) || route.startsWith('/_preview/');
+  return (route.startsWith('/salon/') || route.startsWith('/se-retrouver/')) || noindexRoutes.has(route) || route.startsWith('/_preview/');
 }
 
 function canonicalRouteForRoute(route) {
@@ -2441,7 +2442,7 @@ for (const file of allHtmlFiles) {
   const route = routeForFile(file);
   // The standalone salon template owns its metadata and consent forms.
   // Keep it out of generic language routing, newsletter and tracking injection.
-  if (route.startsWith('/salon/')) continue;
+  if ((route.startsWith('/salon/') || route.startsWith('/se-retrouver/'))) continue;
   let html = await readFile(file, 'utf8');
   if (route.startsWith('/_preview/')) {
     const previewHtml = await improveMediaMarkup(

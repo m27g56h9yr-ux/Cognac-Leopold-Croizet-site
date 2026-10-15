@@ -971,7 +971,7 @@ async function collectSitemapUrls() {
     const url = normalizeAbsoluteUrl(loc);
     if (!url) return;
     if (!HOST_PREFIX.has(url.hostname)) return;
-    if (toLocalRoute(url).startsWith('/salon/')) return; // Owned by the local salon template.
+    if (/^\/(salon|se-retrouver)\//.test(toLocalRoute(url))) return; // Owned by the local salon template.
     if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) return;
     urls.add(stripHash(url).toString());
   };
@@ -1064,7 +1064,7 @@ async function addLocalHtmlPageUrls(urls) {
       if (segments.includes('api')) continue;
 
       const route = routeForPagePath(relativePath);
-      if (route.startsWith('/salon/')) continue; // Rebuilt locally, never fetched from production.
+      if (/^\/(salon|se-retrouver)\//.test(route)) continue; // Rebuilt locally, never fetched from production.
       if (EXCLUDED_PAGE_ROUTES.has(route)) continue;
       urls.add(`${PUBLIC_ORIGIN}${route}`);
     }

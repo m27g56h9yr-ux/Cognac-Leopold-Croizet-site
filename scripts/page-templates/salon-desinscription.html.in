@@ -8,7 +8,7 @@
   <meta name="description" content="Gérez vos consentements et désinscrivez-vous séparément des SMS et des e-mails de Cognac Léopold Croizet.">
   <meta name="robots" content="noindex,follow">
   <title>Mes préférences | Cognac Léopold Croizet</title>
-  <link rel="canonical" href="https://cognac-leopold-croizet.com/salon/desinscription/">
+  <link rel="canonical" href="https://cognac-leopold-croizet.com/se-retrouver/desinscription/">
   <link rel="icon" href="../../assets/brand/favicon-96.png" sizes="96x96">
   <style>
     /* Official site fonts, hosted in the repository. Relative URLs also work in a file preview. */
@@ -183,6 +183,6 @@
       <p>La vente d’alcool est interdite aux mineurs.</p>
     </div>
   </footer>
-  <script src="../../assets/js/salon-contact.js?v=20261015-6" defer></script>
+  <script src="../../assets/js/salon-contact.js?v=20261015-7" defer></script>
 </body>
 </html>

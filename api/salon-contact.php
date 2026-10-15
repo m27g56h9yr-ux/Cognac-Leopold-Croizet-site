@@ -7,8 +7,9 @@ try {
     $method = (string) ($_SERVER['REQUEST_METHOD'] ?? '');
     if (!in_array($method, ['GET', 'POST'], true)) throw new SalonError('method_not_allowed', 405);
     $store = salon_store();
+    salon_cleanup($store);
+    salon_sync_newsletter($store);
     if ($method === 'GET') {
-        salon_cleanup($store);
         if (($_GET['action'] ?? '') === 'health') {
             salon_response(200, ['ok' => true, 'status' => 'ready', 'version' => LC_SALON_VERSION, 'brand' => LC_SALON_BRAND]);
         }
@@ -24,7 +25,6 @@ try {
     $db = $store['db'];
     $db->exec('BEGIN IMMEDIATE');
     try {
-        salon_cleanup($store);
         salon_consume($store, (string) ($input['challenge'] ?? ''));
         if ($action === 'subscribe') $result = salon_subscribe($store, $input);
         elseif ($action === 'inspect') $result = salon_inspect($store, $input);
@@ -34,6 +34,7 @@ try {
         $db->exec('ROLLBACK');
         throw $e;
     }
+    salon_sync_newsletter($store);
     salon_response(200, $result);
 } catch (SalonError $e) {
     if ($e->httpStatus === 429) header('Retry-After: 900');

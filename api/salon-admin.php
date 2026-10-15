@@ -15,6 +15,7 @@ try {
     }
     $store = salon_store();
     salon_cleanup($store);
+    salon_sync_newsletter($store);
     $rows = $store['db']->query('SELECT * FROM contacts ORDER BY channel, changed_at')->fetchAll();
     if (($_GET['format'] ?? '') !== 'csv') {
         $counts = ['active_sms' => 0, 'active_email' => 0, 'withdrawn' => 0, 'expired' => 0];
@@ -23,7 +24,7 @@ try {
             if (isset($counts[$k])) $counts[$k]++;
         }
         salon_response(200, ['ok' => true, 'counts' => $counts, 'encryption' => 'AES-256-GCM',
-            'storage' => 'outside_public_root', 'ownership_verification' => 'declared_only']);
+            'storage' => 'outside_public_root', 'ownership_verification' => 'declared_only', 'newsletter' => salon_newsletter_status($store)]);
     }
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="cognac-leopold-croizet-consentements-' . gmdate('Ymd-His') . '-utc.csv"');
@@ -36,7 +37,7 @@ try {
         $token = salon_sign($store, 'manage', ['ids' => [$r['id']]]);
         $cells = [LC_SALON_BRAND, $r['channel'], $data['contact'], $data['consented_at'],
             $data['consent_version'], $data['source'], $data['ownership'], $r['expires_at'],
-            LC_SALON_ORIGIN . '/salon/desinscription/#' . $token, $data['consent_text'], array_key_exists('adult_confirmed', $data) ? ($data['adult_confirmed'] ? 'yes' : 'no') : ''];
+            LC_SALON_ORIGIN . '/se-retrouver/desinscription/#' . $token, $data['consent_text'], array_key_exists('adult_confirmed', $data) ? ($data['adult_confirmed'] ? 'yes' : 'no') : ''];
         // Prevent formula execution in spreadsheet applications.
         $cells = array_map(static fn ($v) => preg_match('/^[=+@\-\t\r]/u', (string) $v) ? "'" . $v : $v, $cells);
         fputcsv($out, $cells, ',', '"', '');

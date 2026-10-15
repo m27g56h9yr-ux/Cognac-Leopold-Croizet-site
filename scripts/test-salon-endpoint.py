@@ -20,7 +20,7 @@ import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 PHP = os.environ.get('PHP_BINARY', 'php')
-VERSION = 'salon-contact-2026-10-15-v6'
+VERSION = 'salon-contact-2026-10-15-v7'
 checks = 0
 
 def check(value, label):
@@ -35,7 +35,7 @@ with tempfile.TemporaryDirectory(prefix='lc-salon-test-') as temp:
         s.bind(('127.0.0.1', 0))
         port = s.getsockname()[1]
     base = f'http://127.0.0.1:{port}'
-    env = dict(os.environ, LC_SALON_PRIVATE_DIR=str(private), LC_SALON_TEST_MODE='1', LC_SALON_ADMIN_HASH=hashlib.sha256(admin.encode()).hexdigest(), PHP_CLI_SERVER_WORKERS='4')
+    env = dict(os.environ, LC_NEWSLETTER_STORAGE_PATH=str(Path(temp) / 'newsletter' / 'subscriptions.csv'), LC_NEWSLETTER_DISABLE_EMAIL='1', LC_SALON_PRIVATE_DIR=str(private), LC_SALON_TEST_MODE='1', LC_SALON_ADMIN_HASH=hashlib.sha256(admin.encode()).hexdigest(), PHP_CLI_SERVER_WORKERS='4')
     log = open(Path(temp) / 'server.log', 'wb')
     server = subprocess.Popen([PHP, '-S', f'127.0.0.1:{port}', '-t', str(ROOT)], env=env, stdout=log, stderr=log, start_new_session=True)
     def http(path='/api/salon-contact.php', body=None, origin=base, method=None, auth=False, content='application/json'):
@@ -118,7 +118,7 @@ with tempfile.TemporaryDirectory(prefix='lc-salon-test-') as temp:
         check(all(r['adult_confirmed'] == '' for r in records), 'no fabricated adult confirmation')
         check(all(r['consent_text'].startswith('Je souhaite recevoir') for r in records), 'new explicit consent wording retained')
         check(all(r['contact'] != 'both@example.com' for r in records), 'withdrawn absent from export')
-        check(all(r['unsubscribe_url'].startswith('https://cognac-leopold-croizet.com/salon/desinscription/#') for r in records), 'campaign links per channel')
+        check(all(r['unsubscribe_url'].startswith('https://cognac-leopold-croizet.com/se-retrouver/desinscription/#') for r in records), 'campaign links per channel')
         check(any(r['contact'].startswith("'+33") for r in records), 'csv formula protection')
         raw = (private / 'consents.sqlite').read_bytes()
         for value in [b'0612345678', b'+33612345678', b'both@example.com', b'single@example.com', b'discard@example.com', b'127.0.0.1']:

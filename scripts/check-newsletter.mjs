@@ -51,7 +51,7 @@ for (const relativeFile of homeFiles) {
 
 const [clientScript, endpoint, generator, builder, readme] = await Promise.all([
   readFile(path.join(ROOT, 'wp-content/plugins/newsletter-pc/assets/js/frontend/newsletter-pc.js'), 'utf8'),
-  readFile(path.join(ROOT, 'api/newsletter.php'), 'utf8'),
+  Promise.all(['api/newsletter.php', 'api/newsletter-lib.php'].map(file => readFile(path.join(ROOT, file), 'utf8'))).then(parts => parts.join('\n')),
   readFile(path.join(ROOT, 'scripts/seo-hardening.mjs'), 'utf8'),
   readFile(path.join(ROOT, 'scripts/build-static-site.mjs'), 'utf8'),
   readFile(path.join(ROOT, 'api/README.md'), 'utf8'),
@@ -64,7 +64,7 @@ expect(/\bjsonp\s*:\s*false/.test(clientScript), 'client: JSONP must remain disa
 expect(!/(?:turnstile|captcha)/i.test(clientScript), 'client: external or visible challenge must not be added');
 
 expect(endpoint.includes("'risk_log_path'"), 'endpoint: separate risk log path missing');
-expect(endpoint.includes("'created' => false"), 'endpoint: exact duplicate handling missing');
+expect(endpoint.includes("!empty($operation['newsletter'])") && endpoint.includes("return false;"), 'endpoint: exact duplicate handling missing');
 expect(endpoint.includes("'already_registered'"), 'endpoint: duplicate success response missing');
 expect(endpoint.includes("'honeypot_filled'"), 'endpoint: honeypot observation signal missing');
 expect(

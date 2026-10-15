@@ -130,7 +130,7 @@
           } else submit.hidden = true;
         } else if (typeof data.manage_url === 'string') {
           const url = new URL(data.manage_url);
-          if (url.origin === 'https://cognac-leopold-croizet.com' && url.pathname === '/salon/desinscription/') {
+          if (url.origin === 'https://cognac-leopold-croizet.com' && url.pathname === '/se-retrouver/desinscription/') {
             const link = document.createElement('a');
             // On the local preview, keep the withdrawal flow on the same local service.
             link.href = location.hostname === '127.0.0.1' || location.hostname === 'localhost' ? url.pathname + url.hash : url.href;

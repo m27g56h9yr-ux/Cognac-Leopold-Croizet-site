@@ -43,6 +43,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y php-cli php-sqlite3
           php -l api/newsletter.php
+          php -l api/newsletter-lib.php
           php -l scripts/test-newsletter-endpoint.php
           newsletter_test_dir="$(mktemp -d)"
           LC_NEWSLETTER_STORAGE_PATH="$newsletter_test_dir/subscriptions.csv" \
@@ -94,7 +95,7 @@ jobs:
           php -l api/salon-admin.php
           python3 scripts/test-salon-endpoint.py
           node scripts/build-salon-page.mjs
-          git diff --exit-code -- salon/index.html salon/desinscription/index.html
+          git diff --exit-code -- salon/index.html salon/desinscription/index.html se-retrouver/index.html se-retrouver/desinscription/index.html se-retrouver/.htaccess
           npm run check
 
       - name: Prepare deployment bundle
@@ -294,8 +295,8 @@ jobs:
             "https://cognac-leopold-croizet.com/"
             "https://cognac-leopold-croizet.com/rencontre/"
             "https://cognac-leopold-croizet.com/mentions-legales/"
-            "https://cognac-leopold-croizet.com/salon/"
-            "https://cognac-leopold-croizet.com/salon/desinscription/"
+            "https://cognac-leopold-croizet.com/se-retrouver/"
+            "https://cognac-leopold-croizet.com/se-retrouver/desinscription/"
           )
 
           for url in "${urls[@]}"; do
@@ -357,7 +358,7 @@ jobs:
           assert health.get('ok') and health.get('status') == 'ready', 'Salon private storage is unavailable'
           print('Salon collection and private storage are ready.')
           PYHEALTH
-          for protected in api/salon-config.php api/salon-lib.php; do
+          for protected in api/salon-config.php api/salon-lib.php api/newsletter-config.php api/newsletter-lib.php newsletter-data/subscriptions.csv; do
             status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "https://cognac-leopold-croizet.com/$protected")"
             test "$status" = '403'
           done

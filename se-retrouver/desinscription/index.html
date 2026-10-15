@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Gérez vos consentements et désinscrivez-vous séparément des SMS et des e-mails de Cognac Léopold Croizet.">
+  <meta name="robots" content="noindex,follow">
+  <title>Mes préférences | Cognac Léopold Croizet</title>
+  <link rel="canonical" href="https://cognac-leopold-croizet.com/se-retrouver/desinscription/">
+  <link rel="icon" href="../../assets/brand/favicon-96.png" sizes="96x96">
+  <style>
+    /* Official site fonts, hosted in the repository. Relative URLs also work in a file preview. */
+    @font-face{font-family:Montserrat;font-style:normal;font-weight:400;font-display:swap;src:url("../../assets/external/fonts.gstatic.com/s/montserrat/v31/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aX8.ttf") format("truetype")}
+    @font-face{font-family:Montserrat;font-style:normal;font-weight:600;font-display:swap;src:url("../../assets/external/fonts.gstatic.com/s/montserrat/v31/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCu173w5aX8.ttf") format("truetype")}
+    @font-face{font-family:"Playfair Display";font-style:normal;font-weight:400;font-display:swap;src:url("../../assets/external/fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDQ.ttf") format("truetype")}
+    @font-face{font-family:"Playfair Display";font-style:italic;font-weight:400;font-display:swap;src:url("../../assets/external/fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtY.ttf") format("truetype")}
+    :root{color-scheme:light;--ink:#232323;--muted:#62605b;--taupe:#a68d64;--gold-text:#79613e;--paper:#f8f7f6;--line:#d8d0c3;--serif:"Playfair Display",Georgia,serif;--sans:Montserrat,Arial,sans-serif}
+    *{box-sizing:border-box}
+    body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65}
+    a{color:inherit;text-underline-offset:4px}
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
+    h1,h2,p,figure{margin:0}
+    h1,h2{font-family:var(--serif);font-weight:400}
+    .brand-name{white-space:nowrap}
+    :focus-visible{outline:3px solid #895006;outline-offset:5px}
+    .wrap{max-width:1120px;margin-inline:auto;padding-inline:40px}
+    .skip{position:absolute;top:-80px;left:12px;z-index:3;padding:12px;background:#fff}
+    .skip:focus{top:12px}
+    .masthead{background:#fff;border-bottom:1px solid #e7e3dd}
+    .masthead-inner{min-height:104px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .logo{display:block;flex:none}
+    .logo img{width:178px;height:88px;object-fit:cover}
+    .site-link{display:flex;align-items:center;gap:16px;min-height:44px;text-decoration:none;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    .arrow{font:24px/1 Arial,sans-serif}
+    .button>span{font-family:Arial,sans-serif;font-style:normal}
+    .hero{background:var(--paper)}
+    .hero-inner{display:grid;grid-template-columns:1fr 1fr;padding-block:48px 52px;gap:48px;align-items:center}
+    .eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-text);line-height:1.6}
+    .hero h1{font-size:clamp(38px,4.4vw,58px);line-height:1.12;letter-spacing:-.025em;margin:15px 0 20px}
+    .hero h1 em{font-weight:400;color:var(--gold-text)}
+    .hero-copy{max-width:425px;color:#55514b;font-size:14px;line-height:1.8}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:24px;min-height:52px;padding:11px 25px;border:1px solid var(--ink);background:transparent;text-decoration:none;font:400 19px/1.4 var(--serif);cursor:pointer}
+    .hero .button{margin-top:25px}
+    .button:hover{background:var(--ink);color:#fff}
+    .hero-photo{position:relative}
+    .hero-photo img{width:100%;height:354px;object-fit:cover;object-position:48% center}
+    .hero-photo figcaption{position:absolute;left:22px;right:22px;bottom:18px;color:#fff;font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+    .hero-photo::after{content:"";position:absolute;inset:65% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.55));pointer-events:none}
+    .hero-photo figcaption{z-index:1}
+    .social-section{padding-block:32px 36px}
+    .social-inner{display:flex;align-items:center;justify-content:space-between;gap:36px}
+    .social-section h2{font-size:27px;line-height:1.25;margin-bottom:7px}
+    .social-section p{font-size:12px;color:var(--muted)}
+    .social-links{display:flex;gap:12px;flex:none}
+    .social-link{display:flex;align-items:center;justify-content:center;gap:12px;min-width:165px;min-height:52px;padding:12px 20px;border:1px solid var(--line);text-decoration:none;font-size:12px}
+    .social-link:hover{border-color:var(--taupe);background:var(--paper)}
+    .social-link svg{width:19px;height:19px;fill:currentColor;flex:none}
+    .contact-section{background:#ebe7e2;border-block:1px solid #e3ddd4;padding-block:48px 52px}
+    .contact-inner{display:grid;grid-template-columns:.85fr 1.15fr;gap:76px}
+    .contact-intro h2{font-size:42px;line-height:1.15;margin:12px 0 18px}
+    .contact-intro>p:not(.eyebrow){color:#55514b;font-size:14px;line-height:1.85;max-width:310px}
+    .contact-intro .signature{font-family:var(--serif);font-style:italic;color:var(--gold-text);font-size:22px;margin-top:28px}
+    .form-note{font-size:11px;color:#65563e;border-left:2px solid var(--taupe);padding:4px 0 4px 12px;margin-bottom:20px}
+    .fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    .field label{display:block;font-size:12px;margin-bottom:8px}
+    .optional{font-size:10px;color:var(--muted)}
+    .field input{border:1px solid #b6ad9e;border-radius:0;width:100%;height:50px;padding:12px;background:#fff;color:var(--ink);font-size:16px;min-width:0}
+    .field input::placeholder{color:#78746e;opacity:1}
+    fieldset{border:0;margin:22px 0 0;padding:0;min-width:0}
+    legend{font-size:12px;font-weight:600;margin-bottom:12px}
+    .consent{display:flex;align-items:flex-start;gap:10px;margin-bottom:13px}
+    .consent input{flex:none;width:20px;height:20px;margin:2px 0 0;accent-color:#79613e}
+    .consent label{font-size:12px;line-height:1.7;cursor:pointer}
+    .fine{font-size:11px;line-height:1.7;color:#5f5a53}
+    .privacy{margin:15px 0 20px}
+    .submit{width:100%;border-color:#79613e;background:#79613e;color:#fff;font-style:italic}
+    .submit:hover{background:#5c482d;border-color:#5c482d}
+    .submit:disabled{opacity:.65;cursor:default}
+    .status{margin-top:10px;color:#73341f;font-size:12px}
+    .status:empty{margin:0}
+    .withdraw{margin-top:14px}
+    .trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+    .success-link{display:block;margin-top:10px;font-weight:600}
+    .status.success{color:#315335}
+    .management{max-width:720px;padding-block:48px 60px}
+    .management h1{font-size:42px;line-height:1.2;margin:12px 0 20px}
+    .management>p{margin-bottom:22px}
+    .management form{margin-top:26px}
+    [hidden]{display:none!important}
+    .privacy-notice{margin-top:16px;border-top:1px solid #c9c0b4;padding-top:12px}
+    .privacy-notice summary{cursor:pointer;min-height:44px;display:list-item;padding-block:10px}
+    .privacy-notice p+p{margin-top:10px}
+    .site-footer{background:#282828;color:#fff}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:25px;padding-block:24px}
+    .footer-logo{width:134px;height:auto}
+    .footer-links{display:flex;gap:24px;font-size:10px;flex-wrap:wrap}
+    .footer-links a{text-decoration:none;min-height:44px;display:flex;align-items:center}
+    .health{border-top:1px solid #505050;text-align:center;font-size:10px;line-height:1.7;color:#e5e0d8;padding:17px 24px 22px}
+    .health p+p{margin-top:5px}
+    @media(max-width:760px){
+      .wrap{padding-inline:24px}
+      .masthead-inner{min-height:80px}
+      .logo img{width:146px;height:72px}
+      .site-link{font-size:9px;gap:9px;letter-spacing:.06em}
+      .hero-inner{grid-template-columns:1fr;gap:26px;padding-block:30px 0}
+      .hero h1{font-size:39px;max-width:360px;margin:12px 0 15px}
+      .hero-copy{font-size:13px;max-width:430px}
+      .hero .button{min-height:48px;font-size:18px;margin-top:20px}
+      .hero-photo{margin-inline:-24px}
+      .hero-photo img{height:165px;object-position:50% 47%}
+      .hero-photo figcaption{left:24px;font-size:9px;bottom:12px}
+      .social-section{padding-block:26px 28px}
+      .social-inner{display:block}
+      .social-section h2{font-size:26px}
+      .social-section p{font-size:11px}
+      .social-links{margin-top:17px;gap:10px}
+      .social-link{flex:1;min-width:0;min-height:50px;padding:10px}
+      .contact-section{padding-block:30px 35px}
+      .contact-inner{display:block}
+      .contact-intro h2{font-size:35px;margin:10px 0 13px}
+      .contact-intro>p:not(.eyebrow){font-size:13px;max-width:none}
+      .contact-intro .signature{margin-top:14px;font-size:21px}
+      .contact-form{margin-top:23px}
+      .fields{grid-template-columns:1fr;gap:16px}
+      .field input{height:52px}
+      .form-note{font-size:10px;margin-bottom:17px}
+      .footer-inner{flex-direction:column;gap:10px;padding-block:26px 16px}
+      .footer-links{gap:22px}
+      .health{font-size:9px}
+    }
+    @media(max-width:350px){.wrap{padding-inline:20px}.hero h1{font-size:34px}.hero-photo{margin-inline:-20px}.site-link{font-size:8px}.logo img{width:128px}.brand-name{letter-spacing:-.025em}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="logo" href="https://cognac-leopold-croizet.com/" aria-label="Cognac Léopold Croizet, site officiel">
+        <img src="../../wp-content/uploads/2024/03/img_slider_footer_01.png" width="600" height="600" alt="Maison Léopold Croizet Cognac">
+      </a>
+      <a class="site-link" href="https://cognac-leopold-croizet.com/">Le site de la maison <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main" class="wrap management">
+    <p class="eyebrow">Vos nouvelles, à votre rythme</p>
+    <h1>Vous gardez le choix.</h1>
+    <p>Une pause dans nos nouvelles ? Choisissez les communications que vous souhaitez arrêter. Votre demande prend effet immédiatement.</p>
+    <p class="fine" id="management-state" role="status" aria-live="polite">Vous pouvez vous désinscrire sans compte en indiquant la coordonnée concernée.</p>
+    <form id="salon-form" action="../../api/salon-contact.php" method="post" data-mode="withdraw" novalidate>
+      <div class="fields" id="contact-fields">
+        <div class="field"><label for="phone">Votre mobile <span class="optional">(si retrait SMS)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25" placeholder="+33 6 12 34 56 78"></div>
+        <div class="field"><label for="email">Votre e-mail <span class="optional">(si retrait e-mail)</span></label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="vous@exemple.fr"></div>
+      </div>
+      <fieldset><legend>Je souhaite me désinscrire :</legend>
+        <div class="consent"><input id="consent-sms" name="consent_sms" type="checkbox"><label for="consent-sms">Des SMS de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span>.</label></div>
+        <div class="consent"><input id="consent-email" name="consent_email" type="checkbox"><label for="consent-email">Des e-mails de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span>.</label></div>
+      </fieldset>
+      <div class="trap" aria-hidden="true"><label for="company-url">Votre site web</label><input id="company-url" name="company_url" type="text" tabindex="-1" autocomplete="off"></div>
+      <p class="fine privacy">Seuls les canaux cochés sont concernés. La coordonnée est supprimée de la liste active ; une empreinte protégée de l’opposition et les preuves datées sont conservées pendant trois ans.</p>
+      <button class="button submit" type="submit" disabled>Confirmer ma désinscription <span aria-hidden="true">→</span></button>
+      <p class="status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+      <noscript><p class="fine">Activez JavaScript ou écrivez à cognac@mdpierre.com pour demander votre désinscription.</p></noscript>
+    </form>
+    <p class="fine withdraw">Pour toute question : <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>. <a href="../#privacy-notice">Vos données et vos droits</a>.</p>
+    <p class="withdraw"><a href="../">Revenir à la maison</a></p>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a href="https://cognac-leopold-croizet.com/" aria-label="Cognac Léopold Croizet, site officiel">
+        <img class="footer-logo" src="../../wp-content/uploads/2024/03/logo_leopold_croizet_footer_02.svg" alt="Maison Léopold Croizet Cognac" width="176" height="81" loading="lazy">
+      </a>
+      <nav class="footer-links" aria-label="Informations">
+        <a href="https://cognac-leopold-croizet.com/rencontre/">Nous rendre visite</a>
+        <a href="https://cognac-leopold-croizet.com/mentions-legales/">Mentions légales</a>
+      </nav>
+    </div>
+    <div class="health">
+      <p>L’ABUS D’ALCOOL EST DANGEREUX POUR LA SANTÉ, À CONSOMMER AVEC MODÉRATION.</p>
+      <p>La vente d’alcool est interdite aux mineurs.</p>
+    </div>
+  </footer>
+  <script src="../../assets/js/salon-contact.js?v=20261015-7" defer></script>
+</body>
+</html>
