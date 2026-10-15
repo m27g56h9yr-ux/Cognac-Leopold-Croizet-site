@@ -274,12 +274,14 @@ function newsletter_read(array $config): array
             throw new RuntimeException('Unrecognized newsletter header');
         }
         $header = array_values(array_unique(array_merge($oldHeader, $header)));
-        while (($cells = fgetcsv($file, 0, ',', '"', '')) !== false) {
+        // The original writer used PHP's default backslash escape.
+        $escape = in_array('record_version', $oldHeader, true) ? '' : '\\';
+        while (($cells = fgetcsv($file, 0, ',', '"', $escape)) !== false) {
             if ($cells === [null]) continue;
             if (count($cells) !== count($oldHeader)) throw new RuntimeException('Invalid newsletter row');
             $row = array_combine($oldHeader, $cells);
             if (($row['record_version'] ?? '') === '2') {
-                foreach ($row as &$cell) if (preg_match('/^\'[=+@\-\t\r]/u', (string) $cell)) $cell = substr($cell, 1);
+                foreach ($row as &$cell) if (preg_match('/^\'[=+@\-\t\r\']/u', (string) $cell)) $cell = substr($cell, 1);
                 unset($cell);
             } else {
                 // Existing email-only signups retain their original date, page and proof.
@@ -310,7 +312,7 @@ function newsletter_write(array $config, array $header, array $rows): void
             $cells = array_map(static function ($key) use ($row) {
                 $value = (string) ($row[$key] ?? '');
                 // Safe to open the attached CSV in a spreadsheet, including +33 numbers.
-                return preg_match('/^[=+@\-\t\r]/u', $value) ? "'" . $value : $value;
+                return preg_match('/^[=+@\-\t\r\']/u', $value) ? "'" . $value : $value;
             }, $header);
             if (fputcsv($file, $cells, ',', '"', '') === false) throw new RuntimeException('Newsletter write failed');
         }

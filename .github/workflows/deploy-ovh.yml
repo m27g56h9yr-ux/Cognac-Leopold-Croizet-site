@@ -240,6 +240,34 @@ jobs:
             exit 1
           fi
 
+          # One-time transition: the previous endpoint locks the CSV inode itself.
+          # Drain old requests before the new writer starts using atomic replacement.
+          LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_READ
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set sftp:auto-confirm yes
+          get "$SFTP_TARGET_DIR/api/newsletter.php" -o /tmp/lc-previous-newsletter.php
+          bye
+          LFTP_READ
+          if grep -q 'function append_local_record(' /tmp/lc-previous-newsletter.php; then
+            python3 - <<'PYPAUSE'
+          from pathlib import Path
+          Path('/tmp/lc-newsletter-pause.php').write_text("""<?php\nhttp_response_code(503);\nheader("Content-Type: application/json; charset=utf-8");\nheader("Cache-Control: no-store");\nheader("Retry-After: 60");\necho '{"ok":false,"status":"temporarily_unavailable"}';\n""")
+          PYPAUSE
+            LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_PAUSE
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set sftp:auto-confirm yes
+          put /tmp/lc-newsletter-pause.php -o "$SFTP_TARGET_DIR/api/newsletter.php"
+          bye
+          LFTP_PAUSE
+            echo "Legacy newsletter submissions paused; draining existing CSV writers."
+            sleep 60
+          fi
+          rm -f /tmp/lc-previous-newsletter.php /tmp/lc-newsletter-pause.php
+
           LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<LFTP_COMMANDS
           set cmd:fail-exit yes
           set net:timeout 30
