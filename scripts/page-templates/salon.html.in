@@ -35,26 +35,27 @@
     h1{font:400 30px/1.1 var(--serif);letter-spacing:-.02em}
     .intro p{margin-top:5px;font-size:11px;color:var(--muted)}
     .social-links{display:grid;grid-template-rows:1fr 1fr;gap:10px;flex:1;min-height:156px}
-    .social-card{display:grid;grid-template-columns:30px minmax(0,1fr) 22px;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;position:relative;overflow:hidden}
-    .instagram{background:linear-gradient(90deg,rgba(35,35,35,.88),rgba(35,35,35,.69)),url('../wp-content/uploads/2021/05/img_home_large_savoirfaire-1024x432.jpg') center/cover}
-    .facebook{background:var(--gold)}
+    .social-card{display:grid;grid-template-columns:30px minmax(0,1fr) 22px;align-content:end;align-items:center;gap:14px;padding:16px 20px;text-decoration:none;color:#fff;position:relative;overflow:hidden;background-color:var(--gold)}
+    .social-card::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.74),rgba(0,0,0,.42) 54px,transparent 120px)}
+    .social-card>*{position:relative}
+    .instagram{background-image:url('../wp-content/uploads/2021/05/img_home_large_savoirfaire-1024x432.jpg');background-position:center;background-size:cover}
+    .facebook{background-image:url('../assets/environment/environnement-vignes-triac-lautrait.jpg');background-position:60% 48%;background-size:cover}
     .social-card:hover{filter:brightness(1.12)}
     .social-card svg{width:30px;height:30px;fill:currentColor}
     .social-card small{display:block;font-size:10px;letter-spacing:.08em;line-height:1.5}
     .social-card strong{display:block;font:400 33px/1.15 var(--serif)}
     .arrow{font:25px/1 Arial,sans-serif}
     .contact{flex:none;border-top:1px solid var(--line);padding-top:10px}
-    fieldset{border:0;margin:0;padding:0;min-width:0}
-    legend{padding:0;font-size:11px;line-height:1.45;margin-bottom:7px}
+    .contact-intro{font-size:11px;line-height:1.45;margin-bottom:7px}
     .channels{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .channel{min-width:0}
-    .consent{display:flex;align-items:center;gap:7px;min-height:26px;cursor:pointer;font-size:12px;margin-bottom:3px}
-    .consent input{width:19px;height:19px;flex:none;margin:0;accent-color:var(--gold)}
-    .coordinate{width:100%;height:40px;padding:8px 10px;border:1px solid #b6ad9e;background:#fff;color:var(--ink);border-radius:0;min-width:0;font-size:16px}
+    .channel-label{display:block;font-size:11px;margin-bottom:4px}
+    .coordinate{width:100%;height:44px;padding:8px 10px;border:1px solid #b6ad9e;background:#fff;color:var(--ink);border-radius:0;min-width:0;font-size:16px;scroll-margin-block:90px}
     .coordinate::placeholder{color:#756e64;opacity:1;font-size:12px}
-    .submit{display:block;width:100%;height:38px;margin-top:8px;padding:5px 12px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:pointer;font:400 17px/1.3 var(--serif)}
+    .submit{display:block;width:100%;min-height:44px;margin-top:6px;padding:5px 7px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:pointer;font:400 15px/1.25 var(--serif)}
     .submit:hover{background:var(--gold);color:#fff}
     .submit:disabled{opacity:.6;cursor:default}
+    .autofill-hint{font-size:10px;line-height:1.4;color:var(--muted);margin-top:6px;text-align:center}
     .status{font-size:12px;color:#73341f}
     .status:not(:empty){margin-top:8px}
     .status.success{color:#315335}
@@ -74,7 +75,8 @@
     .page:has(.status:not(:empty)) .social-links{min-height:200px}
     @media(min-width:761px){.page{padding-block:22px;max-height:940px;min-height:700px}.masthead{height:70px}.logo img{width:145px;height:64px}.social-card{padding-inline:28px}.social-card strong{font-size:39px}}
     @media(max-height:650px) and (max-width:760px){.page{gap:7px;padding-top:6px;padding-bottom:6px}.masthead{height:40px}.logo img{height:40px;width:105px}main{gap:8px}h1{font-size:26px}.intro p{font-size:10px;margin-top:3px}.social-links{gap:8px;min-height:138px}.social-card{padding:10px 16px}.social-card strong{font-size:29px}.contact{padding-top:7px}.health{font-size:8px}.footer-links a,.footer-links button{min-height:25px}}
-    @media(max-width:350px){.page{padding-inline:14px}.social-card{gap:10px;padding-inline:14px}.social-card strong{font-size:28px}.social-card small{font-size:9px}legend{font-size:10px}.footer-links{column-gap:12px}}
+    @media(max-width:350px){.page{padding-inline:14px}.social-card{gap:10px;padding-inline:14px}.social-card strong{font-size:28px}.social-card small{font-size:9px}.contact-intro{font-size:10px}.submit{font-size:13px}.footer-links{column-gap:12px}}
+    @media(max-height:550px) and (max-width:760px){.autofill-hint{display:none}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
   </style>
 </head>
@@ -97,27 +99,27 @@
         </a>
       </nav>
       <section class="contact" aria-label="Recevoir les nouvelles de Cognac Léopold Croizet">
-        <form id="salon-form" action="../api/salon-contact.php" method="post" data-mode="subscribe" novalidate>
-          <fieldset>
-            <legend>Je souhaite recevoir les actualités et offres de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span> :</legend>
-            <div class="channels">
-              <div class="channel">
-                <label class="consent" for="consent-sms"><input id="consent-sms" name="consent_sms" type="checkbox" value="yes">Par SMS</label>
-                <label class="visually-hidden" for="phone">Votre mobile (facultatif)</label><input class="coordinate" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25" placeholder="Votre mobile">
-              </div>
-              <div class="channel">
-                <label class="consent" for="consent-email"><input id="consent-email" name="consent_email" type="checkbox" value="yes">Par e-mail</label>
-                <label class="visually-hidden" for="email">Votre e-mail (facultatif)</label><input class="coordinate" id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="Votre e-mail">
-              </div>
-            </div>
-          </fieldset>
-          <div class="trap" aria-hidden="true"><label for="company-url">Votre site web</label><input id="company-url" name="company_url" type="text" tabindex="-1" autocomplete="off"></div>
-          <input type="hidden" name="source" value="salon-nfc-qr">
-          <input type="hidden" name="consent_version" value="salon-contact-2026-10-15-v4">
-          <button class="submit" type="submit" disabled>Recevoir vos nouvelles</button>
-          <p class="status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p>
-          <noscript><p>Activez JavaScript pour vous inscrire ou écrivez à cognac@mdpierre.com.</p></noscript>
-        </form>
+        <p class="contact-intro" id="contact-intro">Je souhaite recevoir les actualités et offres de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span> :</p>
+        <div class="channels">
+          <form class="channel" id="salon-sms-form" data-salon-channel="sms" action="../api/salon-contact.php" method="post" autocomplete="on" aria-describedby="contact-intro" novalidate>
+            <label class="channel-label" for="phone">Votre mobile</label>
+            <input class="coordinate" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="send" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="40" placeholder="06 12 34 56 78" required>
+            <div class="trap" aria-hidden="true"><label for="sms-company-url">Votre site web</label><input id="sms-company-url" name="company_url" type="text" tabindex="-1" autocomplete="off"></div>
+            <input type="hidden" name="consent_version" value="salon-contact-2026-10-15-v5">
+            <button class="submit" type="submit" disabled>M’inscrire par SMS</button>
+            <p class="status" id="sms-status" role="status" aria-live="polite" tabindex="-1"></p>
+          </form>
+          <form class="channel" id="salon-email-form" data-salon-channel="email" action="../api/salon-contact.php" method="post" autocomplete="on" aria-describedby="contact-intro" novalidate>
+            <label class="channel-label" for="email">Votre e-mail</label>
+            <input class="coordinate" id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="send" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="254" placeholder="vous@exemple.fr" required>
+            <div class="trap" aria-hidden="true"><label for="email-company-url">Votre site web</label><input id="email-company-url" name="company_url" type="text" tabindex="-1" autocomplete="off"></div>
+            <input type="hidden" name="consent_version" value="salon-contact-2026-10-15-v5">
+            <button class="submit" type="submit" disabled>M’inscrire par e-mail</button>
+            <p class="status" id="email-status" role="status" aria-live="polite" tabindex="-1"></p>
+          </form>
+        </div>
+        <p class="autofill-hint">Votre téléphone peut préremplir ces champs.</p>
+        <noscript><p>Activez JavaScript pour vous inscrire ou écrivez à cognac@mdpierre.com.</p></noscript>
       </section>
     </main>
     <footer>
@@ -129,13 +131,13 @@
     <button class="close-notice" id="privacy-close" type="button" aria-label="Fermer les informations sur vos données">×</button>
     <h2 id="privacy-title">Vos données et vos choix</h2>
             <p>Responsable du traitement : LA MAISON DES PIERRES (MPC), éditrice de Cognac <span class="brand-name">Léopold&nbsp;Croizet</span>, 30 Rue d’Angoulême, 16200 Triac-Lautrait, France. Contact : <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a>.</p>
-            <p>Vos coordonnées servent à vous adresser nos actualités et offres, uniquement pour chaque canal auquel vous avez consenti. Les deux choix sont indépendants et aucune case n’est précochée. Une coordonnée saisie sans le consentement correspondant n’est pas enregistrée. Aucune inscription à une autre marque.</p>
+            <p>Vos coordonnées servent à vous adresser nos actualités et offres. Le bouton « M’inscrire par SMS » donne votre accord pour les SMS uniquement ; « M’inscrire par e-mail » pour les e-mails uniquement. Les deux choix sont indépendants et facultatifs. Une coordonnée saisie ou préremplie sans valider le bouton correspondant n’est pas enregistrée. Aucune inscription à une autre marque.</p>
             <p>Nous enregistrons la coordonnée du canal choisi, la date UTC, le texte et la version du consentement, la source de l’inscription. Votre adresse IP n’est pas conservée en clair ; une empreinte temporaire sert à limiter les abus. Aucun traceur publicitaire n’est utilisé sur cette page.</p>
             <p>Les coordonnées et les preuves sont chiffrées sur notre hébergement OVH, hors du dossier public. L’accès est réservé aux personnes habilitées de la maison et à son prestataire technique pour l’exploitation du service. Aucun fichier de contacts n’est envoyé par e-mail ni cédé à une autre marque.</p>
             <p>Les coordonnées actives sont conservées au maximum trois ans après votre dernier consentement explicite sur ce formulaire. Un retrait supprime immédiatement la coordonnée du canal concerné. Une empreinte protégée de l’opposition et les preuves datées restent conservées pendant trois ans, uniquement pour respecter votre choix et justifier le traitement.</p>
             <p>Vous pouvez <a href="desinscription/">retirer votre consentement en ligne</a>, séparément pour les SMS et les e-mails, sans compte. Le lien privé affiché après votre inscription permet aussi de retrouver vos choix. Pour accéder à vos données, les rectifier, demander leur effacement, leur limitation ou leur portabilité, écrivez à l’adresse ci-dessus. Vous pouvez adresser une réclamation à la <a href="https://www.cnil.fr/" target="_blank" rel="noopener noreferrer">CNIL</a>.</p>
     <p><a href="https://cognac-leopold-croizet.com/mentions-legales/">Mentions légales</a></p>
   </dialog>
-  <script src="../assets/js/salon-contact.js?v=20261015-4" defer></script>
+  <script src="../assets/js/salon-contact.js?v=20261015-5" defer></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /** Dedicated consent store for Cognac Léopold Croizet. No marketing transport. */
 const LC_SALON_BRAND = 'Cognac Léopold Croizet';
-const LC_SALON_VERSION = 'salon-contact-2026-10-15-v4';
+const LC_SALON_VERSION = 'salon-contact-2026-10-15-v5';
 const LC_SALON_ORIGIN = 'https://cognac-leopold-croizet.com';
 const LC_SALON_TEXT = [
     'sms' => 'Je souhaite recevoir par SMS les actualités et offres de Cognac Léopold Croizet.',
@@ -240,6 +240,9 @@ function salon_normalize(string $channel, $value): string
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) throw new SalonError('invalid_email');
         return strtolower($value);
     }
+    // Contact cards can contain non-breaking spaces and the optional French (0).
+    $value = preg_replace('/\p{Z}+/u', ' ', $value) ?? '';
+    $value = preg_replace('/^(\+33|0033)\s*\(0\)/', '$1', $value) ?? '';
     if (preg_match('/^[+0-9().\s-]+$/D', $value) !== 1) throw new SalonError('invalid_sms');
     $value = preg_replace('/[().\s-]/', '', $value) ?? '';
     if (strpos($value, '00') === 0) $value = '+' . substr($value, 2);
@@ -291,7 +294,8 @@ function salon_subscribe(array $store, array $input): array
         $q->execute([$id, $channel, salon_encrypt($store, $record), $now, $now, gmdate('c', strtotime('+3 years'))]);
         salon_event($store, $id, $channel, 'consent_granted', [
             'text' => LC_SALON_TEXT[$channel],
-            'positive_action' => 'unchecked_channel_checkbox_and_submit',
+            'positive_action' => 'channel_specific_subscription_submit',
+            'button_text' => $channel === 'sms' ? 'M’inscrire par SMS' : 'M’inscrire par e-mail',
             'challenge_hash' => hash('sha256', (string) $input['challenge']),
         ]);
     }
