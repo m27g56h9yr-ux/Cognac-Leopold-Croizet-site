@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { access, cp, mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildSalonPage } from './build-salon-page.mjs';
 import { DEPLOY_BASE_PATH, normalizeLegacyDeployBase, stripDeployBaseForLocalPath } from './deploy-config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -422,6 +423,7 @@ async function main() {
   await addPineauBlancPage();
   await removeLegacyExcellenceCoffretAssets();
   await writeGlobalFiles();
+  await buildSalonPage();
 
   console.log(`Generated ${pageRecords.length} pages`);
   console.log(`Localized ${fetchedAssets.size} assets`);
@@ -969,6 +971,7 @@ async function collectSitemapUrls() {
     const url = normalizeAbsoluteUrl(loc);
     if (!url) return;
     if (!HOST_PREFIX.has(url.hostname)) return;
+    if (toLocalRoute(url).startsWith('/salon/')) return; // Owned by the local salon template.
     if (EXCLUDED_PAGE_ROUTES.has(toLocalRoute(url))) return;
     urls.add(stripHash(url).toString());
   };
@@ -1061,6 +1064,7 @@ async function addLocalHtmlPageUrls(urls) {
       if (segments.includes('api')) continue;
 
       const route = routeForPagePath(relativePath);
+      if (route.startsWith('/salon/')) continue; // Rebuilt locally, never fetched from production.
       if (EXCLUDED_PAGE_ROUTES.has(route)) continue;
       urls.add(`${PUBLIC_ORIGIN}${route}`);
     }

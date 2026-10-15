@@ -1,0 +1,20 @@
+name: Salon retention maintenance
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retention:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply retention and verify private store
+        run: |
+          curl --fail --silent --show-error --retry 2 --max-time 30 'https://cognac-leopold-croizet.com/api/salon-contact.php?action=health' > /tmp/salon-health.json
+          python3 - <<'PYHEALTH'
+          import json
+          with open('/tmp/salon-health.json') as f: result = json.load(f)
+          assert result.get('ok') and result.get('status') == 'ready'
+          print('Retention applied; private store is ready.')
+          PYHEALTH

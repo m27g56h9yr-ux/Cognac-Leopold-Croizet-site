@@ -41,7 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y php-cli
+          sudo apt-get install -y php-cli php-sqlite3
           php -l api/newsletter.php
           php -l scripts/test-newsletter-endpoint.php
           newsletter_test_dir="$(mktemp -d)"
@@ -89,6 +89,12 @@ jobs:
           php -l api/partner-offers-lib.php
           php -l api/partner-offers.php
           php -l suivi-vendeurs-data.php
+          php -l api/salon-lib.php
+          php -l api/salon-contact.php
+          php -l api/salon-admin.php
+          python3 scripts/test-salon-endpoint.py
+          node scripts/build-salon-page.mjs
+          git diff --exit-code -- salon/index.html salon/desinscription/index.html
           npm run check
 
       - name: Prepare deployment bundle
@@ -107,6 +113,8 @@ jobs:
             --exclude='_preview/' \
             --exclude='node_modules/' \
             --exclude='scripts/' \
+            --exclude='outputs/' \
+            --exclude='tmp/' \
             --exclude='*.md' \
             --exclude='README.md' \
             --exclude='AUDIT.md' \
@@ -120,6 +128,7 @@ jobs:
             --exclude='partner-data/' \
             --exclude='api/newsletter-config.php' \
             --exclude='api/conversion-config.php' \
+            --exclude='api/salon-config.php' \
             --exclude='.htpasswd' \
             --exclude='.user.ini' \
             --exclude='php.ini' \
@@ -146,6 +155,7 @@ jobs:
             -name 'partner-data' -o \
             -name 'newsletter-config.php' -o \
             -name 'conversion-config.php' -o \
+            -name 'salon-config.php' -o \
             -name '.htpasswd' -o \
             -name '.user.ini' -o \
             -name 'php.ini' -o \
@@ -181,6 +191,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y lftp
 
+      - name: Verify historical WordPress before publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --max-time 30 https://ancien.cognac-leopold-croizet.com/wp-json/ > /tmp/lc-historical-wp.json
+          python3 - <<'PYWP'
+          import json
+          with open('/tmp/lc-historical-wp.json') as f: wp = json.load(f)
+          assert 'wp/v2' in wp.get('namespaces', []) and wp.get('routes'), 'Historical WordPress is not available'
+          assert wp.get('url', '').startswith('https://ancien.cognac-leopold-croizet.com'), 'Unexpected historical WordPress host'
+          print('Historical WordPress is available over verified HTTPS.')
+          PYWP
+
+      - name: Prepare private salon administrator access
+        env:
+          SALON_ADMIN_TOKEN: ${{ secrets.LC_SALON_ADMIN_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PYCONFIG'
+          import hashlib, os, pathlib, re
+          token = os.environ.get('SALON_ADMIN_TOKEN', '')
+          assert re.fullmatch('[a-f0-9]{64}', token), 'Missing valid LC_SALON_ADMIN_TOKEN secret'
+          config = pathlib.Path('/tmp/lc-salon-config.php')
+          config.write_text("<?php\nreturn ['admin_token_hash' => '" + hashlib.sha256(token.encode()).hexdigest() + "'];\n")
+          config.chmod(0o600)
+          PYCONFIG
+
       - name: Deploy to OVH by SFTP
         env:
           SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
@@ -207,12 +245,16 @@ jobs:
           set net:max-retries 3
           set net:reconnect-interval-base 5
           set sftp:auto-confirm yes
+          put /tmp/lc-salon-config.php -o "$SFTP_TARGET_DIR/api/salon-config.php.new"
+          chmod 600 "$SFTP_TARGET_DIR/api/salon-config.php.new"
+          mv -f "$SFTP_TARGET_DIR/api/salon-config.php.new" "$SFTP_TARGET_DIR/api/salon-config.php"
           mirror --reverse --delete --verbose --parallel=4 \
             --exclude '(^|/)newsletter-data(/|$)' \
             --exclude '(^|/)conversion-data(/|$)' \
             --exclude '(^|/)partner-data(/|$)' \
             --exclude '(^|/)api/newsletter-config\.php$' \
             --exclude '(^|/)api/conversion-config\.php$' \
+            --exclude '(^|/)api/salon-config\.php$' \
             --exclude '(^|/)\.htpasswd$' \
             --exclude '(^|/)\.user\.ini$' \
             --exclude '(^|/)php\.ini$' \
@@ -230,6 +272,7 @@ jobs:
             _deploy/ "$SFTP_TARGET_DIR"
           bye
           LFTP_COMMANDS
+          rm -f /tmp/lc-salon-config.php
 
       - name: Verify production pages
         shell: bash
@@ -251,6 +294,8 @@ jobs:
             "https://cognac-leopold-croizet.com/"
             "https://cognac-leopold-croizet.com/rencontre/"
             "https://cognac-leopold-croizet.com/mentions-legales/"
+            "https://cognac-leopold-croizet.com/salon/"
+            "https://cognac-leopold-croizet.com/salon/desinscription/"
           )
 
           for url in "${urls[@]}"; do
@@ -305,4 +350,17 @@ jobs:
             exit 1
           fi
 
+          fetch "https://cognac-leopold-croizet.com/api/salon-contact.php?action=health" > /tmp/lc-salon-health.json
+          python3 - <<'PYHEALTH'
+          import json
+          with open('/tmp/lc-salon-health.json') as f: health = json.load(f)
+          assert health.get('ok') and health.get('status') == 'ready', 'Salon private storage is unavailable'
+          print('Salon collection and private storage are ready.')
+          PYHEALTH
+          for protected in api/salon-config.php api/salon-lib.php; do
+            status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' "https://cognac-leopold-croizet.com/$protected")"
+            test "$status" = '403'
+          done
+          status="$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' https://cognac-leopold-croizet.com/api/salon-admin.php)"
+          test "$status" = '401'
           echo "Production content checks passed for the current commit."

@@ -10,6 +10,11 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Private salon configuration and defensive denial of any misplaced data.
+  RewriteRule ^(?:private-lc-salon|salon-data)(?:/|$) - [F,L]
+  RewriteRule ^api/salon-(?:config|lib)\.php$ - [F,L]
+  RewriteRule ^api/salon-admin\.php$ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
   # Conversion aggregates are server-side operational data, never public files.
   RewriteRule ^conversion-data(?:/|$) - [F,L]
 
@@ -137,5 +142,14 @@ Options -Indexes
   </FilesMatch>
   <FilesMatch "\.(?:xml|txt|json|webmanifest)$">
     Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
+# Private withdrawal links must not reach referrers, caches or search indexes.
+<IfModule mod_headers.c>
+  <FilesMatch "^salon-(contact|admin)\.php$">
+    Header always set Cache-Control "no-store, max-age=0"
+    Header always set Referrer-Policy "no-referrer"
+    Header always set X-Robots-Tag "noindex, nofollow, noarchive"
   </FilesMatch>
 </IfModule>
