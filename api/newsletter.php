@@ -40,8 +40,10 @@ try {
     $sync = salon_sync_newsletter($store);
     $created = $sync['applied'][$operation] ?? false;
     // Another request may already have drained this operation. The CSV remains deduplicated.
-    $status = !$created ? 'already_registered' : ($sync['mail_sent'] ? 'saved_and_emailed' : 'saved_email_failed');
-    append_risk_event($config, $risk, !$created ? 'duplicate' : ($sync['mail_sent'] ? 'saved' : 'saved_email_failed'));
+    $notification = $sync['notification_status'];
+    $status = !$created ? 'already_registered'
+        : ($notification === 'sent' ? 'saved_and_emailed' : ($notification === 'failed' ? 'saved_email_failed' : 'saved'));
+    append_risk_event($config, $risk, !$created ? 'duplicate' : ($notification === 'failed' ? 'saved_email_failed' : 'saved'));
     json_response(200, ['ok' => true, 'status' => $status]);
 } catch (Throwable $e) {
     error_log('Shared newsletter storage unavailable [' . get_class($e) . ']');

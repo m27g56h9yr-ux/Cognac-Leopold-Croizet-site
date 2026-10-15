@@ -106,10 +106,19 @@ function salon_store(): array
         );
         CREATE TABLE IF NOT EXISTS newsletter_pending (id INTEGER PRIMARY KEY AUTOINCREMENT, cipher TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS newsletter_bridge (name TEXT PRIMARY KEY, value TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS newsletter_mail_state (
+            singleton INTEGER PRIMARY KEY CHECK(singleton=1), revision INTEGER NOT NULL DEFAULT 0,
+            sent_revision INTEGER NOT NULL DEFAULT 0, last_attempt_at INTEGER NOT NULL,
+            last_sent_at INTEGER NOT NULL DEFAULT 0
+        );
         CREATE TABLE IF NOT EXISTS limits (bucket TEXT PRIMARY KEY, hits INTEGER NOT NULL, expires_at INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS nonces (id TEXT PRIMARY KEY, expires_at INTEGER NOT NULL);
         CREATE INDEX IF NOT EXISTS contacts_expiry ON contacts(expires_at);
         CREATE INDEX IF NOT EXISTS events_expiry ON consent_events(expires_at);');
+        // Old releases did not retain mail timestamps. Start with a conservative
+        // one-hour cooldown so rollout cannot immediately repeat a previous email.
+        $q = $db->prepare('INSERT OR IGNORE INTO newsletter_mail_state(singleton, last_attempt_at) VALUES (1, ?)');
+        $q->execute([time()]);
     } finally {
         flock($setup, LOCK_UN);
         fclose($setup);
@@ -426,15 +435,12 @@ function salon_sync_newsletter(array $store): array
                 $q->execute(['legacy_rows', (string) $legacyRows]);
             }
             $db->exec("INSERT OR REPLACE INTO newsletter_bridge VALUES ('imported', '1')");
+            if (in_array(true, $applied, true)) $db->exec('UPDATE newsletter_mail_state SET revision=revision+1 WHERE singleton=1');
             $db->exec('DELETE FROM newsletter_pending');
             $db->exec('COMMIT');
         } catch (Throwable $e) { $db->exec('ROLLBACK'); throw $e; }
     } finally { flock($lock, LOCK_UN); fclose($lock); }
-    $mailSent = true;
-    foreach ($applied as $notify) {
-        if ($notify && !empty($config['email_enabled'])) $mailSent = send_updated_csv($config, $config['storage_path'], '') && $mailSent;
-    }
-    return ['applied' => $applied, 'mail_sent' => $mailSent];
+    return ['applied' => $applied, 'notification_status' => salon_notify_newsletter($store, $config)];
 }
 
 /** Aggregate read-back only: no coordinates, addresses, tokens or private paths. */
@@ -444,6 +450,7 @@ function salon_newsletter_status(array $store): array
     $lock = newsletter_lock($config);
     try { [$header, $rows] = newsletter_read($config); }
     finally { flock($lock, LOCK_UN); fclose($lock); }
+    $mail = $store['db']->query('SELECT * FROM newsletter_mail_state WHERE singleton=1')->fetch();
     $sources = [];
     $emailCount = $phoneCount = 0;
     foreach ($rows as $row) {
@@ -458,5 +465,53 @@ function salon_newsletter_status(array $store): array
         'pending' => (int) $store['db']->query('SELECT COUNT(*) FROM newsletter_pending')->fetchColumn(),
         'notification_to_expected' => $config['notification_to'] === 'leo.croizet@free.fr',
         'notification_from_expected' => $config['notification_from'] === 'newsletter@cognac-leopold-croizet.com',
-        'email_enabled' => (bool) $config['email_enabled']];
+        'email_enabled' => (bool) $config['email_enabled'],
+        'notification_min_interval_seconds' => LC_NEWSLETTER_NOTIFICATION_INTERVAL,
+        'notification_pending' => (int) $mail['revision'] > (int) $mail['sent_revision'],
+        'notification_last_sent_at' => $mail['last_sent_at'] ? gmdate('c', (int) $mail['last_sent_at']) : null,
+        'notification_next_eligible_at' => gmdate('c', max((int) $mail['last_attempt_at'], (int) $mail['last_sent_at']) + LC_NEWSLETTER_NOTIFICATION_INTERVAL)];
+}
+
+/** Coalesce updates and reserve the shared mail slot before any external send. */
+function salon_notify_newsletter(array $store, array $config): string
+{
+    if (empty($config['email_enabled'])) return 'disabled';
+    $mailLock = null;
+    $db = $store['db'];
+    try {
+        // Separate non-blocking lock: a slow mail transport never holds the CSV
+        // lock and cannot overlap a later worker, even if it lasts over an hour.
+        $lockPath = $config['storage_path'] . '.mail.lock';
+        if (is_link($lockPath)) throw new RuntimeException('Unsafe notification lock');
+        $mailLock = fopen($lockPath, 'c+b');
+        if (!$mailLock || !chmod($lockPath, 0600)) throw new RuntimeException('Notification lock unavailable');
+        if (!flock($mailLock, LOCK_EX | LOCK_NB)) return 'pending';
+        $db->exec('BEGIN IMMEDIATE');
+        try {
+            $state = $db->query('SELECT * FROM newsletter_mail_state WHERE singleton=1')->fetch();
+            $revision = (int) $state['revision'];
+            $pending = $revision > (int) $state['sent_revision'];
+            $now = time();
+            $eligible = $now >= max((int) $state['last_attempt_at'], (int) $state['last_sent_at']) + LC_NEWSLETTER_NOTIFICATION_INTERVAL;
+            if ($pending && $eligible) {
+                $q = $db->prepare('UPDATE newsletter_mail_state SET last_attempt_at=? WHERE singleton=1');
+                $q->execute([$now]);
+            }
+            $db->exec('COMMIT');
+        } catch (Throwable $e) { $db->exec('ROLLBACK'); throw $e; }
+        if (!$pending) return 'idle';
+        if (!$eligible) return 'pending';
+        // Pending state survives crashes/failures; the reserved hour also survives.
+        if (!send_updated_csv($config, $config['storage_path'], '')) return 'failed';
+        $q = $db->prepare('UPDATE newsletter_mail_state SET sent_revision=MAX(sent_revision, ?), last_sent_at=? WHERE singleton=1');
+        $q->execute([$revision, time()]);
+        return 'sent';
+    } catch (Throwable $e) {
+        // The signup is already saved. Do not turn a delayed notification into a
+        // failed signup or include contacts, paths or credentials in logs.
+        error_log('Newsletter notification delayed [' . get_class($e) . ']');
+        return 'failed';
+    } finally {
+        if (is_resource($mailLock)) { flock($mailLock, LOCK_UN); fclose($mailLock); }
+    }
 }

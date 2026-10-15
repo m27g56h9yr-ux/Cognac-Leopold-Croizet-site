@@ -18,7 +18,7 @@ newsletter-data/submission-risk.csv
 
 Une adresse déjà présente, après suppression des espaces en début et fin et passage en minuscules, reçoit la même réponse de succès sans créer de deuxième ligne ni envoyer un deuxième courriel. Les points et suffixes propres à certains fournisseurs de messagerie ne sont pas modifiés.
 
-Après chaque inscription valide, le script envoie le fichier CSV complet en pièce jointe avec les adresses suivantes :
+Les inscriptions sont enregistrées immédiatement. Le fichier CSV complet est envoyé au maximum une fois par heure, uniquement lorsqu’il y a de nouvelles inscriptions, avec les adresses suivantes :
 
 ```text
 Expéditeur : newsletter@cognac-leopold-croizet.com
@@ -37,6 +37,16 @@ La configuration effective est chargée par `newsletter-lib.php` ; `newsletter-c
 
 Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `leo.croizet@free.fr`.
 
+
+## Regroupement des notifications
+
+Une limite commune aux deux formulaires impose au moins 3 600 secondes entre les tentatives d’envoi et après le dernier envoi réussi. Le créneau est réservé en base avant l’appel au transport, sous verrou, pour éviter les doublons en cas de requêtes simultanées. Un verrou d’envoi distinct ne bloque pas les écritures dans le CSV pendant l’envoi.
+
+Les changements à notifier sont conservés durablement par un compteur de révision. Les inscriptions suivantes sont regroupées ; chaque envoi lit la liste courante. Aucun message n’est envoyé sans nouvelle inscription. En cas d’échec, les mises à jour restent en attente pour une tentative ultérieure, également soumise au délai d’une heure. La confirmation d’inscription ne dépend pas de l’envoi immédiat de cette notification interne.
+
+Le workflow existant `salon-retention.yml` passe chaque heure et appelle le contrôle de santé, qui traite les notifications devenues éligibles, même sans nouvelle visite. Les requêtes habituelles peuvent aussi déclencher cet envoi. Il s’agit d’un plafond d’envoi, pas d’une garantie de réception à heure fixe : le passage suivant du contrôle horaire et les délais du planificateur peuvent retarder l’e-mail. Lors du premier déploiement de cette limite, un délai conservateur d’une heure protège contre la répétition d’un éventuel envoi de l’ancienne version, qui ne conservait pas son horodatage.
+
+Le statut privé expose `notification_min_interval_seconds`, `notification_pending`, `notification_last_sent_at` et `notification_next_eligible_at`, sans coordonnées de contacts.
 
 ## Écriture commune et désinscription
 

@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+// One global rolling window for both signup forms, independent of local overrides.
+const LC_NEWSLETTER_NOTIFICATION_INTERVAL = 3600;
+
 function newsletter_config(): array
 {
     $storageDirectory = dirname(__DIR__) . '/newsletter-data';
@@ -148,20 +151,22 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
         return false;
     }
 
-    $csv = (string) file_get_contents($csvPath);
+    $csv = file_get_contents($csvPath);
+    if ($csv === false) return false;
     $boundary = 'lc-newsletter-' . bin2hex(random_bytes(12));
     $attachmentFilename = newsletter_attachment_filename();
     $to = (string) $config['notification_to'];
     $from = (string) $config['notification_from'];
     $siteName = (string) $config['site_name'];
-    $subject = 'Nouvelle inscription newsletter - ' . $siteName;
+    $subject = 'Liste des inscriptions mise à jour - ' . $siteName;
 
     $body = [
         '--' . $boundary,
         'Content-Type: text/plain; charset=UTF-8',
         'Content-Transfer-Encoding: 8bit',
         '',
-        'Une inscription a été enregistrée sur le site Cognac Léopold Croizet.',
+        'De nouvelles inscriptions ont été enregistrées sur le site Cognac Léopold Croizet.',
+        'Les mises à jour sont regroupées : la liste est envoyée au maximum une fois par heure.',
         '',
         'Le fichier complet newsletter-data/subscriptions.csv est joint sous le nom : ' . $attachmentFilename,
         '',
