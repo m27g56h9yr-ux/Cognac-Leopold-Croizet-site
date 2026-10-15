@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      full_deploy:
+        description: Force a full mirror to repair remote files
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -21,6 +26,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Test incremental deployment planner
+        run: python3 scripts/test-ovh-deploy-plan.py
 
       - name: Setup Node.js
         uses: actions/setup-node@v5
@@ -222,6 +230,7 @@ jobs:
 
       - name: Deploy to OVH by SFTP
         env:
+          FULL_DEPLOY: ${{ inputs.full_deploy || false }}
           SFTP_HOST: ${{ secrets.OVH_SFTP_HOST }}
           SFTP_USERNAME: ${{ secrets.OVH_SFTP_USERNAME }}
           SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
@@ -238,6 +247,48 @@ jobs:
           if [ "$SFTP_TARGET_DIR" != "." ]; then
             echo "::error::OVH_SFTP_TARGET_DIR must be '.' because the OVH SFTP user already opens in www/site-pc-new."
             exit 1
+          fi
+
+          if ! LFTP_PASSWORD="$SFTP_PASSWORD" lftp --env-password -u "$SFTP_USERNAME" "sftp://$SFTP_HOST:22" <<BASELINE
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 3
+          set sftp:auto-confirm yes
+          get "$SFTP_TARGET_DIR/.ovh-deploy-manifest.json" -o /tmp/ovh-baseline.json
+          bye
+          BASELINE
+          then
+            rm -f /tmp/ovh-baseline.json
+          fi
+          force_args=()
+          if [ "$FULL_DEPLOY" = true ]; then force_args+=(--force); fi
+          mode="$(python3 scripts/ovh-deploy-plan.py --bundle _deploy --baseline /tmp/ovh-baseline.json \
+            --target "$SFTP_TARGET_DIR" --site leopold-croizet --output /tmp/ovh-transfer.lftp --delete "${force_args[@]}")"
+          if [ "$mode" = full ]; then
+            cat > /tmp/ovh-transfer.lftp <<FULL_MIRROR
+          mirror --reverse --delete --verbose --parallel=4 \
+            --exclude '(^|/)newsletter-data(/|$)' \
+            --exclude '(^|/)conversion-data(/|$)' \
+            --exclude '(^|/)partner-data(/|$)' \
+            --exclude '(^|/)api/newsletter-config\.php$' \
+            --exclude '(^|/)api/conversion-config\.php$' \
+            --exclude '(^|/)api/salon-config\.php$' \
+            --exclude '(^|/)\.htpasswd$' \
+            --exclude '(^|/)\.user\.ini$' \
+            --exclude '(^|/)php\.ini$' \
+            --exclude '(^|/)wp-config\.php$' \
+            --exclude '(^|/)config\.php$' \
+            --exclude '(^|/)config\..*$' \
+            --exclude '(^|/).*\.config\..*$' \
+            --exclude '(^|/)\.env(\..*)?$' \
+            --exclude '(^|/).*\.env$' \
+            --exclude '(^|/).*\.local$' \
+            --exclude '(^|/).*\.pem$' \
+            --exclude '(^|/).*\.key$' \
+            --exclude '(^|/)id_rsa.*$' \
+            --exclude '(^|/).*private.*$' \
+            _deploy/ "$SFTP_TARGET_DIR"
+          FULL_MIRROR
           fi
 
           # One-time transition: the previous endpoint locks the CSV inode itself.
@@ -277,28 +328,9 @@ jobs:
           put /tmp/lc-salon-config.php -o "$SFTP_TARGET_DIR/api/salon-config.php"
           chmod 600 "$SFTP_TARGET_DIR/api/salon-config.php"
           rm -f "$SFTP_TARGET_DIR/api/salon-config.php.new"
-          mirror --reverse --delete --verbose --parallel=4 \
-            --exclude '(^|/)newsletter-data(/|$)' \
-            --exclude '(^|/)conversion-data(/|$)' \
-            --exclude '(^|/)partner-data(/|$)' \
-            --exclude '(^|/)api/newsletter-config\.php$' \
-            --exclude '(^|/)api/conversion-config\.php$' \
-            --exclude '(^|/)api/salon-config\.php$' \
-            --exclude '(^|/)\.htpasswd$' \
-            --exclude '(^|/)\.user\.ini$' \
-            --exclude '(^|/)php\.ini$' \
-            --exclude '(^|/)wp-config\.php$' \
-            --exclude '(^|/)config\.php$' \
-            --exclude '(^|/)config\..*$' \
-            --exclude '(^|/).*\.config\..*$' \
-            --exclude '(^|/)\.env(\..*)?$' \
-            --exclude '(^|/).*\.env$' \
-            --exclude '(^|/).*\.local$' \
-            --exclude '(^|/).*\.pem$' \
-            --exclude '(^|/).*\.key$' \
-            --exclude '(^|/)id_rsa.*$' \
-            --exclude '(^|/).*private.*$' \
-            _deploy/ "$SFTP_TARGET_DIR"
+          rm -f "$SFTP_TARGET_DIR/.ovh-deploy-manifest.json"
+          source /tmp/ovh-transfer.lftp
+          put /tmp/ovh-transfer.json -o "$SFTP_TARGET_DIR/.ovh-deploy-manifest.json"
           bye
           LFTP_COMMANDS
           rm -f /tmp/lc-salon-config.php
