@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 /** Dedicated consent store for Cognac Léopold Croizet. No marketing transport. */
 const LC_SALON_BRAND = 'Cognac Léopold Croizet';
-const LC_SALON_VERSION = 'salon-contact-2026-10-15-v3';
+const LC_SALON_VERSION = 'salon-contact-2026-10-15-v4';
 const LC_SALON_ORIGIN = 'https://cognac-leopold-croizet.com';
 const LC_SALON_TEXT = [
-    'sms' => 'J’accepte de recevoir par SMS les actualités et offres de Cognac Léopold Croizet.',
-    'email' => 'J’accepte de recevoir par e-mail les actualités et offres de Cognac Léopold Croizet.',
+    'sms' => 'Je souhaite recevoir par SMS les actualités et offres de Cognac Léopold Croizet.',
+    'email' => 'Je souhaite recevoir par e-mail les actualités et offres de Cognac Léopold Croizet.',
 ];
 
 final class SalonError extends RuntimeException
@@ -268,7 +268,6 @@ function salon_event(array $store, string $id, string $channel, string $action, 
 
 function salon_subscribe(array $store, array $input): array
 {
-    if (($input['adult'] ?? false) !== true) throw new SalonError('adult_required');
     if (($input['consent_version'] ?? '') !== LC_SALON_VERSION) throw new SalonError('consent_version_changed', 409);
     $selected = [];
     if (($input['consent_sms'] ?? false) === true) $selected['sms'] = salon_normalize('sms', $input['phone'] ?? '');
@@ -283,7 +282,7 @@ function salon_subscribe(array $store, array $input): array
             'brand' => LC_SALON_BRAND, 'channel' => $channel, 'contact' => $value,
             'consented_at' => $now, 'consent_version' => LC_SALON_VERSION,
             'consent_text' => LC_SALON_TEXT[$channel], 'source' => 'salon-nfc-qr',
-            'page' => '/salon/', 'adult_confirmed' => true,
+            'page' => '/salon/',
             'ownership' => 'declared_not_verified',
         ];
         $q = $store['db']->prepare('INSERT INTO contacts VALUES (?, ?, "active", ?, ?, ?, ?, "declared")
@@ -291,7 +290,7 @@ function salon_subscribe(array $store, array $input): array
             changed_at=excluded.changed_at, expires_at=excluded.expires_at, ownership="declared"');
         $q->execute([$id, $channel, salon_encrypt($store, $record), $now, $now, gmdate('c', strtotime('+3 years'))]);
         salon_event($store, $id, $channel, 'consent_granted', [
-            'text' => LC_SALON_TEXT[$channel], 'adult_confirmed' => true,
+            'text' => LC_SALON_TEXT[$channel],
             'positive_action' => 'unchecked_channel_checkbox_and_submit',
             'challenge_hash' => hash('sha256', (string) $input['challenge']),
         ]);

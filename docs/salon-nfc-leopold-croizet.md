@@ -7,14 +7,16 @@
 - Sources : `scripts/page-templates/salon.html.in`, `salon-desinscription.html.in`, `assets/js/salon-contact.js`.
 - Génération : `node scripts/build-salon-page.mjs`, également appelée par le build général.
 - Pages autonomes et `noindex`, hors sitemap, sans géolocalisation, traceur, newsletter générique ni stockage navigateur.
-- Charte : logos, photographie, Montserrat et Playfair Display officiels, blanc cassé, taupe, pied de page sombre. Marque insécable.
+- Charte : logo, photographie, Montserrat et Playfair Display officiels, blanc cassé et taupe. Marque insécable.
+- Vue d’accueil sur un seul écran de téléphone : deux grandes cartes Instagram/Facebook occupent l’espace principal, formulaire compact en dessous, notice complète dans une fenêtre accessible depuis « Vos données ». À l’ouverture du clavier, en zoom ou pour afficher une confirmation/erreur, le défilement reste possible.
+- Consentement commun « Je souhaite recevoir les actualités et offres de Cognac Léopold Croizet » avec deux cases « Par SMS » / « Par e-mail », jamais précochées. Les anciens consentements conservent leur version et leur texte historiques.
 - Instagram et Facebook reprennent les liens officiels du site. Aucun prix ni nouvelle promotion chiffrée.
 
 ## Collecte réelle (version du 15 octobre 2026)
 
-`api/salon-contact.php` accepte des requêtes JSON sur la même origine HTTPS. Les deux consentements, indépendants et décochés, sont validés côté serveur. La confirmation de majorité est distincte. Une coordonnée sans le consentement correspondant est ignorée, même si elle a été saisie. Un téléphone français doit avoir la structure d’un mobile ; les numéros internationaux doivent suivre le format E.164.
+`api/salon-contact.php` accepte des requêtes JSON sur la même origine HTTPS. Les deux consentements, indépendants et décochés, sont validés côté serveur. La confirmation de majorité a été retirée à la demande du propriétaire ; aucune majorité n’est déclarée automatiquement. Une coordonnée sans le consentement correspondant est ignorée, même si elle a été saisie. Un téléphone français doit avoir la structure d’un mobile ; les numéros internationaux doivent suivre le format E.164.
 
-Chaque canal est dédupliqué séparément. Une inscription enregistre la date UTC, la marque, la source `salon-nfc-qr`, la page, la version et le texte exact du consentement, la majorité déclarée et la preuve de l’action positive. La version courante est `salon-contact-2026-10-15-v3`. Les soumissions concurrentes sont transactionnelles. L’adresse IP brute et l’agent utilisateur ne sont pas conservés par cette application ; l’hébergeur peut disposer de ses propres journaux techniques.
+Chaque canal est dédupliqué séparément. Une inscription enregistre la date UTC, la marque, la source `salon-nfc-qr`, la page, la version et le texte exact du consentement et la preuve de l’action positive. La version courante est `salon-contact-2026-10-15-v4`. Les soumissions concurrentes sont transactionnelles. L’adresse IP brute et l’agent utilisateur ne sont pas conservés par cette application ; l’hébergeur peut disposer de ses propres journaux techniques.
 
 La propriété de l’adresse ou du téléphone est **déclarée, non vérifiée**. Aucun code SMS, double opt-in par e-mail ni service d’envoi commercial n’est branché. Le champ `ownership` de l’export le précise. La collecte ne déclenche aucun message ni transfert de fichier par e-mail. Le formulaire newsletter historique conserve son fonctionnement propre.
 
@@ -56,7 +58,7 @@ Repères officiels : [CNIL, prospection électronique](https://www.cnil.fr/fr/la
 
 ## Contrôles et publication
 
-- `PHP_BINARY=/opt/homebrew/opt/php@8.4/bin/php python3 scripts/test-salon-endpoint.py` : 98 contrôles locaux sur stockage temporaire, dont chiffrement, permissions, consentement séparé, données non consenties, majorité, formats, origine, rejeu, débit, concurrence, déduplication, accès privé, export, retrait séparé et expiration. Aucune communication envoyée.
+- `PHP_BINARY=/opt/homebrew/opt/php@8.4/bin/php python3 scripts/test-salon-endpoint.py` : Contrôles locaux sur stockage temporaire, dont chiffrement, permissions, consentement séparé, données non consenties, absence de majorité fictive, formats, origine, rejeu, débit, concurrence, déduplication, accès privé, export, retrait séparé et expiration. Aucune communication envoyée.
 - `npm run check` : pages statiques, newsletter existante, suivi et offres partenaires.
 - `git diff --check`, syntaxe PHP et JavaScript, régénération identique des deux pages.
 - Parcours local en navigateur : e-mail seul sans téléphone, lien privé reconnu puis retrait confirmé.

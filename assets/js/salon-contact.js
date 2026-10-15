@@ -19,7 +19,6 @@
   const messages = {
     consent_required: 'Choisissez les SMS, les e-mails, ou les deux : c’est vous qui décidez.',
     channel_required: 'Choisissez les SMS, les e-mails, ou les deux.',
-    adult_required: 'Merci de confirmer que vous êtes majeur(e).',
     invalid_sms: 'Vérifiez votre mobile : 06 ou 07 en France, ou le préfixe international (+…).',
     invalid_email: 'Vérifiez votre adresse e-mail, s’il vous plaît.',
     rate_limited: 'Beaucoup de demandes ont été reçues. Réessayez dans quinze minutes.',
@@ -51,8 +50,14 @@
     if (!response.ok || !data.ok) throw new Error(data.status || 'temporarily_unavailable');
     return data;
   }
-  document.getElementById('privacy-open')?.addEventListener('click', () => { notice.open = true; });
-  if (notice && location.hash === '#privacy-notice') notice.open = true;
+  function openNotice() {
+    if (!notice) return;
+    if (notice.tagName === 'DIALOG') notice.showModal();
+    else notice.open = true;
+  }
+  document.getElementById('privacy-open')?.addEventListener('click', openNotice);
+  document.getElementById('privacy-close')?.addEventListener('click', () => notice.close());
+  if (notice && location.hash === '#privacy-notice') openNotice();
   submit.disabled = false;
   if (withdraw && token) {
     submit.disabled = true;
@@ -80,14 +85,13 @@
     event.preventDefault();
     if (busy) return;
     status.textContent = '';
-    [phone, email, sms, mail, form.elements.adult].filter(Boolean).forEach(field => {
+    [phone, email, sms, mail].filter(Boolean).forEach(field => {
       field.removeAttribute('aria-invalid');
       field.removeAttribute('aria-describedby');
     });
     if (!sms.checked && !mail.checked) return show(messages[withdraw ? 'channel_required' : 'consent_required'], sms);
     if (!privateReady && sms.checked && !phone.value.trim()) return show('Ajoutez le numéro de mobile concerné.', phone);
     if (!privateReady && mail.checked && (!email.value.trim() || !email.validity.valid)) return show(messages.invalid_email, email);
-    if (!withdraw && !form.elements.adult.checked) return show(messages.adult_required, form.elements.adult);
     const payload = {
       action: withdraw ? 'withdraw' : 'subscribe',
       company_url: form.elements.company_url.value,
@@ -97,7 +101,7 @@
     if (withdraw) {
       payload.channels = [sms.checked && 'sms', mail.checked && 'email'].filter(Boolean);
       if (privateReady) payload.token = token;
-    } else Object.assign(payload, { consent_sms: sms.checked, consent_email: mail.checked, adult: true, consent_version: version });
+    } else Object.assign(payload, { consent_sms: sms.checked, consent_email: mail.checked, consent_version: version });
     busy = true;
     submit.disabled = true;
     status.textContent = 'Un instant…';

@@ -20,7 +20,7 @@ import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 PHP = os.environ.get('PHP_BINARY', 'php')
-VERSION = 'salon-contact-2026-10-15-v3'
+VERSION = 'salon-contact-2026-10-15-v4'
 checks = 0
 
 def check(value, label):
@@ -55,7 +55,7 @@ with tempfile.TemporaryDirectory(prefix='lc-salon-test-') as temp:
         body = dict(body, challenge=result['challenge'])
         return http(body=body, **kwargs)
     def signup(**kw):
-        return dict(action='subscribe', adult=True, consent_version=VERSION, **kw)
+        return dict(action='subscribe', consent_version=VERSION, **kw)
     def counts():
         code, result, _ = http('/api/salon-admin.php', auth=True)
         check(code == 200, 'private read-back')
@@ -75,7 +75,6 @@ with tempfile.TemporaryDirectory(prefix='lc-salon-test-') as temp:
         check(http('/api/salon-admin.php')[0] == 401, 'admin needs authentication')
         check(send(signup(consent_sms=False, consent_email=False))[1]['status'] == 'consent_required', 'no implicit consent')
         check(send(signup(consent_sms='true', phone='0612345678'))[1]['status'] == 'consent_required', 'strict boolean consent')
-        check(send(dict(signup(consent_email=True, email='test@example.com'), adult=False))[1]['status'] == 'adult_required', 'adult required')
         check(send(signup(consent_sms=True, phone='0123456789'))[1]['status'] == 'invalid_sms', 'landline rejected')
         check(send(signup(consent_email=True, email='bad'))[1]['status'] == 'invalid_email', 'email invalid')
         # Reset the isolated test rate buckets between groups, not in the application.
@@ -116,6 +115,8 @@ with tempfile.TemporaryDirectory(prefix='lc-salon-test-') as temp:
         code, exported, _ = http('/api/salon-admin.php?format=csv', auth=True)
         records = list(csv.DictReader(io.StringIO(exported)))
         check(code == 200 and len(records) == 2, 'only active contacts exported')
+        check(all(r['adult_confirmed'] == '' for r in records), 'no fabricated adult confirmation')
+        check(all(r['consent_text'].startswith('Je souhaite recevoir') for r in records), 'new explicit consent wording retained')
         check(all(r['contact'] != 'both@example.com' for r in records), 'withdrawn absent from export')
         check(all(r['unsubscribe_url'].startswith('https://cognac-leopold-croizet.com/salon/desinscription/#') for r in records), 'campaign links per channel')
         check(any(r['contact'].startswith("'+33") for r in records), 'csv formula protection')

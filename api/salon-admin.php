@@ -36,7 +36,7 @@ try {
         $token = salon_sign($store, 'manage', ['ids' => [$r['id']]]);
         $cells = [LC_SALON_BRAND, $r['channel'], $data['contact'], $data['consented_at'],
             $data['consent_version'], $data['source'], $data['ownership'], $r['expires_at'],
-            LC_SALON_ORIGIN . '/salon/desinscription/#' . $token, $data['consent_text'], $data['adult_confirmed'] ? 'yes' : 'no'];
+            LC_SALON_ORIGIN . '/salon/desinscription/#' . $token, $data['consent_text'], array_key_exists('adult_confirmed', $data) ? ($data['adult_confirmed'] ? 'yes' : 'no') : ''];
         // Prevent formula execution in spreadsheet applications.
         $cells = array_map(static fn ($v) => preg_match('/^[=+@\-\t\r]/u', (string) $v) ? "'" . $v : $v, $cells);
         fputcsv($out, $cells, ',', '"', '');
