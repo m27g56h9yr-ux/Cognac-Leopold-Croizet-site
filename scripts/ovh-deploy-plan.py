@@ -56,9 +56,13 @@ def plan(bundle, baseline, target, site, output, delete=False, force=False):
     commands = []
     for name in removed:
         commands.append('rm -f ' + quote(target + '/' + name))
-    parents = sorted({str(PurePosixPath(name).parent) for name in changed} - {'.'})
+    # OVH can reject MKDIR on an existing directory, even with -p. The
+    # successful baseline already proves these parent directories exist.
+    existing_parents = {str(parent) for name in (previous or {}) for parent in PurePosixPath(name).parents}
+    needed_parents = {str(parent) for name in changed for parent in PurePosixPath(name).parents}
+    parents = sorted(needed_parents - existing_parents - {'.'}, key=lambda value: (len(PurePosixPath(value).parts), value))
     for parent in parents:
-        commands.append('mkdir -p ' + quote(target + '/' + parent))
+        commands.append('mkdir ' + quote(target + '/' + parent))
     for name in changed:
         commands.append('put ' + quote(str(bundle / name)) + ' -o ' + quote(target + '/' + name))
     output.write_text('\n'.join(commands) + '\n')
