@@ -57,7 +57,7 @@ for (const urlValue of urls) {
     continue;
   }
   const html = await readFile(localFile, 'utf8');
-  if (!/id=["']lc-conversion-tracking-js["'][^>]+conversion-tracking\.js\?v=20260714-1/.test(html)) {
+  if (!/id=["']lc-conversion-tracking-js["'][^>]+conversion-tracking\.js\?v=(?:20260714-1|20261024-order1)["']/.test(html)) {
     failures.push(path.relative(ROOT, localFile) + ': conversion client asset missing');
   }
 }
