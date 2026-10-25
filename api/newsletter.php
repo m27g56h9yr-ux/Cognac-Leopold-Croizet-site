@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_response(405, ['ok' => false, 'status' => 'method_not_allowed']);
 $config = newsletter_config();
 $input = request_data();
+$shop=(string)($_SERVER['HTTP_ORIGIN']??'')==='https://boutique.mdpierre.com';
+if ($shop && (($input['consent']??'')!=='yes' || ($input['consent_version']??'')!=='mdp-boutique-news-20261025-v1')) json_response(422,['ok'=>false,'status'=>'consent_required']);
 $email = strtolower(trim((string) ($input['email'] ?? $input['newsletter'] ?? '')));
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) json_response(422, ['ok' => false, 'status' => 'invalid_email']);
 $risk = newsletter_risk_signals($input);
@@ -24,17 +26,17 @@ try {
         $id = salon_id($store, 'email', $email);
         $record = ['brand' => LC_SALON_BRAND, 'channel' => 'email', 'contact' => $email,
             'consented_at' => $now, 'consent_version' => $context['consent_version'],
-            'consent_text' => '', 'source' => 'site-newsletter', 'page' => $context['page'],
+            'consent_text' => $shop?'Recevoir des nouvelles de temps en temps':'', 'source' => $shop?'boutique-mdpierre':'site-newsletter', 'page' => $context['page'],
             'ownership' => 'declared_not_verified'];
         $q = $db->prepare('INSERT INTO contacts VALUES (?, "email", "active", ?, ?, ?, ?, "declared")
             ON CONFLICT(id) DO UPDATE SET state="active", cipher=excluded.cipher,
             changed_at=excluded.changed_at, expires_at=excluded.expires_at');
         $q->execute([$id, salon_encrypt($store, $record), $now, $now, gmdate('c', strtotime('+3 years'))]);
         salon_event($store, $id, 'email', 'consent_granted', ['consent_version' => $context['consent_version'],
-            'source' => 'site-newsletter', 'page' => $context['page'], 'language' => $context['language'],
-            'positive_action' => 'newsletter_form_submit']);
+            'source' => $shop?'boutique-mdpierre':'site-newsletter', 'page' => $context['page'], 'language' => $context['language'],
+            'positive_action' => $shop?'optional_checkbox':'newsletter_form_submit']);
         $operation = salon_queue($store, ['action' => 'add', 'newsletter' => true, 'selected' => ['email' => $email],
-            'context' => $context, 'texts' => [], 'notify' => true]);
+            'context' => $context, 'texts' => $shop?['email'=>'Recevoir des nouvelles de temps en temps']:[], 'notify' => true]);
         $db->exec('COMMIT');
     } catch (Throwable $e) { $db->exec('ROLLBACK'); throw $e; }
     $sync = salon_sync_newsletter($store);
