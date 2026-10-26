@@ -1,6 +1,6 @@
 # Intégration de la boutique — 26 octobre 2026
 
-Version préparée localement, sans publication dans le cadre de cette vérification.
+Publication autorisée par Léopold le 26 octobre 2026 ; contrôler le déploiement et les neuf fiches publiques après le push.
 
 ## Périmètre et provenance
 
@@ -10,7 +10,9 @@ Le pavé affiche le format ; la destination reste indiquée par
 « Boutique en ligne · mdpierre.com ». Le texte de livraison existant est conservé.
 
 Le script public `assets/js/conversion-tracking.js?v=20261024-order1`, lu le
-26 octobre 2026, contenait un ajout JavaScript absent du dépôt. Son catalogue
+26 octobre 2026, contenait un ajout JavaScript absent du checkout initial. Il figurait dans les
+commits distants 6054b716 et f07a42ab, récupérés avant publication, avec les
+correctifs de contrôle et de consentement newsletter jusqu’à acec8a4c. Son catalogue
 est repris sans extension de produits, formats ou territoires :
 
 | Fiche française | 70 cl | 35 cl |
@@ -39,10 +41,14 @@ ni stock n’est ajouté. Aucun achat, panier, devis ou paiement de test n’a �
   photo, médailles éventuelles, commande, miniatures.
 - `assets/js/direct-order.js` synchronise le lien avec les deux sélecteurs de format.
 - Le même identifiant `mdp-direct-order` fait quitter l’ancien ajout JavaScript
-  encore présent sur le serveur, afin d’éviter un doublon lors du déploiement HTML.
+  conservé dans le dépôt après récupération des commits distants, afin d’éviter
+  un doublon lors du déploiement HTML.
 - Le parcours reste limité aux neuf fiches françaises. Les liens AV.ru,
   les autres langues et les pineaux restent inchangés.
 - Le garde existant `lc-hide-prices` masque aussi le bloc de commande.
+- La destination commerciale est la France métropolitaine, indiquée dans le
+  texte visible. Le site utilise des routes linguistiques : ce dispositif ne
+  géolocalise pas l’adresse IP du lecteur et ne crée aucune nouvelle redirection.
 
 ## SEO et GEO
 
@@ -51,6 +57,10 @@ destination. Canoniques, hreflang, sélecteurs et identifiants produit conservé
 Dates de modification actualisées ; le générateur rétablit aussi la bonne image
 XO Exception dans les métadonnées (l’ancienne sortie désignait une image VS).
 Pas de nouvelle `Offer`, de prix, de stock ou d’avis inventé dans le JSON-LD.
+La synchronisation AV.ru (API, cache, client et données structurées) est conservée
+à l’identique. Aucun flux équivalent MDP n’a été trouvé dans le code actuel ni
+dans la page publique de commande. Léopold a choisi explicitement de publier la
+présentation en conservant les balises actuelles, sans ajouter ce flux à ce stade.
 
 Les anciennes indications françaises imposant exclusivement un contact direct
 ont été clarifiées dans les pages de commande et les informations légales :
@@ -78,7 +88,10 @@ Références techniques :
   390 px (VSOP) et 320 px (XO Exception avec médailles).
 - `git diff --check` et syntaxe JavaScript valides.
 
-Avant publication : obtenir l’accord réseau/publication applicable au dépôt,
-vérifier le prérequis OVH de préservation de l’ancien WordPress, puis contrôler
-la version déployée et les neuf fiches publiques. Ne pas conclure à une
-publication sur la seule base des contrôles locaux.
+Prépublication : accord réseau et publication reçu ; rebase sur les quatre
+commits distants effectué ; API WordPress historique accessible en HTTPS avec
+`wp/v2`, ses routes et l’URL `https://ancien.cognac-leopold-croizet.com`.
+La CI conserve le même contrôle bloquant avant SFTP. Les six arborescences
+internationales et toute la synchronisation AV.ru sont identiques à origin/main.
+Après push, vérifier le workflow, `deploy-version.txt`, les neuf pages sur écran
+large/étroit et les onze liens, sans créer de commande ni de paiement.
