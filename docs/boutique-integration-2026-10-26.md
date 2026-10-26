@@ -95,3 +95,12 @@ La CI conserve le même contrôle bloquant avant SFTP. Les six arborescences
 internationales et toute la synchronisation AV.ru sont identiques à origin/main.
 Après push, vérifier le workflow, `deploy-version.txt`, les neuf pages sur écran
 large/étroit et les onze liens, sans créer de commande ni de paiement.
+
+## Simplification demandée après publication
+
+Le 26 octobre 2026, Léopold a demandé de retirer les deux lignes sous le bouton :
+« Boutique en ligne · mdpierre.com » et la phrase de livraison/retrait.
+Seuls le format et « Commander » restent visibles dans le bloc. Le renvoi
+ARIA vers la note supprimée est retiré ; les URL, les balises JSON-LD et les
+circuits internationaux restent identiques. Cette suppression de texte
+n’étend pas les destinations de livraison autorisées par la boutique.

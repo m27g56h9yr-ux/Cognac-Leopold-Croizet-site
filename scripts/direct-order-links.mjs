@@ -40,10 +40,8 @@ export function injectDirectOrder(html, route) {
 <section id="mdp-direct-order" aria-label="Commander ${escape(productName)}" data-order-product="${escape(productName)}" data-order-links="${escape(JSON.stringify(links))}">
   <div class="lc-direct-order-control">
     <span class="lc-direct-order-format" data-order-format>${format}</span>
-    <a class="lc-direct-order-link" data-order-link href="${escape(links[`${volume} ml`])}" aria-label="Commander ${escape(productName)} ${format} sur boutique.mdpierre.com" aria-describedby="lc-direct-order-note">Commander</a>
+    <a class="lc-direct-order-link" data-order-link href="${escape(links[`${volume} ml`])}" aria-label="Commander ${escape(productName)} ${format} sur boutique.mdpierre.com">Commander</a>
   </div>
-  <p id="lc-direct-order-note" class="lc-direct-order-note">Boutique en ligne · mdpierre.com</p>
-  <p class="lc-direct-order-delivery">Livraison en France métropolitaine ou retrait gratuit à la propriété.</p>
   <span class="lc-direct-order-sr" data-order-status role="status"></span>
 </section>
 <!-- lc-direct-order-end -->`;
