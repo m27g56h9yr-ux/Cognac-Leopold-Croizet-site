@@ -16,22 +16,25 @@ function mdp_catalogue_validate($data,string $brand): array {
     }
     return $data;
 }
+function mdp_catalogue_wait_for_refresh(callable $read): array {
+    $until=hrtime(true)+4500000000;
+    do{
+        usleep(50000);$cached=$read();
+        if($cached && $cached['generated_at']>time()-60)return $cached;
+    }while(hrtime(true)<$until);
+    throw new RuntimeException('Refresh in progress');
+}
 function mdp_catalogue_fetch(string $brand): array {
     $file=sys_get_temp_dir().'/mdp-catalogue-v1-'.hash('sha256',__DIR__.$brand).'.json';
-    $read=static function()use($file,$brand){if(!is_file($file)||filesize($file)>100000)return null;try{return mdp_catalogue_validate(json_decode(file_get_contents($file),true,32,JSON_THROW_ON_ERROR),$brand);}catch(Throwable){return null;}};
+    $read=static function()use($file,$brand){clearstatcache(true,$file);if(!is_file($file)||filesize($file)>100000)return null;try{return mdp_catalogue_validate(json_decode(file_get_contents($file),true,32,JSON_THROW_ON_ERROR),$brand);}catch(Throwable){return null;}};
     $cached=$read();if($cached && $cached['generated_at']>time()-60)return $cached;
     $lock=fopen($file.'.lock','c');if(!$lock)throw new RuntimeException('Cache lock unavailable');
     if(!flock($lock,LOCK_EX|LOCK_NB)){
-        fclose($lock);$until=hrtime(true)+4500000000;
-        do{
-            usleep(50000);$cached=$read();
-            if($cached && $cached['generated_at']>time()-60)return $cached;
-        }while(hrtime(true)<$until);
-        throw new RuntimeException('Refresh in progress');
+        fclose($lock);return mdp_catalogue_wait_for_refresh($read);
     }
     try{
         $cached=$read();if($cached && $cached['generated_at']>time()-60)return $cached;
-        if(is_file($file.'.retry') && filemtime($file.'.retry')>time()-15)throw new RuntimeException('Retry later');
+        if(is_file($file.'.retry') && filemtime($file.'.retry')>time()-15){flock($lock,LOCK_UN);return mdp_catalogue_wait_for_refresh($read);}
         touch($file.'.retry');
         $ch=curl_init('https://boutique.mdpierre.com/commander/?mdp_catalogue='.$brand);$body='';
         curl_setopt_array($ch,[CURLOPT_CONNECTTIMEOUT=>2,CURLOPT_TIMEOUT=>4,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_PROTOCOLS=>CURLPROTO_HTTPS,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_SSL_VERIFYHOST=>2,CURLOPT_HTTPHEADER=>['Accept: application/json'],CURLOPT_WRITEFUNCTION=>static function($ch,$chunk)use(&$body){if(strlen($body)+strlen($chunk)>100000)return 0;$body.=$chunk;return strlen($chunk);}]);
