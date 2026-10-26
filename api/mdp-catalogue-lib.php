@@ -20,7 +20,15 @@ function mdp_catalogue_fetch(string $brand): array {
     $file=sys_get_temp_dir().'/mdp-catalogue-v1-'.hash('sha256',__DIR__.$brand).'.json';
     $read=static function()use($file,$brand){if(!is_file($file)||filesize($file)>100000)return null;try{return mdp_catalogue_validate(json_decode(file_get_contents($file),true,32,JSON_THROW_ON_ERROR),$brand);}catch(Throwable){return null;}};
     $cached=$read();if($cached && $cached['generated_at']>time()-60)return $cached;
-    $lock=fopen($file.'.lock','c');if(!$lock||!flock($lock,LOCK_EX|LOCK_NB)){if($lock)fclose($lock);throw new RuntimeException('Refresh in progress');}
+    $lock=fopen($file.'.lock','c');if(!$lock)throw new RuntimeException('Cache lock unavailable');
+    if(!flock($lock,LOCK_EX|LOCK_NB)){
+        fclose($lock);$until=hrtime(true)+4500000000;
+        do{
+            usleep(50000);$cached=$read();
+            if($cached && $cached['generated_at']>time()-60)return $cached;
+        }while(hrtime(true)<$until);
+        throw new RuntimeException('Refresh in progress');
+    }
     try{
         $cached=$read();if($cached && $cached['generated_at']>time()-60)return $cached;
         if(is_file($file.'.retry') && filemtime($file.'.retry')>time()-15)throw new RuntimeException('Retry later');
