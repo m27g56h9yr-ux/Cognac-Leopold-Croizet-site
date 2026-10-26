@@ -1,0 +1,96 @@
+/* FlexSlider wraps/appends its viewport during initialization. Keep the order
+   stable before and after that initialization, including without JavaScript. */
+.woocommerce-product-gallery:has(> #mdp-direct-order) {
+  display: flex;
+  flex-direction: column;
+}
+.woocommerce-product-gallery:has(> #mdp-direct-order) > .flex-viewport,
+.woocommerce-product-gallery:has(> #mdp-direct-order) > .woocommerce-product-gallery__wrapper {
+  order: -1;
+  width: 100%;
+  min-width: 0;
+}
+.woocommerce-product-gallery:has(> #mdp-direct-order) > .flex-control-nav { order: 2; }
+#mdp-direct-order {
+  order: 1;
+  margin: 15px 0 20px;
+  width: 100%;
+  clear: both;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+#mdp-direct-order .lc-direct-order-control {
+  display: flex;
+  align-items: stretch;
+  min-height: 54px;
+}
+#mdp-direct-order .lc-direct-order-format {
+  flex: 0 0 24%;
+  min-width: 90px;
+  padding: 12px 10px;
+  border: 1px solid #895006;
+  background: #895006;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+#mdp-direct-order .lc-direct-order-link {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 12px;
+  border: 1px solid #895006;
+  border-left: 0;
+  background: #fff;
+  color: #895006;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color .2s, color .2s;
+}
+#mdp-direct-order .lc-direct-order-link[href]:hover {
+  color: #fff;
+  background: #895006;
+}
+#mdp-direct-order .lc-direct-order-link:focus-visible {
+  outline: 2px solid #895006;
+  outline-offset: 4px;
+}
+#mdp-direct-order .lc-direct-order-link[aria-disabled="true"] {
+  color: #746a5b;
+  background: #f4f1ec;
+  text-transform: none;
+  cursor: default;
+}
+#mdp-direct-order .lc-direct-order-note,
+#mdp-direct-order .lc-direct-order-delivery {
+  margin: 8px 0 0;
+  padding: 0 4px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #756b5d;
+  text-align: center;
+}
+#mdp-direct-order .lc-direct-order-delivery { margin-top: 3px; }
+#mdp-direct-order .lc-direct-order-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+html.lc-hide-prices #mdp-direct-order { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #mdp-direct-order .lc-direct-order-link { transition: none; }
+}
