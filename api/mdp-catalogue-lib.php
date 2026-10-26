@@ -25,7 +25,7 @@ function mdp_catalogue_fetch(string $brand): array {
         $cached=$read();if($cached && $cached['generated_at']>time()-60)return $cached;
         if(is_file($file.'.retry') && filemtime($file.'.retry')>time()-15)throw new RuntimeException('Retry later');
         touch($file.'.retry');
-        $ch=curl_init('https://boutique.mdpierre.com/?mdp_catalogue='.$brand);$body='';
+        $ch=curl_init('https://boutique.mdpierre.com/commander/?mdp_catalogue='.$brand);$body='';
         curl_setopt_array($ch,[CURLOPT_CONNECTTIMEOUT=>2,CURLOPT_TIMEOUT=>4,CURLOPT_FOLLOWLOCATION=>false,CURLOPT_PROTOCOLS=>CURLPROTO_HTTPS,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_SSL_VERIFYHOST=>2,CURLOPT_HTTPHEADER=>['Accept: application/json'],CURLOPT_WRITEFUNCTION=>static function($ch,$chunk)use(&$body){if(strlen($body)+strlen($chunk)>100000)return 0;$body.=$chunk;return strlen($chunk);}]);
         $ok=curl_exec($ch);$status=curl_getinfo($ch,CURLINFO_RESPONSE_CODE);curl_close($ch);
         if(!$ok||$status!==200)throw new RuntimeException('Catalogue unavailable');
