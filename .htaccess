@@ -96,6 +96,10 @@ Options -Indexes
 
   # OVH sometimes misses the directory index for this newly created locale page.
   RewriteRule ^zh/faq/?$ zh/faq/index.html [L]
+# Live catalogue rendered into visible HTML and Product offers.
+  RewriteRule ^collection/(extra|pineau-des-charentes-blanc|heritage|xo-exception|vs|excellence|pineau-des-charentes-rouge|valentine|pineau-des-charentes|napoleon|vsop|xo)/$ api/mdp-catalogue-page.php [END]
+RewriteRule ^api/mdp-catalogue-lib\.php$ - [F,END]
+
 </IfModule>
 
 <IfModule mod_headers.c>

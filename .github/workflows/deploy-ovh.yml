@@ -106,6 +106,12 @@ jobs:
           git diff --exit-code -- salon/index.html salon/desinscription/index.html se-retrouver/index.html se-retrouver/desinscription/index.html se-retrouver/.htaccess
           npm run check
 
+      - name: Validate live catalogue rendering
+        run: |
+          php -l api/mdp-catalogue-page.php
+          php -l api/mdp-catalogue-lib.php
+          php scripts/test-live-catalogue.php api/mdp-catalogue-lib.php
+
       - name: Prepare deployment bundle
         shell: bash
         run: |
