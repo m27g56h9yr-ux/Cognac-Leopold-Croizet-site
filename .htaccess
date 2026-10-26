@@ -12,7 +12,7 @@ Options -Indexes
 
   # Private salon configuration and defensive denial of any misplaced data.
   RewriteRule ^(?:private-lc-salon|salon-data)(?:/|$) - [F,L]
-  RewriteRule ^api/(?:salon|newsletter)-(?:config|lib)\.php$ - [F,L]
+  RewriteRule ^api/(?:salon|newsletter|nfc)-(?:config|lib)\.php$ - [F,L]
   RewriteRule ^api/salon-admin\.php$ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
   # Shared subscriptions are never served over HTTP, including temporary/lock files.

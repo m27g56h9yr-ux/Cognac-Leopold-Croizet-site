@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/newsletter-lib.php';
+require_once __DIR__ . '/nfc-lib.php';
 
 /** Dedicated consent store for Cognac Léopold Croizet. No marketing transport. */
 const LC_SALON_BRAND = 'Cognac Léopold Croizet';
@@ -115,6 +116,7 @@ function salon_store(): array
         CREATE TABLE IF NOT EXISTS nonces (id TEXT PRIMARY KEY, expires_at INTEGER NOT NULL);
         CREATE INDEX IF NOT EXISTS contacts_expiry ON contacts(expires_at);
         CREATE INDEX IF NOT EXISTS events_expiry ON consent_events(expires_at);');
+        nfc_schema($db);
         // Old releases did not retain mail timestamps. Start with a conservative
         // one-hour cooldown so rollout cannot immediately repeat a previous email.
         $q = $db->prepare('INSERT OR IGNORE INTO newsletter_mail_state(singleton, last_attempt_at) VALUES (1, ?)');
@@ -230,6 +232,7 @@ function salon_cleanup(array $store): void
         $q->execute([$now]);
         $db->exec('DELETE FROM limits WHERE expires_at < ' . time());
         $db->exec('DELETE FROM nonces WHERE expires_at < ' . time());
+        nfc_cleanup($db);
         $db->exec('COMMIT');
     } catch (Throwable $e) {
         $db->exec('ROLLBACK');
@@ -300,6 +303,7 @@ function salon_subscribe(array $store, array $input): array
     if (($input['consent_sms'] ?? false) === true) $selected['sms'] = salon_normalize('sms', $input['phone'] ?? '');
     if (($input['consent_email'] ?? false) === true) $selected['email'] = salon_normalize('email', $input['email'] ?? '');
     if (!$selected) throw new SalonError('consent_required');
+    $card = nfc_card_id($input['card_id'] ?? null);
     $ids = [];
     $now = gmdate('c');
     foreach ($selected as $channel => $value) {
@@ -309,7 +313,7 @@ function salon_subscribe(array $store, array $input): array
             'brand' => LC_SALON_BRAND, 'channel' => $channel, 'contact' => $value,
             'consented_at' => $now, 'consent_version' => LC_SALON_VERSION,
             'consent_text' => LC_SALON_TEXT[$channel], 'source' => 'se-retrouver',
-            'page' => '/se-retrouver/',
+            'page' => '/se-retrouver/', 'card_id' => $card,
             'ownership' => 'declared_not_verified',
         ];
         $q = $store['db']->prepare('INSERT INTO contacts VALUES (?, ?, "active", ?, ?, ?, ?, "declared")
@@ -322,10 +326,16 @@ function salon_subscribe(array $store, array $input): array
             'button_text' => 'M’inscrire',
             'channel_choice_text' => 'Par SMS et/ou e-mail, selon les champs remplis.',
             'challenge_hash' => hash('sha256', (string) $input['challenge']),
+            'card_id' => $card,
         ]);
     }
+    if ($card !== '' && nfc_measure_allowed() && ($input['measure'] ?? true) !== false) {
+        nfc_increment($store, $card, 'subscribe');
+        foreach (array_keys($selected) as $channel) nfc_increment($store, $card, $channel);
+    }
     salon_queue($store, ['action' => 'add', 'selected' => $selected,
-        'context' => newsletter_context('/se-retrouver/', 'fr', LC_SALON_VERSION), 'texts' => LC_SALON_TEXT, 'notify' => true]);
+        'context' => array_merge(newsletter_context('/se-retrouver/', 'fr', LC_SALON_VERSION), ['card_id' => $card]),
+        'texts' => LC_SALON_TEXT, 'notify' => true]);
     $token = salon_sign($store, 'manage', ['ids' => $ids]);
     return ['ok' => true, 'status' => 'saved', 'manage_url' => LC_SALON_ORIGIN . '/se-retrouver/desinscription/#' . $token];
 }
@@ -423,7 +433,7 @@ function salon_sync_newsletter(array $store): array
                     $data = salon_decrypt($store, $r['cipher']);
                     newsletter_apply($store, $rows, ['action' => 'add', 'selected' => [$r['channel'] => $data['contact']],
                         'context' => ['created_at' => $data['consented_at'], 'page' => $data['page'], 'language' => 'fr',
-                            'consent_version' => $data['consent_version']],
+                            'consent_version' => $data['consent_version'], 'card_id' => $data['card_id'] ?? ''],
                         'texts' => [$r['channel'] => $data['consent_text']], 'notify' => false]);
                 }
             }
@@ -502,7 +512,8 @@ function salon_notify_newsletter(array $store, array $config): string
         if (!$pending) return 'idle';
         if (!$eligible) return 'pending';
         // Pending state survives crashes/failures; the reserved hour also survives.
-        if (!send_updated_csv($config, $config['storage_path'], '')) return 'failed';
+        $cardsCsv = nfc_report_csv(nfc_report($store));
+        if (!send_updated_csv($config, $config['storage_path'], '', $cardsCsv)) return 'failed';
         $q = $db->prepare('UPDATE newsletter_mail_state SET sent_revision=MAX(sent_revision, ?), last_sent_at=? WHERE singleton=1');
         $q->execute([$revision, time()]);
         return 'sent';

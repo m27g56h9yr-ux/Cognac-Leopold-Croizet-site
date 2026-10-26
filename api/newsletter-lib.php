@@ -145,7 +145,7 @@ function append_risk_event(array $config, array $risk, string $outcome): void
     @chmod($path, 0640);
 }
 
-function send_updated_csv(array $config, string $csvPath, string $email): bool
+function send_updated_csv(array $config, string $csvPath, string $email, ?string $cardsCsv = null): bool
 {
     if (!is_file($csvPath)) {
         return false;
@@ -169,6 +169,8 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
         'Les mises à jour sont regroupées : la liste est envoyée au maximum une fois par heure.',
         '',
         'Le fichier complet newsletter-data/subscriptions.csv est joint sous le nom : ' . $attachmentFilename,
+        $cardsCsv !== null ? 'Le second CSV contient le bilan cumulé des cartes NFC sur les 25 derniers mois : ouvertures, clics et inscriptions validées.' : '',
+        $cardsCsv !== null ? 'Les essais et rechargements sont comptés ; les clics ne prouvent pas un abonnement aux réseaux sociaux.' : '',
         '',
         '--' . $boundary,
         'Content-Type: text/csv; charset=UTF-8; name="' . $attachmentFilename . '"',
@@ -176,9 +178,14 @@ function send_updated_csv(array $config, string $csvPath, string $email): bool
         'Content-Transfer-Encoding: base64',
         '',
         chunk_split(base64_encode($csv)),
-        '--' . $boundary . '--',
-        '',
     ];
+    if ($cardsCsv !== null) {
+        $cardsFilename = 'cognac-leopold-croizet-cartes-nfc-' . gmdate('Ymd-His') . '-utc.csv';
+        array_push($body, '--' . $boundary, 'Content-Type: text/csv; charset=UTF-8; name="' . $cardsFilename . '"',
+            'Content-Disposition: attachment; filename="' . $cardsFilename . '"',
+            'Content-Transfer-Encoding: base64', '', chunk_split(base64_encode($cardsCsv)));
+    }
+    array_push($body, '--' . $boundary . '--', '');
 
     $headers = [
         'From: ' . $from,
@@ -229,7 +236,7 @@ function newsletter_header(): array
         'user_agent', 'referer', 'accept_language', 'phone', 'consent_email', 'consent_sms',
         'email_page', 'phone_page', 'last_page', 'updated_at', 'email_consented_at', 'phone_consented_at',
         'email_consent_version', 'phone_consent_version', 'email_consent_text', 'phone_consent_text',
-        'record_version'];
+        'record_version', 'card_id', 'email_card_id', 'phone_card_id'];
 }
 
 function newsletter_page(string $value): string
@@ -339,7 +346,7 @@ function newsletter_apply(array $store, array &$rows, array $operation): bool
                 if ($value === '' || !in_array(salon_id($store, $channel, $value), $operation['ids'], true)) continue;
                 $row[$field] = '';
                 $row[$channel === 'sms' ? 'consent_sms' : 'consent_email'] = '';
-                foreach (['_page', '_consented_at', '_consent_version', '_consent_text'] as $suffix) $row[$field . $suffix] = '';
+                foreach (['_page', '_consented_at', '_consent_version', '_consent_text', '_card_id'] as $suffix) $row[$field . $suffix] = '';
             }
         }
         unset($row);
@@ -348,6 +355,8 @@ function newsletter_apply(array $store, array &$rows, array $operation): bool
     }
     $selected = $operation['selected'];
     $context = $operation['context'];
+    $card = $context['card_id'] ?? '';
+    $card = is_string($card) && preg_match('/^LC[0-9]{2,4}$/D', $card) ? $card : '';
     // Historical footer duplicates do not create another row or another email.
     if (!empty($operation['newsletter'])) {
         foreach ($rows as $row) if (strtolower(trim($row['email'] ?? '')) === ($selected['email'] ?? null)) return false;
@@ -374,6 +383,8 @@ function newsletter_apply(array $store, array &$rows, array $operation): bool
             $rows[$i][$field] = $value;
             $rows[$i][$channel === 'sms' ? 'consent_sms' : 'consent_email'] = 'yes';
             $rows[$i][$field . '_page'] = $context['page'];
+            $rows[$i][$field . '_card_id'] = $card;
+            $rows[$i]['card_id'] = $card;
             $rows[$i][$field . '_consented_at'] = $context['created_at'];
             $rows[$i][$field . '_consent_version'] = $context['consent_version'];
             $rows[$i][$field . '_consent_text'] = $operation['texts'][$channel] ?? '';

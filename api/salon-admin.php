@@ -16,6 +16,14 @@ try {
     $store = salon_store();
     salon_cleanup($store);
     salon_sync_newsletter($store);
+    if (($_GET['report'] ?? '') === 'cards') {
+        $report = nfc_report($store, $_GET['from'] ?? null, $_GET['to'] ?? null);
+        if (($_GET['format'] ?? '') !== 'csv') salon_response(200, $report);
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="cognac-leopold-croizet-cartes-nfc-' . gmdate('Ymd-His') . '-utc.csv"');
+        echo nfc_report_csv($report);
+        exit;
+    }
     $rows = $store['db']->query('SELECT * FROM contacts ORDER BY channel, changed_at')->fetchAll();
     if (($_GET['format'] ?? '') !== 'csv') {
         $counts = ['active_sms' => 0, 'active_email' => 0, 'withdrawn' => 0, 'expired' => 0];
@@ -30,14 +38,14 @@ try {
     header('Content-Disposition: attachment; filename="cognac-leopold-croizet-consentements-' . gmdate('Ymd-His') . '-utc.csv"');
     $out = fopen('php://output', 'wb');
     fputcsv($out, ['brand', 'channel', 'contact', 'consented_at', 'consent_version', 'source',
-        'ownership', 'expires_at', 'unsubscribe_url', 'consent_text', 'adult_confirmed'], ',', '"', '');
+        'ownership', 'expires_at', 'unsubscribe_url', 'consent_text', 'adult_confirmed', 'card_id'], ',', '"', '');
     foreach ($rows as $r) {
         if ($r['state'] !== 'active') continue;
         $data = salon_decrypt($store, $r['cipher']);
         $token = salon_sign($store, 'manage', ['ids' => [$r['id']]]);
         $cells = [LC_SALON_BRAND, $r['channel'], $data['contact'], $data['consented_at'],
             $data['consent_version'], $data['source'], $data['ownership'], $r['expires_at'],
-            LC_SALON_ORIGIN . '/se-retrouver/desinscription/#' . $token, $data['consent_text'], array_key_exists('adult_confirmed', $data) ? ($data['adult_confirmed'] ? 'yes' : 'no') : ''];
+            LC_SALON_ORIGIN . '/se-retrouver/desinscription/#' . $token, $data['consent_text'], array_key_exists('adult_confirmed', $data) ? ($data['adult_confirmed'] ? 'yes' : 'no') : '', $data['card_id'] ?? ''];
         // Prevent formula execution in spreadsheet applications.
         $cells = array_map(static fn ($v) => preg_match('/^[=+@\-\t\r]/u', (string) $v) ? "'" . $v : $v, $cells);
         fputcsv($out, $cells, ',', '"', '');

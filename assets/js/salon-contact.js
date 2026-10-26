@@ -1,6 +1,46 @@
-/* Dedicated, tracker-free contact/withdrawal forms. No browser persistence. */
+/* Contact/withdrawal forms and card counters. No cookies or browser persistence. */
 (() => {
   'use strict';
+  const pageUrl = new URL(location.href);
+  const cardMatch = /^LC([0-9]{1,4})$/i.exec((pageUrl.searchParams.get('carte') || '').trim());
+  const cardNumber = cardMatch ? Number(cardMatch[1]) : 0;
+  const cardId = cardNumber > 0 ? `LC${String(cardNumber).padStart(2, '0')}` : '';
+  const measure = pageUrl.searchParams.get('mesure') !== 'non'
+    && navigator.doNotTrack !== '1' && navigator.globalPrivacyControl !== true;
+  const noMeasureLink = document.getElementById('nfc-no-measure');
+  if (noMeasureLink) {
+    const noMeasureUrl = new URL(location.href);
+    noMeasureUrl.searchParams.set('mesure', 'non');
+    noMeasureUrl.hash = '';
+    noMeasureLink.href = noMeasureUrl.href;
+    if (!measure) noMeasureLink.textContent = 'La mesure est désactivée pour cette page.';
+  }
+  if (cardId && measure && document.querySelector('form[data-mode="subscribe"]')) initializeCardCounters();
+  function initializeCardCounters() {
+    let pageId;
+    try {
+      pageId = Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
+    } catch (_) { return; }
+    const recorded = new Set();
+    function record(event) {
+      if (recorded.has(event)) return;
+      recorded.add(event);
+      // Never delay navigation or signup if counting is unavailable.
+      fetch(new URL('../api/nfc-event.php', location.href), {
+        method: 'POST', credentials: 'omit', cache: 'no-store', keepalive: true,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ card_id: cardId, event, page_id: pageId })
+      }).catch(() => {});
+    }
+    function recordVisiblePage() {
+      if (document.visibilityState === 'visible') record('view');
+    }
+    recordVisiblePage();
+    document.addEventListener('visibilitychange', recordVisiblePage);
+    for (const network of ['instagram', 'facebook']) {
+      document.querySelector(`.social-card.${network}`)?.addEventListener('click', () => record(network));
+    }
+  }
   const notice = document.getElementById('privacy-notice');
   function openNotice() {
     if (!notice) return;
@@ -106,7 +146,8 @@
       if (withdraw) {
         payload.channels = [wantsSms && 'sms', wantsEmail && 'email'].filter(Boolean);
         if (privateReady) payload.token = token;
-      } else Object.assign(payload, { consent_sms: wantsSms, consent_email: wantsEmail, consent_version: version });
+      } else Object.assign(payload, { consent_sms: wantsSms, consent_email: wantsEmail, consent_version: version,
+        card_id: cardId, measure });
       busy = true;
       submit.disabled = true;
       status.textContent = 'Un instant…';

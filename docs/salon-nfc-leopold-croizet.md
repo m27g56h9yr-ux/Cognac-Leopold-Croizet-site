@@ -72,3 +72,7 @@ Repères officiels : [CNIL, prospection électronique](https://www.cnil.fr/fr/la
 - Publication : push sur `main` → workflow `Deploy OVH` → tests → vérification HTTPS du WordPress historique → préparation du secret privé → SFTP → contrôle des pages, du marqueur de commit, du stockage et des refus 401/403.
 - Après publication, lire le statut privé et le schéma commun sans exposer les coordonnées. Une inscription synthétique en production déclencherait l’envoi du CSV réel au responsable ; préférer les contrôles isolés de la CI pour les scénarios de collecte. Les résultats de déploiement sont consultables dans GitHub Actions.
 - Utiliser exactement l’URL permanente ci-dessus sur NFC/QR. Les anciens SVG provisoires locaux encodent `/salon/`, qui redirige vers cette URL ; la destination doit être observée en production avant fabrication.
+
+## Suivi par carte NFC
+
+Les liens numérotés LC01 à LC10, la programmation NFC Tools, les compteurs, les colonnes d’origine et les exports sont décrits dans [nfc-card-tracking.md](nfc-card-tracking.md). Le lien sans numéro reste valable.

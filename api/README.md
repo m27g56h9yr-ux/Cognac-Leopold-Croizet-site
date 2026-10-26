@@ -58,6 +58,14 @@ Les nouveaux consentements et les opérations en attente sont chiffrés dans la 
 
 `python3 scripts/salon-admin.py` affiche les compteurs, le schéma du CSV, les pages d’origine et la conformité des adresses de notification sans afficher les coordonnées. Son export historique reste un export des preuves chiffrées ; les anciens inscrits présents seulement dans le CSV restent dans la liste commune.
 
+### Cartes NFC
+
+Les liens `/se-retrouver/?carte=LC01` à `?carte=LC10` permettent d’attribuer les ouvertures, clics sociaux et inscriptions à une carte. Les colonnes `card_id`, `email_card_id` et `phone_card_id` sont ajoutées au CSV commun lors de sa prochaine écriture, en préservant les lignes existantes. Les colonnes par canal indiquent la carte du dernier accord de ce canal ; `card_id` correspond à la dernière inscription appliquée à la ligne. Les anciens contacts ne reçoivent aucune attribution inventée.
+
+`python3 scripts/salon-admin.py --cards` consulte le bilan privé. `--from-date`, `--to-date` et `--export` permettent de choisir une période UTC et un CSV. Ce bilan accompagne les notifications d’inscription existantes dans un second fichier `cognac-leopold-croizet-cartes-nfc-AAAAMMJJ-HHMMSS-utc.csv`, avec la même limite globale d’un envoi par heure. Les ouvertures/clics seuls ne déclenchent pas d’e-mail.
+
+Les compteurs journaliers sont conservés 25 mois dans la base privée, les empreintes de déduplication 24 heures. Aucun cookie ni profil visiteur ; les liens sans numéro fonctionnent sans comptage par carte. Le point d’entrée de mesure `api/nfc-event.php` n’expose pas les statistiques et n’envoie aucun e-mail. Voir [le guide complet des dix cartes](../docs/nfc-card-tracking.md).
+
 ## Mesure des conversions SEO/GEO
 
 Le script `conversion.php` enregistre uniquement trois familles d'actions :
