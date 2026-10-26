@@ -6,3 +6,8 @@
 #mdp-direct-order .mdp-live-row a:focus-visible{outline:3px solid #a96e17;outline-offset:3px}
 #mdp-direct-order .mdp-live-stock{flex-basis:100%;font-size:.75rem;line-height:1.3}
 body #mdp-direct-order:not(.eo-shop) .mdp-live-row a{background:#895006}
+.product-scene #mdp-direct-order.eo-shop{background:var(--product-top,#31554a);padding:10px 20px;color:#fff}
+#mdp-direct-order.eo-shop .mdp-live-row{padding:0;gap:6px 12px}
+#mdp-direct-order.eo-shop .mdp-live-row a{background:#f5eee2;color:var(--product-tone,#29452f);border-radius:0}
+#mdp-direct-order.eo-shop .mdp-live-row a:hover{background:#fff}
+#mdp-direct-order.eo-shop .mdp-live-stock{color:rgba(255,255,255,.85)}
