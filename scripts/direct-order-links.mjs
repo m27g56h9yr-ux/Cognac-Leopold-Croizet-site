@@ -32,7 +32,7 @@ export function injectDirectOrder(html, route) {
   const volume = model ? /^(\d+) ml$/.exec(model)?.[1] : (product.formats[700] ? '700' : '350');
   if (!product.formats[volume]) throw new Error(`No verified default order format for ${route}: ${model}`);
   const links = Object.fromEntries(Object.entries(product.formats).map(([ml, sku]) => [
-    `${ml} ml`, `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr`,
+    `${ml} ml`, `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr&mdp_source=site_lc`,
   ]));
   const productName = `Cognac Léopold\u00a0Croizet ${product.name}`;
   const format = `${Number(volume) / 10} cl`;

@@ -27,11 +27,11 @@ for (const [slug, formats] of Object.entries(expected)) {
   const links = JSON.parse(data);
   assert.equal(Object.keys(links).length, Object.keys(formats).length);
   for (const [ml, sku] of Object.entries(formats)) {
-    assert.equal(links[`${ml} ml`], `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr`);
+    assert.equal(links[`${ml} ml`], `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr&mdp_source=site_lc`);
     verified++;
   }
   const defaultMl = formats[700] ? '700' : '350';
-  assert(section.includes(`href="https://boutique.mdpierre.com/commander/?mdp_ref=${formats[defaultMl]}&amp;mdp_lang=fr"`));
+  assert(section.includes(`href="https://boutique.mdpierre.com/commander/?mdp_ref=${formats[defaultMl]}&amp;mdp_lang=fr&amp;mdp_source=site_lc"`));
   assert(html.includes(`rel="canonical" href="https://cognac-leopold-croizet.com${route}"`));
   const rebuilt = injectDirectOrder(injectDirectOrder(html, route), route);
   assert.equal((rebuilt.match(/id="mdp-direct-order"/g) || []).length, 1, 'rebuild duplicated CTA');
@@ -57,7 +57,7 @@ for (const [slug, formats] of Object.entries(expected)) {
       update();
       const ml = /^(\d+) ml$/.exec(model)?.[1];
       if (formats[ml]) {
-        assert.equal(attrs.get('href'), `https://boutique.mdpierre.com/commander/?mdp_ref=${formats[ml]}&mdp_lang=fr`);
+        assert.equal(attrs.get('href'), `https://boutique.mdpierre.com/commander/?mdp_ref=${formats[ml]}&mdp_lang=fr&mdp_source=site_lc`);
         assert(!attrs.has('aria-disabled'));
       } else {
         assert(!attrs.has('href'), `${slug}: ${model} must never order a substitute format`);

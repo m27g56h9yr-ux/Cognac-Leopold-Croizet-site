@@ -174,6 +174,7 @@
         var url = new URL('https://boutique.mdpierre.com/commander/');
         url.searchParams.set('mdp_ref', sku);
         url.searchParams.set('mdp_lang', 'fr');
+        url.searchParams.set('mdp_source', 'site_lc');
         link.href = url.href;
         link.textContent = 'Commander — ' + (Number(ml) / 10) + ' cl';
         link.removeAttribute('aria-disabled');
