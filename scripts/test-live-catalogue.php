@@ -103,3 +103,8 @@ foreach(['brand','stale','foreign_link','wrong_format','swapped_product'] as $ca
     try{mdp_catalogue_validate($bad,'eo');throw new LogicException('accepted');}
     catch(RuntimeException $e){check('reject '.$case,true);}
 }
+
+check('LC visible buy links carry site_lc',str_contains($lcRendered,'&amp;mdp_source=site_lc'));
+check('LC offer links keep reference language and source',($lc70['offers'][0]['url']??null)==='https://boutique.mdpierre.com/commander/?mdp_ref=LC0001&mdp_lang=fr&mdp_source=site_lc');
+check('EO visible buy links carry site_eo',str_contains($eoRendered,'&amp;mdp_source=site_eo'));
+check('EO offer links keep reference language and source',($eo50['offers'][0]['url']??null)==='https://boutique.mdpierre.com/commander/?mdp_ref=EO0008&mdp_lang=fr&mdp_source=site_eo');

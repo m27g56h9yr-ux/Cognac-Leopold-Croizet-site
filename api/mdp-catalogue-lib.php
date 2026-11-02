@@ -47,6 +47,9 @@ function mdp_catalogue_fetch(string $brand): array {
 function mdp_catalogue_render(string $html,?array $catalogue,string $url,string $brand): string {
     $h=static fn($v)=>htmlspecialchars((string)$v,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');
     $items=array_values(array_filter($catalogue['products']??[],static fn($p)=>is_array($p)&&($p['product_url']??null)===$url));
+    // Keep the shop feed canonical; stamp only the purchase links rendered by this brand site.
+    foreach($items as &$item)$item['order_url'].='&mdp_source=site_'.$brand;
+    unset($item);
     $rows='';
     foreach($items as $p){
         $state=['InStock'=>'En stock','BackOrder'=>'Sur préparation · délai confirmé dans la boutique','OutOfStock'=>'Indisponible'][$p['availability']];
