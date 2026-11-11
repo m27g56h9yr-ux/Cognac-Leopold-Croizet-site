@@ -5442,7 +5442,7 @@ function injectPartnerOfferRuntime(html, route) {
 // Accès CSE : garde le laissez-passer de la boutique et l'ajoute aux liens d'achat (toutes les pages).
 function injectCsePass(html) {
   const cleaned = html.replace(/\s*<script\b[^>]*id=["']mdp-cse-pass-js["'][^>]*><\/script>\s*/gi, '\n');
-  const script = '<script id="mdp-cse-pass-js" src="/assets/js/cse-pass.js?v=20261111-2" defer></script>';
+  const script = '<script id="mdp-cse-pass-js" src="/assets/js/cse-pass.js?v=20261111-3" defer></script>';
   return /<\/body>/i.test(cleaned) ? cleaned.replace(/<\/body>(?![\s\S]*<\/body>)/i, `${script}\n</body>`) : `${cleaned}\n${script}\n`;
 }
 
