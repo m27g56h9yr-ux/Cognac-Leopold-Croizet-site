@@ -5363,6 +5363,7 @@ function hardenHtml(html, route, file) {
   next = repairCgvPage(next, route);
   next = injectPartnerOfferRuntime(next, route);
   next = injectConversionTracking(next, route);
+  next = injectCsePass(next);
   return normalizeGeneratedWhitespace(normalizeLegacyDeployBase(next));
 }
 
@@ -5436,6 +5437,13 @@ function injectPartnerOfferRuntime(html, route) {
   if (languageForRoute(route) !== 'ru' || !evidence?.identityVerified) return cleaned;
   const script = `<script id="lc-partner-offer-js" src="${PARTNER_OFFER_ASSET}" data-product-slug="${escapeHtml(evidence.slug)}" defer></script>`;
   return /<\/body>/i.test(cleaned) ? cleaned.replace(/<\/body>/i, `${script}\n</body>`) : `${cleaned}\n${script}\n`;
+}
+
+// Accès CSE : garde le laissez-passer de la boutique et l'ajoute aux liens d'achat (toutes les pages).
+function injectCsePass(html) {
+  const cleaned = html.replace(/\s*<script\b[^>]*id=["']mdp-cse-pass-js["'][^>]*><\/script>\s*/gi, '\n');
+  const script = '<script id="mdp-cse-pass-js" src="/assets/js/cse-pass.js?v=20261111-1" defer></script>';
+  return /<\/body>/i.test(cleaned) ? cleaned.replace(/<\/body>(?![\s\S]*<\/body>)/i, `${script}\n</body>`) : `${cleaned}\n${script}\n`;
 }
 
 function injectConversionTracking(html, route) {
