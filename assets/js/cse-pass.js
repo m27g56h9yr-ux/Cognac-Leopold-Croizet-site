@@ -72,7 +72,7 @@
     style(); bar();
     document.querySelectorAll('a[href*="' + SHOP + '"][href*="mdp_ref="]').forEach(function (link) {
       var code = codeOf(link), p = code && data.prices[code];
-      var row = link.closest('.eo-shop-row');
+      var row = link.closest('.eo-shop-row, .mdp-live-row, [data-shop-volume]');
       var strong = row ? row.querySelector('strong') : null;
       if (strong) {
         if (p && p.cse < p.list && strong.getAttribute('data-mdp-cse') !== code) {
