@@ -22,6 +22,11 @@ Options -Indexes
   RewriteRule ^salon(?:/index\.html)?/?$ /se-retrouver/ [R=301,L]
   RewriteRule ^salon/desinscription(?:/index\.html)?/?$ /se-retrouver/desinscription/ [R=301,L]
 
+  # Printed QR codes point to /qr so the destination can change without reprinting.
+  # Temporary (302) on purpose: browsers must not cache it. utm_source=qr labels
+  # the visit in conversion-tracking.js and the hits show in the OVH access logs.
+  RewriteRule ^qr/?$ https://cognac-leopold-croizet.com/?utm_source=qr&utm_medium=print&utm_campaign=qr-code [R=302,L]
+
   # Conversion aggregates are server-side operational data, never public files.
   RewriteRule ^conversion-data(?:/|$) - [F,L]
 
