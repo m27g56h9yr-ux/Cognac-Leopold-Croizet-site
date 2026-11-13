@@ -17,7 +17,6 @@ export const directOrderProducts = {
   valentine: { name: 'Valentine XO', formats: { 350: 'LC0015' } },
   'coffret-degustation': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0017' } },
   'coffret-degustation-vs-vsop-xo': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0018' } },
-  'coffret-degustation-vs-vsop-napoleon': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0019' } },
 };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
