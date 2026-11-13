@@ -12,6 +12,7 @@ const expected = {
   napoleon: { 700: 'LC0007' }, xo: { 700: 'LC0009' }, 'xo-exception': { 700: 'LC0011' },
   extra: { 700: 'LC0012' }, excellence: { 700: 'LC0013' }, heritage: { 700: 'LC0014' },
   valentine: { 350: 'LC0015' },
+  'coffret-degustation': { 600: 'LC0017' },
 };
 const runtime = await readFile(path.join(root, 'assets/js/direct-order.js'), 'utf8');
 const decode = value => value.replaceAll('&quot;', '"').replaceAll('&amp;', '&');
@@ -30,7 +31,7 @@ for (const [slug, formats] of Object.entries(expected)) {
     assert.equal(links[`${ml} ml`], `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr&mdp_source=site_lc`);
     verified++;
   }
-  const defaultMl = formats[700] ? '700' : '350';
+  const defaultMl = formats[700] ? '700' : Object.keys(formats)[0];
   assert(section.includes(`href="https://boutique.mdpierre.com/commander/?mdp_ref=${formats[defaultMl]}&amp;mdp_lang=fr&amp;mdp_source=site_lc"`));
   assert(html.includes(`rel="canonical" href="https://cognac-leopold-croizet.com${route}"`));
   const rebuilt = injectDirectOrder(injectDirectOrder(html, route), route);
@@ -69,6 +70,7 @@ for (const [slug, formats] of Object.entries(expected)) {
 }
 for (const lang of ['en', 'ru', 'da', 'sv', 'no', 'zh']) {
   for (const slug of Object.keys(expected)) {
+    if (lang === 'ru' && slug === 'coffret-degustation') continue; // no Russian page for the tasting set
     const route = `/${lang}/collection/${slug}/`;
     const html = await readFile(path.join(root, route, 'index.html'), 'utf8');
     assert(!html.includes('id="mdp-direct-order"'), `French shop leaked to ${route}`);
@@ -79,4 +81,4 @@ for (const slug of ['pineau-des-charentes', 'pineau-des-charentes-rouge']) {
   const html = await readFile(path.join(root, `collection/${slug}/index.html`), 'utf8');
   assert(!html.includes('id="mdp-direct-order"'));
 }
-console.log(`Checked 9 pages, ${verified} unchanged order references, both selectors, unsupported formats and 56 excluded pages.`);
+console.log(`Checked 10 pages, ${verified} unchanged order references, both selectors, unsupported formats and 56 excluded pages.`);
