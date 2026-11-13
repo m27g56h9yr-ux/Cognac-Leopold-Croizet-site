@@ -15,6 +15,9 @@ export const directOrderProducts = {
   excellence: { name: 'Excellence', formats: { 700: 'LC0013' } },
   heritage: { name: 'Héritage', formats: { 700: 'LC0014' } },
   valentine: { name: 'Valentine XO', formats: { 350: 'LC0015' } },
+  'coffret-degustation': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0017' } },
+  'coffret-degustation-vs-vsop-xo': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0018' } },
+  'coffret-degustation-vs-vsop-napoleon': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0019' } },
 };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -29,7 +32,7 @@ export function injectDirectOrder(html, route) {
     .replace(/\n?<link\b[^>]*id="lc-direct-order-css"[^>]*>/g, '')
     .replace(/\n?<script\b[^>]*id="lc-direct-order-js"[^>]*><\/script>/g, '');
   const model = /<button\b(?=[^>]*data-product-model-option="([^"]+)")(?=[^>]*aria-pressed="true")[^>]*>/.exec(next)?.[1];
-  const volume = model ? /^(\d+) ml$/.exec(model)?.[1] : (product.formats[700] ? '700' : '350');
+  const volume = model ? /^(\d+) ml$/.exec(model)?.[1] : (product.formats[700] ? '700' : Object.keys(product.formats)[0]);
   if (!product.formats[volume]) throw new Error(`No verified default order format for ${route}: ${model}`);
   const links = Object.fromEntries(Object.entries(product.formats).map(([ml, sku]) => [
     `${ml} ml`, `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr&mdp_source=site_lc`,

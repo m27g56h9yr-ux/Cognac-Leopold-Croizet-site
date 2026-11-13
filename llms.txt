@@ -43,6 +43,9 @@ Cognac Léopold Croizet produces and presents VS, VSOP, Napoléon, XO, XO Except
 - [Excellence](https://cognac-leopold-croizet.com/collection/excellence/): Cognac Léopold Croizet Excellence.
 - [Héritage](https://cognac-leopold-croizet.com/collection/heritage/): Cognac Léopold Croizet Héritage.
 - [Valentine XO](https://cognac-leopold-croizet.com/collection/valentine/): Cognac Léopold Croizet Valentine XO.
+- [Coffret dégustation 3 × 20 cl](https://cognac-leopold-croizet.com/collection/coffret-degustation/): coffret Cognac Léopold Croizet de trois flacons de 20 cl, VSOP, Napoléon et XO.
+- [Coffret dégustation VS · VSOP · XO 3 × 20 cl](https://cognac-leopold-croizet.com/collection/coffret-degustation-vs-vsop-xo/): coffret Cognac Léopold Croizet de trois flacons de 20 cl, VS, VSOP et XO.
+- [Coffret dégustation VS · VSOP · Napoléon 3 × 20 cl](https://cognac-leopold-croizet.com/collection/coffret-degustation-vs-vsop-napoleon/): coffret Cognac Léopold Croizet de trois flacons de 20 cl, VS, VSOP et Napoléon.
 - [Pineau des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes/): Pineau des Charentes Léopold Croizet.
 - [Pineau Rouge des Charentes](https://cognac-leopold-croizet.com/collection/pineau-des-charentes-rouge/): Pineau Rouge des Charentes Léopold Croizet.
 Product pages are the official source of truth for category, origin, bottle size, GTIN variants, medals when cited, and nutrition links. These details are exposed in the visible product detail section and aligned with Product JSON-LD.
