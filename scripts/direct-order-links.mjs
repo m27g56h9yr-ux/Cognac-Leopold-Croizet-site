@@ -17,6 +17,8 @@ export const directOrderProducts = {
   valentine: { name: 'Valentine XO', formats: { 350: 'LC0015' } },
   'coffret-degustation': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0017' } },
   'coffret-degustation-vs-vsop-xo': { name: 'Coffret dégustation 3 × 20 cl', formats: { 600: 'LC0018' } },
+  'pineau-des-charentes': { name: 'Pineau des Charentes blanc', fullName: 'Pineau des Charentes blanc Léopold\u00a0Croizet', formats: { 750: 'LC0020' } },
+  'pineau-des-charentes-rouge': { name: 'Pineau des Charentes rouge', fullName: 'Pineau des Charentes rouge Léopold\u00a0Croizet', formats: { 750: 'LC0021' } },
 };
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -36,7 +38,7 @@ export function injectDirectOrder(html, route) {
   const links = Object.fromEntries(Object.entries(product.formats).map(([ml, sku]) => [
     `${ml} ml`, `https://boutique.mdpierre.com/commander/?mdp_ref=${sku}&mdp_lang=fr&mdp_source=site_lc`,
   ]));
-  const productName = `Cognac Léopold\u00a0Croizet ${product.name}`;
+  const productName = product.fullName ?? `Cognac Léopold\u00a0Croizet ${product.name}`;
   const format = `${Number(volume) / 10} cl`;
   const block = `<!-- lc-direct-order-start -->
 <section id="mdp-direct-order" aria-label="Commander ${escape(productName)}" data-order-product="${escape(productName)}" data-order-links="${escape(JSON.stringify(links))}">
