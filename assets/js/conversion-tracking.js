@@ -14,7 +14,8 @@
         newsletter: 'newsletter',
         instagram: 'instagram',
         facebook: 'facebook',
-        youtube: 'youtube'
+        youtube: 'youtube',
+        qr: 'qr'
     };
 
     function productSlugFromPath(pathname) {
