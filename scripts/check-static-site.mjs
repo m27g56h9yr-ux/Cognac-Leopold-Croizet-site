@@ -1039,8 +1039,8 @@ function findCollectionEndPageLayoutViolations(html, relativeFile) {
 
   const cardStarts = [...block.matchAll(/<div class="container-collection-produit">/g)];
   const violations = [];
-  // Valentine XO, the two tasting sets (not on the Russian page) and the two Pineaux.
-  const expectedCards = relativeFile.startsWith('ru/') ? 3 : 5;
+  // Valentine XO, the tasting set (not on the Russian page) and the two Pineaux.
+  const expectedCards = relativeFile.startsWith('ru/') ? 3 : 4;
   if (cardStarts.length !== expectedCards) {
     violations.push(`${relativeFile}: expected ${expectedCards} end-page collection cards, found ${cardStarts.length}`);
   }
