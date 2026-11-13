@@ -1039,8 +1039,10 @@ function findCollectionEndPageLayoutViolations(html, relativeFile) {
 
   const cardStarts = [...block.matchAll(/<div class="container-collection-produit">/g)];
   const violations = [];
-  if (cardStarts.length !== 3) {
-    violations.push(`${relativeFile}: expected 3 end-page collection cards, found ${cardStarts.length}`);
+  // Valentine XO, the two tasting sets (not on the Russian page) and the two Pineaux.
+  const expectedCards = relativeFile.startsWith('ru/') ? 3 : 5;
+  if (cardStarts.length !== expectedCards) {
+    violations.push(`${relativeFile}: expected ${expectedCards} end-page collection cards, found ${cardStarts.length}`);
   }
 
   for (let index = 0; index < cardStarts.length - 1; index++) {
