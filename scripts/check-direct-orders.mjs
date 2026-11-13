@@ -14,6 +14,7 @@ const expected = {
   valentine: { 350: 'LC0015' },
   'coffret-degustation': { 600: 'LC0017' },
   'coffret-degustation-vs-vsop-xo': { 600: 'LC0018' },
+  'pineau-des-charentes': { 750: 'LC0020' }, 'pineau-des-charentes-rouge': { 750: 'LC0021' },
 };
 const runtime = await readFile(path.join(root, 'assets/js/direct-order.js'), 'utf8');
 const decode = value => value.replaceAll('&quot;', '"').replaceAll('&amp;', '&');
@@ -78,8 +79,4 @@ for (const lang of ['en', 'ru', 'da', 'sv', 'no', 'zh']) {
     assert.equal(injectDirectOrder(html, route), html);
   }
 }
-for (const slug of ['pineau-des-charentes', 'pineau-des-charentes-rouge']) {
-  const html = await readFile(path.join(root, `collection/${slug}/index.html`), 'utf8');
-  assert(!html.includes('id="mdp-direct-order"'));
-}
-console.log(`Checked 11 pages, ${verified} unchanged order references, both selectors, unsupported formats and 56 excluded pages.`);
+console.log(`Checked 13 pages, ${verified} unchanged order references, both selectors, unsupported formats and 56 excluded pages.`);
