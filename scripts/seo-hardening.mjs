@@ -5565,15 +5565,15 @@ function repairCgvPage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph"><strong>Dernière mise à jour : 2 juillet 2026.</strong></p>
+<p class="container-mentions-legales wp-block-paragraph"><strong>Dernière mise à jour : 16 novembre 2026.</strong></p>
 
 
 
-<h3 class="wp-block-heading container-mentions-legales"><strong>Vente en ligne inactive :</strong></h3>
+<h3 class="wp-block-heading container-mentions-legales"><strong>Vente en ligne :</strong></h3>
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Le site <a href="/">cognac-leopold-croizet.com</a> présente les produits sans panier ni paiement intégré. Les boutons des fiches françaises concernées ouvrent la boutique externe <a href="https://boutique.mdpierre.com/">boutique.mdpierre.com</a>, exploitée par LA MAISON DES PIERRES (MPC). La disponibilité et les éventuels frais de livraison y sont confirmés avant paiement. Les <a href="https://boutique.mdpierre.com/conditions-generales-de-vente/">conditions générales de vente de la boutique</a> régissent ce parcours. Les fiches produits, pages de collection et contenus éditoriaux sont fournis à titre d’information. Pour les demandes traitées par contact direct, les conditions sont confirmées par écrit, devis, facture ou accord exprès de LA MAISON DES PIERRES (MPC).</p>
+<p class="container-mentions-legales wp-block-paragraph">Le site <a href="/">cognac-leopold-croizet.com</a> présente les produits ; il n’a ni panier ni paiement intégré. Les boutons « Acheter » des fiches françaises ouvrent la boutique en ligne <a href="https://boutique.mdpierre.com/">boutique.mdpierre.com</a>, exploitée par LA MAISON DES PIERRES (MPC). La disponibilité et les éventuels frais de livraison y sont confirmés avant paiement. Les <a href="https://boutique.mdpierre.com/conditions-generales-de-vente/">conditions générales de vente de la boutique</a> régissent ces ventes. Les fiches produits, pages de collection et contenus éditoriaux sont fournis à titre d’information. Pour les demandes traitées par contact direct, les conditions sont confirmées par écrit, devis, facture ou accord exprès de LA MAISON DES PIERRES (MPC).</p>
 
 
 
@@ -5613,7 +5613,7 @@ function repairCgvPage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Les conditions de retrait, d’expédition, de transport, de livraison et d’assurance sont définies au cas par cas avant toute commande confirmée. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
+<p class="container-mentions-legales wp-block-paragraph">Les conditions de retrait, d’expédition, de transport, de livraison et d’assurance sont celles de la boutique pour les commandes en ligne : livraison en France métropolitaine ou retrait gratuit à la propriété. Pour les demandes traitées par contact direct, elles sont définies au cas par cas avant toute commande confirmée. Le client demeure responsable du respect des règles applicables à l’achat, à l’importation, à la détention et à la consommation de boissons alcooliques dans son pays de livraison ou de résidence.</p>
 
 
 
@@ -5621,7 +5621,7 @@ function repairCgvPage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">Si une vente à distance est conclue avec un consommateur, les règles légales applicables au droit de rétractation, aux exceptions éventuelles, aux retours et aux remboursements sont précisées avant ou au moment de la confirmation de commande. Les produits bénéficient des garanties légales applicables, notamment en cas de défaut de conformité ou de vice caché, dans les conditions prévues par le droit français. Toute réclamation doit être adressée avec les justificatifs utiles à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a> ou à l’adresse postale de LA MAISON DES PIERRES (MPC).</p>
+<p class="container-mentions-legales wp-block-paragraph">Pour une commande passée sur la boutique, le consommateur dispose de quatorze jours après réception pour se rétracter, sans avoir à donner de motif. Les modalités, le formulaire de rétractation, les retours et les remboursements sont détaillés dans les <a href="https://boutique.mdpierre.com/conditions-generales-de-vente/">conditions générales de vente de la boutique</a>. Pour une vente à distance conclue par contact direct avec un consommateur, les mêmes règles légales s’appliquent et sont rappelées avant ou au moment de la confirmation de commande. Les produits bénéficient des garanties légales applicables, notamment en cas de défaut de conformité ou de vice caché, dans les conditions prévues par le droit français. Toute réclamation doit être adressée avec les justificatifs utiles à <a href="mailto:cognac@mdpierre.com">cognac@mdpierre.com</a> ou à l’adresse postale de LA MAISON DES PIERRES (MPC).</p>
 
 
 
@@ -5629,7 +5629,7 @@ function repairCgvPage(html, route) {
 
 
 
-<p class="container-mentions-legales wp-block-paragraph">En cas de difficulté, le client est invité à contacter en priorité LA MAISON DES PIERRES (MPC) par e-mail ou courrier afin de rechercher une solution amiable. Le site ne concluant pas actuellement de vente en ligne, le médiateur de la consommation compétent devra être confirmé et indiqué avant toute reprise d’un parcours actif de vente à distance aux consommateurs. Les présentes conditions sont soumises au droit français, sans priver les consommateurs des protections impératives éventuellement applicables dans leur pays de résidence.</p>
+<p class="container-mentions-legales wp-block-paragraph">En cas de difficulté, le client est invité à contacter en priorité LA MAISON DES PIERRES (MPC) par e-mail ou courrier afin de rechercher une solution amiable. Si la réponse à sa réclamation écrite ne le satisfait pas, ou en l’absence de réponse dans les deux mois, le consommateur peut saisir gratuitement le médiateur de la consommation : Centre de la Médiation de la Consommation de Conciliateurs de Justice (CM2C), 49 rue de Ponthieu, 75008 Paris, <a href="https://www.cm2c.net/">www.cm2c.net</a>. Cette saisine doit intervenir dans l’année qui suit la réclamation écrite. Les présentes conditions sont soumises au droit français, sans priver les consommateurs des protections impératives éventuellement applicables dans leur pays de résidence.</p>
 
 
 
