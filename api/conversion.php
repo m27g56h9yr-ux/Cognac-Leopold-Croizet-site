@@ -357,7 +357,7 @@ function normalize_traffic_source(string $value): string
     $allowed = [
         'direct', 'internal', 'google', 'bing', 'yandex', 'baidu',
         'chatgpt', 'perplexity', 'copilot', 'newsletter',
-        'instagram', 'facebook', 'youtube', 'campaign_other', 'other',
+        'instagram', 'facebook', 'youtube', 'qr', 'campaign_other', 'other',
     ];
     return in_array($source, $allowed, true) ? $source : 'other';
 }
