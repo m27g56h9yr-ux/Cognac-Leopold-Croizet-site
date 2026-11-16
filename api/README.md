@@ -22,7 +22,7 @@ Les inscriptions sont enregistrées immédiatement. Le fichier CSV complet est e
 
 ```text
 Expéditeur : newsletter@cognac-leopold-croizet.com
-Destinataire : leo.croizet@free.fr
+Destinataire : cognac@mdpierre.com
 ```
 
 La pièce jointe porte un nom propre au site, compatible avec les traitements automatisés :
@@ -35,7 +35,7 @@ Ce nom permet d'identifier immédiatement Cognac Léopold Croizet et l'instant d
 
 La configuration effective est chargée par `newsletter-lib.php` ; `newsletter-config.sample.php` en fournit le modèle. Pour modifier le destinataire, l'expéditeur ou les chemins des fichiers CSV, copier ce fichier en `newsletter-config.php`.
 
-Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `leo.croizet@free.fr`.
+Si `api/newsletter-config.php` existe déjà sur OVH, ses valeurs priment sur la configuration par défaut et ce fichier est conservé pendant les déploiements. Sa valeur `notification_to` doit donc également être `cognac@mdpierre.com`.
 
 
 ## Regroupement des notifications

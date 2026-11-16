@@ -31,7 +31,7 @@ Pour la carte suivante, **modifier l’enregistrement URL existant** avec le num
 
 ## Consulter le bilan
 
-Le bilan CSV par carte est joint **au même e-mail que la liste d’inscrits**, après de nouvelles inscriptions, au maximum une fois par heure. Une ouverture ou un clic seul ne déclenche aucun e-mail. La maintenance horaire existante envoie les notifications devenues éligibles. Destinataire existant : leo.croizet@free.fr.
+Le bilan CSV par carte est joint **au même e-mail que la liste d’inscrits**, après de nouvelles inscriptions, au maximum une fois par heure. Une ouverture ou un clic seul ne déclenche aucun e-mail. La maintenance horaire existante envoie les notifications devenues éligibles. Destinataire existant : cognac@mdpierre.com.
 
 Fichier : `cognac-leopold-croizet-cartes-nfc-AAAAMMJJ-HHMMSS-utc.csv`. Colonnes : carte, URL, début/fin de période UTC, ouvertures, clics Instagram, clics Facebook, inscriptions validées, accords e-mail et accords SMS. Le bilan par défaut couvre les 25 derniers mois conservés ; les comptes ne sont pas remis à zéro lors d’un envoi.
 
