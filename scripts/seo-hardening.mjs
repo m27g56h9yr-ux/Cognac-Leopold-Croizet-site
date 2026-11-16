@@ -6253,6 +6253,22 @@ function repairPlaceholderLinks(html, route) {
   for (const [label, href] of legalTargets) {
     next = next.replaceAll(`<a href="#">${label}</a>`, `<a href="${href}">${label}</a>`);
   }
+  // The age-gate link leads to the shop's sales terms (/cgv/ redirects there since
+  // 2026-11-16), so its label says "sales terms", not "terms of use".
+  const salesTermsLabels = [
+    ['Conditions générales d’utilisation', 'Conditions générales de vente'],
+    ["Conditions générales d'utilisation", 'Conditions générales de vente'],
+    ['terms of use', 'terms of sale'],
+    ['общие условия использования', 'условия продажи'],
+    ['условия использования', 'условия продажи'],
+    ['generelle brugsbetingelser', 'salgsbetingelser'],
+    ['allmänna användarvillkor', 'försäljningsvillkor'],
+    ['generelle bruksvilkår', 'salgsvilkår'],
+    ['使用条款', '销售条款'],
+  ];
+  for (const [oldLabel, newLabel] of salesTermsLabels) {
+    next = next.replaceAll(`<a href="${termsHref}">${oldLabel}</a>`, `<a href="${termsHref}">${newLabel}</a>`);
+  }
   return next;
 }
 
