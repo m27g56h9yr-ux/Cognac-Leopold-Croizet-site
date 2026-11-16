@@ -10,7 +10,7 @@ function newsletter_config(): array
     $config = [
         'storage_path' => $storageDirectory . '/subscriptions.csv',
         'risk_log_path' => $storageDirectory . '/submission-risk.csv',
-        'notification_to' => 'leo.croizet@free.fr',
+        'notification_to' => 'cognac@mdpierre.com',
         'notification_from' => 'newsletter@cognac-leopold-croizet.com',
         'site_name' => 'Cognac Léopold Croizet',
         'email_enabled' => true,

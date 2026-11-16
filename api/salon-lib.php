@@ -473,7 +473,7 @@ function salon_newsletter_status(array $store): array
         'columns' => $header, 'pages' => $sources,
         'legacy_rows' => (int) $store['db']->query("SELECT value FROM newsletter_bridge WHERE name='legacy_rows'")->fetchColumn(),
         'pending' => (int) $store['db']->query('SELECT COUNT(*) FROM newsletter_pending')->fetchColumn(),
-        'notification_to_expected' => $config['notification_to'] === 'leo.croizet@free.fr',
+        'notification_to_expected' => $config['notification_to'] === 'cognac@mdpierre.com',
         'notification_from_expected' => $config['notification_from'] === 'newsletter@cognac-leopold-croizet.com',
         'email_enabled' => (bool) $config['email_enabled'],
         'notification_min_interval_seconds' => LC_NEWSLETTER_NOTIFICATION_INTERVAL,
