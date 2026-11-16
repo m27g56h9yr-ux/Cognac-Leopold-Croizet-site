@@ -22,6 +22,10 @@ Options -Indexes
   RewriteRule ^salon(?:/index\.html)?/?$ /se-retrouver/ [R=301,L]
   RewriteRule ^salon/desinscription(?:/index\.html)?/?$ /se-retrouver/desinscription/ [R=301,L]
 
+  # One single text of sales terms, kept on the shop where the sale happens
+  # (decision of 2026-11-16). cgv/index.html only remains as a fallback.
+  RewriteRule ^cgv(?:/index\.html)?/?$ https://boutique.mdpierre.com/conditions-generales-de-vente/ [R=302,L,QSD]
+
   # Conversion aggregates are server-side operational data, never public files.
   RewriteRule ^conversion-data(?:/|$) - [F,L]
 
